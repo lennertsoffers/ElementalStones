@@ -482,5 +482,7 @@ public class ItemStones {
         magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 3);
         magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed Beasts and Creatures Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
     }
-
 }
+
+// doesn't display passive
+// move to late

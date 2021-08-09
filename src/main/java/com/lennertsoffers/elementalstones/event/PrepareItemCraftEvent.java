@@ -2,26 +2,19 @@ package com.lennertsoffers.elementalstones.event;
 
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import javax.crypto.interfaces.DHKey;
+import java.util.Arrays;
 
 public class PrepareItemCraftEvent implements Listener {
 
-    private boolean checkCraftInventory(ItemStack[][] recipe) {
-        for (int i = 0; i < 9; i++) {
-            if (!(recipe[0][i].equals(recipe[1][i]))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     @EventHandler
     public void onPrepareItemCraft(org.bukkit.event.inventory.PrepareItemCraftEvent event) {
+        ItemStack[] craftingMatrix = event.getInventory().getMatrix();
+
+
         ItemStack s = ItemStones.baseStone;
 
         ItemStack BC = new ItemStack(Material.COD_BUCKET);
@@ -184,5 +177,197 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] magicStoneBeastsAndCreatures2recipe = {null, SA, null, SA, ItemStones.magicStoneBeastsAndCreatures1, SA, null, SA, null};
         ItemStack[] magicStoneBeastsAndCreatures3recipe = {SA, SA, SA, SA, ItemStones.magicStoneBeastsAndCreatures2, SA, SA, SA, SA};
         ItemStack[] magicStoneBeastsAndCreatures4recipe = {DH, DH, DH, DH, ItemStones.magicStoneBeastsAndCreatures3, DH, DH, DH, DH};
+
+        if (Arrays.equals(waterStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStone0);
+        } else if (Arrays.equals(waterStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStone1);
+        } else if (Arrays.equals(waterStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStone2);
+        } else if (Arrays.equals(waterStoneOcean0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneOcean0);
+        } else if (Arrays.equals(waterStoneOcean1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneOcean1);
+        } else if (Arrays.equals(waterStoneOcean2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneOcean2);
+        } else if (Arrays.equals(waterStoneOcean3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneOcean3);
+        } else if (Arrays.equals(waterStoneOcean4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneOcean4);
+        } else if (Arrays.equals(waterStoneBending0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneBending0);
+        } else if (Arrays.equals(waterStoneBending1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneBending1);
+        } else if (Arrays.equals(waterStoneBending2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneBending2);
+        } else if (Arrays.equals(waterStoneBending3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneBending3);
+        } else if (Arrays.equals(waterStoneBending4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneBending4);
+        } else if (Arrays.equals(waterStoneIce0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneIce0);
+        } else if (Arrays.equals(waterStoneIce1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneIce1);
+        } else if (Arrays.equals(waterStoneIce2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneIce2);
+        } else if (Arrays.equals(waterStoneIce3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneIce3);
+        } else if (Arrays.equals(waterStoneIce4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.waterStoneIce4);
+        } else if (Arrays.equals(fireStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStone0);
+        } else if (Arrays.equals(fireStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStone1);
+        } else if (Arrays.equals(fireStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStone2);
+        } else if (Arrays.equals(fireStoneLava0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneLava0);
+        } else if (Arrays.equals(fireStoneLava1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneLava1);
+        } else if (Arrays.equals(fireStoneLava2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneLava2);
+        } else if (Arrays.equals(fireStoneLava3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneLava3);
+        } else if (Arrays.equals(fireStoneLava4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneLava4);
+        } else if (Arrays.equals(fireStoneExplosion0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion0);
+        } else if (Arrays.equals(fireStoneExplosion1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion1);
+        } else if (Arrays.equals(fireStoneExplosion2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion2);
+        } else if (Arrays.equals(fireStoneExplosion3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion3);
+        } else if (Arrays.equals(fireStoneExplosion4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion4);
+        } else if (Arrays.equals(fireStoneHellFire0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneHellFire0);
+        } else if (Arrays.equals(fireStoneHellFire1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneHellFire1);
+        } else if (Arrays.equals(fireStoneHellFire2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneHellFire2);
+        } else if (Arrays.equals(fireStoneHellFire3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneHellFire3);
+        } else if (Arrays.equals(fireStoneHellFire4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneHellFire4);
+        } else if (Arrays.equals(windStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStone0);
+        } else if (Arrays.equals(windStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStone1);
+        } else if (Arrays.equals(windStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStone2);
+        } else if (Arrays.equals(windStoneAgility0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneAgility0);
+        } else if (Arrays.equals(windStoneAgility1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneAgility1);
+        } else if (Arrays.equals(windStoneAgility2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneAgility2);
+        } else if (Arrays.equals(windStoneAgility3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneAgility3);
+        } else if (Arrays.equals(windStoneAgility4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneAgility4);
+        } else if (Arrays.equals(windStoneBending0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneBending0);
+        } else if (Arrays.equals(windStoneBending1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneBending1);
+        } else if (Arrays.equals(windStoneBending2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneBending2);
+        } else if (Arrays.equals(windStoneBending3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneBending3);
+        } else if (Arrays.equals(windStoneBending4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneBending4);
+        } else if (Arrays.equals(windStoneWeather0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneWeather0);
+        } else if (Arrays.equals(windStoneWeather1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneWeather1);
+        } else if (Arrays.equals(windStoneWeather2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneWeather2);
+        } else if (Arrays.equals(windStoneWeather3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneWeather3);
+        } else if (Arrays.equals(windStoneWeather4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.windStoneWeather4);
+        } else if (Arrays.equals(earthStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStone0);
+        } else if (Arrays.equals(earthStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStone1);
+        } else if (Arrays.equals(earthStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStone2);
+        } else if (Arrays.equals(earthStoneDefense0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneDefense0);
+        } else if (Arrays.equals(earthStoneDefense1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneDefense1);
+        } else if (Arrays.equals(earthStoneDefense2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneDefense2);
+        } else if (Arrays.equals(earthStoneDefense3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneDefense3);
+        } else if (Arrays.equals(earthStoneDefense4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneDefense4);
+        } else if (Arrays.equals(earthStoneBending0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneBending0);
+        } else if (Arrays.equals(earthStoneBending1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneBending1);
+        } else if (Arrays.equals(earthStoneBending2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneBending2);
+        } else if (Arrays.equals(earthStoneBending3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneBending3);
+        } else if (Arrays.equals(earthStoneBending4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneBending4);
+        } else if (Arrays.equals(earthStoneMining0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneMining0);
+        } else if (Arrays.equals(earthStoneMining1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneMining1);
+        } else if (Arrays.equals(earthStoneMining2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneMining2);
+        } else if (Arrays.equals(earthStoneMining3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneMining3);
+        } else if (Arrays.equals(earthStoneMining4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneMining4);
+        } else if (Arrays.equals(magicStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStone0);
+        } else if (Arrays.equals(magicStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStone1);
+        } else if (Arrays.equals(magicStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStone2);
+        } else if (Arrays.equals(magicStoneLife0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneLife0);
+        } else if (Arrays.equals(magicStoneLife1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneLife1);
+        } else if (Arrays.equals(magicStoneLife2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneLife2);
+        } else if (Arrays.equals(magicStoneLife3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneLife3);
+        } else if (Arrays.equals(magicStoneLife4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneLife4);
+        } else if (Arrays.equals(magicStoneEnergy0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneEnergy0);
+        } else if (Arrays.equals(magicStoneEnergy1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneEnergy1);
+        } else if (Arrays.equals(magicStoneEnergy2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneEnergy2);
+        } else if (Arrays.equals(magicStoneEnergy3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneEnergy3);
+        } else if (Arrays.equals(magicStoneEnergy4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneEnergy4);
+        } else if (Arrays.equals(magicStonePotion0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStonePotion0);
+        } else if (Arrays.equals(magicStonePotion1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStonePotion1);
+        } else if (Arrays.equals(magicStonePotion2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStonePotion2);
+        } else if (Arrays.equals(magicStonePotion3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStonePotion3);
+        } else if (Arrays.equals(magicStonePotion4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStonePotion4);
+        } else if (Arrays.equals(magicStoneBeastsAndCreatures0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures0);
+        } else if (Arrays.equals(magicStoneBeastsAndCreatures1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures1);
+        } else if (Arrays.equals(magicStoneBeastsAndCreatures2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures2);
+        } else if (Arrays.equals(magicStoneBeastsAndCreatures3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures3);
+        } else if (Arrays.equals(magicStoneBeastsAndCreatures4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures4);
+        }
     }
 }
