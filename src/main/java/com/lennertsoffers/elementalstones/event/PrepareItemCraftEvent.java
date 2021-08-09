@@ -2,38 +2,175 @@ package com.lennertsoffers.elementalstones.event;
 
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 public class PrepareItemCraftEvent implements Listener {
 
+    private boolean checkCraftInventory(ItemStack[][] recipe) {
+        for (int i = 0; i < 9; i++) {
+            if (!(recipe[0][i].equals(recipe[1][i]))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @EventHandler
     public void onPrepareItemCraft(org.bukkit.event.inventory.PrepareItemCraftEvent event) {
-        ItemStack[] itemStackMatrix = event.getInventory().getMatrix();
-        boolean slotNull = false;
-        for (ItemStack stack : itemStackMatrix) {
-            if (stack == null) {
-                slotNull = true;
-                break;
-            }
-        }
+        ItemStack s = ItemStones.baseStone;
 
-        if (!slotNull) {
-            ItemStack nautilusShell = new ItemStack(Material.NAUTILUS_SHELL);
-            ItemStack heartOfTheSea = new ItemStack(Material.HEART_OF_THE_SEA);
-            if (itemStackMatrix[0].equals(nautilusShell) &&
-                    itemStackMatrix[1].equals(heartOfTheSea) &&
-                    itemStackMatrix[2].equals(nautilusShell) &&
-                    itemStackMatrix[3].equals(heartOfTheSea) &&
-                    itemStackMatrix[4].equals(ItemStones.waterStone0) &&
-                    itemStackMatrix[5].equals(heartOfTheSea) &&
-                    itemStackMatrix[6].equals(nautilusShell) &&
-                    itemStackMatrix[7].equals(heartOfTheSea) &&
-                    itemStackMatrix[8].equals(nautilusShell)
-            ) {
-                event.getInventory().setResult(ItemStones.waterStone1);
-            }
-        }
+        ItemStack BC = new ItemStack(Material.COD_BUCKET);
+        ItemStack BP = new ItemStack(Material.PUFFERFISH_BUCKET);
+        ItemStack BS = new ItemStack(Material.SALMON_BUCKET);
+        ItemStack BT = new ItemStack(Material.TROPICAL_FISH_BUCKET);
+        ItemStack D = new ItemStack(Material.DIAMOND_BLOCK);
+        ItemStack H = new ItemStack(Material.HEART_OF_THE_SEA);
+        ItemStack I = new ItemStack(Material.ICE);
+        ItemStack P = new ItemStack(Material.PACKED_ICE);
+        ItemStack B = new ItemStack(Material.BLUE_ICE);
+        ItemStack I64 = new ItemStack(Material.ICE, 64);
+        ItemStack P64 = new ItemStack(Material.PACKED_ICE, 64);
+        ItemStack B64 = new ItemStack(Material.BLUE_ICE, 64);
+        ItemStack S = new ItemStack(Material.NAUTILUS_SHELL);
+        ItemStack T = new ItemStack(Material.TRIDENT);
+        ItemStack R64 = new ItemStack(Material.RED_NETHER_BRICK_SLAB);
+        ItemStack G = new ItemStack(Material.GHAST_TEAR);
+        ItemStack W = new ItemStack(Material.WITHER_ROSE);
+        ItemStack N = new ItemStack(Material.NETHER_STAR);
+        ItemStack PS = new ItemStack(Material.MUSIC_DISC_PIGSTEP);
+        ItemStack EA = new ItemStack(Material.ENCHANTED_GOLDEN_APPLE);
+        ItemStack TH = new ItemStack(Material.TURTLE_HELMET);
+        ItemStack SC = new ItemStack(Material.SCUTE);
+        ItemStack DE = new ItemStack(Material.DRAGON_EGG);
+        ItemStack DB = new ItemStack(Material.DRAGON_BREATH);
+        ItemStack SA = new ItemStack(Material.SADDLE);
+        ItemStack LA = new ItemStack(Material.LAVA_BUCKET);
+        ItemStack AD = new ItemStack(Material.ANCIENT_DEBRIS);
+        ItemStack NE = new ItemStack(Material.NETHERITE_INGOT);
+        ItemStack PH = new ItemStack(Material.PHANTOM_MEMBRANE);
+        ItemStack EL = new ItemStack(Material.ELYTRA);
+        ItemStack SP = new ItemStack(Material.WET_SPONGE);
+        ItemStack CH = new ItemStack(Material.CHAINMAIL_HELMET);
+        ItemStack BE = new ItemStack(Material.BEACON);
+        ItemStack ET = new ItemStack(Material.ENCHANTING_TABLE);
+        ItemStack BO = new ItemStack(Material.EXPERIENCE_BOTTLE);
+        ItemStack OB64 = new ItemStack(Material.OBSIDIAN, 64);
+        ItemStack CO64 = new ItemStack(Material.CRYING_OBSIDIAN, 64);
+        ItemStack EC = new ItemStack(Material.END_CRYSTAL);
+        ItemStack TO = new ItemStack(Material.TOTEM_OF_UNDYING);
+        ItemStack CL = new ItemStack(Material.CLOCK);
+        ItemStack TN = new ItemStack(Material.TNT);
+        ItemStack FC = new ItemStack(Material.FIRE_CHARGE);
+        ItemStack SB = new ItemStack(Material.SOUL_CAMPFIRE);
+        ItemStack LS = new ItemStack(Material.LODESTONE);
+        ItemStack MDW = new ItemStack(Material.MUSIC_DISC_WARD);
+        ItemStack MDB = new ItemStack(Material.MUSIC_DISC_BLOCKS);
+        ItemStack MDC = new ItemStack(Material.MUSIC_DISC_CAT);
+        ItemStack MDF = new ItemStack(Material.MUSIC_DISC_FAR);
+        ItemStack MDM = new ItemStack(Material.MUSIC_DISC_MELLOHI);
+        ItemStack MD1 = new ItemStack(Material.MUSIC_DISC_11);
+
+        ItemStack[] waterStone0recipe = {null, S, null, null, s, null, null, S, null};
+        ItemStack[] waterStone1recipe = {null, S, null, S, ItemStones.waterStone0, S, null, S, null};
+        ItemStack[] waterStone2recipe = {S, S, S, S, ItemStones.waterStone1, S, S, S, S};
+        ItemStack[] waterStoneOcean0recipe = {null, H, null, null, ItemStones.waterStone2, null, null, null, null};
+        ItemStack[] waterStoneOcean1recipe = {null, H, null, null, ItemStones.waterStoneOcean0, null, null, H, null};
+        ItemStack[] waterStoneOcean2recipe = {null, H, null, S, ItemStones.waterStoneOcean1, S, null, H, null};
+        ItemStack[] waterStoneOcean3recipe = {S, H, S, S, ItemStones.waterStoneOcean2, S, S, H, S};
+        ItemStack[] waterStoneOcean4recipe = {D, H, D, H, ItemStones.waterStoneOcean3, H, D, H, D};
+        ItemStack[] waterStoneBending0recipe = {BC, BP, BC, BP, ItemStones.waterStone2, BP, BC, BP, BC};
+        ItemStack[] waterStoneBending1recipe = {BT, BS, BT, BS, ItemStones.waterStoneBending0, BS, BT, BS, BT};
+        ItemStack[] waterStoneBending2recipe = {S, S, S, S, ItemStones.waterStoneBending1, S, S, S, S};
+        ItemStack[] waterStoneBending3recipe = {null, T, null, null, ItemStones.waterStoneBending2, null, null, null, null};
+        ItemStack[] waterStoneBending4recipe = {D, T, D, D, ItemStones.waterStoneBending3, D, D, T, D};
+        ItemStack[] waterStoneIce0recipe = {I, P, B, null, ItemStones.waterStone2, null, B, P, I};
+        ItemStack[] waterStoneIce1recipe = {I64, I64, I64, I64, ItemStones.waterStoneIce0, I64, I64, I64, I64};
+        ItemStack[] waterStoneIce2recipe = {P64, P64, P64, P64, ItemStones.waterStoneIce1, P64, P64, P64, P64};
+        ItemStack[] waterStoneIce3recipe = {B64, B64, B64, B64, ItemStones.waterStoneIce1, B64, B64, B64, B64};
+        ItemStack[] waterStoneIce4recipe = {B64, D, B64, D, ItemStones.waterStoneIce3, D, B64, D, B64};
+
+        ItemStack[] fireStone0recipe = {null, G, null, null, s, null, null, null, null};
+        ItemStack[] fireStone1recipe = {null, R64, null, null, ItemStones.fireStone0, null, null, R64, null};
+        ItemStack[] fireStone2recipe = {null, G, null, R64, ItemStones.fireStone1, R64, null, G, null};
+        ItemStack[] fireStoneLava0recipe = {LA, LA, LA, LA, ItemStones.fireStone2, LA, LA, LA, LA};
+        ItemStack[] fireStoneLava1recipe = {LA, G, LA, LA, ItemStones.fireStoneLava0, LA, LA, G, LA};
+        ItemStack[] fireStoneLava2recipe = {AD, LA, AD, null, ItemStones.fireStoneLava1, LA, LA, LA, LA};
+        ItemStack[] fireStoneLava3recipe = {G, G, G, G, ItemStones.fireStoneLava2, G, G, G, G};
+        ItemStack[] fireStoneLava4recipe = {LA, EA, LA, LA, ItemStones.fireStoneLava3, LA, LA, LA, LA};
+        ItemStack[] fireStoneExplosion0recipe = {TN, TN, TN, TN, ItemStones.fireStone2, TN, TN, TN, TN};
+        ItemStack[] fireStoneExplosion1recipe = {null, AD, null, null, ItemStones.fireStone2, null, null, null, null};
+        ItemStack[] fireStoneExplosion2recipe = {AD, null, AD, null, ItemStones.fireStoneExplosion1, null, AD, null, AD};
+        ItemStack[] fireStoneExplosion3recipe = {EC, TN, EC, TN, ItemStones.fireStoneExplosion2, TN, EC, TN, EC};
+        ItemStack[] fireStoneExplosion4recipe = {EC, EC, EC, EC, ItemStones.fireStoneExplosion3, EC, EC, EC, EC};
+        ItemStack[] fireStoneHellFire0recipe = {SB, SB, SB, SB, ItemStones.fireStone2, SB, SB, SB, SB};
+        ItemStack[] fireStoneHellFire1recipe = {FC, SB, FC, SB, ItemStones.fireStoneHellFire0, SB, FC, SB, FC};
+        ItemStack[] fireStoneHellFire2recipe = {DB, FC, DB, FC, ItemStones.fireStoneHellFire1, FC, DB, FC, DB};
+        ItemStack[] fireStoneHellFire3recipe = {DB, DB, DB, DB, ItemStones.fireStoneHellFire2, DB, DB, DB, DB};
+        ItemStack[] fireStoneHellFire4recipe = {null, NE, null, null, ItemStones.fireStoneHellFire3, null, null, PS, null};
+
+        ItemStack[] windStone0recipe = {null, MDW, null, null, s, null, null, null, null};
+        ItemStack[] windStone1recipe = {null, MDB, null, null, ItemStones.windStone0, null, null, null, null};
+        ItemStack[] windStone2recipe = {null, MDC, null, null, ItemStones.windStone1, null, null, null, null};
+        ItemStack[] windStoneAgility0recipe = {null, MDF, null, null, ItemStones.windStone2, null, null, null, null};
+        ItemStack[] windStoneAgility1recipe = {null, MDM, null, null, ItemStones.windStoneAgility0, null, null, null, null};
+        ItemStack[] windStoneAgility2recipe = {null, MD1, null, null, ItemStones.windStoneAgility1, null, null, null, null};
+        ItemStack[] windStoneAgility3recipe = {MDW, MDB, MDC, MDF, ItemStones.windStoneAgility2, MDM, null, MD1, null};
+        ItemStack[] windStoneAgility4recipe = {null, EL, null, null, ItemStones.windStoneAgility3, null, null, EL, null};
+        ItemStack[] windStoneBending0recipe = {};
+        ItemStack[] windStoneBending1recipe = {};
+        ItemStack[] windStoneBending2recipe = {};
+        ItemStack[] windStoneBending3recipe = {};
+        ItemStack[] windStoneBending4recipe = {null, N, null, null, ItemStones.windStoneBending3, null, null, N, null};
+        ItemStack[] windStoneWeather0recipe = {null, CL, null, null, ItemStones.windStone2, null, null, null, null};
+        ItemStack[] windStoneWeather1recipe = {CL, CL, CL, null, ItemStones.windStoneWeather0, null, null, null, null};
+        ItemStack[] windStoneWeather2recipe = {CL, CL, CL, CL, ItemStones.windStoneWeather1, CL, CL, CL, CL};
+        ItemStack[] windStoneWeather3recipe = {null, LS, null, ItemStones.windStoneWeather2, null, null, null, null};
+        ItemStack[] windStoneWeather4recipe = {CL, N, CL, CL, ItemStones.windStoneWeather3, CL, CL, CL, CL};
+
+        ItemStack[] earthStone0recipe = {};
+        ItemStack[] earthStone1recipe = {};
+        ItemStack[] earthStone2recipe = {};
+        ItemStack[] earthStoneDefense0recipe = {};
+        ItemStack[] earthStoneDefense1recipe = {};
+        ItemStack[] earthStoneDefense2recipe = {};
+        ItemStack[] earthStoneDefense3recipe = {};
+        ItemStack[] earthStoneDefense4recipe = {};
+        ItemStack[] earthStoneBending0recipe = {};
+        ItemStack[] earthStoneBending1recipe = {};
+        ItemStack[] earthStoneBending2recipe = {};
+        ItemStack[] earthStoneBending3recipe = {};
+        ItemStack[] earthStoneBending4recipe = {};
+        ItemStack[] earthStoneMining0recipe = {};
+        ItemStack[] earthStoneMining1recipe = {};
+        ItemStack[] earthStoneMining2recipe = {};
+        ItemStack[] earthStoneMining3recipe = {};
+        ItemStack[] earthStoneMining4recipe = {};
+
+        ItemStack[] magicStone0recipe = {BO, BO, BO, BO, s, BO, BO, BO, BO};
+        ItemStack[] magicStone1recipe = {BO, ET, BO, BO, ItemStones.magicStone0, BO, BO, ET, BO};
+        ItemStack[] magicStone2recipe = {BO, ET, BO, ET, ItemStones.magicStone1, ET, BO, ET, BO};
+        ItemStack[] magicStoneLife0recipe = {};
+        ItemStack[] magicStoneLife1recipe = {};
+        ItemStack[] magicStoneLife2recipe = {};
+        ItemStack[] magicStoneLife3recipe = {};
+        ItemStack[] magicStoneLife4recipe = {};
+        ItemStack[] magicStoneEnergy0recipe = {};
+        ItemStack[] magicStoneEnergy1recipe = {};
+        ItemStack[] magicStoneEnergy2recipe = {};
+        ItemStack[] magicStoneEnergy3recipe = {};
+        ItemStack[] magicStoneEnergy4recipe = {};
+        ItemStack[] magicStonePotion0recipe = {};
+        ItemStack[] magicStonePotion1recipe = {};
+        ItemStack[] magicStonePotion2recipe = {};
+        ItemStack[] magicStonePotion3recipe = {};
+        ItemStack[] magicStonePotion4recipe = {};
+        ItemStack[] magicStoneBeastsAndCreatures0recipe = {};
+        ItemStack[] magicStoneBeastsAndCreatures1recipe = {};
+        ItemStack[] magicStoneBeastsAndCreatures2recipe = {};
+        ItemStack[] magicStoneBeastsAndCreatures3recipe = {};
+        ItemStack[] magicStoneBeastsAndCreatures4recipe = {};
     }
 }
