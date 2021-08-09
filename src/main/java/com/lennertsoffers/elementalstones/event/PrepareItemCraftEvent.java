@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.event;
 
-import com.lennertsoffers.elementalstones.items.ItemWaterStone;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,13 +26,13 @@ public class PrepareItemCraftEvent implements Listener {
                     itemStackMatrix[1].equals(heartOfTheSea) &&
                     itemStackMatrix[2].equals(nautilusShell) &&
                     itemStackMatrix[3].equals(heartOfTheSea) &&
-                    itemStackMatrix[4].equals(ItemWaterStone.waterStone0) &&
+                    itemStackMatrix[4].equals(ItemStones.waterStone0) &&
                     itemStackMatrix[5].equals(heartOfTheSea) &&
                     itemStackMatrix[6].equals(nautilusShell) &&
                     itemStackMatrix[7].equals(heartOfTheSea) &&
                     itemStackMatrix[8].equals(nautilusShell)
             ) {
-                event.getInventory().setResult(ItemWaterStone.waterStone1);
+                event.getInventory().setResult(ItemStones.waterStone1);
             }
         }
     }
