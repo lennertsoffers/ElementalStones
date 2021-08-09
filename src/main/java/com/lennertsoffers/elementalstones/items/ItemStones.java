@@ -1,14 +1,20 @@
 package com.lennertsoffers.elementalstones.items;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemStones {
+
+    // BASE STONE
+    public static ItemStack baseStone;
 
     // WATER STONES
     // WaterStones: Default
@@ -161,6 +167,7 @@ public class ItemStones {
                             "Move 3: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -168,6 +175,7 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -175,34 +183,7 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    }
-            },
-            {
-                    {
-                            "Move 1: info",
-                            "Move 2: info",
-                            "Move 3: info"
-                    },
-                    {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -217,6 +198,7 @@ public class ItemStones {
                             "Move 3: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -224,6 +206,7 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -231,34 +214,7 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    }
-            },
-            {
-                    {
-                            "Move 1: info",
-                            "Move 2: info",
-                            "Move 3: info"
-                    },
-                    {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -273,6 +229,7 @@ public class ItemStones {
                             "Move 3: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -280,6 +237,7 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -287,6 +245,22 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    }
+            },
+            {
+                    {
+                            "Move 1: info",
+                            "Move 2: info",
+                            "Move 3: info"
+                    },
+                    {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -294,6 +268,54 @@ public class ItemStones {
                             "Move 8: info"
                     },
                     {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    },
+                    {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    }
+            },
+            {
+                    {
+                            "Move 1: info",
+                            "Move 2: info",
+                            "Move 3: info"
+                    },
+                    {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    },
+                    {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    },
+                    {
+                            "Passive: info",
+                            "Move 4: info",
+                            "Move 5: info",
+                            "Move 6: info",
+                            "Move 7: info",
+                            "Move 8: info"
+                    },
+                    {
+                            "Passive: info",
                             "Move 4: info",
                             "Move 5: info",
                             "Move 6: info",
@@ -303,6 +325,24 @@ public class ItemStones {
             }
     };
 
+    private static void createBaseStone() {
+        ItemStack stack = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "Base Stone");
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful stones you can control the elements with");
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
+
+        baseStone = stack;
+
+        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft("base-stone"), stack);
+        recipe.shape(" D ", "DND", " D ");
+        recipe.setIngredient('D', Material.DIAMOND_BLOCK);
+        recipe.setIngredient('N', Material.NETHERITE_BLOCK);
+        Bukkit.getServer().addRecipe(recipe);
+    }
+
     private static ItemStack createStone(String displayName, String stoneTypeLore, String moveTypeLore, int stoneType, int moveType, int numberOfMoves) {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
@@ -311,13 +351,16 @@ public class ItemStones {
         lore.add(ChatColor.YELLOW + stoneTypeLore);
         if (!(moveTypeLore.equals(""))) {
             lore.add(ChatColor.YELLOW + moveTypeLore);
+            lore.add(ChatColor.YELLOW + "");
+
             for (int i = 0; i < 3; i++) {
                 lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][0][i]);
             }
-            for (int i = 0; i < numberOfMoves; i++) {
+            for (int i = 1; i <= numberOfMoves; i++) {
                 lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][i]);
             }
         } else {
+            lore.add(ChatColor.YELLOW + "");
             for (int i = 0; i < numberOfMoves; i++) {
                 lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][0][i]);
             }
@@ -328,6 +371,10 @@ public class ItemStones {
     }
 
     public static void init() {
+
+        // BASE STONE
+        createBaseStone();
+
         // WATER STONES
         waterStone0 = createStone(ChatColor.BLUE + "Water Stone", "An old relic used to manipulate water in surroundings.", "", 0, 0, 1);
         waterStone1 = createStone(ChatColor.BLUE + "Water Stone Lv2", "An old relic used to manipulate water in surroundings.", "", 0, 0, 2);
