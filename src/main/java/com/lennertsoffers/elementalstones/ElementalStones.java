@@ -2,13 +2,13 @@ package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.event.PrepareItemCraftEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-import com.lennertsoffers.elementalstones.items.ItemWaterStone;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 
 public final class ElementalStones extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        ItemWaterStone.init();
+        ItemStones.init();
         getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this);
     }
 
