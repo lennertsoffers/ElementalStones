@@ -7,6 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import javax.crypto.interfaces.DHKey;
+
 public class PrepareItemCraftEvent implements Listener {
 
     private boolean checkCraftInventory(ItemStack[][] recipe) {
@@ -50,9 +52,7 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack LA = new ItemStack(Material.LAVA_BUCKET);
         ItemStack AD = new ItemStack(Material.ANCIENT_DEBRIS);
         ItemStack NE = new ItemStack(Material.NETHERITE_INGOT);
-        ItemStack PH = new ItemStack(Material.PHANTOM_MEMBRANE);
         ItemStack EL = new ItemStack(Material.ELYTRA);
-        ItemStack WS = new ItemStack(Material.WET_SPONGE);
         ItemStack CH = new ItemStack(Material.CHAINMAIL_HELMET);
         ItemStack BE = new ItemStack(Material.BEACON);
         ItemStack ET = new ItemStack(Material.ENCHANTING_TABLE);
@@ -79,6 +79,11 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack GP = new ItemStack(Material.GOLDEN_PICKAXE);
         ItemStack DP = new ItemStack(Material.DIAMOND_PICKAXE);
         ItemStack NP = new ItemStack(Material.NETHERITE_PICKAXE);
+        ItemStack SS = new ItemStack(Material.SUSPICIOUS_STEW);
+        ItemStack BM = new ItemStack(Material.BONE_MEAL);
+        ItemStack WSS = new ItemStack(Material.WITHER_SKELETON_SKULL);
+        ItemStack LP = new ItemStack(Material.LINGERING_POTION);
+        ItemStack DH = new ItemStack(Material.DRAGON_HEAD);
 
         ItemStack[] waterStone0recipe = {null, S, null, null, s, null, null, S, null};
         ItemStack[] waterStone1recipe = {null, S, null, S, ItemStones.waterStone0, S, null, S, null};
@@ -159,25 +164,25 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] magicStone0recipe = {BO, BO, BO, BO, s, BO, BO, BO, BO};
         ItemStack[] magicStone1recipe = {BO, ET, BO, BO, ItemStones.magicStone0, BO, BO, ET, BO};
         ItemStack[] magicStone2recipe = {BO, ET, BO, ET, ItemStones.magicStone1, ET, BO, ET, BO};
-        ItemStack[] magicStoneLife0recipe = {null, CH, null, null, ItemStones.earthStone0 };
-        ItemStack[] magicStoneLife1recipe = {};
-        ItemStack[] magicStoneLife2recipe = {};
-        ItemStack[] magicStoneLife3recipe = {};
-        ItemStack[] magicStoneLife4recipe = {};
-        ItemStack[] magicStoneEnergy0recipe = {};
-        ItemStack[] magicStoneEnergy1recipe = {};
-        ItemStack[] magicStoneEnergy2recipe = {};
-        ItemStack[] magicStoneEnergy3recipe = {};
-        ItemStack[] magicStoneEnergy4recipe = {};
-        ItemStack[] magicStonePotion0recipe = {};
-        ItemStack[] magicStonePotion1recipe = {};
-        ItemStack[] magicStonePotion2recipe = {};
-        ItemStack[] magicStonePotion3recipe = {};
-        ItemStack[] magicStonePotion4recipe = {};
-        ItemStack[] magicStoneBeastsAndCreatures0recipe = {};
-        ItemStack[] magicStoneBeastsAndCreatures1recipe = {};
-        ItemStack[] magicStoneBeastsAndCreatures2recipe = {};
-        ItemStack[] magicStoneBeastsAndCreatures3recipe = {};
-        ItemStack[] magicStoneBeastsAndCreatures4recipe = {};
+        ItemStack[] magicStoneLife0recipe = {BM, BM, BM, BM, ItemStones.magicStone2, BM, BM, BM, BM};
+        ItemStack[] magicStoneLife1recipe = {SS, SS, SS, SS, ItemStones.magicStoneLife0, SS, SS, SS, SS};
+        ItemStack[] magicStoneLife2recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife1, SS, SS, SS, SS};
+        ItemStack[] magicStoneLife3recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife2, SS, SS, TO, SS};
+        ItemStack[] magicStoneLife4recipe = {TO, TO, TO, TO, ItemStones.magicStoneLife3, TO, TO, TO, TO};
+        ItemStack[] magicStoneEnergy0recipe = {null, W, null, null, ItemStones.magicStone2, null, null, null, null};
+        ItemStack[] magicStoneEnergy1recipe = {null, W, null, null, ItemStones.magicStoneEnergy0, null, null, W, null};
+        ItemStack[] magicStoneEnergy2recipe = {null, W, null, W, ItemStones.magicStoneEnergy1, W, null, W, null};
+        ItemStack[] magicStoneEnergy3recipe = {W, W, W, W, ItemStones.magicStoneEnergy2, W, W, W, W};
+        ItemStack[] magicStoneEnergy4recipe = {null, DE, null, null, ItemStones.magicStoneEnergy3, null, null, null, null};
+        ItemStack[] magicStonePotion0recipe = {null, LP, null, null, ItemStones.magicStone2, null, null, null, null};
+        ItemStack[] magicStonePotion1recipe = {null, LP, null, null, ItemStones.magicStonePotion0, null, null, LP, null};
+        ItemStack[] magicStonePotion2recipe = {null, LP, null, LP, ItemStones.magicStonePotion1, LP, null, LP, null};
+        ItemStack[] magicStonePotion3recipe = {LP, LP, LP, LP, ItemStones.magicStonePotion2, LP, LP, LP, LP};
+        ItemStack[] magicStonePotion4recipe = {WSS, WSS, WSS, WSS, ItemStones.magicStonePotion3, WSS, WSS, WSS, WSS};
+        ItemStack[] magicStoneBeastsAndCreatures0recipe = {null, SA, null, null, ItemStones.magicStone2, null, null, null, null};
+        ItemStack[] magicStoneBeastsAndCreatures1recipe = {null, SA, null, null, ItemStones.magicStoneBeastsAndCreatures0, null, null, SA, null};
+        ItemStack[] magicStoneBeastsAndCreatures2recipe = {null, SA, null, SA, ItemStones.magicStoneBeastsAndCreatures1, SA, null, SA, null};
+        ItemStack[] magicStoneBeastsAndCreatures3recipe = {SA, SA, SA, SA, ItemStones.magicStoneBeastsAndCreatures2, SA, SA, SA, SA};
+        ItemStack[] magicStoneBeastsAndCreatures4recipe = {DH, DH, DH, DH, ItemStones.magicStoneBeastsAndCreatures3, DH, DH, DH, DH};
     }
 }
