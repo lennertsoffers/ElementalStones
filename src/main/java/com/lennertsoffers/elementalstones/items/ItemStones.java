@@ -330,7 +330,8 @@ public class ItemStones {
         ItemMeta meta = stack.getItemMeta();
         meta.setDisplayName(ChatColor.GOLD + "Base Stone");
         List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful stones you can control the elements with");
+        lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful");
+        lore.add(ChatColor.YELLOW + "stones you can control the elements with");
         meta.setLore(lore);
         stack.setItemMeta(meta);
 
