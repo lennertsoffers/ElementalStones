@@ -139,11 +139,11 @@ public class ItemStones {
     public static ItemStack magicStoneLife4;
 
     // MagicStones: Energy path
-    public static ItemStack magicStoneEnergy0;
-    public static ItemStack magicStoneEnergy1;
-    public static ItemStack magicStoneEnergy2;
-    public static ItemStack magicStoneEnergy3;
-    public static ItemStack magicStoneEnergy4;
+    public static ItemStack magicStoneDarkMagic0;
+    public static ItemStack magicStoneDarkMagic1;
+    public static ItemStack magicStoneDarkMagic2;
+    public static ItemStack magicStoneDarkMagic3;
+    public static ItemStack magicStoneDarkMagic4;
 
     // MagicStones: Potions path
     public static ItemStack magicStonePotion0;
@@ -158,6 +158,8 @@ public class ItemStones {
     public static ItemStack magicStoneBeastsAndCreatures2;
     public static ItemStack magicStoneBeastsAndCreatures3;
     public static ItemStack magicStoneBeastsAndCreatures4;
+
+    public static ItemStack[] allStones;
 
     private static final String[][][] moveDeclaration = {
             {
@@ -467,11 +469,11 @@ public class ItemStones {
         magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
         magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
         magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed Magic Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
-        magicStoneEnergy0 = createStone(ChatColor.DARK_PURPLE + "Energy Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
-        magicStoneEnergy1 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv2", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 2);
-        magicStoneEnergy2 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv3", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 3);
-        magicStoneEnergy3 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv4", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 4);
-        magicStoneEnergy4 = createStone(ChatColor.DARK_PURPLE + "Completed Energy Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 5);
+        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark Magic Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
+        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
+        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
+        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
+        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed Dark Magic Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
         magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
         magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
         magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
@@ -482,5 +484,103 @@ public class ItemStones {
         magicStoneBeastsAndCreatures2 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv3", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 3);
         magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
         magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed Beasts and Creatures Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 5);
+
+        allStones = new ItemStack[]{
+                waterStone0,
+                waterStone1,
+                waterStone2,
+                waterStoneOcean0,
+                waterStoneOcean1,
+                waterStoneOcean2,
+                waterStoneOcean3,
+                waterStoneOcean4,
+                waterStoneBending0,
+                waterStoneBending1,
+                waterStoneBending2,
+                waterStoneBending3,
+                waterStoneBending4,
+                waterStoneIce0,
+                waterStoneIce1,
+                waterStoneIce2,
+                waterStoneIce3,
+                waterStoneIce4,
+                fireStone0,
+                fireStone1,
+                fireStone2,
+                fireStoneLava0,
+                fireStoneLava1,
+                fireStoneLava2,
+                fireStoneLava3,
+                fireStoneLava4,
+                fireStoneExplosion0,
+                fireStoneExplosion1,
+                fireStoneExplosion2,
+                fireStoneExplosion3,
+                fireStoneExplosion4,
+                fireStoneHellFire0,
+                fireStoneHellFire1,
+                fireStoneHellFire2,
+                fireStoneHellFire3,
+                fireStoneHellFire4,
+                windStone0,
+                windStone1,
+                windStone2,
+                windStoneAgility0,
+                windStoneAgility1,
+                windStoneAgility2,
+                windStoneAgility3,
+                windStoneAgility4,
+                windStoneBending0,
+                windStoneBending1,
+                windStoneBending2,
+                windStoneBending3,
+                windStoneBending4,
+                windStoneWeather0,
+                windStoneWeather1,
+                windStoneWeather2,
+                windStoneWeather3,
+                windStoneWeather4,
+                earthStone0,
+                earthStone1,
+                earthStone2,
+                earthStoneDefense0,
+                earthStoneDefense1,
+                earthStoneDefense2,
+                earthStoneDefense3,
+                earthStoneDefense4,
+                earthStoneBending0,
+                earthStoneBending1,
+                earthStoneBending2,
+                earthStoneBending3,
+                earthStoneBending4,
+                earthStoneMining0,
+                earthStoneMining1,
+                earthStoneMining2,
+                earthStoneMining3,
+                earthStoneMining4,
+                magicStone0,
+                magicStone1,
+                magicStone2,
+                magicStoneLife0,
+                magicStoneLife1,
+                magicStoneLife2,
+                magicStoneLife3,
+                magicStoneLife4,
+                magicStoneDarkMagic0,
+                magicStoneDarkMagic1,
+                magicStoneDarkMagic2,
+                magicStoneDarkMagic3,
+                magicStoneDarkMagic4,
+                magicStonePotion0,
+                magicStonePotion1,
+                magicStonePotion2,
+                magicStonePotion3,
+                magicStonePotion4,
+                magicStoneBeastsAndCreatures0,
+                magicStoneBeastsAndCreatures1,
+                magicStoneBeastsAndCreatures2,
+                magicStoneBeastsAndCreatures3,
+                magicStoneBeastsAndCreatures4
+        };
     }
 }
