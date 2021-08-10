@@ -139,11 +139,11 @@ public class ItemStones {
     public static ItemStack magicStoneLife4;
 
     // MagicStones: Energy path
-    public static ItemStack magicStoneEnergy0;
-    public static ItemStack magicStoneEnergy1;
-    public static ItemStack magicStoneEnergy2;
-    public static ItemStack magicStoneEnergy3;
-    public static ItemStack magicStoneEnergy4;
+    public static ItemStack magicStoneDarkMagic0;
+    public static ItemStack magicStoneDarkMagic1;
+    public static ItemStack magicStoneDarkMagic2;
+    public static ItemStack magicStoneDarkMagic3;
+    public static ItemStack magicStoneDarkMagic4;
 
     // MagicStones: Potions path
     public static ItemStack magicStonePotion0;
@@ -467,11 +467,11 @@ public class ItemStones {
         magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
         magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
         magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed Magic Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
-        magicStoneEnergy0 = createStone(ChatColor.DARK_PURPLE + "Energy Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
-        magicStoneEnergy1 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv2", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 2);
-        magicStoneEnergy2 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv3", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 3);
-        magicStoneEnergy3 = createStone(ChatColor.DARK_PURPLE + "Energy Stone Lv4", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 4);
-        magicStoneEnergy4 = createStone(ChatColor.DARK_PURPLE + "Completed Energy Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 5);
+        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark Magic Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
+        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
+        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
+        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
+        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed Dark Magic Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
         magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
         magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
         magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);

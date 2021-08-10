@@ -26,12 +26,9 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack I = new ItemStack(Material.ICE);
         ItemStack P = new ItemStack(Material.PACKED_ICE);
         ItemStack B = new ItemStack(Material.BLUE_ICE);
-        ItemStack I64 = new ItemStack(Material.ICE, 64);
-        ItemStack P64 = new ItemStack(Material.PACKED_ICE, 64);
-        ItemStack B64 = new ItemStack(Material.BLUE_ICE, 64);
         ItemStack S = new ItemStack(Material.NAUTILUS_SHELL);
         ItemStack T = new ItemStack(Material.TRIDENT);
-        ItemStack R64 = new ItemStack(Material.RED_NETHER_BRICK_SLAB);
+        ItemStack R = new ItemStack(Material.RED_NETHER_BRICK_SLAB);
         ItemStack G = new ItemStack(Material.GHAST_TEAR);
         ItemStack W = new ItemStack(Material.WITHER_ROSE);
         ItemStack N = new ItemStack(Material.NETHER_STAR);
@@ -50,8 +47,8 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack BE = new ItemStack(Material.BEACON);
         ItemStack ET = new ItemStack(Material.ENCHANTING_TABLE);
         ItemStack BO = new ItemStack(Material.EXPERIENCE_BOTTLE);
-        ItemStack OB64 = new ItemStack(Material.OBSIDIAN, 64);
-        ItemStack CO64 = new ItemStack(Material.CRYING_OBSIDIAN, 64);
+        ItemStack OB = new ItemStack(Material.OBSIDIAN);
+        ItemStack CO = new ItemStack(Material.CRYING_OBSIDIAN);
         ItemStack EC = new ItemStack(Material.END_CRYSTAL);
         ItemStack TO = new ItemStack(Material.TOTEM_OF_UNDYING);
         ItemStack CL = new ItemStack(Material.CLOCK);
@@ -77,6 +74,8 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack WSS = new ItemStack(Material.WITHER_SKELETON_SKULL);
         ItemStack LP = new ItemStack(Material.LINGERING_POTION);
         ItemStack DH = new ItemStack(Material.DRAGON_HEAD);
+        ItemStack WS = new ItemStack(Material.WET_SPONGE);
+        ItemStack DS = new ItemStack(Material.SPONGE);
 
         ItemStack[] waterStone0recipe = {null, S, null, null, s, null, null, S, null};
         ItemStack[] waterStone1recipe = {null, S, null, S, ItemStones.waterStone0, S, null, S, null};
@@ -92,14 +91,14 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] waterStoneBending3recipe = {null, T, null, null, ItemStones.waterStoneBending2, null, null, null, null};
         ItemStack[] waterStoneBending4recipe = {D, T, D, D, ItemStones.waterStoneBending3, D, D, T, D};
         ItemStack[] waterStoneIce0recipe = {I, P, B, null, ItemStones.waterStone2, null, B, P, I};
-        ItemStack[] waterStoneIce1recipe = {I64, I64, I64, I64, ItemStones.waterStoneIce0, I64, I64, I64, I64};
-        ItemStack[] waterStoneIce2recipe = {P64, P64, P64, P64, ItemStones.waterStoneIce1, P64, P64, P64, P64};
-        ItemStack[] waterStoneIce3recipe = {B64, B64, B64, B64, ItemStones.waterStoneIce1, B64, B64, B64, B64};
-        ItemStack[] waterStoneIce4recipe = {B64, D, B64, D, ItemStones.waterStoneIce3, D, B64, D, B64};
+        ItemStack[] waterStoneIce1recipe = {DS, DS, DS, DS, ItemStones.waterStoneIce0, DS, DS, DS, DS};
+        ItemStack[] waterStoneIce2recipe = {WS, WS, WS, WS, ItemStones.waterStoneIce1, WS, WS, WS, WS};
+        ItemStack[] waterStoneIce3recipe = {B, B, B, B, ItemStones.waterStoneIce1, B, B, B, B};
+        ItemStack[] waterStoneIce4recipe = {B, D, B, D, ItemStones.waterStoneIce3, D, B, D, B};
 
         ItemStack[] fireStone0recipe = {null, G, null, null, s, null, null, null, null};
-        ItemStack[] fireStone1recipe = {null, R64, null, null, ItemStones.fireStone0, null, null, R64, null};
-        ItemStack[] fireStone2recipe = {null, G, null, R64, ItemStones.fireStone1, R64, null, G, null};
+        ItemStack[] fireStone1recipe = {null, R, null, null, ItemStones.fireStone0, null, null, R, null};
+        ItemStack[] fireStone2recipe = {null, G, null, R, ItemStones.fireStone1, R, null, G, null};
         ItemStack[] fireStoneLava0recipe = {LA, LA, LA, LA, ItemStones.fireStone2, LA, LA, LA, LA};
         ItemStack[] fireStoneLava1recipe = {LA, G, LA, LA, ItemStones.fireStoneLava0, LA, LA, G, LA};
         ItemStack[] fireStoneLava2recipe = {AD, LA, AD, null, ItemStones.fireStoneLava1, LA, LA, LA, LA};
@@ -135,18 +134,18 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] windStoneWeather3recipe = {null, LS, null, ItemStones.windStoneWeather2, null, null, null, null};
         ItemStack[] windStoneWeather4recipe = {CL, N, CL, CL, ItemStones.windStoneWeather3, CL, CL, CL, CL};
 
-        ItemStack[] earthStone0recipe = {null, OB64, null, null, s, null, null, null, null};
-        ItemStack[] earthStone1recipe = {null, OB64, null, OB64, ItemStones.earthStone0, OB64, null, OB64, null};
-        ItemStack[] earthStone2recipe = {CO64, OB64, CO64, OB64, ItemStones.earthStone1, OB64, CO64, OB64, CO64};
+        ItemStack[] earthStone0recipe = {null, OB, null, null, s, null, null, null, null};
+        ItemStack[] earthStone1recipe = {null, OB, null, OB, ItemStones.earthStone0, OB, null, OB, null};
+        ItemStack[] earthStone2recipe = {CO, OB, CO, OB, ItemStones.earthStone1, OB, CO, OB, CO};
         ItemStack[] earthStoneDefense0recipe = {null, CH, null, null, ItemStones.earthStone2, null, null, null, null};
         ItemStack[] earthStoneDefense1recipe = {null, SC, null, null, ItemStones.earthStoneDefense0, null, null, null, null};
         ItemStack[] earthStoneDefense2recipe = {null, SC, null, SC, ItemStones.earthStoneDefense1, SC, null, SC, null};
         ItemStack[] earthStoneDefense3recipe = {null, TH, null, null, ItemStones.earthStoneDefense2, null, null, null, null};
         ItemStack[] earthStoneDefense4recipe = {null, TH, null, TH, ItemStones.earthStoneDefense3, TH, null, TH, null};
-        ItemStack[] earthStoneBending0recipe = {null, OB64, null, null, ItemStones.earthStone2, null, null, null, null};
-        ItemStack[] earthStoneBending1recipe = {null, OB64, null, OB64, ItemStones.earthStoneBending0, OB64, null, OB64, null};
-        ItemStack[] earthStoneBending2recipe = {OB64, OB64, OB64, OB64, ItemStones.earthStone0, OB64, OB64, OB64, OB64};
-        ItemStack[] earthStoneBending3recipe = {CO64, CO64, CO64, CO64, ItemStones.earthStone0, CO64, CO64, CO64, CO64};
+        ItemStack[] earthStoneBending0recipe = {null, OB, null, null, ItemStones.earthStone2, null, null, null, null};
+        ItemStack[] earthStoneBending1recipe = {null, OB, null, OB, ItemStones.earthStoneBending0, OB, null, OB, null};
+        ItemStack[] earthStoneBending2recipe = {OB, OB, OB, OB, ItemStones.earthStone0, OB, OB, OB, OB};
+        ItemStack[] earthStoneBending3recipe = {CO, CO, CO, CO, ItemStones.earthStone0, CO, CO, CO, CO};
         ItemStack[] earthStoneBending4recipe = {null, NB, null, null, ItemStones.earthStoneBending3, null, null, NB, null};
         ItemStack[] earthStoneMining0recipe = {SP, SP, SP, SP, ItemStones.earthStone2, SP, SP, SP, SP};
         ItemStack[] earthStoneMining1recipe = {IP, IP, IP, IP, ItemStones.earthStoneMining0, IP, IP, IP, IP};
@@ -162,11 +161,11 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] magicStoneLife2recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife1, SS, SS, SS, SS};
         ItemStack[] magicStoneLife3recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife2, SS, SS, TO, SS};
         ItemStack[] magicStoneLife4recipe = {TO, TO, TO, TO, ItemStones.magicStoneLife3, TO, TO, TO, TO};
-        ItemStack[] magicStoneEnergy0recipe = {null, W, null, null, ItemStones.magicStone2, null, null, null, null};
-        ItemStack[] magicStoneEnergy1recipe = {null, W, null, null, ItemStones.magicStoneEnergy0, null, null, W, null};
-        ItemStack[] magicStoneEnergy2recipe = {null, W, null, W, ItemStones.magicStoneEnergy1, W, null, W, null};
-        ItemStack[] magicStoneEnergy3recipe = {W, W, W, W, ItemStones.magicStoneEnergy2, W, W, W, W};
-        ItemStack[] magicStoneEnergy4recipe = {null, DE, null, null, ItemStones.magicStoneEnergy3, null, null, null, null};
+        ItemStack[] magicStoneDarkMagic0recipe = {null, W, null, null, ItemStones.magicStone2, null, null, null, null};
+        ItemStack[] magicStoneDarkMagic1recipe = {null, W, null, null, ItemStones.magicStoneDarkMagic0, null, null, W, null};
+        ItemStack[] magicStoneDarkMagic2recipe = {null, W, null, W, ItemStones.magicStoneDarkMagic1, W, null, W, null};
+        ItemStack[] magicStoneDarkMagic3recipe = {W, W, W, W, ItemStones.magicStoneDarkMagic2, W, W, W, W};
+        ItemStack[] magicStoneDarkMagic4recipe = {null, DE, null, null, ItemStones.magicStoneDarkMagic3, null, null, null, null};
         ItemStack[] magicStonePotion0recipe = {null, LP, null, null, ItemStones.magicStone2, null, null, null, null};
         ItemStack[] magicStonePotion1recipe = {null, LP, null, null, ItemStones.magicStonePotion0, null, null, LP, null};
         ItemStack[] magicStonePotion2recipe = {null, LP, null, LP, ItemStones.magicStonePotion1, LP, null, LP, null};
@@ -338,16 +337,16 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.magicStoneLife3);
         } else if (Arrays.equals(magicStoneLife4recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.magicStoneLife4);
-        } else if (Arrays.equals(magicStoneEnergy0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneEnergy0);
-        } else if (Arrays.equals(magicStoneEnergy1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneEnergy1);
-        } else if (Arrays.equals(magicStoneEnergy2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneEnergy2);
-        } else if (Arrays.equals(magicStoneEnergy3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneEnergy3);
-        } else if (Arrays.equals(magicStoneEnergy4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneEnergy4);
+        } else if (Arrays.equals(magicStoneDarkMagic0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneDarkMagic0);
+        } else if (Arrays.equals(magicStoneDarkMagic1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneDarkMagic1);
+        } else if (Arrays.equals(magicStoneDarkMagic2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneDarkMagic2);
+        } else if (Arrays.equals(magicStoneDarkMagic3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneDarkMagic3);
+        } else if (Arrays.equals(magicStoneDarkMagic4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.magicStoneDarkMagic4);
         } else if (Arrays.equals(magicStonePotion0recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.magicStonePotion0);
         } else if (Arrays.equals(magicStonePotion1recipe, craftingMatrix)) {
