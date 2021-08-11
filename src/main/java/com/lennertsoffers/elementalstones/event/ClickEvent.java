@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.event;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,13 @@ public class ClickEvent implements Listener {
             if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand())) {
                 ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
                 if (activePlayer != null) {
-                    activePlayer.setActive(!activePlayer.isActive());
+                    if (activePlayer.isActive()) {
+                        activePlayer.setActive(false);
+                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
+                    } else {
+                        activePlayer.setActive(true);
+                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+                    }
                 }
             }
         }
