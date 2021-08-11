@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.customClasses;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class ActivePlayer {
     private final Player player;
@@ -29,5 +30,18 @@ public class ActivePlayer {
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
         return activePlayers;
+    }
+
+    public static ActivePlayer getActivePlayer(UUID uuid) {
+        for (ActivePlayer activePlayer : activePlayers) {
+            if (activePlayer.getPlayer().getUniqueId() == uuid) {
+                return activePlayer;
+            }
+        }
+        return null;
+    }
+
+    public static void removeActivePlayer(UUID uuid) {
+        activePlayers.removeIf(activePlayer -> activePlayer.getPlayer().getUniqueId() == uuid);
     }
 }
