@@ -115,24 +115,24 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] fireStoneHellFire3recipe = {DB, DB, DB, DB, ItemStones.fireStoneHellFire2, DB, DB, DB, DB};
         ItemStack[] fireStoneHellFire4recipe = {null, NE, null, null, ItemStones.fireStoneHellFire3, null, null, PS, null};
 
-        ItemStack[] windStone0recipe = {null, MDW, null, null, s, null, null, null, null};
-        ItemStack[] windStone1recipe = {null, MDB, null, null, ItemStones.windStone0, null, null, null, null};
-        ItemStack[] windStone2recipe = {null, MDC, null, null, ItemStones.windStone1, null, null, null, null};
-        ItemStack[] windStoneAgility0recipe = {null, MDF, null, null, ItemStones.windStone2, null, null, null, null};
-        ItemStack[] windStoneAgility1recipe = {null, MDM, null, null, ItemStones.windStoneAgility0, null, null, null, null};
-        ItemStack[] windStoneAgility2recipe = {null, MD1, null, null, ItemStones.windStoneAgility1, null, null, null, null};
-        ItemStack[] windStoneAgility3recipe = {MDW, MDB, MDC, MDF, ItemStones.windStoneAgility2, MDM, null, MD1, null};
-        ItemStack[] windStoneAgility4recipe = {null, EL, null, null, ItemStones.windStoneAgility3, null, null, EL, null};
-        ItemStack[] windStoneBending0recipe = {null, GB, null, null, ItemStones.windStone2, null, null, null, null};
-        ItemStack[] windStoneBending1recipe = {null, GB, null, GB, ItemStones.windStoneBending0, GB, null, GB, null };
-        ItemStack[] windStoneBending2recipe = {GB, GB, GB, GB, ItemStones.windStoneBending1, GB, GB, GB, GB};
-        ItemStack[] windStoneBending3recipe = {null, BE, null, ItemStones.windStoneBending2, null, null, null, null};
-        ItemStack[] windStoneBending4recipe = {null, N, null, null, ItemStones.windStoneBending3, null, null, N, null};
-        ItemStack[] windStoneWeather0recipe = {null, CL, null, null, ItemStones.windStone2, null, null, null, null};
-        ItemStack[] windStoneWeather1recipe = {CL, CL, CL, null, ItemStones.windStoneWeather0, null, null, null, null};
-        ItemStack[] windStoneWeather2recipe = {CL, CL, CL, CL, ItemStones.windStoneWeather1, CL, CL, CL, CL};
-        ItemStack[] windStoneWeather3recipe = {null, LS, null, ItemStones.windStoneWeather2, null, null, null, null};
-        ItemStack[] windStoneWeather4recipe = {CL, N, CL, CL, ItemStones.windStoneWeather3, CL, CL, CL, CL};
+        ItemStack[] airStone0recipe = {null, MDW, null, null, s, null, null, null, null};
+        ItemStack[] airStone1recipe = {null, MDB, null, null, ItemStones.airStone0, null, null, null, null};
+        ItemStack[] airStone2recipe = {null, MDC, null, null, ItemStones.airStone1, null, null, null, null};
+        ItemStack[] airStoneAgility0recipe = {null, MDF, null, null, ItemStones.airStone2, null, null, null, null};
+        ItemStack[] airStoneAgility1recipe = {null, MDM, null, null, ItemStones.airStoneAgility0, null, null, null, null};
+        ItemStack[] airStoneAgility2recipe = {null, MD1, null, null, ItemStones.airStoneAgility1, null, null, null, null};
+        ItemStack[] airStoneAgility3recipe = {MDW, MDB, MDC, MDF, ItemStones.airStoneAgility2, MDM, null, MD1, null};
+        ItemStack[] airStoneAgility4recipe = {null, EL, null, null, ItemStones.airStoneAgility3, null, null, EL, null};
+        ItemStack[] airStoneBending0recipe = {null, GB, null, null, ItemStones.airStone2, null, null, null, null};
+        ItemStack[] airStoneBending1recipe = {null, GB, null, GB, ItemStones.airStoneBending0, GB, null, GB, null };
+        ItemStack[] airStoneBending2recipe = {GB, GB, GB, GB, ItemStones.airStoneBending1, GB, GB, GB, GB};
+        ItemStack[] airStoneBending3recipe = {null, BE, null, ItemStones.airStoneBending2, null, null, null, null};
+        ItemStack[] airStoneBending4recipe = {null, N, null, null, ItemStones.airStoneBending3, null, null, N, null};
+        ItemStack[] airStoneWeather0recipe = {null, CL, null, null, ItemStones.airStone2, null, null, null, null};
+        ItemStack[] airStoneWeather1recipe = {CL, CL, CL, null, ItemStones.airStoneWeather0, null, null, null, null};
+        ItemStack[] airStoneWeather2recipe = {CL, CL, CL, CL, ItemStones.airStoneWeather1, CL, CL, CL, CL};
+        ItemStack[] airStoneWeather3recipe = {null, LS, null, ItemStones.airStoneWeather2, null, null, null, null};
+        ItemStack[] airStoneWeather4recipe = {CL, N, CL, CL, ItemStones.airStoneWeather3, CL, CL, CL, CL};
 
         ItemStack[] earthStone0recipe = {null, OB, null, null, s, null, null, null, null};
         ItemStack[] earthStone1recipe = {null, OB, null, OB, ItemStones.earthStone0, OB, null, OB, null};
@@ -249,42 +249,42 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.fireStoneHellFire3);
         } else if (Arrays.equals(fireStoneHellFire4recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.fireStoneHellFire4);
-        } else if (Arrays.equals(windStone0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStone0);
-        } else if (Arrays.equals(windStone1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStone1);
-        } else if (Arrays.equals(windStone2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStone2);
-        } else if (Arrays.equals(windStoneAgility0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneAgility0);
-        } else if (Arrays.equals(windStoneAgility1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneAgility1);
-        } else if (Arrays.equals(windStoneAgility2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneAgility2);
-        } else if (Arrays.equals(windStoneAgility3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneAgility3);
-        } else if (Arrays.equals(windStoneAgility4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneAgility4);
-        } else if (Arrays.equals(windStoneBending0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneBending0);
-        } else if (Arrays.equals(windStoneBending1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneBending1);
-        } else if (Arrays.equals(windStoneBending2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneBending2);
-        } else if (Arrays.equals(windStoneBending3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneBending3);
-        } else if (Arrays.equals(windStoneBending4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneBending4);
-        } else if (Arrays.equals(windStoneWeather0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneWeather0);
-        } else if (Arrays.equals(windStoneWeather1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneWeather1);
-        } else if (Arrays.equals(windStoneWeather2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneWeather2);
-        } else if (Arrays.equals(windStoneWeather3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneWeather3);
-        } else if (Arrays.equals(windStoneWeather4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.windStoneWeather4);
+        } else if (Arrays.equals(airStone0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStone0);
+        } else if (Arrays.equals(airStone1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStone1);
+        } else if (Arrays.equals(airStone2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStone2);
+        } else if (Arrays.equals(airStoneAgility0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneAgility0);
+        } else if (Arrays.equals(airStoneAgility1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneAgility1);
+        } else if (Arrays.equals(airStoneAgility2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneAgility2);
+        } else if (Arrays.equals(airStoneAgility3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneAgility3);
+        } else if (Arrays.equals(airStoneAgility4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneAgility4);
+        } else if (Arrays.equals(airStoneBending0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneBending0);
+        } else if (Arrays.equals(airStoneBending1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneBending1);
+        } else if (Arrays.equals(airStoneBending2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneBending2);
+        } else if (Arrays.equals(airStoneBending3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneBending3);
+        } else if (Arrays.equals(airStoneBending4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneBending4);
+        } else if (Arrays.equals(airStoneWeather0recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneWeather0);
+        } else if (Arrays.equals(airStoneWeather1recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneWeather1);
+        } else if (Arrays.equals(airStoneWeather2recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneWeather2);
+        } else if (Arrays.equals(airStoneWeather3recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneWeather3);
+        } else if (Arrays.equals(airStoneWeather4recipe, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.airStoneWeather4);
         } else if (Arrays.equals(earthStone0recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStone0);
         } else if (Arrays.equals(earthStone1recipe, craftingMatrix)) {
