@@ -9,6 +9,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ItemStones {
@@ -159,7 +160,7 @@ public class ItemStones {
     public static ItemStack magicStoneBeastsAndCreatures3;
     public static ItemStack magicStoneBeastsAndCreatures4;
 
-    public static ItemStack[] allStones;
+    public static ArrayList<ItemStack> allStones = new ArrayList<>();
 
     private static final String[][][] moveDeclaration = {
             {
@@ -485,7 +486,7 @@ public class ItemStones {
         magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
         magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed Beasts and Creatures Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 5);
 
-        allStones = new ItemStack[]{
+        allStones.addAll(Arrays.asList(
                 waterStone0,
                 waterStone1,
                 waterStone2,
@@ -581,6 +582,6 @@ public class ItemStones {
                 magicStoneBeastsAndCreatures2,
                 magicStoneBeastsAndCreatures3,
                 magicStoneBeastsAndCreatures4
-        };
+        ));
     }
 }

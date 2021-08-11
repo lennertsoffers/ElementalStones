@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.event;
 
-import com.lennertsoffers.elementalstones.items.ItemStones;
+import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,17 +11,14 @@ public class PlayerItemHeldEvent implements Listener {
     @EventHandler
     public void onPlayerItemHeld(org.bukkit.event.player.PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
-        try {
-            if (ClickEvent.getActivePlayers().get(player)) {
+        ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+        if (activePlayer != null) {
+            if (activePlayer.isActive()) {
                 ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
                 if (!(previousItem == null)) {
-                    if (previousItem.equals(ItemStones.baseStone)) {
-                        event.setCancelled(true);
-                    }
+                    event.setCancelled(true);
                 }
             }
-        } catch (java.lang.NullPointerException exception) {
-            System.out.println("error");
         }
     }
 }
