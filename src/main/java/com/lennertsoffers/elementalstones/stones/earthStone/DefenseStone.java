@@ -4,10 +4,12 @@ import com.lennertsoffers.elementalstones.ElementalStones;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.util.Vector;
 
 public class DefenseStone {
 
@@ -33,7 +35,13 @@ public class DefenseStone {
         int playerX = location.getBlockX();
         int playerY = location.getBlockY();
         int playerZ = location.getBlockZ();
-        if (world.getBlockAt(location.add(0, -1, 0)).getType() != Material.AIR) {
+        for (Entity entity : player.getNearbyEntities(3, 3, 3)) {
+            int entityX = entity.getLocation().getBlockX();
+            int entityZ = entity.getLocation().getBlockZ();
+            entity.setVelocity(new Vector((playerX - entityX) * - 1, 0.4, (playerZ - entityZ) * - 1));
+        }
+
+            if (world.getBlockAt(location.add(0, -1, 0)).getType() != Material.AIR) {
             location.add(0, 1, 0);
             for (int i = 0; i < 3; i++) {
                 world.getBlockAt(playerX + 2, playerY + i, playerZ - 1).setType(Material.STONE);

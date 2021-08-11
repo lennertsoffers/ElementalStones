@@ -28,5 +28,10 @@ public class ClickEvent implements Listener {
                 }
             }
         }
+
+        if (event.getAction() == Action.LEFT_CLICK_AIR) {
+            System.out.println(player.getHealthScale());
+            System.out.println(player.getHealth());
+        }
     }
 }
