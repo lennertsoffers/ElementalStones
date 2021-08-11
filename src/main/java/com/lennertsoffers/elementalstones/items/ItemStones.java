@@ -72,32 +72,32 @@ public class ItemStones {
     public static ItemStack fireStoneHellFire3;
     public static ItemStack fireStoneHellFire4;
 
-    // WIND STONES
-    // WindStones: Default
-    public static ItemStack windStone0;
-    public static ItemStack windStone1;
-    public static ItemStack windStone2;
+    // AIR STONES
+    // AirStones: Default
+    public static ItemStack airStone0;
+    public static ItemStack airStone1;
+    public static ItemStack airStone2;
 
-    // WindStones: Agility path
-    public static ItemStack windStoneAgility0;
-    public static ItemStack windStoneAgility1;
-    public static ItemStack windStoneAgility2;
-    public static ItemStack windStoneAgility3;
-    public static ItemStack windStoneAgility4;
+    // AirStones: Agility path
+    public static ItemStack airStoneAgility0;
+    public static ItemStack airStoneAgility1;
+    public static ItemStack airStoneAgility2;
+    public static ItemStack airStoneAgility3;
+    public static ItemStack airStoneAgility4;
 
-    // WindStones: Bending path
-    public static ItemStack windStoneBending0;
-    public static ItemStack windStoneBending1;
-    public static ItemStack windStoneBending2;
-    public static ItemStack windStoneBending3;
-    public static ItemStack windStoneBending4;
+    // AirStones: Bending path
+    public static ItemStack airStoneBending0;
+    public static ItemStack airStoneBending1;
+    public static ItemStack airStoneBending2;
+    public static ItemStack airStoneBending3;
+    public static ItemStack airStoneBending4;
 
-    // WindStones: Weather path
-    public static ItemStack windStoneWeather0;
-    public static ItemStack windStoneWeather1;
-    public static ItemStack windStoneWeather2;
-    public static ItemStack windStoneWeather3;
-    public static ItemStack windStoneWeather4;
+    // AirStones: Weather path
+    public static ItemStack airStoneWeather0;
+    public static ItemStack airStoneWeather1;
+    public static ItemStack airStoneWeather2;
+    public static ItemStack airStoneWeather3;
+    public static ItemStack airStoneWeather4;
 
     // EARTH STONES
     // EarthStones: Default
@@ -420,25 +420,25 @@ public class ItemStones {
         fireStoneHellFire3 = createStone(ChatColor.RED + "Hellfire Stone Lv4", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 4);
         fireStoneHellFire4 = createStone(ChatColor.RED + "Completed Hellfire Stone", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 5);
 
-        // WIND STONES
-        windStone0 = createStone(ChatColor.WHITE + "Wind Stone", "An old relic that befriends you with the air around you", "", 2, 0, 1);
-        windStone1 = createStone(ChatColor.WHITE + "Wind Stone Lv2", "An old relic that befriends you with the air around you", "", 2, 0, 2);
-        windStone2 = createStone(ChatColor.WHITE + "Wind Stone Lv3", "An old relic that befriends you with the air around you", "", 2, 0, 3);
-        windStoneAgility0 = createStone(ChatColor.WHITE + "Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 1);
-        windStoneAgility1 = createStone(ChatColor.WHITE + "Agility Stone Lv2", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 2);
-        windStoneAgility2 = createStone(ChatColor.WHITE + "Agility Stone Lv3", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 3);
-        windStoneAgility3 = createStone(ChatColor.WHITE + "Agility Stone Lv4", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 4);
-        windStoneAgility4 = createStone(ChatColor.WHITE + "Completed Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 5);
-        windStoneBending0 = createStone(ChatColor.WHITE + "Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 1);
-        windStoneBending1 = createStone(ChatColor.WHITE + "Airbending Stone Lv2", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 2);
-        windStoneBending2 = createStone(ChatColor.WHITE + "Airbending Stone Lv3", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 3);
-        windStoneBending3 = createStone(ChatColor.WHITE + "Airbending Stone Lv4", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 4);
-        windStoneBending4 = createStone(ChatColor.WHITE + "Completed Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 5);
-        windStoneWeather0 = createStone(ChatColor.WHITE + "Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 1);
-        windStoneWeather1 = createStone(ChatColor.WHITE + "Weather Stone Lv2", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 2);
-        windStoneWeather2 = createStone(ChatColor.WHITE + "Weather Stone Lv3", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 3);
-        windStoneWeather3 = createStone(ChatColor.WHITE + "Weather Stone Lv4", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 4);
-        windStoneWeather4 = createStone(ChatColor.WHITE + "Completed Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 5);
+        // AIR STONES
+        airStone0 = createStone(ChatColor.WHITE + "Air Stone", "An old relic that befriends you with the air around you", "", 2, 0, 1);
+        airStone1 = createStone(ChatColor.WHITE + "Air Stone Lv2", "An old relic that befriends you with the air around you", "", 2, 0, 2);
+        airStone2 = createStone(ChatColor.WHITE + "Air Stone Lv3", "An old relic that befriends you with the air around you", "", 2, 0, 3);
+        airStoneAgility0 = createStone(ChatColor.WHITE + "Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 1);
+        airStoneAgility1 = createStone(ChatColor.WHITE + "Agility Stone Lv2", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 2);
+        airStoneAgility2 = createStone(ChatColor.WHITE + "Agility Stone Lv3", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 3);
+        airStoneAgility3 = createStone(ChatColor.WHITE + "Agility Stone Lv4", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 4);
+        airStoneAgility4 = createStone(ChatColor.WHITE + "Completed Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 5);
+        airStoneBending0 = createStone(ChatColor.WHITE + "Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 1);
+        airStoneBending1 = createStone(ChatColor.WHITE + "Airbending Stone Lv2", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 2);
+        airStoneBending2 = createStone(ChatColor.WHITE + "Airbending Stone Lv3", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 3);
+        airStoneBending3 = createStone(ChatColor.WHITE + "Airbending Stone Lv4", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 4);
+        airStoneBending4 = createStone(ChatColor.WHITE + "Completed Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 5);
+        airStoneWeather0 = createStone(ChatColor.WHITE + "Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 1);
+        airStoneWeather1 = createStone(ChatColor.WHITE + "Weather Stone Lv2", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 2);
+        airStoneWeather2 = createStone(ChatColor.WHITE + "Weather Stone Lv3", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 3);
+        airStoneWeather3 = createStone(ChatColor.WHITE + "Weather Stone Lv4", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 4);
+        airStoneWeather4 = createStone(ChatColor.WHITE + "Completed Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 5);
 
 
         // EARTH STONES
@@ -523,24 +523,24 @@ public class ItemStones {
                 fireStoneHellFire2,
                 fireStoneHellFire3,
                 fireStoneHellFire4,
-                windStone0,
-                windStone1,
-                windStone2,
-                windStoneAgility0,
-                windStoneAgility1,
-                windStoneAgility2,
-                windStoneAgility3,
-                windStoneAgility4,
-                windStoneBending0,
-                windStoneBending1,
-                windStoneBending2,
-                windStoneBending3,
-                windStoneBending4,
-                windStoneWeather0,
-                windStoneWeather1,
-                windStoneWeather2,
-                windStoneWeather3,
-                windStoneWeather4,
+                airStone0,
+                airStone1,
+                airStone2,
+                airStoneAgility0,
+                airStoneAgility1,
+                airStoneAgility2,
+                airStoneAgility3,
+                airStoneAgility4,
+                airStoneBending0,
+                airStoneBending1,
+                airStoneBending2,
+                airStoneBending3,
+                airStoneBending4,
+                airStoneWeather0,
+                airStoneWeather1,
+                airStoneWeather2,
+                airStoneWeather3,
+                airStoneWeather4,
                 earthStone0,
                 earthStone1,
                 earthStone2,
