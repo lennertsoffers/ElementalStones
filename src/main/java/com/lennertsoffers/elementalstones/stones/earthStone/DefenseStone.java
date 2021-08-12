@@ -3,22 +3,19 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
-public class DefenseStone {
-
-    private final ElementalStones plugin;
+public class DefenseStone extends EarthStone {
 
     public DefenseStone(ElementalStones plugin) {
-        this.plugin = plugin;
-        BukkitScheduler scheduler = plugin.getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask(plugin, this::defenseStonePassive, 0L, 200L);
+        super(plugin);
+        super.scheduler.scheduleSyncRepeatingTask(plugin, this::defenseStonePassive, 0L, 200L);
     }
 
     // PASSIVE
@@ -26,6 +23,26 @@ public class DefenseStone {
         for (Player player : this.plugin.getServer().getOnlinePlayers()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));
         }
+    }
+
+    // MOVE 4
+    public static void defenseStoneMove4(Player player) {
+
+    }
+
+    // MOVE 5
+    public static void defenseStoneMove5(Player player) {
+
+    }
+
+    // MOVE 6
+    public static void defenseStoneMove6(Player player) {
+
+    }
+
+    // MOVE 7
+    public static void defenseStoneMove7(Player player) {
+        player.spawnParticle(Particle.BLOCK_CRACK, player.getLocation().add(0, -1, 0), 1000, player.getLocation().add(0, -1, 0).getBlock().getBlockData());
     }
 
     // MOVE 8
