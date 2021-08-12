@@ -2,7 +2,9 @@ package com.lennertsoffers.elementalstones.event;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 import org.bukkit.ChatColor;
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -30,8 +32,9 @@ public class ClickEvent implements Listener {
         }
 
         if (event.getAction() == Action.LEFT_CLICK_AIR) {
-            System.out.println(player.getHealthScale());
-            System.out.println(player.getHealth());
+            System.out.println(Particle.BLOCK_CRACK.getDataType());
+            DefenseStone.defenseStoneMove7(event.getPlayer());
+            System.out.println("test");
         }
     }
 }
