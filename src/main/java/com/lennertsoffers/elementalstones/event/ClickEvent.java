@@ -1,10 +1,10 @@
 package com.lennertsoffers.elementalstones.event;
 
+import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 import org.bukkit.ChatColor;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +12,12 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 public class ClickEvent implements Listener {
+
+    protected final ElementalStones plugin;
+
+    public ClickEvent(ElementalStones plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
@@ -31,8 +37,8 @@ public class ClickEvent implements Listener {
             }
         }
 
-        if (event.getAction() == Action.LEFT_CLICK_AIR) {
-            DefenseStone.move7(event.getPlayer());
+        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            DefenseStone.move1(player, event, this.plugin);
         }
     }
 }
