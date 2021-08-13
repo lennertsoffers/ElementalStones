@@ -1,10 +1,10 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,11 +16,6 @@ import org.bukkit.util.Vector;
 import java.util.List;
 
 public class DefenseStone extends EarthStone {
-
-    public DefenseStone(ElementalStones plugin) {
-        super(plugin);
-        EarthStone.scheduler.scheduleSyncRepeatingTask(plugin, this::defenseStonePassive, 0L, 200L);
-    }
 
     private static ItemStack addEnchantments(ItemStack item) {
         ItemMeta itemMeta = item.getItemMeta();
@@ -34,10 +29,12 @@ public class DefenseStone extends EarthStone {
     }
 
     // PASSIVE
-    private void defenseStonePassive() {
-        for (Player player : EarthStone.plugin.getServer().getOnlinePlayers()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));
-        }
+    private static void defenseStonePassive() {
+        StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
+            for (Player player : StaticVariables.plugin.getServer().getOnlinePlayers()) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));
+            }
+        }, 0L, 200L);
     }
 
     // MOVE 4
@@ -62,7 +59,6 @@ public class DefenseStone extends EarthStone {
         player.getInventory().setLeggings(betterLeggings);
         player.getInventory().setBoots(betterBoots);
 
-        Bu
     }
 
     // MOVE 6
