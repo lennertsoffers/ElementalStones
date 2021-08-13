@@ -2,10 +2,13 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -16,12 +19,23 @@ public class DefenseStone extends EarthStone {
 
     public DefenseStone(ElementalStones plugin) {
         super(plugin);
-        super.scheduler.scheduleSyncRepeatingTask(plugin, this::defenseStonePassive, 0L, 200L);
+        EarthStone.scheduler.scheduleSyncRepeatingTask(plugin, this::defenseStonePassive, 0L, 200L);
+    }
+
+    private static ItemStack addEnchantments(ItemStack item) {
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5, true);
+        itemMeta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+        itemMeta.addEnchant(Enchantment.PROTECTION_FALL, 5, true);
+        itemMeta.addEnchant(Enchantment.PROTECTION_FIRE, 5, true);
+        itemMeta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 5, true);
+        item.setItemMeta(itemMeta);
+        return item;
     }
 
     // PASSIVE
     private void defenseStonePassive() {
-        for (Player player : this.plugin.getServer().getOnlinePlayers()) {
+        for (Player player : EarthStone.plugin.getServer().getOnlinePlayers()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));
         }
     }
@@ -33,7 +47,22 @@ public class DefenseStone extends EarthStone {
 
     // MOVE 5
     public static void move5(Player player) {
+        ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack chestplate = player.getInventory().getChestplate();
+        ItemStack leggings = player.getInventory().getLeggings();
+        ItemStack boots = player.getInventory().getBoots();
 
+        ItemStack betterHelmet = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_HELMET));
+        ItemStack betterChestplate = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_CHESTPLATE));
+        ItemStack betterLeggings = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_LEGGINGS));
+        ItemStack betterBoots = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_BOOTS));
+
+        player.getInventory().setHelmet(betterHelmet);
+        player.getInventory().setChestplate(betterChestplate);
+        player.getInventory().setLeggings(betterLeggings);
+        player.getInventory().setBoots(betterBoots);
+
+        Bu
     }
 
     // MOVE 6

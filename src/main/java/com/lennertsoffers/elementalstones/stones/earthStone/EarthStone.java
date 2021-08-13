@@ -15,12 +15,12 @@ import java.util.Objects;
 
 public class EarthStone {
 
-    protected final ElementalStones plugin;
-    protected final BukkitScheduler scheduler;
+    protected static ElementalStones plugin;
+    protected static BukkitScheduler scheduler;
 
-    public EarthStone(ElementalStones plugin) {
-        this.plugin = plugin;
-        this.scheduler = plugin.getServer().getScheduler();
+    public EarthStone(ElementalStones p) {
+        plugin = p;
+        scheduler = plugin.getServer().getScheduler();
     }
 
     private static void placePillar(Location location) {
