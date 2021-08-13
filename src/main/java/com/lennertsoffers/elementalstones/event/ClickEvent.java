@@ -32,7 +32,7 @@ public class ClickEvent implements Listener {
         }
 
         if (event.getAction() == Action.LEFT_CLICK_AIR) {
-            DefenseStone.move8(event.getPlayer());
+            DefenseStone.move7(event.getPlayer());
         }
     }
 }

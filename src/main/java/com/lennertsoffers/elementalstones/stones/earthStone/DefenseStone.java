@@ -3,14 +3,14 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.util.Objects;
+import java.util.List;
 
 public class DefenseStone extends EarthStone {
 
@@ -44,13 +44,29 @@ public class DefenseStone extends EarthStone {
     // MOVE 7
     public static void move7(Player player) {
         Location location = player.getLocation();
+        List<Entity> entities = player.getNearbyEntities(3, 0, 3);
         int playerX = location.getBlockX() - 3;
+        int playerY = location.getBlockY();
         int playerZ = location.getBlockZ() - 3;
 
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 7; j++) {
-                if (!((i == 0 && j == 0))) {
-                    player.getWorld().spawnParticle(Particle.ITEM_CRACK, playerX + i, location.getBlockY() + 1, playerZ + j, 100, 1, -0.5, 1, 0.1, new ItemStack(player.getWorld().getBlockAt(player.getLocation().add(0, -1, 0)).getType()));
+                if (!((i == 0 && j == 0) || (i == 0 && j == 6) || (i == 6 && j == 0) || (i == 6 && j == 6))) {
+                    ItemStack stack;
+                    if (player.getWorld().getBlockAt(player.getLocation().add(0, -1, 0)).getType().equals(Material.AIR)) {
+                        stack = new ItemStack(Material.STONE);
+                    } else {
+                        stack = new ItemStack(player.getWorld().getBlockAt(player.getLocation().add(0, -1, 0)).getType());
+                    }
+                    player.getWorld().spawnParticle(Particle.ITEM_CRACK, playerX + i, playerY + 0.5, playerZ + j, 50, 1, 0, 1, 0.1, stack);
+                    for (Entity entity : entities) {
+                        try {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 2));
+                        } finally {
+                            entity.setVelocity(new Vector(0, 0.5, 0));
+                        }
+                    }
                 }
             }
         }
@@ -63,7 +79,7 @@ public class DefenseStone extends EarthStone {
         int playerX = location.getBlockX();
         int playerY = location.getBlockY();
         int playerZ = location.getBlockZ();
-        for (Entity entity : player.getNearbyEntities(4, 4, 3)) {
+        for (Entity entity : player.getNearbyEntities(4, 4, 4)) {
             int entityX = entity.getLocation().getBlockX();
             int entityZ = entity.getLocation().getBlockZ();
             entity.setVelocity(new Vector((double) 1/(entityX - playerX), 0.4, (double) 1/(entityZ - playerZ)));
