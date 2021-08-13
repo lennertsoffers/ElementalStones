@@ -15,14 +15,6 @@ import java.util.Objects;
 
 public class EarthStone {
 
-    protected static ElementalStones plugin;
-    protected static BukkitScheduler scheduler;
-
-    public EarthStone(ElementalStones p) {
-        plugin = p;
-        scheduler = plugin.getServer().getScheduler();
-    }
-
     private static void placePillar(Location location) {
         for (int i = 0; i < 3; i++) {
             location.setY(location.getY() + 1.0);
