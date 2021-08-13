@@ -6,8 +6,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
+
+import java.util.Objects;
 
 public class EarthStone {
 
@@ -27,19 +31,23 @@ public class EarthStone {
     }
 
     // MOVE 1
-    public static void move1(Player player, Location location, Server server, ElementalStones plugin) {
-        double playerX = player.getLocation().getX();
-        double playerZ = player.getLocation().getZ();
-        double blockX = location.getX();
-        double blockZ = location.getZ();
+    public static void move1(Player player, PlayerInteractEvent event, ElementalStones plugin) {
+        if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
+            Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
+            Server server = player.getServer();
+            double playerX = player.getLocation().getX();
+            double playerZ = player.getLocation().getZ();
+            double blockX = location.getX();
+            double blockZ = location.getZ();
 
-        if (Tools.checkPlayerCollision(playerX, blockX) && Tools.checkPlayerCollision(playerZ, blockZ)) {
-            player.setVelocity(new Vector(0, 1 ,0));
-            server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if (Tools.checkPlayerCollision(playerX, blockX) && Tools.checkPlayerCollision(playerZ, blockZ)) {
+                player.setVelocity(new Vector(0, 1 ,0));
+                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                    placePillar(location);
+                }, 3L);
+            } else {
                 placePillar(location);
-            }, 3L);
-        } else {
-            placePillar(location);
+            }
         }
     }
 
