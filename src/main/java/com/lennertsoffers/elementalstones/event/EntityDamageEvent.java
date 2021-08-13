@@ -13,7 +13,7 @@ public class EntityDamageEvent implements Listener {
             Player player = (Player) event.getEntity();
             if (event.getDamage() >= player.getHealth()) {
                 event.setCancelled(true);
-                DefenseStone.defenseStoneMove8(player);
+                DefenseStone.move8(player);
             }
         }
     }

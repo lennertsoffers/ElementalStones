@@ -52,5 +52,4 @@ public class EarthStone {
     public static void move3(Player player) {
 
     }
-
 }
