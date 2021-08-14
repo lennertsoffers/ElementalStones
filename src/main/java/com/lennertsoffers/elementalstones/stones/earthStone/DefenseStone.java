@@ -1,8 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
-import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -76,7 +74,15 @@ public class DefenseStone extends EarthStone {
 
     // MOVE 6
     public static void move6(Player player) {
+        Location location = player.getLocation();
+        float yaw = location.getYaw();
 
+        if ((yaw >= 0 && yaw < 25) || (yaw >= 65 && yaw < 115) || (yaw >= 155 && yaw < 205) || (yaw >= 245 && yaw < 295) || (yaw >= 335 && yaw <= 360)) {
+            // wall right in front
+
+        } else {
+            // diagonal wall
+        }
     }
 
     // MOVE 7
