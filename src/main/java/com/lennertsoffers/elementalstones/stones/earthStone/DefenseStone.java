@@ -127,28 +127,20 @@ public class DefenseStone extends EarthStone {
         location.add(vector);
 
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-            System.out.println("towards pos z");
             buildPerpendicularWallZ(location, player.getWorld());
         } else if (yaw >= 25 && yaw < 65) {
-            System.out.println("between pos z and neg x");
             buildDiagonalWallX(location, player.getWorld());
         } else if (yaw >= 65 && yaw < 115) {
-            System.out.println("towards neg x");
             buildPerpendicularWallX(location, player.getWorld());
         } else if (yaw >= 115 && yaw < 155) {
-            System.out.println("between neg x and neg z");
             buildDiagonalWallZ(location, player.getWorld()) ;
         } else if (yaw >= 155 && yaw < 205) {
-            System.out.println("towards neg z");
             buildPerpendicularWallZ(location, player.getWorld());
         } else if (yaw >= 205 && yaw < 245) {
-            System.out.println("between neg z and pos x");
             buildDiagonalWallX(location, player.getWorld());
         } else if (yaw >= 245 && yaw < 295) {
-            System.out.println("towards pos x");
             buildPerpendicularWallX(location, player.getWorld());
         } else {
-            System.out.println("between pos x and pos z");
             buildDiagonalWallZ(location, player.getWorld());
         }
     }
