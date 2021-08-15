@@ -28,12 +28,48 @@ public class DefenseStone extends EarthStone {
         return item;
     }
 
-    private static void buildPerpendicularWall(Location location) {
-
+    private static void buildPerpendicularWallX(Location location, World world) {
+        location.add(0, -1, 3);
+        for (int i = 0; i < 15; i++) {
+            if (i % 5 == 0) {
+                location.add(0, 1, -5);
+            }
+            world.getBlockAt(location).setType(Material.STONE);
+            location.add(0, 0, 1);
+        }
     }
 
-    private static void buildDiagonalWall(Location location) {
+    private static void buildPerpendicularWallZ(Location location, World world) {
+        location.add(3, -1, 0);
+        for (int i = 0; i < 15; i++) {
+            if (i % 5 == 0) {
+                location.add(-5, 1, 0);
+            }
+            world.getBlockAt(location).setType(Material.STONE);
+            location.add(1, 0, 0);
+        }
+    }
 
+    private static void buildDiagonalWallX(Location location, World world) {
+        location.add(3, -1, 3);
+        for (int i = 0; i < 15; i++) {
+            if (i % 5 == 0) {
+                location.add(-5, 1, -5);
+            }
+            world.getBlockAt(location).setType(Material.STONE);
+            location.add(1, 0, 1);
+        }
+    }
+
+    private static void buildDiagonalWallZ(Location location, World world) {
+        location.add(3, -1, -3);
+        for (int i = 0; i < 15; i++) {
+            if (i % 5 == 0) {
+                location.add(-5, 1, 5);
+            }
+            world.getBlockAt(location).setType(Material.STONE);
+            location.add(1, 0, -1);
+        }
     }
 
     // PASSIVE
@@ -92,20 +128,28 @@ public class DefenseStone extends EarthStone {
 
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
             System.out.println("towards pos z");
+            buildPerpendicularWallZ(location, player.getWorld());
         } else if (yaw >= 25 && yaw < 65) {
             System.out.println("between pos z and neg x");
+            buildDiagonalWallX(location, player.getWorld());
         } else if (yaw >= 65 && yaw < 115) {
             System.out.println("towards neg x");
+            buildPerpendicularWallX(location, player.getWorld());
         } else if (yaw >= 115 && yaw < 155) {
             System.out.println("between neg x and neg z");
+            buildDiagonalWallZ(location, player.getWorld()) ;
         } else if (yaw >= 155 && yaw < 205) {
             System.out.println("towards neg z");
+            buildPerpendicularWallZ(location, player.getWorld());
         } else if (yaw >= 205 && yaw < 245) {
             System.out.println("between neg z and pos x");
+            buildDiagonalWallX(location, player.getWorld());
         } else if (yaw >= 245 && yaw < 295) {
             System.out.println("towards pos x");
+            buildPerpendicularWallX(location, player.getWorld());
         } else {
             System.out.println("between pos x and pos z");
+            buildDiagonalWallZ(location, player.getWorld());
         }
     }
 
