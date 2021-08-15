@@ -38,7 +38,7 @@ public class ClickEvent implements Listener {
         }
 
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            DefenseStone.move5(player);
+            DefenseStone.move6(player);
         }
     }
 }

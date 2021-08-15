@@ -28,6 +28,14 @@ public class DefenseStone extends EarthStone {
         return item;
     }
 
+    private static void buildPerpendicularWall(Location location) {
+
+    }
+
+    private static void buildDiagonalWall(Location location) {
+
+    }
+
     // PASSIVE
     private static void defenseStonePassive() {
         StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
@@ -69,19 +77,35 @@ public class DefenseStone extends EarthStone {
             player.getInventory().setChestplate(chestplate);
             player.getInventory().setLeggings(leggings);
             player.getInventory().setBoots(boots);
-        }, 100L);
+        }, 1200L);
     }
 
     // MOVE 6
     public static void move6(Player player) {
         Location location = player.getLocation();
         float yaw = location.getYaw();
+        Vector vector = location.getDirection();
+        vector.setX(vector.getX() * 3);
+        vector.setY(0);
+        vector.setZ(vector.getZ() * 3);
+        location.add(vector);
 
-        if ((yaw >= 0 && yaw < 25) || (yaw >= 65 && yaw < 115) || (yaw >= 155 && yaw < 205) || (yaw >= 245 && yaw < 295) || (yaw >= 335 && yaw <= 360)) {
-            // wall right in front
-
+        if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
+            System.out.println("towards pos z");
+        } else if (yaw >= 25 && yaw < 65) {
+            System.out.println("between pos z and neg x");
+        } else if (yaw >= 65 && yaw < 115) {
+            System.out.println("towards neg x");
+        } else if (yaw >= 115 && yaw < 155) {
+            System.out.println("between neg x and neg z");
+        } else if (yaw >= 155 && yaw < 205) {
+            System.out.println("towards neg z");
+        } else if (yaw >= 205 && yaw < 245) {
+            System.out.println("between neg z and pos x");
+        } else if (yaw >= 245 && yaw < 295) {
+            System.out.println("towards pos x");
         } else {
-            // diagonal wall
+            System.out.println("between pos x and pos z");
         }
     }
 
