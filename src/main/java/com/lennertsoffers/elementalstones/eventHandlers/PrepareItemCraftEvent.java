@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.event;
+package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Material;

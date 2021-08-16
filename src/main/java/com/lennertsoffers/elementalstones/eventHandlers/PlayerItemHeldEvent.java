@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.event;
+package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
