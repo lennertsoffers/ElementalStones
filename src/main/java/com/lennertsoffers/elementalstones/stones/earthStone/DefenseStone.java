@@ -4,12 +4,14 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -82,8 +84,24 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 4
-    public static void move4(Player player) {
-
+    public static void move4(Player player, FallingBlock move4Block) {
+        if (move4Block == null) {
+            return;
+        }
+        World world = player.getWorld();
+        Location location = move4Block.getLocation();
+        move4Block.remove();
+        new BukkitRunnable() {
+            int counter = 0;
+            @Override
+            public void run() {
+                world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, location, 800, counter / 2.0, counter / 2.0, counter / 2.0, 0.1);
+                counter++;
+                if (counter >= 20) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
     }
 
     // MOVE 5
