@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.event;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +14,9 @@ public class PlayerItemHeldEvent implements Listener {
     public void onPlayerItemHeld(org.bukkit.event.player.PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         if (event.getNewSlot() == 0) {
-            EarthbendingStone.move4(player);
+            EarthStone.move2(player);
         } else if (event.getNewSlot() == 1) {
-            EarthbendingStone.move5(player);
+            EarthbendingStone.move4(player, EarthStone.move4Block);
         }
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {

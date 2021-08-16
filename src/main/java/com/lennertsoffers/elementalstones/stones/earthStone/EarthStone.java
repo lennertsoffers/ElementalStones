@@ -5,6 +5,9 @@ import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -14,6 +17,8 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 public class EarthStone {
+
+    public static FallingBlock move4Block = null;
 
     private static void placePillar(Location location) {
         for (int i = 0; i < 3; i++) {
@@ -45,7 +50,13 @@ public class EarthStone {
 
     // MOVE 2
     public static void move2(Player player) {
-
+        World world = player.getWorld();
+        Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
+        FallingBlock fallingBlock = world.spawnFallingBlock(targetBlock.getLocation(), targetBlock.getBlockData());
+        world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
+        fallingBlock.setVelocity(new Vector(0, 0.7, 0));
+        fallingBlock.setHurtEntities(true);
+        move4Block = fallingBlock;
     }
 
     // MOVE 3
