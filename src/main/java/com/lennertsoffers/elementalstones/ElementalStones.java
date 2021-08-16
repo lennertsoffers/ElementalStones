@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
+import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 
@@ -17,6 +18,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
+        AgilityStone.passive();
     }
 
     @Override

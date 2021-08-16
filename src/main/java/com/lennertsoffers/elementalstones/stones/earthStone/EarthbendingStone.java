@@ -1,7 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -9,7 +8,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import sun.jvm.hotspot.opto.Block;
 
 import java.util.List;
 
@@ -55,11 +53,13 @@ public class EarthbendingStone {
         if (move4Block == null) {
             return;
         }
-        Block targetBlock = player.getTargetBlock(100);
     }
 
     // MOVE 6
+    public static void move6(Player player, FallingBlock move4Block) {
+        Location location = move4Block.getLocation();
 
+    }
 
     // MOVE 7
 
