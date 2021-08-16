@@ -9,6 +9,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import sun.jvm.hotspot.opto.Block;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ public class EarthbendingStone {
             return;
         }
         Location playerLocation = player.getLocation();
-        Location blockLocation = move4Block.getLocation();
         move4Block.setVelocity(new Vector(playerLocation.getDirection().getX() * 5, 0, playerLocation.getDirection().getZ() * 5));
         new BukkitRunnable() {
             int tickCount = 0;
@@ -55,6 +55,7 @@ public class EarthbendingStone {
         if (move4Block == null) {
             return;
         }
+        Block targetBlock = player.getTargetBlock(100);
     }
 
     // MOVE 6

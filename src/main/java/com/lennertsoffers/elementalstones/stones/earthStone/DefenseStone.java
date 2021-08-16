@@ -186,46 +186,54 @@ public class DefenseStone extends EarthStone {
         for (Entity entity : player.getNearbyEntities(4, 4, 4)) {
             double entityX = entity.getLocation().getBlockX();
             double entityZ = entity.getLocation().getBlockZ();
-            entity.setVelocity(new Vector((double) 1/(entityX - playerX), 0.4, (double) 1/(entityZ - playerZ)));
-        }
-            int playerXint = (int) playerX;
-            int playerYint = (int) playerY;
-            int playerZint = (int) playerZ;
-            if (world.getBlockAt(location.add(0, -1, 0)).getType() != Material.AIR) {
-            location.add(0, 1, 0);
-            for (int i = 0; i < 3; i++) {
-                world.getBlockAt(playerXint+ 2, playerYint + i, playerZint - 1).setType(Material.STONE);
-                world.getBlockAt(playerXint+ 2, playerYint + i, playerZint).setType(Material.STONE);
-                world.getBlockAt(playerXint+ 2, playerYint + i, playerZint + 1).setType(Material.STONE);
-                world.getBlockAt(playerXint- 1, playerYint + i, playerZint + 2).setType(Material.STONE);
-                world.getBlockAt(playerXint, playerYint + i, playerZint + 2).setType(Material.STONE);
-                world.getBlockAt(playerXint+ 1, playerYint + i, playerZint + 2).setType(Material.STONE);
-                world.getBlockAt(playerXint- 2, playerYint + i, playerZint - 1).setType(Material.STONE);
-                world.getBlockAt(playerXint- 2, playerYint + i, playerZint).setType(Material.STONE);
-                world.getBlockAt(playerXint- 2, playerYint + i, playerZint + 1).setType(Material.STONE);
-                world.getBlockAt(playerXint- 1, playerYint + i, playerZint - 2).setType(Material.STONE);
-                world.getBlockAt(playerXint, playerYint + i, playerZint - 2).setType(Material.STONE);
-                world.getBlockAt(playerXint+ 1, playerYint + i, playerZint - 2).setType(Material.STONE);
-
-                world.getBlockAt(playerXint+ 1, playerYint + i, playerZint + 1).setType(Material.AIR);
-                world.getBlockAt(playerXint+ 1, playerYint + i, playerZint).setType(Material.AIR);
-                world.getBlockAt(playerXint+ 1, playerYint + i, playerZint - 1).setType(Material.AIR);
-                world.getBlockAt(playerXint, playerYint + i, playerZint + 1).setType(Material.AIR);
-                world.getBlockAt(playerXint, playerYint + i, playerZint).setType(Material.AIR);
-                world.getBlockAt(playerXint, playerYint + i, playerZint - 1).setType(Material.AIR);
-                world.getBlockAt(playerXint- 1, playerYint + i, playerZint + 1).setType(Material.AIR);
-                world.getBlockAt(playerXint- 1, playerYint + i, playerZint).setType(Material.AIR);
-                world.getBlockAt(playerXint- 1, playerYint + i, playerZint - 1).setType(Material.AIR);
+            if (entityX == playerX) {
+                playerX = entityX + 0.001;
             }
-            world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint + 1).setType(Material.STONE);
-            world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint).setType(Material.STONE);
-            world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint - 1).setType(Material.STONE);
-            world.getBlockAt(playerXint, playerYint + 3, playerZint + 1).setType(Material.STONE);
-            world.getBlockAt(playerXint, playerYint + 3, playerZint).setType(Material.STONE);
-            world.getBlockAt(playerXint, playerYint + 3, playerZint - 1).setType(Material.STONE);
-            world.getBlockAt(playerXint- 1, playerYint + 3, playerZint + 1).setType(Material.STONE);
-            world.getBlockAt(playerXint- 1, playerYint + 3, playerZint).setType(Material.STONE);
-            world.getBlockAt(playerXint- 1, playerYint + 3, playerZint - 1).setType(Material.STONE);
+            if (entityZ == playerZ) {
+                playerZ = entityZ + 0.001;
+            }
+            entity.setVelocity(new Vector((double) 1/(entityX - playerX) * 2, 0.4, (double) 1/(entityZ - playerZ) * 2));
+        }
+        int playerXint = (int) playerX;
+        int playerYint = (int) playerY;
+        int playerZint = (int) playerZ;
+        if (world.getBlockAt(location.add(0, -1, 0)).getType() != Material.AIR) {
+            StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> {
+                location.add(0, 1, 0);
+                for (int i = 0; i < 3; i++) {
+                    world.getBlockAt(playerXint+ 2, playerYint + i, playerZint - 1).setType(Material.STONE);
+                    world.getBlockAt(playerXint+ 2, playerYint + i, playerZint).setType(Material.STONE);
+                    world.getBlockAt(playerXint+ 2, playerYint + i, playerZint + 1).setType(Material.STONE);
+                    world.getBlockAt(playerXint- 1, playerYint + i, playerZint + 2).setType(Material.STONE);
+                    world.getBlockAt(playerXint, playerYint + i, playerZint + 2).setType(Material.STONE);
+                    world.getBlockAt(playerXint+ 1, playerYint + i, playerZint + 2).setType(Material.STONE);
+                    world.getBlockAt(playerXint- 2, playerYint + i, playerZint - 1).setType(Material.STONE);
+                    world.getBlockAt(playerXint- 2, playerYint + i, playerZint).setType(Material.STONE);
+                    world.getBlockAt(playerXint- 2, playerYint + i, playerZint + 1).setType(Material.STONE);
+                    world.getBlockAt(playerXint- 1, playerYint + i, playerZint - 2).setType(Material.STONE);
+                    world.getBlockAt(playerXint, playerYint + i, playerZint - 2).setType(Material.STONE);
+                    world.getBlockAt(playerXint+ 1, playerYint + i, playerZint - 2).setType(Material.STONE);
+
+                    world.getBlockAt(playerXint+ 1, playerYint + i, playerZint + 1).setType(Material.AIR);
+                    world.getBlockAt(playerXint+ 1, playerYint + i, playerZint).setType(Material.AIR);
+                    world.getBlockAt(playerXint+ 1, playerYint + i, playerZint - 1).setType(Material.AIR);
+                    world.getBlockAt(playerXint, playerYint + i, playerZint + 1).setType(Material.AIR);
+                    world.getBlockAt(playerXint, playerYint + i, playerZint).setType(Material.AIR);
+                    world.getBlockAt(playerXint, playerYint + i, playerZint - 1).setType(Material.AIR);
+                    world.getBlockAt(playerXint- 1, playerYint + i, playerZint + 1).setType(Material.AIR);
+                    world.getBlockAt(playerXint- 1, playerYint + i, playerZint).setType(Material.AIR);
+                    world.getBlockAt(playerXint- 1, playerYint + i, playerZint - 1).setType(Material.AIR);
+                }
+                world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint + 1).setType(Material.STONE);
+                world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint).setType(Material.STONE);
+                world.getBlockAt(playerXint+ 1, playerYint + 3, playerZint - 1).setType(Material.STONE);
+                world.getBlockAt(playerXint, playerYint + 3, playerZint + 1).setType(Material.STONE);
+                world.getBlockAt(playerXint, playerYint + 3, playerZint).setType(Material.STONE);
+                world.getBlockAt(playerXint, playerYint + 3, playerZint - 1).setType(Material.STONE);
+                world.getBlockAt(playerXint- 1, playerYint + 3, playerZint + 1).setType(Material.STONE);
+                world.getBlockAt(playerXint- 1, playerYint + 3, playerZint).setType(Material.STONE);
+                world.getBlockAt(playerXint- 1, playerYint + 3, playerZint - 1).setType(Material.STONE);
+            }, 5L);
         }
     }
 }
