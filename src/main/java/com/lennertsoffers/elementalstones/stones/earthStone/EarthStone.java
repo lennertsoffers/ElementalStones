@@ -11,7 +11,6 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
@@ -52,11 +51,22 @@ public class EarthStone {
     public static void move2(Player player) {
         World world = player.getWorld();
         Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
-        FallingBlock fallingBlock = world.spawnFallingBlock(targetBlock.getLocation(), targetBlock.getBlockData());
-        world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
-        fallingBlock.setVelocity(new Vector(0, 0.7, 0));
-        fallingBlock.setHurtEntities(true);
-        move4Block = fallingBlock;
+        Location targetBlockLocation = targetBlock.getLocation();
+        if (world.getBlockAt(targetBlockLocation.add(0, 1, 0)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(0, 0, 1)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(-1, 0, 0)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(-1, 0, 0)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(0, 0, -1)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(0, 0, -1)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR &&
+            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR) {
+            FallingBlock fallingBlock = world.spawnFallingBlock(targetBlock.getLocation(), targetBlock.getBlockData());
+            world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
+            fallingBlock.setVelocity(new Vector(0, 0.7, 0));
+            fallingBlock.setHurtEntities(false);
+            move4Block = fallingBlock;
+        }
     }
 
     // MOVE 3

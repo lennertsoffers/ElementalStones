@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.event.*;
+import com.lennertsoffers.elementalstones.eventHandlers.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 

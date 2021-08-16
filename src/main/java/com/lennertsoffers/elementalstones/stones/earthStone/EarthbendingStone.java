@@ -1,15 +1,16 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.Objects;
+import java.util.List;
 
 public class EarthbendingStone {
 
@@ -20,13 +21,33 @@ public class EarthbendingStone {
         }
         Location playerLocation = player.getLocation();
         Location blockLocation = move4Block.getLocation();
-        double playerX = playerLocation.getX();
-        double playerZ = playerLocation.getZ();
-        double blockX = blockLocation.getX();
-        double blockZ = blockLocation.getBlockZ();
-        double length = Tools.lengthOfVector(blockX, playerX, blockZ, playerZ);
-        Vector entityVector = new Vector(((blockX - playerX) / length) * 5, 0, ((blockZ - playerZ) / length) * 5);
-        move4Block.setVelocity(entityVector);
+        move4Block.setVelocity(new Vector(playerLocation.getDirection().getX() * 5, 0, playerLocation.getDirection().getZ() * 5));
+        new BukkitRunnable() {
+            int tickCount = 0;
+            @Override
+            public void run() {
+                List<Entity> nearbyEntities = move4Block.getNearbyEntities(1, 1, 1);
+                if (!(nearbyEntities.isEmpty())) {
+                    for (Entity entity : nearbyEntities) {
+                        if (entity instanceof LivingEntity) {
+                            if (entity != player) {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                double health = livingEntity.getHealth() - 10;
+                                if (health < 0) {
+                                    health = 0;
+                                }
+                                livingEntity.setHealth(health);
+                            }
+                        }
+                    }
+                }
+                tickCount++;
+                System.out.println(tickCount);
+                if (tickCount >= 50) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
     // MOVE 5
