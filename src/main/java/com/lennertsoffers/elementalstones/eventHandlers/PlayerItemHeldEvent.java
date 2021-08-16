@@ -16,7 +16,9 @@ public class PlayerItemHeldEvent implements Listener {
     public void onPlayerItemHeld(org.bukkit.event.player.PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         if (event.getNewSlot() == 0) {
-            AgilityStone.move4(player);
+            EarthStone.move2(player);
+        } else if (event.getNewSlot() == 1) {
+            DefenseStone.move4(player, EarthStone.move4Block);
         }
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {

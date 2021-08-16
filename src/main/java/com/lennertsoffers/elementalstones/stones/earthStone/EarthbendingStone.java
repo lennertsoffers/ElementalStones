@@ -40,7 +40,6 @@ public class EarthbendingStone {
                     }
                 }
                 tickCount++;
-                System.out.println(tickCount);
                 if (tickCount >= 50) {
                     this.cancel();
                 }
