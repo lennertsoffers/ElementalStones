@@ -73,7 +73,7 @@ public class DefenseStone extends EarthStone {
     }
 
     // PASSIVE
-    private static void defenseStonePassive() {
+    private static void passive() {
         StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
             for (Player player : StaticVariables.plugin.getServer().getOnlinePlayers()) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));

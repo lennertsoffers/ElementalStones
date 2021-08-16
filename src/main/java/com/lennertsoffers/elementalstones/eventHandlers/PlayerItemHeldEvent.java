@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
+import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +16,7 @@ public class PlayerItemHeldEvent implements Listener {
     public void onPlayerItemHeld(org.bukkit.event.player.PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         if (event.getNewSlot() == 0) {
-            DefenseStone.move7(player);
+            AgilityStone.move4(player);
         }
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
