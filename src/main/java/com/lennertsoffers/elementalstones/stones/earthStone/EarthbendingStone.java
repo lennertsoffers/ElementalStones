@@ -2,6 +2,9 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
@@ -30,11 +33,7 @@ public class EarthbendingStone {
                         if (entity instanceof LivingEntity) {
                             if (entity != player) {
                                 LivingEntity livingEntity = (LivingEntity) entity;
-                                double health = livingEntity.getHealth() - 10;
-                                if (health < 0) {
-                                    health = 0;
-                                }
-                                livingEntity.setHealth(health);
+                                livingEntity.damage(10.0);
                             }
                         }
                     }
@@ -48,10 +47,36 @@ public class EarthbendingStone {
     }
 
     // MOVE 5
-    public static void move5(Player player, FallingBlock move4Block) {
-        if (move4Block == null) {
-            return;
-        }
+    public static void move5(Player player) {
+        World world = player.getWorld();
+        Location location = player.getLocation();
+        Vector direction = location.getDirection();
+        direction.setX(direction.getX());
+        direction.setY(0);
+        direction.setZ(direction.getZ());
+        new BukkitRunnable() {
+            int counter = 0;
+            @Override
+            public void run() {
+                location.add(direction);
+                int amountAdded = 0;
+                while (world.getBlockAt(location).getType() != Material.AIR && amountAdded < 50) {
+                    location.add(0, 1, 0);
+                    amountAdded++;
+                }
+                while (world.getBlockAt(location.getBlockX(), location.getBlockY() - 1, location.getBlockZ()).getType() == Material.AIR) {
+                    location.add(0, -1, 0);
+                    amountAdded--;
+                }
+                world.spawnParticle(Particle.SMOKE_LARGE, location, 0, 0, -0.5, 0);
+                location.add(0, -amountAdded, 0);
+                counter++;
+                if (counter >= 50) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
     }
 
     // MOVE 6
