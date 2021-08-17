@@ -61,7 +61,8 @@ public class EarthbendingStone {
     }
 
     // MOVE 7
-
+    // instant dirt house
 
     // MOVE 8
+
 }

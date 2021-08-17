@@ -24,7 +24,7 @@ After level 3, you can choose a path in which you want to continue upgrading the
     * Airbending Stone
     * Weather Stone
 * Earth Stone
-    * Defense Stone
+    * Defense Stone 👍
     * Earthbending Stone
     * Mining Stone
 * Magic Stone
@@ -32,6 +32,8 @@ After level 3, you can choose a path in which you want to continue upgrading the
     * Potion Stone
     * Beasts and Creatures Stone
     * Dark Magic Stone
+
+👍 = done
 
 ## Download elementalStones.jar
 I'm currently still working on the plugin and haven't set up a download link yet.
