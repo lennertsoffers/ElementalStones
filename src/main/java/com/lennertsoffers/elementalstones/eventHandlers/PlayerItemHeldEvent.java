@@ -18,7 +18,7 @@ public class PlayerItemHeldEvent implements Listener {
         if (event.getNewSlot() == 0) {
             EarthStone.move2(player);
         } else if (event.getNewSlot() == 1) {
-            DefenseStone.move4(player, EarthStone.move4Block);
+            EarthStone.move3(player);
         }
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {

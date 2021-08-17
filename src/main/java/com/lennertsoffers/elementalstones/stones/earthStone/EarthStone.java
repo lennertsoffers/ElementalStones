@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -71,6 +72,32 @@ public class EarthStone {
 
     // MOVE 3
     public static void move3(Player player) {
-
+        World world = player.getWorld();
+        Location location = player.getLocation();
+        for (int i = 0; i < 3; i++) {
+            world.getBlockAt(location).setType(Material.AIR);
+            world.getBlockAt(location.add(1, -1, 0)).setType(Material.AIR);
+            world.getBlockAt(location.add(0, 0, 1)).setType(Material.AIR);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.AIR);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.AIR);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.AIR);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.AIR);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.AIR);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.AIR);
+            world.getBlockAt(location.add(-1, 0, 1)).setType(Material.AIR);
+        }
+        world.getBlockAt(location).setType(Material.AIR);
+        player.setVelocity(new Vector(0, -10, 0));
+        StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> {
+            world.getBlockAt(location.add(0, 3, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+        }, 10L);
     }
 }
