@@ -89,15 +89,15 @@ public class EarthStone {
         world.getBlockAt(location).setType(Material.AIR);
         player.setVelocity(new Vector(0, -10, 0));
         StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> {
-            world.getBlockAt(location.add(0, 3, 0)).setType(Material.STONE);
-            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
-            world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
-            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
-            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
-            world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
-            world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
-            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
-            world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+            world.getBlockAt(location.add(0, 2, 0)).setType(Material.SAND);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.SAND);
+            world.getBlockAt(location.add(0, 0, 1)).setType(Material.SAND);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.SAND);
+            world.getBlockAt(location.add(-1, 0, 0)).setType(Material.SAND);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.SAND);
+            world.getBlockAt(location.add(0, 0, -1)).setType(Material.SAND);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.SAND);
+            world.getBlockAt(location.add(1, 0, 0)).setType(Material.SAND);
         }, 10L);
     }
 }
