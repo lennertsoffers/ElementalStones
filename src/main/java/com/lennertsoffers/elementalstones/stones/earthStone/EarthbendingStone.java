@@ -69,6 +69,14 @@ public class EarthbendingStone {
                     amountAdded--;
                 }
                 world.spawnParticle(Particle.SMOKE_LARGE, location, 0, 0, -0.5, 0);
+                for (Entity entity : world.getNearbyEntities(location, 1.0, 1.0, 1.0)) {
+                    if (entity instanceof LivingEntity) {
+                        if (entity != player) {
+                            entity.setVelocity(new Vector(0, 0.5, 0));
+                            ((LivingEntity) entity).damage(10);
+                        }
+                    }
+                }
                 location.add(0, -amountAdded, 0);
                 counter++;
                 if (counter >= 50) {
