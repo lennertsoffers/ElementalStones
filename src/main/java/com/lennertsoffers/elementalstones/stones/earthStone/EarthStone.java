@@ -28,6 +28,10 @@ public class EarthStone {
     }
 
     // MOVE 1
+    // Stone Pillar
+    // -> Creates a pillar on the targeted location
+    // -> If an entity collides with the pillar it flies up
+    // -> The player will not get fall damage when he lands
     public static void move1(Player player, PlayerInteractEvent event, ElementalStones plugin) {
         if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
@@ -49,6 +53,9 @@ public class EarthStone {
     }
 
     // MOVE 2
+    // Flying Rock
+    // -> The targeted block will fly up a bit
+    // -> Primer for moves in the upgraded versions of the stone
     public static void move2(Player player) {
         World world = player.getWorld();
         Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
@@ -71,6 +78,8 @@ public class EarthStone {
     }
 
     // MOVE 3
+    // Bunker
+    // -> Hides the player in a bunker under the ground
     public static void move3(Player player) {
         World world = player.getWorld();
         Location location = player.getLocation();

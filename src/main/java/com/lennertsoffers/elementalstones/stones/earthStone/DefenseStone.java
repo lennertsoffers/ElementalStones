@@ -75,6 +75,8 @@ public class DefenseStone extends EarthStone {
     }
 
     // PASSIVE
+    // Stone Resistance
+    // -> Player gets the resistance effect when he is holding the stone
     private static void passive() {
         StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
             for (Player player : StaticVariables.plugin.getServer().getOnlinePlayers()) {
@@ -84,6 +86,9 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 4
+    // Smoke Screen
+    // -> Following up to flying rock
+    // -> Explodes the flying block into a big smoke which makes it impossible to see trough
     public static void move4(Player player, FallingBlock move4Block) {
         if (move4Block == null) {
             return;
@@ -105,6 +110,9 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 5
+    // Better Gear
+    // -> Swaps your current armor for the best possible armor in the game
+    // -> After 60s, your normal gear will return
     public static void move5(Player player) {
         ItemStack helmet;
         ItemStack boots;
@@ -135,6 +143,8 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 6
+    // Stone Wall
+    // -> Place a stone wall a few blocks before the player to block attacks
     public static void move6(Player player) {
         Location location = player.getLocation();
         float yaw = location.getYaw();
@@ -164,6 +174,8 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 7
+    // Shockwave
+    // -> Creates a shockwave around the player knocking up all entities and giving them the slowness effect
     public static void move7(Player player) {
         Location location = player.getLocation();
         List<Entity> entities = player.getNearbyEntities(3, 0, 3);
@@ -184,7 +196,7 @@ public class DefenseStone extends EarthStone {
                     for (Entity entity : entities) {
                         try {
                             LivingEntity livingEntity = (LivingEntity) entity;
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 80, 2));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 140, 2));
                         } finally {
                             entity.setVelocity(new Vector(0, 0.5, 0));
                         }
@@ -195,6 +207,9 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 8
+    // Last Chance
+    // -> When something should have killed the player, he gets a last chance by not getting the damage
+    // -> All entities in close range are knocked back and the player is protected by a stone bunker
     public static void move8(Player player) {
         Location location = player.getLocation();
         World world = player.getWorld();
@@ -210,7 +225,7 @@ public class DefenseStone extends EarthStone {
             if (entityZ == playerZ) {
                 playerZ = entityZ + 0.001;
             }
-            entity.setVelocity(new Vector((double) 1/(entityX - playerX) * 2, 0.4, (double) 1/(entityZ - playerZ) * 2));
+            entity.setVelocity(new Vector((double) 1/(entityX - playerX) * 2, 0.5, (double) 1/(entityZ - playerZ) * 2));
         }
         int playerXint = (int) playerX;
         int playerYint = (int) playerY;

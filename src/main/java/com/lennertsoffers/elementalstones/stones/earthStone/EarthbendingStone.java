@@ -17,6 +17,9 @@ import java.util.List;
 public class EarthbendingStone {
 
     // MOVE 4
+    // Rock Sniper
+    // -> Following up to flying rock
+    // -> Shoots the flying rock in the looking direction of the player
     public static void move4(Player player, FallingBlock move4Block) {
         if (move4Block == null) {
             return;
@@ -47,6 +50,8 @@ public class EarthbendingStone {
     }
 
     // MOVE 5
+    // Stomp:
+    // -> Create an underground shockwave that damages entities along its way
     public static void move5(Player player) {
         World world = player.getWorld();
         Location location = player.getLocation();
@@ -88,14 +93,20 @@ public class EarthbendingStone {
     }
 
     // MOVE 6
-    public static void move6(Player player, FallingBlock move4Block) {
-        Location location = move4Block.getLocation();
+    // Earth Prison
+    // Creates an hard to escape prison at the targeted block
+    public static void move6(Player player) {
 
     }
 
     // MOVE 7
-    // instant dirt house
+    // Earth Wave
+    // -> Creates an earth wave in the looking direction of the player
+
 
     // MOVE 8
-
+    // Machine Gun
+    // -> Selects 8 blocks around player and shoots them up
+    // -> Second time you activate this ability the stones fly in the looking direction of the player
+    // -> (On third activation you let the stones come back to the player)
 }
