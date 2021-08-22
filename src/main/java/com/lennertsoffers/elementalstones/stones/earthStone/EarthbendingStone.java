@@ -9,6 +9,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -16,6 +18,32 @@ import java.util.List;
 import java.util.Objects;
 
 public class EarthbendingStone {
+
+    private static void damageLivingEntities(World world, Location location, Player player) {
+        for (Entity entity : world.getNearbyEntities(location, 0.5, 3, 0.5)) {
+            if (entity instanceof LivingEntity) {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                if (livingEntity != player) {
+                    livingEntity.setVelocity(new Vector(0, 1, 0));
+                    livingEntity.damage(10);
+                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 140, 2));
+                }
+            }
+        }
+    }
+
+    private static int checkAirBlocks(int amountAdded, World world, Location location) {
+        amountAdded = 0;
+        while (world.getBlockAt(location.getBlockX(), location.getBlockY() + 1, location.getBlockZ()).getType() != Material.AIR && amountAdded < 50) {
+            location.add(0, 1, 0);
+            amountAdded++;
+        }
+        while (world.getBlockAt(location).getType() == Material.AIR) {
+            location.add(0, -1, 0);
+            amountAdded--;
+        }
+        return amountAdded;
+    }
 
     private static void earthWavePerpendicular(World world, Player player, boolean positive, boolean x) {
         Location location = player.getLocation();
@@ -35,22 +63,27 @@ public class EarthbendingStone {
 
         new BukkitRunnable() {
             int counter = 0;
+            int amountAdded = 0;
+
             private void spawnFlyingBlocks() {
+                amountAdded = checkAirBlocks(amountAdded, world, location);
                 world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
                 world.getBlockAt(location).setType(Material.AIR);
-
+                damageLivingEntities(world, location, player);
                 if (x) {
-                    location.add(0, 0, 1);
+                    location.add(0, -amountAdded, 1);
                 } else {
-                    location.add(1, 0, 0);
+                    location.add(1, -amountAdded, 0);
                 }
             }
             @Override
             public void run() {
                 spawnFlyingBlocks();
                 spawnFlyingBlocks();
+                amountAdded = checkAirBlocks(amountAdded, world, location);
                 world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
                 world.getBlockAt(location).setType(Material.AIR);
+                damageLivingEntities(world, location, player);
 
                 if (x) {
                     if (positive) {
@@ -65,8 +98,9 @@ public class EarthbendingStone {
                         location.add(-2, 0, -1);
                     }
                 }
+                location.add(0, -amountAdded, 0);
                 counter++;
-                if (counter > 15) {
+                if (counter > 24) {
                     this.cancel();
                 }
             }
@@ -91,9 +125,15 @@ public class EarthbendingStone {
 
         new BukkitRunnable() {
             int counter = 0;
+            int amountAdded = 0;
+
             private void spawnFlyingBlocks() {
-                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                amountAdded = checkAirBlocks(amountAdded, world, location);
+                FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
+                fallingBlock.setDropItem(false);
+                fallingBlock.setVelocity(new Vector(0, 0.3, 0));
                 world.getBlockAt(location).setType(Material.AIR);
+                damageLivingEntities(world, location, player);
                 if (x) {
                     location.add(-1, 0, 1);
                 } else {
@@ -106,7 +146,11 @@ public class EarthbendingStone {
                 if (counter % 2 == 0) {
                     spawnFlyingBlocks();
                 }
-                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                amountAdded = checkAirBlocks(amountAdded, world, location);
+                FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
+                fallingBlock.setDropItem(false);
+                fallingBlock.setVelocity(new Vector(0, 0.3, 0));
+                damageLivingEntities(world, location, player);
                 world.getBlockAt(location).setType(Material.AIR);
 
                 if (x) {
@@ -123,7 +167,7 @@ public class EarthbendingStone {
                     }
                 }
                 counter++;
-                if (counter > 15) {
+                if (counter > 24) {
                     this.cancel();
                 }
             }
@@ -246,29 +290,20 @@ public class EarthbendingStone {
         float yaw = Math.abs(location.getYaw());
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
             earthWavePerpendicular(player.getWorld(), player, true, false);
-            System.out.println("P-TF");
         } else if (yaw >= 25 && yaw < 65) {
             earthWaveDiagonal(player.getWorld(), player, true, false);
-            System.out.println("D-TF");
         } else if (yaw >= 65 && yaw < 115) {
             earthWavePerpendicular(player.getWorld(), player, false, true);
-            System.out.println("P-FT");
         } else if (yaw >= 115 && yaw < 155) {
             earthWaveDiagonal(player.getWorld(), player, false, true);
-            System.out.println("D-FT");
         } else if (yaw >= 155 && yaw < 205) {
             earthWavePerpendicular(player.getWorld(), player, false, false);
-            System.out.println("P-FF");
         } else if (yaw >= 205 && yaw < 245) {
             earthWaveDiagonal(player.getWorld(), player, false, false);
-            System.out.println("D-FF");
         } else if (yaw >= 245 && yaw < 295) {
             earthWavePerpendicular(player.getWorld(), player, true, true);
-            System.out.println("P-TT");
         } else {
             earthWaveDiagonal(player.getWorld(), player, true, true);
-            System.out.println("D-TT");
-            System.out.println(yaw);
         }
     }
 
