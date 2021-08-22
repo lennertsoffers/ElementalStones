@@ -147,13 +147,7 @@ public class DefenseStone extends EarthStone {
     // -> Place a stone wall a few blocks before the player to block attacks
     public static void move6(Player player) {
         Location location = player.getLocation();
-        float yaw = location.getYaw();
-        Vector vector = location.getDirection();
-        vector.setX(vector.getX() * 3);
-        vector.setY(0);
-        vector.setZ(vector.getZ() * 3);
-        location.add(vector);
-
+        float yaw = Math.abs(location.getYaw());
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
             buildPerpendicularWallZ(location, player.getWorld());
         } else if (yaw >= 25 && yaw < 65) {
