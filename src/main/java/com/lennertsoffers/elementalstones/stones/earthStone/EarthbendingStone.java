@@ -1,6 +1,8 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
+import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -14,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -184,7 +187,7 @@ public class EarthbendingStone {
             return;
         }
         Location playerLocation = player.getLocation();
-        move4Block.setVelocity(new Vector(playerLocation.getDirection().getX() * 5, 0, playerLocation.getDirection().getZ() * 5));
+        move4Block.setVelocity(new Vector(playerLocation.getDirection().getX() * 8, 0, playerLocation.getDirection().getZ() * 8));
         new BukkitRunnable() {
             int tickCount = 0;
             @Override
@@ -313,4 +316,60 @@ public class EarthbendingStone {
     // -> Selects 8 blocks around player and shoots them up
     // -> Second time you activate this ability the stones fly in the looking direction of the player
     // -> (On third activation you let the stones come back to the player)
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        if (activePlayer.getMove8Stage() > 0 && activePlayer.getMove8FallingBlocks() == null) {
+            activePlayer.setMove8Stage(0);
+            activePlayer.setMove8FallingBlocks(null);
+        }
+        if (activePlayer.getMove8Stage() == 0) {
+            World world = player.getWorld();
+            Location location = player.getLocation();
+            List<FallingBlock> fallingBlocks = new ArrayList<>();
+            fallingBlocks.add(world.spawnFallingBlock(location.add(3, -1, -1), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, 2), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 2), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 0), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, -2), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, -2), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, -2), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, 0), location.getBlock().getBlockData()));
+            world.getBlockAt(location).setType(Material.STONE);
+            for (FallingBlock fallingBlock : fallingBlocks) {
+                fallingBlock.setDropItem(false);
+                fallingBlock.setVelocity(new Vector(0, 1, 0));
+            }
+            activePlayer.setMove8FallingBlocks(fallingBlocks);
+            activePlayer.increaseMove8Stage();
+        } else if (activePlayer.getMove8Stage() == 1) {
+            Vector direction = player.getLocation().getDirection();
+            for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
+                fallingBlock.setVelocity(new Vector(direction.getX() * 4, direction.getY() * 4, direction.getZ() * 4));
+            }
+            activePlayer.increaseMove8Stage();
+        } else if (activePlayer.getMove8Stage() == 2) {
+            Location playerLocation = player.getLocation();
+            double playerX = playerLocation.getX();
+            double playerY = playerLocation.getY();
+            double playerZ = playerLocation.getZ();
+            for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
+                Location fallingBlockLocation = fallingBlock.getLocation();
+                double fallingBlockX = fallingBlockLocation.getX();
+                double fallingBlockY = fallingBlockLocation.getY();
+                double fallingBlockZ = fallingBlockLocation.getZ();
+                double length = Tools.lengthOfVector(playerX, fallingBlockX, playerY, fallingBlockY, playerZ, fallingBlockZ);
+                fallingBlock.setVelocity(new Vector(-(fallingBlockX - playerX) / length * 5, -(fallingBlockY - playerY) / length * 2, -(fallingBlockZ - playerZ) / length * 5));
+            }
+            activePlayer.setMove8FallingBlocks(null);
+        } else {
+            activePlayer.setMove8Stage(0);
+        }
+    }
 }
