@@ -190,7 +190,7 @@ public class DefenseStone extends EarthStone {
                     for (Entity entity : entities) {
                         try {
                             LivingEntity livingEntity = (LivingEntity) entity;
-                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 140, 2));
+                            livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 140, 10));
                         } finally {
                             entity.setVelocity(new Vector(0, 0.5, 0));
                         }
