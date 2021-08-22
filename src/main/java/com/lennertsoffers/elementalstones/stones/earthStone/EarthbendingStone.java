@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Objects;
 
 public class EarthbendingStone {
 
@@ -96,7 +97,31 @@ public class EarthbendingStone {
     // Earth Prison
     // Creates an hard to escape prison at the targeted block
     public static void move6(Player player) {
-
+        Location location = Objects.requireNonNull(player.getTargetBlockExact(20)).getLocation().add(2, 1, -1);
+        World world = player.getWorld();
+        new BukkitRunnable() {
+            int counter = 0;
+            @Override
+            public void run() {
+                world.getBlockAt(location).setType(Material.STONE);
+                world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
+                world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
+                world.getBlockAt(location.add(-1, 0, 1)).setType(Material.STONE);
+                world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
+                world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
+                world.getBlockAt(location.add(-1, 0, -1)).setType(Material.STONE);
+                world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
+                world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
+                world.getBlockAt(location.add(1, 0, -1)).setType(Material.STONE);
+                world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+                world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
+                location.add(1, 1, 1);
+                counter++;
+                if (!(counter < 3)) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
     // MOVE 7
@@ -105,7 +130,7 @@ public class EarthbendingStone {
 
 
     // MOVE 8
-    // Machine Gun
+    // Reverse Machine Gun
     // -> Selects 8 blocks around player and shoots them up
     // -> Second time you activate this ability the stones fly in the looking direction of the player
     // -> (On third activation you let the stones come back to the player)
