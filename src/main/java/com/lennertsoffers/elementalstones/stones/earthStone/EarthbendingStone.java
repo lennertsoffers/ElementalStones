@@ -17,6 +17,120 @@ import java.util.Objects;
 
 public class EarthbendingStone {
 
+    private static void earthWavePerpendicular(World world, Player player, boolean positive, boolean x) {
+        Location location = player.getLocation();
+        if (x) {
+            if (positive) {
+                location.add(1, -1, -1);
+            } else {
+                location.add(-1, -1, -1);
+            }
+        } else {
+            if (positive) {
+                location.add(-1, -1, 1);
+            } else {
+                location.add(-1, -1, -1);
+            }
+        }
+
+        new BukkitRunnable() {
+            int counter = 0;
+            private void spawnFlyingBlocks() {
+                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                world.getBlockAt(location).setType(Material.AIR);
+
+                if (x) {
+                    location.add(0, 0, 1);
+                } else {
+                    location.add(1, 0, 0);
+                }
+            }
+            @Override
+            public void run() {
+                spawnFlyingBlocks();
+                spawnFlyingBlocks();
+                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                world.getBlockAt(location).setType(Material.AIR);
+
+                if (x) {
+                    if (positive) {
+                        location.add(1, 0, -2);
+                    } else {
+                        location.add(-1, 0, -2);
+                    }
+                } else {
+                    if (positive) {
+                        location.add(-2, 0, 1);
+                    } else {
+                        location.add(-2, 0, -1);
+                    }
+                }
+                counter++;
+                if (counter > 15) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
+    }
+
+    private static void earthWaveDiagonal(World world, Player player, boolean positive, boolean x) {
+        Location location = player.getLocation();
+        if (x) {
+            if (positive) {
+                location.add(2, -1, 0);
+            } else {
+                location.add(0, -1, -2);
+            }
+        } else {
+            if (positive) {
+                location.add(0, -1, 2);
+            } else {
+                location.add(2, -1, 0);
+            }
+        }
+
+        new BukkitRunnable() {
+            int counter = 0;
+            private void spawnFlyingBlocks() {
+                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                world.getBlockAt(location).setType(Material.AIR);
+                if (x) {
+                    location.add(-1, 0, 1);
+                } else {
+                    location.add(-1, 0, -1);
+                }
+            }
+            @Override
+            public void run() {
+                spawnFlyingBlocks();
+                if (counter % 2 == 0) {
+                    spawnFlyingBlocks();
+                }
+                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
+                world.getBlockAt(location).setType(Material.AIR);
+
+                if (x) {
+                    if (positive) {
+                        location.add(2, 0, -1);
+                    } else {
+                        location.add(1, 0, -2);
+                    }
+                } else {
+                    if (positive) {
+                        location.add(1, 0, 2);
+                    } else {
+                        location.add(2, 0, 1);
+                    }
+                }
+                counter++;
+                if (counter > 15) {
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
+    }
+
+
     // MOVE 4
     // Rock Sniper
     // -> Following up to flying rock
@@ -83,7 +197,7 @@ public class EarthbendingStone {
                         }
                     }
                 }
-                location.add(0, -amountAdded, 0);
+                location.add(0, - amountAdded, 0);
                 counter++;
                 if (counter >= 50) {
                     this.cancel();
@@ -127,6 +241,36 @@ public class EarthbendingStone {
     // MOVE 7
     // Earth Wave
     // -> Creates an earth wave in the looking direction of the player
+    public static void move7(Player player) {
+        Location location = player.getLocation();
+        float yaw = Math.abs(location.getYaw());
+        if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
+            earthWavePerpendicular(player.getWorld(), player, true, false);
+            System.out.println("P-TF");
+        } else if (yaw >= 25 && yaw < 65) {
+            earthWaveDiagonal(player.getWorld(), player, true, false);
+            System.out.println("D-TF");
+        } else if (yaw >= 65 && yaw < 115) {
+            earthWavePerpendicular(player.getWorld(), player, false, true);
+            System.out.println("P-FT");
+        } else if (yaw >= 115 && yaw < 155) {
+            earthWaveDiagonal(player.getWorld(), player, false, true);
+            System.out.println("D-FT");
+        } else if (yaw >= 155 && yaw < 205) {
+            earthWavePerpendicular(player.getWorld(), player, false, false);
+            System.out.println("P-FF");
+        } else if (yaw >= 205 && yaw < 245) {
+            earthWaveDiagonal(player.getWorld(), player, false, false);
+            System.out.println("D-FF");
+        } else if (yaw >= 245 && yaw < 295) {
+            earthWavePerpendicular(player.getWorld(), player, true, true);
+            System.out.println("P-TT");
+        } else {
+            earthWaveDiagonal(player.getWorld(), player, true, true);
+            System.out.println("D-TT");
+            System.out.println(yaw);
+        }
+    }
 
 
     // MOVE 8
