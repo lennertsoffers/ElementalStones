@@ -13,7 +13,6 @@ public class PlayerMoveEvent implements Listener {
     public void onPlayerMove(org.bukkit.event.player.PlayerMoveEvent event) {
         if (event.getFrom().getY() < Objects.requireNonNull(event.getTo()).getY()) {
             // Jump
-            System.out.println("in event");
             ActivePlayer activePlayer = Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId()));
             EarthbendingStone.passive(activePlayer);
         }
