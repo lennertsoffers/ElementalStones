@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
@@ -17,8 +18,6 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 public class EarthStone {
-
-    public static FallingBlock move4Block = null;
 
     private static void placePillar(Location location) {
         for (int i = 0; i < 3; i++) {
@@ -56,7 +55,8 @@ public class EarthStone {
     // Flying Rock
     // -> The targeted block will fly up a bit
     // -> Primer for moves in the upgraded versions of the stone
-    public static void move2(Player player) {
+    public static void move2(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
         Location targetBlockLocation = targetBlock.getLocation();
@@ -73,7 +73,7 @@ public class EarthStone {
             world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
             fallingBlock.setVelocity(new Vector(0, 0.7, 0));
             fallingBlock.setHurtEntities(false);
-            move4Block = fallingBlock;
+            activePlayer.setFallingBlock(fallingBlock);
         }
     }
 

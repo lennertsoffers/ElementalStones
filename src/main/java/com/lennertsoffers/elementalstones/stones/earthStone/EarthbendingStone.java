@@ -196,7 +196,9 @@ public class EarthbendingStone {
     // Rock Sniper
     // -> Following up to flying rock
     // -> Shoots the flying rock in the looking direction of the player
-    public static void move4(Player player, FallingBlock move4Block) {
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        FallingBlock move4Block = activePlayer.getFallingBlock();
         if (move4Block == null) {
             return;
         }

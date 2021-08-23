@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.customClasses;
 
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,10 @@ public class ActivePlayer {
     private boolean active;
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
 
-    // EarthStone
+    // Earth Stone
+    private FallingBlock fallingBlock;
+
+    // Earthbending Stone
     private List<FallingBlock> move8FallingBlocks;
     private int move8Stage;
 
@@ -33,6 +37,19 @@ public class ActivePlayer {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public FallingBlock getFallingBlock() {
+        return this.fallingBlock;
+    }
+
+    private void setFallingBlockValue(FallingBlock fallingBlock) {
+        this.fallingBlock = fallingBlock;
+    }
+
+    public void setFallingBlock(FallingBlock fallingBlock) {
+        setFallingBlockValue(fallingBlock);
+        StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> setFallingBlockValue(null), 100L);
     }
 
     public List<FallingBlock> getMove8FallingBlocks() {
