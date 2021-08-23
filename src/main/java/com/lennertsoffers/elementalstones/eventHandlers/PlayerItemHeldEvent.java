@@ -4,7 +4,6 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.MiningStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -4,16 +4,24 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class MiningStone {
 
     // PASSIVE
-
+    private static void passive() {
+        StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
+            for (ActivePlayer activePlayer : ActivePlayer.getActivePlayers()) {
+                Player player = activePlayer.getPlayer();
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 220, 1, true, true, true));
+            }
+        }, 0L, 200L);
+    }
 
     // MOVE 4
     // Rock Smash
