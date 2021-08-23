@@ -25,7 +25,7 @@ After level 3, you can choose a path in which you want to continue upgrading the
     * Weather Stone
 * Earth Stone
     * Defense Stone 👍
-    * Earthbending Stone
+    * Earthbending Stone 👍
     * Mining Stone
 * Magic Stone
     * Life Stone

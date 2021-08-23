@@ -35,8 +35,22 @@ public class EarthbendingStone {
         }
     }
 
-    private static int checkAirBlocks(int amountAdded, World world, Location location) {
-        amountAdded = 0;
+    private static void damageLivingEntitiesCollidedWithFallingBlock(Player player, FallingBlock fallingBlock, double amount) {
+        List<Entity> nearbyEntities = fallingBlock.getNearbyEntities(1, 1, 1);
+        if (!(nearbyEntities.isEmpty())) {
+            for (Entity entity : nearbyEntities) {
+                if (entity instanceof LivingEntity) {
+                    if (entity != player) {
+                        LivingEntity livingEntity = (LivingEntity) entity;
+                        livingEntity.damage(amount);
+                    }
+                }
+            }
+        }
+    }
+
+    private static int checkAirBlocks(World world, Location location) {
+        int amountAdded = 0;
         while (world.getBlockAt(location.getBlockX(), location.getBlockY() + 1, location.getBlockZ()).getType() != Material.AIR && amountAdded < 50) {
             location.add(0, 1, 0);
             amountAdded++;
@@ -69,7 +83,7 @@ public class EarthbendingStone {
             int amountAdded = 0;
 
             private void spawnFlyingBlocks() {
-                amountAdded = checkAirBlocks(amountAdded, world, location);
+                amountAdded = checkAirBlocks(world, location);
                 world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
                 world.getBlockAt(location).setType(Material.AIR);
                 damageLivingEntities(world, location, player);
@@ -83,7 +97,7 @@ public class EarthbendingStone {
             public void run() {
                 spawnFlyingBlocks();
                 spawnFlyingBlocks();
-                amountAdded = checkAirBlocks(amountAdded, world, location);
+                amountAdded = checkAirBlocks(world, location);
                 world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
                 world.getBlockAt(location).setType(Material.AIR);
                 damageLivingEntities(world, location, player);
@@ -131,7 +145,7 @@ public class EarthbendingStone {
             int amountAdded = 0;
 
             private void spawnFlyingBlocks() {
-                amountAdded = checkAirBlocks(amountAdded, world, location);
+                amountAdded = checkAirBlocks(world, location);
                 FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
                 fallingBlock.setDropItem(false);
                 fallingBlock.setVelocity(new Vector(0, 0.3, 0));
@@ -149,7 +163,7 @@ public class EarthbendingStone {
                 if (counter % 2 == 0) {
                     spawnFlyingBlocks();
                 }
-                amountAdded = checkAirBlocks(amountAdded, world, location);
+                amountAdded = checkAirBlocks(world, location);
                 FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
                 fallingBlock.setDropItem(false);
                 fallingBlock.setVelocity(new Vector(0, 0.3, 0));
@@ -192,19 +206,9 @@ public class EarthbendingStone {
             int tickCount = 0;
             @Override
             public void run() {
-                List<Entity> nearbyEntities = move4Block.getNearbyEntities(1, 1, 1);
-                if (!(nearbyEntities.isEmpty())) {
-                    for (Entity entity : nearbyEntities) {
-                        if (entity instanceof LivingEntity) {
-                            if (entity != player) {
-                                LivingEntity livingEntity = (LivingEntity) entity;
-                                livingEntity.damage(10.0);
-                            }
-                        }
-                    }
-                }
+                damageLivingEntitiesCollidedWithFallingBlock(player, move4Block, 10.0);
                 tickCount++;
-                if (tickCount >= 50) {
+                if (tickCount >= 100) {
                     this.cancel();
                 }
             }
@@ -327,21 +331,21 @@ public class EarthbendingStone {
             Location location = player.getLocation();
             List<FallingBlock> fallingBlocks = new ArrayList<>();
             fallingBlocks.add(world.spawnFallingBlock(location.add(3, -1, -1), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, 2), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 2), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 0), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, -2), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, -2), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, -2), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, 0), location.getBlock().getBlockData()));
-            world.getBlockAt(location).setType(Material.STONE);
+            world.getBlockAt(location).setType(Material.AIR);
             for (FallingBlock fallingBlock : fallingBlocks) {
                 fallingBlock.setDropItem(false);
                 fallingBlock.setVelocity(new Vector(0, 1, 0));
@@ -352,6 +356,17 @@ public class EarthbendingStone {
             Vector direction = player.getLocation().getDirection();
             for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
                 fallingBlock.setVelocity(new Vector(direction.getX() * 4, direction.getY() * 4, direction.getZ() * 4));
+                new BukkitRunnable() {
+                    int tickCount = 0;
+                    @Override
+                    public void run() {
+                        damageLivingEntitiesCollidedWithFallingBlock(player, fallingBlock, 7.5);
+                        tickCount++;
+                        if (tickCount >= 100) {
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
             activePlayer.increaseMove8Stage();
         } else if (activePlayer.getMove8Stage() == 2) {
