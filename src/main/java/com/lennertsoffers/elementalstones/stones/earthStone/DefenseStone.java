@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
+import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
@@ -89,7 +90,9 @@ public class DefenseStone extends EarthStone {
     // Smoke Screen
     // -> Following up to flying rock
     // -> Explodes the flying block into a big smoke which makes it impossible to see trough
-    public static void move4(Player player, FallingBlock move4Block) {
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        FallingBlock move4Block = activePlayer.getFallingBlock();
         if (move4Block == null) {
             return;
         }
