@@ -194,7 +194,6 @@ public class EarthbendingStone {
 
     // PASSIVE
     public static void passive(ActivePlayer activePlayer) {
-        System.out.println("in passive");
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation();
         Location locationAround = location.clone().add(1, -1, 0);
