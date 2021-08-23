@@ -18,6 +18,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
         AgilityStone.passive();
     }
 

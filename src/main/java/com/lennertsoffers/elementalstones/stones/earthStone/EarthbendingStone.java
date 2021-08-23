@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
@@ -189,6 +190,31 @@ public class EarthbendingStone {
                 }
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
+    }
+
+    // PASSIVE
+    public static void passive(ActivePlayer activePlayer) {
+        System.out.println("in passive");
+        Player player = activePlayer.getPlayer();
+        Location location = player.getLocation();
+        Location locationAround = location.clone().add(1, -1, 0);
+        World world = player.getWorld();
+        Material material = world.getBlockAt(location.add(0, -1, 0)).getType();
+
+        if (material == Material.STONE || material == Material.COBBLESTONE || material == Material.DIRT || material == Material.SAND || material == Material.SANDSTONE || material == Material.ANDESITE || material == Material.DIORITE || material == Material.GRANITE) {
+            if (Tools.locationAroundClear(locationAround, world)) {
+                Block block = world.getBlockAt(location);
+                FallingBlock fallingBlock = world.spawnFallingBlock(location, block.getBlockData());
+                world.getBlockAt(location).setType(Material.AIR);
+                fallingBlock.setVelocity(new Vector(0, 0.3, 0));
+                player.setVelocity(player.getVelocity().add(new Vector(0, 0.1, 0)));
+                fallingBlock.setDropItem(false);
+                StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> {
+                    fallingBlock.remove();
+                    world.getBlockAt(location).setType(block.getType());
+                }, 20L);
+            }
+        }
     }
 
 

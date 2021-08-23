@@ -80,7 +80,8 @@ public class DefenseStone extends EarthStone {
     // -> Player gets the resistance effect when he is holding the stone
     private static void passive() {
         StaticVariables.scheduler.scheduleSyncRepeatingTask(StaticVariables.plugin, () -> {
-            for (Player player : StaticVariables.plugin.getServer().getOnlinePlayers()) {
+            for (ActivePlayer activePlayer : ActivePlayer.getActivePlayers()) {
+                Player player = activePlayer.getPlayer();
                 player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 220, 1, true, true, true));
             }
         }, 0L, 200L);
