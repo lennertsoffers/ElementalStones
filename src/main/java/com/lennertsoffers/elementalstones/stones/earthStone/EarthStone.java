@@ -60,15 +60,7 @@ public class EarthStone {
         World world = player.getWorld();
         Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
         Location targetBlockLocation = targetBlock.getLocation();
-        if (world.getBlockAt(targetBlockLocation.add(0, 1, 0)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(0, 0, 1)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(-1, 0, 0)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(-1, 0, 0)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(0, 0, -1)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(0, 0, -1)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR &&
-            world.getBlockAt(targetBlockLocation.add(1, 0, 0)).getType() == Material.AIR) {
+        if (Tools.locationAroundClear(targetBlockLocation.clone(), world)) {
             FallingBlock fallingBlock = world.spawnFallingBlock(targetBlock.getLocation(), targetBlock.getBlockData());
             world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
             fallingBlock.setVelocity(new Vector(0, 0.7, 0));
