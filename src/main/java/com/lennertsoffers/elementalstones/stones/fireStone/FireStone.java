@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -49,7 +51,19 @@ public class FireStone {
     // Floating Fire
     // -> You can summon a fireball and hold it right in front of you
     public static void move2(ActivePlayer activePlayer) {
-
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Random random = new Random();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Location location = player.getLocation().add(0, 1.5, 0);
+                location.add(location.getDirection());
+                for (int i = 0; i < 200; i++) {
+                    world.spawnParticle(Particle.FLAME, location, 0, random.nextDouble() / 20, random.nextDouble() / 20, random.nextDouble() / 20, 0);
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
     // MOVE 3
