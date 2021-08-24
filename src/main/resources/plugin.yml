@@ -5,3 +5,7 @@ api-version: 1.16
 depend: [ProtocolLib]
 authors: [ lennertsoffers ]
 description: A Minecraft Spigot plugin to add elemental stones to your server  
+commands:
+  r:
+    description: Reloads the server
+    usage: /r
