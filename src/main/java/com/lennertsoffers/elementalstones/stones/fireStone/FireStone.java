@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +15,6 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 
 public class FireStone {
@@ -90,7 +88,7 @@ public class FireStone {
                     Location fireballLocation = player.getLocation().add(fireballDirection.getX() * 2.5, fireballDirection.getY() * 2.5, direction.getZ() * 2.5).add(0, 1.5, 0);
                     world.spawnParticle(Particle.FLAME, fireballLocation.add(random.nextGaussian() / nominator, random.nextGaussian() / nominator, random.nextGaussian() / nominator), 0, 0, 0, 0);
                 }
-                if (ticksLived > 3000) {
+                if (ticksLived > 2400) {
                     this.cancel();
                 }
                 ticksLived++;
@@ -140,32 +138,3 @@ public class FireStone {
         }.runTaskTimer(StaticVariables.plugin, 80, 1L);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
