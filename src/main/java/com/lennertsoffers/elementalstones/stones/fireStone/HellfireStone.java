@@ -1,6 +1,38 @@
 package com.lennertsoffers.elementalstones.stones.fireStone;
 
+import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerMoveEvent;
+
 public class HellfireStone {
+
+    // PASSIVE
+
+
+    // MOVE 4
     // Fire Track
     // -> You leave a fire track behind you
+    public static void move4(ActivePlayer activePlayer, PlayerMoveEvent event) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Block block = world.getBlockAt(event.getFrom().add(0, -1, 0));
+        if (block.getType() != Material.AIR) {
+            block.getRelative(BlockFace.UP).setType(Material.FIRE);
+        }
+    }
+
+    // MOVE 5
+
+
+    // MOVE 6
+
+
+    // MOVE 7
+
+
+    // MOVE 8
 }
