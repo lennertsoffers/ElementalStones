@@ -8,7 +8,7 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class HellfireStone {
+public class HellfireStone extends FireStone {
 
     // PASSIVE
 
@@ -16,12 +16,19 @@ public class HellfireStone {
     // MOVE 4
     // Fire Track
     // -> You leave a fire track behind you
+    // Activation
+    public static void move4(ActivePlayer activePlayer) {
+        activePlayer.setHellfireStoneMove4TimeRemaining();
+    }
+    // Move
     public static void move4(ActivePlayer activePlayer, PlayerMoveEvent event) {
-        Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
-        Block block = world.getBlockAt(event.getFrom().add(0, -1, 0));
-        if (block.getType() != Material.AIR) {
-            block.getRelative(BlockFace.UP).setType(Material.FIRE);
+        if (activePlayer.hasHellfireStoneMove4TimeRemaining()) {
+            Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+            Block block = world.getBlockAt(event.getFrom().add(0, -1, 0));
+            if (block.getType() != Material.AIR) {
+                block.getRelative(BlockFace.UP).setType(Material.FIRE);
+            }
         }
     }
 

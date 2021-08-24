@@ -15,10 +15,11 @@ public class ActivePlayer {
 
     // Earth Stone
     private FallingBlock fallingBlock;
-
-    // Earthbending Stone
     private List<FallingBlock> move8FallingBlocks;
     private int move8Stage;
+
+    // Fire Stone
+    private long hellfireStoneMove4TimeRemaining = -1;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -70,6 +71,22 @@ public class ActivePlayer {
 
     public void setMove8Stage(int newValue) {
         this.move8Stage = newValue;
+    }
+
+    public boolean hasHellfireStoneMove4TimeRemaining() {
+        if (this.hellfireStoneMove4TimeRemaining != -1) {
+            if (this.hellfireStoneMove4TimeRemaining > System.currentTimeMillis()) {
+                return true;
+            } else {
+                this.hellfireStoneMove4TimeRemaining = -1;
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public void setHellfireStoneMove4TimeRemaining() {
+        this.hellfireStoneMove4TimeRemaining = System.currentTimeMillis() + (5 * 1000);
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
