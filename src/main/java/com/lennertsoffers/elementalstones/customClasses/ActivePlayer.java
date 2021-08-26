@@ -22,6 +22,7 @@ public class ActivePlayer {
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
+    private BukkitRunnable floatingFire;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -73,6 +74,15 @@ public class ActivePlayer {
 
     public void setMove8Stage(int newValue) {
         this.move8Stage = newValue;
+    }
+
+    public BukkitRunnable getFloatingFire() {
+        return this.floatingFire;
+    }
+
+    public void setFloatingFire(BukkitRunnable bukkitRunnable) {
+        this.floatingFire = bukkitRunnable;
+        this.floatingFire.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
     public boolean hasHellfireStoneMove4TimeRemaining() {
