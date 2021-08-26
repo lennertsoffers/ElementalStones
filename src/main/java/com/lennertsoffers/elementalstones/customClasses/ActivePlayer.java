@@ -2,6 +2,8 @@ package com.lennertsoffers.elementalstones.customClasses;
 
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -86,7 +88,8 @@ public class ActivePlayer {
     }
 
     public void setHellfireStoneMove4TimeRemaining() {
-        this.hellfireStoneMove4TimeRemaining = System.currentTimeMillis() + (5 * 1000);
+        this.hellfireStoneMove4TimeRemaining = System.currentTimeMillis() + (10 * 1000);
+        this.player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 140, 2, false, false, false));
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
