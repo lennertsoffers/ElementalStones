@@ -15,7 +15,9 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                HellfireStone.move4(activePlayer);
+                HellfireStone.move7(activePlayer);
+            } else if (event.getNewSlot() == 1) {
+                HellfireStone.move2(activePlayer);
             }
             if (activePlayer.isActive()) {
                 ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
