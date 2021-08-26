@@ -9,6 +9,7 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -79,8 +80,29 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 5
-    // Follow up to floating fire
-    //
+    // Fire Blast
+    // -> Follow up to floating fire
+    // -> Shoots fire ball in the looking direction
+    public static void move5(ActivePlayer activePlayer) {
+        if (activePlayer.getFloatingFire() != null) {
+            activePlayer.getFloatingFire().cancel();
+            Player player = activePlayer.getPlayer();
+            new BukkitRunnable() {
+                int counter = 0;
+                @Override
+                public void run() {
+                    Location location = player.getLocation();
+                    Vector direction = location.getDirection();
+                    Location fireBallLocation = location.add(direction.getX() * 2.5, direction.getY() * 2.5 + 0.85, direction.getZ() * 2.5).add(0, 1.5, 0);
+                    player.getWorld().spawnEntity(fireBallLocation, EntityType.FIREBALL).setVelocity(direction);
+                    if (counter >= 10) {
+                        this.cancel();
+                    }
+                    counter++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }
+    }
 
     // MOVE 6
 

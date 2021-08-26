@@ -55,14 +55,14 @@ public class FireStone {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Random random = new Random();
-        new BukkitRunnable() {
+        activePlayer.setFloatingFire(new BukkitRunnable() {
             int ticksLived = 1200;
             final Map<LivingEntity, Long> damagedEntityCooldown = new HashMap<>();
             @Override
             public void run() {
                 Vector direction = player.getLocation().getDirection();
                 Location location = player.getLocation().add(direction.getX() * 2.5, direction.getY() * 2.5, direction.getZ() * 2.5).add(0, 1.5, 0);
-                double nominator = ticksLived / 200f;
+                double nominator = ticksLived / 200f * 2;
                 for (Entity entity : world.getNearbyEntities(location, 0.5, 0.5, 0.5)) {
                     if (entity != null) {
                         if (entity instanceof LivingEntity) {
@@ -85,7 +85,7 @@ public class FireStone {
                 }
                 for (int i = 0; i < 30; i++) {
                     Vector fireballDirection = player.getLocation().getDirection();
-                    Location fireballLocation = player.getLocation().add(fireballDirection.getX() * 2.5, fireballDirection.getY() * 2.5, direction.getZ() * 2.5).add(0, 1.5, 0);
+                    Location fireballLocation = player.getLocation().add(fireballDirection.getX() * 2.5, fireballDirection.getY() * 2.5 + 1, direction.getZ() * 2.5).add(0, 1.5, 0);
                     world.spawnParticle(Particle.FLAME, fireballLocation.add(random.nextGaussian() / nominator, random.nextGaussian() / nominator, random.nextGaussian() / nominator), 0, 0, 0, 0);
                 }
                 if (ticksLived > 2400) {
@@ -93,7 +93,7 @@ public class FireStone {
                 }
                 ticksLived++;
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        });
     }
 
     // MOVE 3
