@@ -17,6 +17,15 @@ import java.util.Random;
 
 public class HellfireStone extends FireStone {
 
+    private static void spawnSmallFlameOrb(Location location, Vector direction, Random random, World world) {
+        for (int j = 0; j < 2; j++) {
+            Location flameLocation = location.clone().add(direction);
+            flameLocation.add(random.nextGaussian() / 20, random.nextGaussian() / 20, random.nextGaussian() / 20);
+            world.spawnParticle(Particle.FLAME, flameLocation, 0, 0, 0, 0);
+
+        }
+    }
+
     // PASSIVE
 
 
@@ -54,30 +63,42 @@ public class HellfireStone extends FireStone {
     public static void move7(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-
         new BukkitRunnable() {
-            int tickCount = 0;
+            double stageOfBeam = 0.1;
+            final Random random = new Random();
             @Override
             public void run() {
-                Random random = new Random();
+                final Location location = player.getEyeLocation().add(0, -0.6, 0);
+                final Vector direction = location.getDirection();
+                Location variableLocation = location.clone();
+                for (double i = 0.1; i <= stageOfBeam; i += 0.1) {
+                    variableLocation.add(direction.getX() / 40 * i, direction.getY() / 40 * i, direction.getZ() / 40 * i);
+                    spawnSmallFlameOrb(variableLocation, direction, random, world);
+                }
+                if (stageOfBeam >= 7) {
+                    this.cancel();
+                }
+                stageOfBeam += 0.35;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        new BukkitRunnable() {
+            int tickCount = 0;
+            final Random random = new Random();
+            @Override
+            public void run() {
                 final Location location = player.getEyeLocation();
                 final Vector direction = location.getDirection();
                 location.add(0, -0.6, 0);
                 for (double i = 0.1; i < 7; i += 0.1) {
-                    for (int j = 0; j < 5; j++) {
-                        Location flameLocation = location.clone().add(direction);
-                        flameLocation.add(random.nextGaussian() / 20, random.nextGaussian() / 20, random.nextGaussian() / 20);
-                        world.spawnParticle(Particle.FLAME, flameLocation, 0, 0, 0, 0);
-
-                    }
+                    spawnSmallFlameOrb(location, direction, random, world);
                     location.add(direction.getX() / 40 * i, direction.getY() / 40 * i, direction.getZ() / 40 * i);
                 }
-                if (tickCount > 200) {
+                if (tickCount > 100) {
                     this.cancel();
                 }
                 tickCount++;
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }.runTaskTimer(StaticVariables.plugin, 20L, 1L);
     }
 
     // MOVE 8
