@@ -62,15 +62,15 @@ public class HellfireStone extends FireStone {
                 Random random = new Random();
                 final Location location = player.getEyeLocation();
                 final Vector direction = location.getDirection();
-                location.add(direction.getX(), -0.4, direction.getZ());
-                for (double i = 0.1; i < 20; i += 0.1) {
-                    for (int j = 0; j < 50; j++) {
+                location.add(0, -0.6, 0);
+                for (double i = 0.1; i < 7; i += 0.1) {
+                    for (int j = 0; j < 5; j++) {
                         Location flameLocation = location.clone().add(direction);
-                        flameLocation.add(random.nextGaussian() / 10, random.nextGaussian() / 10, random.nextGaussian() / 10);
+                        flameLocation.add(random.nextGaussian() / 20, random.nextGaussian() / 20, random.nextGaussian() / 20);
                         world.spawnParticle(Particle.FLAME, flameLocation, 0, 0, 0, 0);
 
                     }
-                    location.add(direction.getX() * i, direction.getY() * i, direction.getZ() * i);
+                    location.add(direction.getX() / 40 * i, direction.getY() / 40 * i, direction.getZ() / 40 * i);
                 }
                 if (tickCount > 200) {
                     this.cancel();
