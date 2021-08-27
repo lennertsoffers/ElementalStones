@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -105,7 +106,16 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 6
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
 
+        for (Entity entity : player.getNearbyEntities(20, 20, 20)) {
+            if (Tools.playerTargetsEntity(player, entity.getLocation())) {
+                System.out.println("true");
+            }
+        }
+    }
 
     // MOVE 7
     // Fire Blast
@@ -154,4 +164,55 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 8
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        new BukkitRunnable() {
+            double radius = 2;
+            final Random random = new Random();
+            @Override
+            public void run() {
+                Location location = player.getLocation();
+                for (int i = 0; i < 360; i++) {
+                    double x = location.getX() + radius * Math.cos(i);
+                    double z = location.getZ() + radius * Math.sin(i);
+                    Location particleLocation = new Location(world, x, location.getY() + 7, z);
+                    particleLocation.add(random.nextGaussian() / 2, random.nextGaussian() / 2, random.nextGaussian() / 2);
+                    world.spawnParticle(Particle.FLAME, particleLocation, 0, 0,-0.01, 0, 50);
+                }
+                if (radius > 10) {
+                    this.cancel();
+                }
+                radius += 0.1;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

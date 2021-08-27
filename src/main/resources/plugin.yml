@@ -3,7 +3,7 @@ version: ${project.version}
 main: com.lennertsoffers.elementalstones.ElementalStones
 api-version: 1.16
 authors: [ lennertsoffers ]
-description: A Minecraft Spigot plugin to add elemental stones to your server  
+description: A Minecraft Spigot plugin to add elemental stones to your server
 commands:
   r:
     description: Reloads the server
