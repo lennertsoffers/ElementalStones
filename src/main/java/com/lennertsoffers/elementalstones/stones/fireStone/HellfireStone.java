@@ -164,29 +164,35 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 8
+    // Dragons Breath
+    // -> Creates a ring of fire around the player damaging entities
+    // -> Player shoots continuously fireballs at the location he aims
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         new BukkitRunnable() {
-            double radius = 2;
+            int radius = 20;
             final Random random = new Random();
             @Override
             public void run() {
                 Location location = player.getLocation();
-                location.setYaw(location.getYaw() + 4.5f);
-                player.teleport(location);
-                world.spawnEntity(location.clone().add(location.getDirection()), EntityType.FIREBALL).setVelocity(location.getDirection());
-                for (int i = 0; i < 360; i++) {
-                    double x = location.getX() + radius * Math.cos(i);
-                    double z = location.getZ() + radius * Math.sin(i);
-                    Location particleLocation = new Location(world, x, location.getY() + 7 , z);
-                    particleLocation.add(random.nextGaussian() / 2, random.nextGaussian() / 2, random.nextGaussian() / 2);
-                    world.spawnParticle(Particle.FLAME, particleLocation, 0, 0,-0.01, 0, 50);
+                if (radius % 2 == 0) {
+                    Entity fireball = world.spawnEntity(location.clone().add(0, 3, 0), EntityType.FIREBALL);
+                    fireball.setVelocity(location.getDirection().setY(-0.3));
                 }
-                if (radius >= 10) {
+                for (int i = 0; i < 360; i++) {
+                    Location particleLocation = Tools.locationOnCircle(location, (double) radius / 10, i, world);
+                    particleLocation.add(random.nextGaussian() / 2, random.nextGaussian() / 2, random.nextGaussian() / 2);
+                    Vector particleDirection = Tools.directionOfVector(location, particleLocation);
+                    particleDirection.setX(particleDirection.getX() / 150);
+                    particleDirection.setZ(particleDirection.getZ() / 150);
+                    Location newParticleLocation
+                    world.spawnParticle(Particle.FLAME, particleLocation, 0, particleDirection.getX(),0, particleDirection.getZ(), 70);
+                }
+                if (radius >= 100) {
                     this.cancel();
                 }
-                radius += 0.1;
+                radius += 1;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
