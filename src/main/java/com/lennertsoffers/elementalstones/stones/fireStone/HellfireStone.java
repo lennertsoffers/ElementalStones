@@ -20,10 +20,13 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Stream;
 
 public class HellfireStone extends FireStone {
 
-    private static final Map<LivingEntity, Long> damagedEntityCoolDown = new HashMap<>();
+    private static final Map<LivingEntity, Long> damagedEntityCoolDownMove7 = new HashMap<>();
+    private static final Map<LivingEntity, Long> damagedEntityCoolDownMove8 = new HashMap<>();
+
 
     private static void spawnSmallFlameOrb(Location location, Vector direction, Random random, World world) {
         for (int j = 0; j < 2; j++) {
@@ -39,14 +42,14 @@ public class HellfireStone extends FireStone {
                 if (entity instanceof LivingEntity) {
                     LivingEntity livingEntity = (LivingEntity) entity;
                     if (livingEntity != player) {
-                        if (HellfireStone.damagedEntityCoolDown.containsKey(livingEntity)) {
-                            if (HellfireStone.damagedEntityCoolDown.get(livingEntity) < System.currentTimeMillis()) {
-                                HellfireStone.damagedEntityCoolDown.replace(livingEntity, System.currentTimeMillis() + 1000);
+                        if (HellfireStone.damagedEntityCoolDownMove7.containsKey(livingEntity)) {
+                            if (HellfireStone.damagedEntityCoolDownMove7.get(livingEntity) < System.currentTimeMillis()) {
+                                HellfireStone.damagedEntityCoolDownMove7.replace(livingEntity, System.currentTimeMillis() + 1000);
                                 livingEntity.damage(4);
                                 entity.setFireTicks(entity.getFireTicks() + 40);
                             }
                         } else {
-                            HellfireStone.damagedEntityCoolDown.put(livingEntity, System.currentTimeMillis() + 1000);
+                            HellfireStone.damagedEntityCoolDownMove7.put(livingEntity, System.currentTimeMillis() + 1000);
                             livingEntity.damage(4);
                             entity.setFireTicks(entity.getFireTicks() + 40);
                         }
@@ -167,6 +170,7 @@ public class HellfireStone extends FireStone {
     // Dragons Breath
     // -> Creates a ring of fire around the player damaging entities
     // -> Player shoots continuously fireballs at the location he aims
+    // -> This move has to charge for 3 seconds
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
@@ -186,8 +190,29 @@ public class HellfireStone extends FireStone {
                     Vector particleDirection = Tools.directionOfVector(location, particleLocation);
                     particleDirection.setX(particleDirection.getX() / 150);
                     particleDirection.setZ(particleDirection.getZ() / 150);
-                    Location newParticleLocation
+                    Location newParticleLocation = particleLocation.add(particleDirection).getBlock().getLocation();
                     world.spawnParticle(Particle.FLAME, particleLocation, 0, particleDirection.getX(),0, particleDirection.getZ(), 70);
+                    Stream.concat(world.getNearbyEntities(newParticleLocation, 0.5, 0.5, 0.5).stream(), world.getNearbyEntities(particleLocation, 0.5, 0.5, 0.5).stream()).forEach(entity -> {
+                        if (entity != null) {
+                            if (entity != player) {
+                                if (entity instanceof LivingEntity) {
+                                    LivingEntity livingEntity = (LivingEntity) entity;
+                                    if (HellfireStone.damagedEntityCoolDownMove8.containsKey(livingEntity)) {
+                                        if (HellfireStone.damagedEntityCoolDownMove8.get(livingEntity) < System.currentTimeMillis()) {
+                                            livingEntity.setFireTicks(400);
+                                            livingEntity.damage(5);
+                                            HellfireStone.damagedEntityCoolDownMove8.put(livingEntity, System.currentTimeMillis() + (10 * 1000));
+                                        }
+                                    } else {
+                                        livingEntity.setFireTicks(400);
+                                        livingEntity.damage(5);
+                                        HellfireStone.damagedEntityCoolDownMove8.put(livingEntity, System.currentTimeMillis() + (10 * 1000));
+                                    }
+
+                                }
+                            }
+                        }
+                    });
                 }
                 if (radius >= 100) {
                     this.cancel();
