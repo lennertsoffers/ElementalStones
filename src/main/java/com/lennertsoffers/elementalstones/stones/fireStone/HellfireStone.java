@@ -173,14 +173,17 @@ public class HellfireStone extends FireStone {
             @Override
             public void run() {
                 Location location = player.getLocation();
+                location.setYaw(location.getYaw() + 4.5f);
+                player.teleport(location);
+                world.spawnEntity(location.clone().add(location.getDirection()), EntityType.FIREBALL).setVelocity(location.getDirection());
                 for (int i = 0; i < 360; i++) {
                     double x = location.getX() + radius * Math.cos(i);
                     double z = location.getZ() + radius * Math.sin(i);
-                    Location particleLocation = new Location(world, x, location.getY() + 7, z);
+                    Location particleLocation = new Location(world, x, location.getY() + 7 , z);
                     particleLocation.add(random.nextGaussian() / 2, random.nextGaussian() / 2, random.nextGaussian() / 2);
                     world.spawnParticle(Particle.FLAME, particleLocation, 0, 0,-0.01, 0, 50);
                 }
-                if (radius > 10) {
+                if (radius >= 10) {
                     this.cancel();
                 }
                 radius += 0.1;
