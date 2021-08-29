@@ -174,6 +174,43 @@ public class HellfireStone extends FireStone {
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
+        System.out.println("move8");
+        new BukkitRunnable() {
+            int tickCount = 0;
+            final Random random = new Random();
+            @Override
+            public void run() {
+                Location location = player.getLocation().add(0, 1, 0);
+                Location particleLocation = location.clone();
+                double addX = random.nextDouble();
+                double addY = random.nextDouble();
+                double addZ = random.nextDouble();
+                if (random.nextBoolean()) {
+                    particleLocation.add(addX, 0, 0);
+                } else {
+                    particleLocation.add(-addX, 0 ,0 );
+                }
+
+                if (random.nextBoolean()) {
+                    particleLocation.add(0, addY, 0);
+                } else {
+                    particleLocation.add(0, -addY, 0);
+                }
+
+                if (random.nextBoolean()) {
+                    particleLocation.add(0, 0, addZ);
+                } else {
+                    particleLocation.add(0, 0,0 -addZ);
+                }
+                Vector particleDirection = location.toVector().subtract(particleLocation.toVector());
+                System.out.println(particleLocation);
+                world.spawnParticle(Particle.FLAME, particleLocation, 0, particleDirection.getX() / 100, particleDirection.getY() / 100, particleDirection.getZ() / 100, 4);
+                if (tickCount > 59) {
+                    this.cancel();
+                }
+                tickCount++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         new BukkitRunnable() {
             int radius = 20;
             final Random random = new Random();
