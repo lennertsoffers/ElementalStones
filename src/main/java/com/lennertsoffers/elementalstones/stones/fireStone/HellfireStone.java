@@ -205,7 +205,7 @@ public class HellfireStone extends FireStone {
                 Vector particleDirection = location.toVector().subtract(particleLocation.toVector());
                 System.out.println(particleLocation);
                 world.spawnParticle(Particle.FLAME, particleLocation, 0, particleDirection.getX() / 100, particleDirection.getY() / 100, particleDirection.getZ() / 100, 4);
-                if (tickCount > 59) {
+                if (tickCount > 58) {
                     this.cancel();
                 }
                 tickCount++;
@@ -256,7 +256,7 @@ public class HellfireStone extends FireStone {
                 }
                 radius += 1;
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }.runTaskTimer(StaticVariables.plugin, 60L, 1L);
     }
 }
 
