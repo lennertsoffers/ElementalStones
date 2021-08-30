@@ -3,16 +3,14 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.Tools;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -60,7 +58,11 @@ public class HellfireStone extends FireStone {
     }
 
     // PASSIVE
-
+    public static void passive(ActivePlayer activePlayer, EntityDamageEvent event) {
+        if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
+            event.setCancelled(true);
+        }
+    }
 
     // MOVE 4
     // Fire Track
@@ -109,15 +111,92 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 6
+    // Into the Underworld
+    // -> Follow up to floating fire
+    // -> Instant nether teleportation
     public static void move6(ActivePlayer activePlayer) {
+//        if (activePlayer.getFloatingFire() != null) {
         Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
+        World overworld = Bukkit.getWorld("WORLD");
+        World nether = Bukkit.getWorld("WORLD_NETHER");
+        if (overworld != null) {
+            if (nether != null) {
+                if (player.getWorld().getEnvironment() == World.Environment.NETHER) {
+                    Location location = player.getLocation();
+                    location.setWorld(overworld);
+                    location.setX(location.getX() * 8);
+                    location.setZ(location.getZ() * 8);
+                    location.setY(overworld.getHighestBlockYAt(location));
+                    player.teleport(location);
+                } else if (player.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                    Location location = player.getLocation();
+                    boolean foundLocation = false;
+                    location.setX(location.getX() / 8 - 16);
+                    location.setZ(location.getZ() / 8 - 16);
+                    location.setY(32);
+                    location.setWorld(nether);
+                    for (int j = 0; j < 80; j++) {
+                        for (int i = 1; i <= 256; i++) {
+                            Location checkLocation = location.clone();
+                            if (
+                                    (nether.getBlockAt(checkLocation).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 1)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, 1)).getType() != Material.AIR && nether.getBlockAt(location).getType() != Material.LAVA) &&
 
-        for (Entity entity : player.getNearbyEntities(20, 20, 20)) {
-            if (Tools.playerTargetsEntity(player, entity.getLocation())) {
-                System.out.println("true");
+                                            (nether.getBlockAt(checkLocation.add(0, 1, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, 1)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 1)).getType() == Material.AIR) &&
+
+                                            (nether.getBlockAt(checkLocation.add(0, 1, 0)).getType() == Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 1)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(-1, 0, 0)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, -1)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(1, 0, 0)).getType() != Material.AIR) &&
+                                            (nether.getBlockAt(checkLocation.add(0, 0, 1)).getType() != Material.AIR)
+                            ) {
+                                foundLocation = true;
+                                player.teleport(location);
+                                break;
+                            }
+                            location.add(0, 0, 1);
+                            if (i % 16 == 0) {
+                                location.add(1, 0, 0);
+                            }
+                        }
+                        if (foundLocation) {
+                            break;
+                        } else {
+                            location.add(0, 1, 0);
+                        }
+                    }
+                    if (!foundLocation) {
+                        player.teleport(nether.getSpawnLocation());
+                    }
+                } else {
+                    player.teleport(overworld.getSpawnLocation());
+                }
+            } else {
+                player.sendMessage("Incorrect configuration of nether name");
             }
+        } else {
+            player.sendMessage("Incorrect configuration of overworld name");
         }
+//        }
     }
 
     // MOVE 7
