@@ -26,6 +26,7 @@ public class ActivePlayer {
     private BukkitRunnable floatingFire;
     private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
+    private ArrayList<Location> lavaBlockLocations = new ArrayList<>();
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -123,6 +124,27 @@ public class ActivePlayer {
             this.removeBasald.runTaskTimer(StaticVariables.plugin, 60L, 5L);
         }
         this.removeBasald = removeBasaldRunnable;
+    }
+
+    public void addLavaBlockLocation(Location lavaBlockLocation) {
+        this.lavaBlockLocations.add(lavaBlockLocation);
+    }
+
+    public void removeLavaBlockLocation(Location lavaBlockLocation) {
+        this.lavaBlockLocations.remove(lavaBlockLocation);
+    }
+
+    public boolean isInLavaBlockLocations(Location location) {
+        for (Location lavaBlockLocation : this.lavaBlockLocations) {
+            if (
+                (lavaBlockLocation.getBlockX() == location.getBlockX()) &&
+                (lavaBlockLocation.getBlockY() == location.getBlockY()) &&
+                (lavaBlockLocation.getBlockZ() == location.getBlockZ())
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {

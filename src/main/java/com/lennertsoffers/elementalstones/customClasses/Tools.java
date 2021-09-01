@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class Tools {
@@ -65,5 +66,20 @@ public class Tools {
             }
         }
         return false;
+    }
+
+    public static void setWorldMaterialsFromString(World world, Location midpoint, String[] stringList, Map<Character, Material> characterMaterialMap) {
+        // width on x-axis
+        int width = stringList[0].length();
+        // height on z-axis
+        int height = stringList.length;
+        Location startingLocation = midpoint.clone().add(-width / 2f, 0, -height / 2f);
+        for (int i = 0; i < stringList.length; i++) {
+            String string = stringList[i];
+            for (int j = 0; j < string.length(); j++) {
+                Location blockLocation = startingLocation.clone().add(j, 0, i);
+                world.getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(j)));
+            }
+        }
     }
 }
