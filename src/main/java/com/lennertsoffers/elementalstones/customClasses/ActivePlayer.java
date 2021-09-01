@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
+import org.bukkit.Location;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -8,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class ActivePlayer {
@@ -23,6 +25,7 @@ public class ActivePlayer {
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
     private BukkitRunnable floatingFire;
+    private Location floatingFireLocation;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -83,6 +86,19 @@ public class ActivePlayer {
     public void setFloatingFire(BukkitRunnable bukkitRunnable) {
         this.floatingFire = bukkitRunnable;
         this.floatingFire.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    public void cancelFloatingFire() {
+        this.floatingFire.cancel();
+        this.floatingFire = null;
+    }
+
+    public Location getFloatingFireLocation() {
+        return this.floatingFireLocation;
+    }
+
+    public void setFloatingFireLocation(Location location) {
+        this.floatingFireLocation = location.add(0, 1, 0);
     }
 
     public boolean hasHellfireStoneMove4TimeRemaining() {
