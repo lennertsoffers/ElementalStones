@@ -17,7 +17,7 @@ After level 3, you can choose a path in which you want to continue upgrading the
     * Ice Stone
 * Fire Stone
     * Lava Stone
-    * Hellfire Stone
+    * Hellfire Stone 👍
     * Explosion Stone
 * Wind Stone
     * Agility Stone
