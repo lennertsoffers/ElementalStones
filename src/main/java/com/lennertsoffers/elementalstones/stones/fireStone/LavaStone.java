@@ -6,6 +6,9 @@ import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -15,7 +18,7 @@ import java.util.ArrayList;
 public class LavaStone {
 
     // PASSIVE
-    public static void passive(ActivePlayer activePlayer, PlayerMoveEvent event) {
+    public static void passive(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Location location = player.getLocation().add(0, -1, 0);
@@ -43,9 +46,11 @@ public class LavaStone {
             int blocksRemoved = 1;
             @Override
             public void run() {
-                int index = StaticVariables.random.nextInt(locationGroup.size() - 1);
-                world.getBlockAt(locationGroup.get(index)).setType(Material.LAVA);
-                locationGroup.remove(index);
+                if (locationGroup.size() >= 1) {
+                    int index = StaticVariables.random.nextInt(Math.abs(locationGroup.size()));
+                    world.getBlockAt(locationGroup.get(index)).setType(Material.LAVA);
+                    locationGroup.remove(index);
+                }
                 if (blocksRemoved >= 25) {
                     this.cancel();
                 }
@@ -53,4 +58,46 @@ public class LavaStone {
             }
         });
     }
+
+    // MOVE 4
+    // Lava Cross
+    // -> Spawns lava cross along the axes
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location location = player.getLocation();
+        new BukkitRunnable() {
+            int length = 0;
+            final Location locationPosX = location.clone().add(1, 0, 0);
+            final Location locationNegX = location.clone().add(-1, 0, 0);
+            final Location locationPosZ = location.clone().add(0, 0, 1);
+            final Location locationNegZ = location.clone().add(0, 0, -1);
+            @Override
+            public void run() {
+                world.getBlockAt(locationPosX).setType(Material.LAVA);
+                world.getBlockAt(locationNegX).setType(Material.LAVA);
+                world.getBlockAt(locationPosZ).setType(Material.LAVA);
+                world.getBlockAt(locationNegZ).setType(Material.LAVA);
+                locationPosX.add(1, 0, 0);
+                locationNegX.add(-1, 0, 0);
+                locationPosZ.add(0, 0, 1);
+                locationNegZ.add(0, 0, -1);
+                if (length > 10) {
+                    this.cancel();
+                }
+                length++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+    }
+
+    // MOVE 5
+
+
+    // MOVE 6
+
+
+    // MOVE 7
+
+
+    // MOVE 8
 }
