@@ -6,6 +6,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.Objects;
+
 public class Tools {
 
     public static boolean checkPlayerCollision(double player, double block) {
@@ -50,12 +52,18 @@ public class Tools {
                 world.getBlockAt(location.add(1, 0, 0)).getType() == Material.AIR;
     }
 
-    public static boolean playerTargetsEntity(Player player, Location target){
-        Location head = player.getLocation().add(0, player.getEyeHeight(), 0);
-        Vector look = player.getLocation().getDirection().normalize();
-        Vector direction = head.subtract(target).toVector().normalize();
-        Vector cp = direction.crossProduct(look);
-        double length = cp.length();
-        return (length < 0.1);
+    public static boolean lavaAroundPlayer(Location location) {
+        World world = location.getWorld();
+        location.add(1, 0, 1);
+        for (int i = 1; i <= 9; i++) {
+            if (Objects.requireNonNull(world).getBlockAt(location).getType() == Material.LAVA) {
+                return true;
+            }
+            location.add(-1, 0, 0);
+            if (i % 3 == 0) {
+                location.add(3, 0, -1);
+            }
+        }
+        return false;
     }
 }
