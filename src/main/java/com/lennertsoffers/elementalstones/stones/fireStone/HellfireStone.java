@@ -147,7 +147,6 @@ public class HellfireStone extends FireStone {
                     if (overworld != null) {
                         if (nether != null) {
                             if (player.getWorld().getEnvironment() == World.Environment.NETHER) {
-                                System.out.println("nether -> normal");
                                 Location location = player.getLocation();
                                 location.setWorld(overworld);
                                 location.setX(location.getX() * 8);
@@ -155,7 +154,6 @@ public class HellfireStone extends FireStone {
                                 location.setY(overworld.getHighestBlockYAt(location));
                                 player.teleport(location);
                             } else if (player.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                                System.out.println("normal -> nether");
                                 Location location = player.getLocation();
                                 location.setWorld(nether);
                                 location.setX(location.getX() / 8);
@@ -298,7 +296,6 @@ public class HellfireStone extends FireStone {
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        System.out.println("move8");
         new BukkitRunnable() {
             int tickCount = 0;
             final Random random = new Random();
@@ -327,7 +324,6 @@ public class HellfireStone extends FireStone {
                     particleLocation.add(0, 0,0 -addZ);
                 }
                 Vector particleDirection = location.toVector().subtract(particleLocation.toVector());
-                System.out.println(particleLocation);
                 world.spawnParticle(Particle.FLAME, particleLocation, 0, particleDirection.getX() / 100, particleDirection.getY() / 100, particleDirection.getZ() / 100, 4);
                 if (tickCount > 58) {
                     this.cancel();

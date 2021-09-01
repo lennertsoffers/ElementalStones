@@ -9,7 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class ActivePlayer {
@@ -26,6 +25,7 @@ public class ActivePlayer {
     private long hellfireStoneMove4TimeRemaining = -1;
     private BukkitRunnable floatingFire;
     private Location floatingFireLocation;
+    private BukkitRunnable removeBasald;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -116,6 +116,13 @@ public class ActivePlayer {
     public void setHellfireStoneMove4TimeRemaining() {
         this.hellfireStoneMove4TimeRemaining = System.currentTimeMillis() + (10 * 1000);
         this.player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 140, 2, false, false, false));
+    }
+
+    public void setRemoveBasald(BukkitRunnable removeBasaldRunnable) {
+        if (this.removeBasald != null) {
+            this.removeBasald.runTaskTimer(StaticVariables.plugin, 60L, 5L);
+        }
+        this.removeBasald = removeBasaldRunnable;
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
