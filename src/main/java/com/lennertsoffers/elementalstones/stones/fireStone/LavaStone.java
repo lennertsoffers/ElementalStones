@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LavaStone {
 
@@ -27,14 +29,16 @@ public class LavaStone {
             location.add(2, 0, 2);
             Location startLocation = location.clone();
             for (int i = 1; i <= 25; i++) {
-                locationGroup.add(location.clone());
-                if (
-                        !(startLocation.getX() == location.getX() && startLocation.getZ() == location.getZ()) &&
-                                !(startLocation.getX() == location.getX() && startLocation.getZ() - 4 == location.getZ()) &&
-                                !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() == location.getZ()) &&
-                                !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() - 4 == location.getZ())
-                ) {
-                    world.getBlockAt(location).setType(Material.BASALT);
+                if (!activePlayer.isInLavaBlockLocations(location)) {
+                    locationGroup.add(location.clone());
+                    if (
+                            !(startLocation.getX() == location.getX() && startLocation.getZ() == location.getZ()) &&
+                                    !(startLocation.getX() == location.getX() && startLocation.getZ() - 4 == location.getZ()) &&
+                                    !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() == location.getZ()) &&
+                                    !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() - 4 == location.getZ())
+                    ) {
+                        world.getBlockAt(location).setType(Material.BASALT);
+                    }
                 }
                 location.add(-1, 0, 0);
                 if (i % 5 == 0) {
@@ -59,6 +63,10 @@ public class LavaStone {
         });
     }
 
+
+
+
+
     // MOVE 4
     // Lava Cross
     // -> Spawns lava cross along the axes
@@ -66,28 +74,39 @@ public class LavaStone {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Location location = player.getLocation();
-        new BukkitRunnable() {
-            int length = 0;
-            final Location locationPosX = location.clone().add(1, 0, 0);
-            final Location locationNegX = location.clone().add(-1, 0, 0);
-            final Location locationPosZ = location.clone().add(0, 0, 1);
-            final Location locationNegZ = location.clone().add(0, 0, -1);
-            @Override
-            public void run() {
-                world.getBlockAt(locationPosX).setType(Material.LAVA);
-                world.getBlockAt(locationNegX).setType(Material.LAVA);
-                world.getBlockAt(locationPosZ).setType(Material.LAVA);
-                world.getBlockAt(locationNegZ).setType(Material.LAVA);
-                locationPosX.add(1, 0, 0);
-                locationNegX.add(-1, 0, 0);
-                locationPosZ.add(0, 0, 1);
-                locationNegZ.add(0, 0, -1);
-                if (length > 10) {
-                    this.cancel();
-                }
-                length++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        String[] stringList = {
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC",
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC",
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC",
+                "CDDDDDC",
+                "CEEEEEC"
+        };
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('C', Material.COAL_BLOCK);
+        characterMaterialMap.put('E', Material.EMERALD_BLOCK);
+        characterMaterialMap.put('D', Material.DIAMOND_BLOCK);
+        Tools.setWorldMaterialsFromString(world, location, stringList, characterMaterialMap);
+
+//        new BukkitRunnable() {
+//            int length = 0;
+//            @Override
+//            public void run() {
+//                if (length > 10) {
+//                    this.cancel();
+//                }
+//                length++;
+//            }
+//        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
     }
 
     // MOVE 5
