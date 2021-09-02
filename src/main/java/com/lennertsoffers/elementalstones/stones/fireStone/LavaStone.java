@@ -12,6 +12,7 @@ import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,47 +71,126 @@ public class LavaStone {
     // MOVE 4
     // Lava Cross
     // -> Spawns lava cross along the axes
-    public static void move4(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
-        Location location = player.getLocation();
-        String[] stringList = {
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC",
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC",
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC",
-                "CDDDDDC",
-                "CEEEEEC"
-        };
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('C', Material.COAL_BLOCK);
-        characterMaterialMap.put('E', Material.EMERALD_BLOCK);
-        characterMaterialMap.put('D', Material.DIAMOND_BLOCK);
-        Tools.setWorldMaterialsFromString(world, location, stringList, characterMaterialMap);
-
+//    public static void move4(ActivePlayer activePlayer) {
+//        Player player = activePlayer.getPlayer();
+//        World world = player.getWorld();
+//        Location location = player.getLocation();
+//        String[] stringList = {
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "LLLLLALLLLL",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//                "AAAAALAAAAA",
+//        };
+//        Map<Character, Material> characterMaterialMap = new HashMap<>();
+//        characterMaterialMap.put('A', Material.AIR);
+//        characterMaterialMap.put('L', Material.LAVA);
+//        Vector vector = player.getLocation().getDirection();
+//        vector
+//
 //        new BukkitRunnable() {
-//            int length = 0;
+//            int tickCount = 0;
 //            @Override
 //            public void run() {
-//                if (length > 10) {
+//                Tools.setWorldMaterialsFromString(world, location, stringList, characterMaterialMap);
+//                if (tickCount > 60) {
 //                    this.cancel();
 //                }
-//                length++;
+//                tickCount++;
 //            }
-//        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
-    }
+//        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                Tools.set
+//            }
+//        }
+//    }
 
     // MOVE 5
+    // Lava Wave
+    // -> Creates a wave of lava in the looking direction
+    public static void move5(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location playerLocation = player.getLocation();
+        Vector playerDirection = playerLocation.getDirection();
+        float yaw = Math.abs(playerLocation.getYaw());
+        if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
+            Map<Character, Material> characterMaterialMap = new HashMap<>();
+            characterMaterialMap.put('A', Material.AIR);
+            characterMaterialMap.put('L', Material.LAVA);
+            String[] stringListBottom = {
+                    "AAAL",
+                    "AALL",
+                    "ALLL",
+                    "LLL*"
+            };
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true);
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        } else if (yaw >= 25 && yaw < 65) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else if (yaw >= 65 && yaw < 115) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else if (yaw >= 115 && yaw < 155) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else if (yaw >= 155 && yaw < 205) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else if (yaw >= 205 && yaw < 245) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else if (yaw >= 245 && yaw < 295) {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        } else {
+            String[] stringListBottom = {
+                    ""
+            };
+            String[] stringListTop = {
+                    ""
+            };
+        }
 
+
+    }
 
     // MOVE 6
 

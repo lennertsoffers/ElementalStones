@@ -13,6 +13,6 @@ public class PlayerMoveEvent implements Listener {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
 //        HellfireStone.move4(Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId())), event);
-        LavaStone.passive(activePlayer);
+//        LavaStone.passive(activePlayer);
     }
 }
