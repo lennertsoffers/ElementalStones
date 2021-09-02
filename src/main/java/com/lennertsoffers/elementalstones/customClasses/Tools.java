@@ -6,6 +6,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
@@ -68,18 +69,59 @@ public class Tools {
         return false;
     }
 
-    public static void setWorldMaterialsFromString(World world, Location midpoint, String[] stringList, Map<Character, Material> characterMaterialMap) {
-        // width on x-axis
-        int width = stringList[0].length();
-        // height on z-axis
-        int height = stringList.length;
-        Location startingLocation = midpoint.clone().add(-width / 2f, 0, -height / 2f);
-        for (int i = 0; i < stringList.length; i++) {
-            String string = stringList[i];
-            for (int j = 0; j < string.length(); j++) {
-                Location blockLocation = startingLocation.clone().add(j, 0, i);
-                world.getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(j)));
+    public static void setBlocks(Location playerLocation, String[] stringList, Map<Character, Material> characterMaterialMap, boolean onlyFillAir) {
+        int columnLocation = 0;
+        int rowLocation = 0;
+        for (int row = 0; row < stringList.length; row++) {
+            for (int column = 0; column < stringList[0].length(); column++) {
+                if (stringList[row].charAt(column) == '*') {
+                    columnLocation = column;
+                    rowLocation = row;
+                }
+            }
+        }
+        Location startingLocation = playerLocation.clone().add(-rowLocation, 0, -columnLocation);
+        for (int row = 0; row < stringList.length; row++) {
+            String string = stringList[row];
+            for (int column = 0; column < stringList[0].length(); column++) {
+                Location blockLocation = startingLocation.clone().add(row, 0, column);
+                Material material = Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).getType();
+                if (material == Material.AIR || !onlyFillAir) {
+                    if (string.charAt(column) == '?' && string.charAt(column) == '*') {
+                        Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(material);
+                    } else {
+                        Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
+                    }
+                }
             }
         }
     }
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
