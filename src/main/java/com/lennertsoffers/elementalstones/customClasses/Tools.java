@@ -69,7 +69,7 @@ public class Tools {
         return false;
     }
 
-    public static void setBlocks(Location playerLocation, String[] stringList, Map<Character, Material> characterMaterialMap, boolean onlyFillAir) {
+    public static void setBlocks(Location playerLocation, String[] stringList, Map<Character, Material> characterMaterialMap, boolean onlyFillAir, ArrayList<Material> overrideBlocks) {
         int columnLocation = 0;
         int rowLocation = 0;
         for (int row = 0; row < stringList.length; row++) {
@@ -86,11 +86,15 @@ public class Tools {
             for (int column = 0; column < stringList[0].length(); column++) {
                 Location blockLocation = startingLocation.clone().add(row, 0, column);
                 Material material = Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).getType();
-                if (material == Material.AIR || !onlyFillAir) {
-                    if (string.charAt(column) == '?' && string.charAt(column) == '*') {
+                if ((material == Material.AIR || !onlyFillAir) || (overrideBlocks.contains(material))) {
+                    if (string.charAt(column) == '?' || string.charAt(column) == '*') {
                         Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(material);
                     } else {
-                        Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
+                        try {
+                            Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(string.charAt(column));
+                        }
                     }
                 }
             }

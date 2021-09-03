@@ -6,11 +6,7 @@ import com.lennertsoffers.elementalstones.customClasses.Tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -120,73 +116,180 @@ public class LavaStone {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Location playerLocation = player.getLocation();
-        Vector playerDirection = playerLocation.getDirection();
         float yaw = Math.abs(playerLocation.getYaw());
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('L', Material.LAVA);
+        ArrayList<Material> overrideBlocks = new ArrayList<>();
+        overrideBlocks.add(Material.LAVA);
+        String[] clearAllLavaString = {
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAA*AAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA",
+                "AAAAAAAAAAA"
+        };
+        BukkitRunnable clearLava = new BukkitRunnable() {
+            @Override
+            public void run() {
+                Tools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks);
+                Tools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks);
+
+            }
+        };
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-            Map<Character, Material> characterMaterialMap = new HashMap<>();
-            characterMaterialMap.put('A', Material.AIR);
-            characterMaterialMap.put('L', Material.LAVA);
+            System.out.println("1");
+            playerLocation.add(0, 0, 7);
             String[] stringListBottom = {
-                    "AAAL",
-                    "AALL",
-                    "ALLL",
-                    "LLL*"
+                    "AAAAAA",
+                    "AALAAA",
+                    "ALLLAA",
+                    "ALLLA*",
+                    "ALLLAA",
+                    "AALAAA",
+                    "AAAAAA"
+            };
+            String[] stringListTop = {
+                    "AAAAA",
+                    "ALAAA",
+                    "ALLA*",
+                    "ALAAA",
+                    "AAAAA",
             };
             new BukkitRunnable() {
+                int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true);
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(0, 0, 1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 25 && yaw < 65) {
-            String[] stringListBottom = {
-                    ""
-            };
-            String[] stringListTop = {
-                    ""
-            };
+
         } else if (yaw >= 65 && yaw < 115) {
+            System.out.println("2");
+            playerLocation.add(-1, 0, 0);
             String[] stringListBottom = {
-                    ""
+                    "AAAAAAA",
+                    "AALLLAA",
+                    "ALLLLLA",
+                    "AALLLAA",
+                    "AAAAAAA",
+                    "AAA*AAA",
             };
             String[] stringListTop = {
-                    ""
+                    "AAAAAAA",
+                    "AAALAAA",
+                    "AALLLAA",
+                    "AAAAAAA",
+                    "AAAAAAA",
+                    "AAA*AAA",
             };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(-1, 0, 0);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 115 && yaw < 155) {
-            String[] stringListBottom = {
-                    ""
-            };
-            String[] stringListTop = {
-                    ""
-            };
+
         } else if (yaw >= 155 && yaw < 205) {
+            System.out.println("3");
+            playerLocation.add(0, 0, -1);
             String[] stringListBottom = {
-                    ""
+                    "AAAAAA",
+                    "AALAAA",
+                    "ALLLAA",
+                    "ALLLA*",
+                    "ALLLAA",
+                    "AALAAA",
+                    "AAAAAA"
             };
             String[] stringListTop = {
-                    ""
+                    "AAAAAA",
+                    "AALAAA",
+                    "ALLAA*",
+                    "AALAAA",
+                    "AAAAAA",
             };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(0, 0, -1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 205 && yaw < 245) {
-            String[] stringListBottom = {
-                    ""
-            };
-            String[] stringListTop = {
-                    ""
-            };
+
         } else if (yaw >= 245 && yaw < 295) {
+            System.out.println("4");
+            playerLocation.add(7, 0, 0);
             String[] stringListBottom = {
-                    ""
+                    "AAAAAAA",
+                    "AALLLAA",
+                    "ALLLLLA",
+                    "AALLLAA",
+                    "AAAAAAA",
+                    "AAA*AAA",
             };
             String[] stringListTop = {
-                    ""
+                    "AAAAAAA",
+                    "AALLLAA",
+                    "AAALAAA",
+                    "AAAAAAA",
+                    "AAA*AAA",
             };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(1, 0, 0);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else {
-            String[] stringListBottom = {
-                    ""
-            };
-            String[] stringListTop = {
-                    ""
-            };
+
         }
 
 
