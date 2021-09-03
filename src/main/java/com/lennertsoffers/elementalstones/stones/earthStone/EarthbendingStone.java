@@ -2,7 +2,8 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.Tools;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -201,7 +202,7 @@ public class EarthbendingStone {
         Material material = world.getBlockAt(location.add(0, -1, 0)).getType();
 
         if (material == Material.STONE || material == Material.COBBLESTONE || material == Material.DIRT || material == Material.SAND || material == Material.SANDSTONE || material == Material.ANDESITE || material == Material.DIORITE || material == Material.GRANITE) {
-            if (Tools.locationAroundClear(locationAround, world)) {
+            if (CheckLocationTools.locationAroundClear(locationAround, world)) {
                 Block block = world.getBlockAt(location);
                 FallingBlock fallingBlock = world.spawnFallingBlock(location, block.getBlockData());
                 world.getBlockAt(location).setType(Material.AIR);
@@ -406,7 +407,7 @@ public class EarthbendingStone {
                 double fallingBlockX = fallingBlockLocation.getX();
                 double fallingBlockY = fallingBlockLocation.getY();
                 double fallingBlockZ = fallingBlockLocation.getZ();
-                double length = Tools.lengthOfVector(playerX, fallingBlockX, playerY, fallingBlockY, playerZ, fallingBlockZ);
+                double length = MathTools.lengthOfVector(playerX, fallingBlockX, playerY, fallingBlockY, playerZ, fallingBlockZ);
                 fallingBlock.setVelocity(new Vector(-(fallingBlockX - playerX) / length * 5, -(fallingBlockY - playerY) / length * 2, -(fallingBlockZ - playerZ) / length * 5));
             }
             activePlayer.setMove8FallingBlocks(null);

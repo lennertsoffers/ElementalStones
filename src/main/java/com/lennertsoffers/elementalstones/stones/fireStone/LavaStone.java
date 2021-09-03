@@ -2,7 +2,8 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.Tools;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -21,7 +22,7 @@ public class LavaStone {
         World world = player.getWorld();
         Location location = player.getLocation().add(0, -1, 0);
         ArrayList<Location> locationGroup = new ArrayList<>();
-        if (Tools.lavaAroundPlayer(location)) {
+        if (CheckLocationTools.lavaAroundPlayer(location)) {
             location.add(2, 0, 2);
             Location startLocation = location.clone();
             for (int i = 1; i <= 25; i++) {
@@ -138,8 +139,8 @@ public class LavaStone {
         BukkitRunnable clearLava = new BukkitRunnable() {
             @Override
             public void run() {
-                Tools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                Tools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                SetBlockTools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                SetBlockTools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
             }
         };
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
@@ -164,8 +165,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(0, 0, 1);
                     }
@@ -197,8 +198,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(-1, 0, 1);
                     }
@@ -231,8 +232,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(-1, 0, 0);
                     }
@@ -264,8 +265,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(-1, 0, -1);
                     }
@@ -298,8 +299,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(0, 0, -1);
                     }
@@ -331,8 +332,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(1, 0, -1);
                     }
@@ -364,8 +365,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(1, 0, 0);
                     }
@@ -397,8 +398,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(1, 0, 1);
                     }

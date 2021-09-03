@@ -2,7 +2,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.Tools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -342,9 +342,9 @@ public class HellfireStone extends FireStone {
                     fireball.setVelocity(location.getDirection().setY(-0.3));
                 }
                 for (int i = 0; i < 360; i++) {
-                    Location particleLocation = Tools.locationOnCircle(location, (double) radius / 10, i, world);
+                    Location particleLocation = MathTools.locationOnCircle(location, (double) radius / 10, i, world);
                     particleLocation.add(random.nextGaussian() / 2, random.nextGaussian() / 2, random.nextGaussian() / 2);
-                    Vector particleDirection = Tools.directionOfVector(location, particleLocation);
+                    Vector particleDirection = MathTools.directionOfVector(location, particleLocation);
                     particleDirection.setX(particleDirection.getX() / 150);
                     particleDirection.setZ(particleDirection.getZ() / 150);
                     Location newParticleLocation = particleLocation.add(particleDirection).getBlock().getLocation();

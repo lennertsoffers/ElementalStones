@@ -3,7 +3,7 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.Tools;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -40,7 +40,7 @@ public class EarthStone {
             double blockX = location.getX();
             double blockZ = location.getZ();
 
-            if (Tools.checkPlayerCollision(playerX, blockX) && Tools.checkPlayerCollision(playerZ, blockZ)) {
+            if (CheckLocationTools.checkPlayerCollision(playerX, blockX) && CheckLocationTools.checkPlayerCollision(playerZ, blockZ)) {
                 player.setVelocity(new Vector(0, 1 ,0));
                 server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
                     placePillar(location);
@@ -60,7 +60,7 @@ public class EarthStone {
         World world = player.getWorld();
         Block targetBlock = Objects.requireNonNull(player.getTargetBlockExact(100));
         Location targetBlockLocation = targetBlock.getLocation();
-        if (Tools.locationAroundClear(targetBlockLocation.clone(), world)) {
+        if (CheckLocationTools.locationAroundClear(targetBlockLocation.clone(), world)) {
             FallingBlock fallingBlock = world.spawnFallingBlock(targetBlock.getLocation(), targetBlock.getBlockData());
             world.getBlockAt(targetBlock.getLocation()).setType(Material.AIR);
             fallingBlock.setVelocity(new Vector(0, 0.7, 0));
