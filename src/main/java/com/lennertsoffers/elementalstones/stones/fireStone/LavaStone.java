@@ -114,7 +114,6 @@ public class LavaStone {
     // -> Creates a wave of lava in the looking direction
     public static void move5(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
         Location playerLocation = player.getLocation();
         float yaw = Math.abs(playerLocation.getYaw());
         Map<Character, Material> characterMaterialMap = new HashMap<>();
@@ -123,28 +122,28 @@ public class LavaStone {
         ArrayList<Material> overrideBlocks = new ArrayList<>();
         overrideBlocks.add(Material.LAVA);
         String[] clearAllLavaString = {
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAA*AAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA"
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAA*AAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA",
+                "AAAAAAAAAAAAA"
         };
         BukkitRunnable clearLava = new BukkitRunnable() {
             @Override
             public void run() {
-                Tools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks);
-                Tools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks);
-
+                Tools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                Tools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
             }
         };
         if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-            System.out.println("1");
             playerLocation.add(0, 0, 7);
             String[] stringListBottom = {
                     "AAAAAA",
@@ -166,8 +165,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(0, 0, 1);
                     }
@@ -179,9 +178,39 @@ public class LavaStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 25 && yaw < 65) {
-
+            playerLocation.add(-2, 0, 2);
+            String[] stringListBottom = {
+                    "AAAAAA",
+                    "ALAAAA",
+                    "ALLAAA",
+                    "ALLLAA",
+                    "A*LLLA",
+                    "AAAAAA"
+            };
+            String[] stringListTop = {
+                    "AAAAA",
+                    "ALAAA",
+                    "AALAA",
+                    "A*ALA",
+                    "AAAAA"
+            };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(-1, 0, 1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 65 && yaw < 115) {
-            System.out.println("2");
             playerLocation.add(-1, 0, 0);
             String[] stringListBottom = {
                     "AAAAAAA",
@@ -203,8 +232,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(-1, 0, 0);
                     }
@@ -216,9 +245,39 @@ public class LavaStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 115 && yaw < 155) {
-
+            playerLocation.add(-2, 0, -2);
+            String[] stringListBottom = {
+                    "AAAAAA",
+                    "AAAALA",
+                    "AAALLA",
+                    "AALLLA",
+                    "ALLL*A",
+                    "AAAAAA"
+            };
+            String[] stringListTop = {
+                    "AAAAA",
+                    "AAALA",
+                    "AALAA",
+                    "ALA*A",
+                    "AAAAA"
+            };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(-1, 0, -1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 155 && yaw < 205) {
-            System.out.println("3");
             playerLocation.add(0, 0, -1);
             String[] stringListBottom = {
                     "AAAAAA",
@@ -240,8 +299,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(0, 0, -1);
                     }
@@ -253,9 +312,39 @@ public class LavaStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 205 && yaw < 245) {
-
+            playerLocation.add(2, 0, -2);
+            String[] stringListBottom = {
+                    "AAAAAA",
+                    "ALLL*A",
+                    "AALLLA",
+                    "AAALLA",
+                    "AAAALA",
+                    "AAAAAA"
+            };
+            String[] stringListTop = {
+                    "AAAAA",
+                    "ALA*A",
+                    "AALAA",
+                    "AAALA",
+                    "AAAAA"
+            };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(1, 0, -1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else if (yaw >= 245 && yaw < 295) {
-            System.out.println("4");
             playerLocation.add(7, 0, 0);
             String[] stringListBottom = {
                     "AAAAAAA",
@@ -276,8 +365,8 @@ public class LavaStone {
                 int lengthOfWave = 1;
                 @Override
                 public void run() {
-                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, null);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, null);
                     if (lengthOfWave % 2 == 0) {
                         playerLocation.add(1, 0, 0);
                     }
@@ -289,7 +378,38 @@ public class LavaStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else {
-
+            playerLocation.add(2, 0, 2);
+            String[] stringListBottom = {
+                    "AAAAAA",
+                    "A*LLLA",
+                    "ALLLAA",
+                    "ALLAAA",
+                    "ALAAAA",
+                    "AAAAAA"
+            };
+            String[] stringListTop = {
+                    "AAAAA",
+                    "A*ALA",
+                    "AALAA",
+                    "ALAAA",
+                    "AAAAA"
+            };
+            new BukkitRunnable() {
+                int lengthOfWave = 1;
+                @Override
+                public void run() {
+                    Tools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    Tools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    if (lengthOfWave % 2 == 0) {
+                        playerLocation.add(1, 0, 1);
+                    }
+                    if (lengthOfWave > 31) {
+                        clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                        this.cancel();
+                    }
+                    lengthOfWave++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         }
 
 
