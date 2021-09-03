@@ -413,10 +413,86 @@ public class LavaStone {
     }
 
     // MOVE 6
+    // Rift
+    // -> Creates a gap in the earth in the direction of the player filled with lava
 
 
     // MOVE 7
-
+    // Lava Burst
+    // -> The blocks where the player is looking at burst open creating an intense flow of lava
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location midpoint = Objects.requireNonNull(player.getTargetBlockExact(25)).getLocation();
+        ArrayList<Location> lavaLocations = new ArrayList<>();
+        String[] lavaBeamCrossSection = {
+                "AAAAA",
+                "AALAA",
+                "AL*LA",
+                "AALAA",
+                "AAAAA"
+        };
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('L', Material.LAVA);
+        characterMaterialMap.put('S', Material.STONE);
+        BukkitRunnable removeLava = new BukkitRunnable() {
+            int height = 0;
+            @Override
+            public void run() {
+                final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                overrideBlocks.add(Material.LAVA);
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < height; i++) {
+                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (height <= 0) {
+                    this.cancel();
+                }
+                height--;
+            }
+        };
+        BukkitRunnable holdLavaInPosition = new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+                final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                overrideBlocks.add(Material.LAVA);
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < 22; i++) {
+                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (amountOfTicks > 100) {
+                    removeLava.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        };
+        new BukkitRunnable() {
+            int height = 0;
+            @Override
+            public void run() {
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < height; i++) {
+                    for (Location location : SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, Material.LAVA, activePlayer)) {
+                        if (!lavaLocations.contains(location)) {
+                            lavaLocations.add(location);
+                        }
+                    }
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (height > 20) {
+                    holdLavaInPosition.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    this.cancel();
+                }
+                height++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
     // MOVE 8
+    // Eruption
+
 }

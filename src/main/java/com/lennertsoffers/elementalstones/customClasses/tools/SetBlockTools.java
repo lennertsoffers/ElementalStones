@@ -14,7 +14,7 @@ import java.util.Map;
 public class SetBlockTools {
 
     // Tool to effectively set the blocks in the world
-    private static void setBlockTool(Location startLocation,
+    private static ArrayList<Location> setBlockTool(Location startLocation,
                                      String[] stringList,
                                      Map<Character, Material> characterMaterialMap,
                                      boolean onlyFillAir,
@@ -24,10 +24,13 @@ public class SetBlockTools {
                                      Player player,
                                      ActivePlayer activePlayer)
     {
+        // Arraylist of locations to return
+        ArrayList<Location> locationArrayList = new ArrayList<>();
+
         // Stop function if world is not defined
         World world = startLocation.getWorld();
         if (world == null) {
-            return;
+            return locationArrayList;
         }
 
         // Search the startingLocation on the grid
@@ -52,6 +55,7 @@ public class SetBlockTools {
 
                 // Create new location object with the current location on the grid
                 Location blockLocation = startingLocation.clone().add(row, 0, column);
+                locationArrayList.add(blockLocation);
 
                 // Get the material of the current selected block
                 Material material = world.getBlockAt(blockLocation).getType();
@@ -91,94 +95,95 @@ public class SetBlockTools {
                 }
             }
         }
+        return locationArrayList;
     }
 
 
 
-    // -> Fill blocks
-    public static void setBlocks(Location startLocation,
+    // -> Fill blocks and return locations
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  ArrayList<Material> overrideBlocks)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  ArrayList<Material> overrideBlocks,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Set material of starting location
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  Material locationBlockType)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Set material of starting location
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  Material locationBlockType,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Damages nearby livingEntities except player
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  double amountOfDamage,
                                  Player player)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Damages nearby livingEntities except player
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -186,27 +191,27 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Set material of starting location
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
                                  ArrayList<Material> overrideBlocks,
                                  Material locationBlockType)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Set material of starting location
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -214,13 +219,13 @@ public class SetBlockTools {
                                  Material locationBlockType,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Damages nearby livingEntities except player
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -228,14 +233,14 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Damages nearby livingEntities except player
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -244,13 +249,13 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Set material of starting location
     // -> Damages nearby livingEntities except player
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -258,14 +263,14 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Set material of starting location
     // -> Damages nearby livingEntities except player
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -274,14 +279,14 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, activePlayer);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Damages nearby livingEntities except player
     // -> Set material of starting location
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -290,15 +295,15 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, null);
     }
 
-    // -> Fill blocks
+    // -> Fill blocks and return locations
     // -> Overrides non fill blocks set by boolean onlyFillAir
     // -> Damages nearby livingEntities except player
     // -> Set material of starting location
     // -> Add LavaBlocks to activePlayer
-    public static void setBlocks(Location startLocation,
+    public static ArrayList<Location> setBlocks(Location startLocation,
                                  String[] stringList,
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir,
@@ -308,6 +313,6 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, activePlayer);
     }
 }
