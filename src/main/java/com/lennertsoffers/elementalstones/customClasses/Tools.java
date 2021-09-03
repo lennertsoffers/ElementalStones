@@ -1,8 +1,11 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
+import net.minecraft.server.INamableTileEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -69,7 +72,11 @@ public class Tools {
         return false;
     }
 
-    public static void setBlocks(Location playerLocation, String[] stringList, Map<Character, Material> characterMaterialMap, boolean onlyFillAir, ArrayList<Material> overrideBlocks) {
+    public static void setBlocks(Location playerLocation, String[] stringList, Map<Character, Material> characterMaterialMap, boolean onlyFillAir, ArrayList<Material> overrideBlocks, Material locationType, double damageOnLocation, Player player) {
+        World world = playerLocation.getWorld();
+        if (world == null) {
+            return;
+        }
         int columnLocation = 0;
         int rowLocation = 0;
         for (int row = 0; row < stringList.length; row++) {
@@ -85,16 +92,28 @@ public class Tools {
             String string = stringList[row];
             for (int column = 0; column < stringList[0].length(); column++) {
                 Location blockLocation = startingLocation.clone().add(row, 0, column);
-                Material material = Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).getType();
-                if ((material == Material.AIR || !onlyFillAir) || (overrideBlocks.contains(material))) {
-                    if (string.charAt(column) == '?' || string.charAt(column) == '*') {
-                        Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(material);
-                    } else {
-                        try {
-                            Objects.requireNonNull(playerLocation.getWorld()).getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
-                        } catch (IllegalArgumentException e) {
-                            System.out.println(string.charAt(column));
+                if (damageOnLocation != -1) {
+                    for (Entity entity : world.getNearbyEntities(blockLocation, 0.5, 0.5, 0.5)) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (livingEntity != player) {
+                                livingEntity.damage(damageOnLocation);
+                            }
                         }
+                    }
+                }
+                Material material = Objects.requireNonNull(world).getBlockAt(blockLocation).getType();
+                if ((material == Material.AIR || !onlyFillAir) || (overrideBlocks.contains(material))) {
+                    if (string.charAt(column) == '?') {
+                        Objects.requireNonNull(world).getBlockAt(blockLocation).setType(material);
+                    } else if (string.charAt(column) == '*') {
+                        if (locationType != null) {
+                            Objects.requireNonNull(world).getBlockAt(blockLocation).setType(locationType);
+                        } else {
+                            Objects.requireNonNull(world).getBlockAt(blockLocation).setType(material);
+                        }
+                    } else {
+                        Objects.requireNonNull(world).getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
                     }
                 }
             }
