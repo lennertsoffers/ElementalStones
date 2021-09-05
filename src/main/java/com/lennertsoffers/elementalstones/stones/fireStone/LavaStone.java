@@ -5,9 +5,12 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -422,54 +425,63 @@ public class LavaStone {
     // -> The blocks where the player is looking at burst open creating an intense flow of lava
     public static void move7(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
         Location midpoint = Objects.requireNonNull(player.getTargetBlockExact(25)).getLocation();
+
+        Material materialCenter = world.getBlockAt(midpoint).getType();
+        Material materialUp = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
+        Material materialDown = world.getBlockAt(midpoint.clone().add(-1, 0, 0)).getType();
+        Material materialLeft = world.getBlockAt(midpoint.clone().add(0, 0, -1)).getType();
+        Material materialRight = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
+
+        world.getBlockAt(midpoint).setType(Material.AIR);
+        world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(Material.AIR);
+        world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(Material.AIR);
+        world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(Material.AIR);
+        world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(Material.AIR);
+
         ArrayList<Location> lavaLocations = new ArrayList<>();
         String[] lavaBeamCrossSection = {
                 "AAAAA",
                 "AALAA",
                 "AL*LA",
                 "AALAA",
-                "AAAAA"
+                "AAAAA",
+        };
+        String[] lavaRemoveCrossSection = {
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAA*AAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA"
         };
         Map<Character, Material> characterMaterialMap = new HashMap<>();
         characterMaterialMap.put('A', Material.AIR);
         characterMaterialMap.put('L', Material.LAVA);
         characterMaterialMap.put('S', Material.STONE);
-        BukkitRunnable removeLava = new BukkitRunnable() {
-            int height = 0;
-            @Override
-            public void run() {
-                final ArrayList<Material> overrideBlocks = new ArrayList<>();
-                overrideBlocks.add(Material.LAVA);
-                Location variableMidpoint = midpoint.clone();
-                for (int i = 0; i < height; i++) {
-                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                    variableMidpoint.add(0, 1, 0);
-                }
-                if (height <= 0) {
-                    this.cancel();
-                }
-                height--;
-            }
-        };
-        BukkitRunnable holdLavaInPosition = new BukkitRunnable() {
+        new BukkitRunnable() {
             int amountOfTicks = 0;
             @Override
             public void run() {
-                final ArrayList<Material> overrideBlocks = new ArrayList<>();
-                overrideBlocks.add(Material.LAVA);
-                Location variableMidpoint = midpoint.clone();
-                for (int i = 0; i < 22; i++) {
-                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                    variableMidpoint.add(0, 1, 0);
+                for (Location location : lavaLocations) {
+                    for (Entity entity : world.getNearbyEntities(location, 0, 0, 0)) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+//                            if (!(livingEntity == player)) {
+                                livingEntity.setVelocity(new Vector(0, 2, 0));
+                                livingEntity.setFireTicks(100);
+//                            }
+                        }
+                    }
                 }
-                if (amountOfTicks > 100) {
-                    removeLava.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                if (amountOfTicks > 70) {
                     this.cancel();
                 }
                 amountOfTicks++;
             }
-        };
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         new BukkitRunnable() {
             int height = 0;
             @Override
@@ -484,7 +496,54 @@ public class LavaStone {
                     variableMidpoint.add(0, 1, 0);
                 }
                 if (height > 20) {
-                    holdLavaInPosition.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    new BukkitRunnable() {
+                        int amountOfTicks = 0;
+                        @Override
+                        public void run() {
+                            final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                            overrideBlocks.add(Material.LAVA);
+                            Location variableMidpoint = midpoint.clone();
+                            for (int i = 0; i < 22; i++) {
+                                SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                                variableMidpoint.add(0, 1, 0);
+                            }
+                            if (amountOfTicks > 50) {
+                                new BukkitRunnable() {
+                                    int height = 21;
+                                    @Override
+                                    public void run() {
+                                        final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                                        overrideBlocks.add(Material.LAVA);
+                                        Location variableMidpoint = midpoint.clone();
+                                        for (int i = 0; i < height; i++) {
+                                            SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                                            variableMidpoint.add(0, 1, 0);
+                                        }
+                                        for (int i = height; i <= 21; i++) {
+                                            SetBlockTools.setBlocks(variableMidpoint, lavaRemoveCrossSection, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                                            variableMidpoint.add(0, 1, 0);
+                                        }
+                                        if (height <= 0) {
+                                            new BukkitRunnable() {
+                                                @Override
+                                                public void run() {
+                                                    world.getBlockAt(midpoint).setType(materialCenter);
+                                                    world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(materialUp);
+                                                    world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(materialDown);
+                                                    world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(materialLeft);
+                                                    world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(materialRight);
+                                                }
+                                            }.runTaskLater(StaticVariables.plugin, 10L);
+                                            this.cancel();
+                                        }
+                                        height--;
+                                    }
+                                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                                this.cancel();
+                            }
+                            amountOfTicks++;
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
                     this.cancel();
                 }
                 height++;
