@@ -70,7 +70,7 @@ public class SetBlockTools {
                         if (locationBlockType != null) {
                             world.getBlockAt(blockLocation).setType(locationBlockType);
                         }
-                    } else {
+                    } else if (string.charAt(column) != '?') {
                         world.getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
                     }
                 }

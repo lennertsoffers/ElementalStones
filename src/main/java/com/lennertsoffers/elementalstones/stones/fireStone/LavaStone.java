@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -422,6 +423,350 @@ public class LavaStone {
     public static void move6(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation();
+        float yaw;
+        if (player.getLocation().getYaw() < 0) {
+            yaw = 360 + player.getLocation().getYaw();
+        } else {
+            yaw = player.getLocation().getYaw();
+        }
+
+        // Stage 0
+        String[] riftStage0Layer0 = new String[] {
+                "???",
+                "???",
+                "MBM",
+                "MLM",
+                "BLB",
+                "BMM",
+                "MLB",
+                "MBM",
+                "BLM",
+                "BBB",
+                "MLB",
+                "MMB",
+                "B*M"
+        };
+        String[] riftStage0Layer1 = new String[] {
+                "?B?",
+                "?M?",
+                "MAM",
+                "AAA",
+                "AAB",
+                "BAA",
+                "AAA",
+                "AAA",
+                "BAM",
+                "AAA",
+                "MAA",
+                "AAB",
+                "B*M"
+        };
+        String[] riftStage0LayerAir = new String[] {
+                "?A?",
+                "?A?",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "AAA",
+                "A*A"
+        };
+
+        // Stage 1
+        String[] riftStage1Layer0 = new String[] {
+                "?????",
+                "?????",
+                "??M??",
+                "?MLB?",
+                "?MLM?",
+                "BLMMB",
+                "BMMLB",
+                "BMLMM",
+                "BMMLB",
+                "MMLMB",
+                "BMLMM",
+                "BBMBB",
+                "BLMBB",
+                "MMMLB",
+                "BM*MM"
+        };
+        String[] riftStage1Layer1 = new String[] {
+                "??B??",
+                "??B??",
+                "?MAB?",
+                "?BAB?",
+                "MAAAM",
+                "BAAAA",
+                "BAAAB",
+                "BAAAA",
+                "AAAAB",
+                "AAAAA",
+                "AAAAM",
+                "AAAAB",
+                "MAAAB",
+                "AAAAB",
+                "BA*AM",
+        };
+        String[] riftStage1Layer2 = new String[] {
+                "??A??",
+                "??B??",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "BAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAB",
+                "AAAAA",
+                "AA*AA"
+        };
+        String[] riftStage1LayerAir = new String[] {
+                "??A??",
+                "??A??",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AAAAA",
+                "AA*AA"
+        };
+
+        // Stage 2
+        String[] riftStage2Layer0 = new String[] {
+                "???????",
+                "???B???",
+                "??BLB??",
+                "??MMB??",
+                "?MLLLM?",
+                "?MLMLB?",
+                "?BLLMMB",
+                "BBLLLBB",
+                "BMMLLBB",
+                "BMMLLMB",
+                "BBLLLBB",
+                "MMLLMBB",
+                "BMLLMMM",
+                "MBLLLBM",
+                "MBLMLMB",
+                "MMMLLMB",
+                "BML*LBM",
+        };
+        String[] riftStage2Layer1 = new String[] {
+                "???B???",
+                "???B???",
+                "??BAM??",
+                "??MAB??",
+                "?MAAAM?",
+                "?MAAAB?",
+                "MBAAAAB",
+                "BAAAAAM",
+                "BMAAABB",
+                "BAAAAAA",
+                "BAAAAAB",
+                "MAAAAAA",
+                "BAAAAAM",
+                "MBAAABM",
+                "MAAAAAB",
+                "MAAAAAB",
+                "BBA*AAM"
+        };
+        String[] riftStage2Layer2 = new String[] {
+                "???B???",
+                "???B???",
+                "??AAA??",
+                "??AAA??",
+                "?AAAAA?",
+                "?AAAAA?",
+                "AAAAAAA",
+                "AAAAAAA",
+                "BAAAABB",
+                "BAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "MBAAAAM",
+                "AAAAAAB",
+                "AAAAAAA",
+                "AAA*AAA",
+        };
+        String[] riftStage2LayerAir = new String[] {
+                "???A???",
+                "???A???",
+                "??AAA??",
+                "??AAA??",
+                "?AAAAA?",
+                "?AAAAA?",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAAAAAA",
+                "AAA*AAA",
+        };
+
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('B', Material.BASALT);
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('M', Material.MAGMA_BLOCK);
+        characterMaterialMap.put('L', Material.LAVA);
+
+        if ((yaw >= 0 && yaw < 45) || (yaw >= 315 && yaw <= 360)) {
+            location.add(0, -5, 3);
+            new BukkitRunnable() {
+                int steps = 0;
+                @Override
+                public void run() {
+                    if (steps == 0) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage0LayerAir)), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage0Layer1)), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage0Layer0)), characterMaterialMap, false, Material.MAGMA_BLOCK);
+                    } else if (steps == 1) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1LayerAir)), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer0)), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer1)), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer2)), characterMaterialMap, false, Material.AIR);
+                    } else if (steps == 2) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2LayerAir)), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer0)), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer1)), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer2)), characterMaterialMap, false, Material.AIR);
+                    } else {
+                        this.cancel();
+                    }
+                    steps++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        }
+        else if (yaw >= 45 && yaw < 135) {
+            System.out.println(yaw + "else if");
+            location.add(-3, -5, 0);
+            new BukkitRunnable() {
+                int steps = 0;
+                @Override
+                public void run() {
+                    if (steps == 0) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), riftStage0LayerAir, characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage0Layer1, characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location, riftStage0Layer0, characterMaterialMap, false, Material.MAGMA_BLOCK);
+                    } else if (steps == 1) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), riftStage1LayerAir, characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, riftStage1Layer0, characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage1Layer1, characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), riftStage1Layer2, characterMaterialMap, false, Material.AIR);
+                    } else if (steps == 2) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(riftStage2LayerAir), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, riftStage2Layer0, characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage2Layer1, characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), riftStage2Layer2, characterMaterialMap, false, Material.AIR);
+                    } else {
+                        this.cancel();
+                    }
+                    steps++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+
+        } else if (yaw >= 135 && yaw < 225) {
+            location.add(0, -5, -3);
+            new BukkitRunnable() {
+                int steps = 0;
+                @Override
+                public void run() {
+                    if (steps == 0) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage0LayerAir), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage0Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage0Layer0), characterMaterialMap, false, Material.MAGMA_BLOCK);
+                    } else if (steps == 1) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage1LayerAir), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage1Layer0), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage1Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.rotate(riftStage1Layer2), characterMaterialMap, false, Material.AIR);
+                    } else if (steps == 2) {
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage2LayerAir), characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage2Layer0), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage2Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.rotate(riftStage2Layer2), characterMaterialMap, false, Material.AIR);
+                    } else {
+                        this.cancel();
+                    }
+                    steps++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        } else {
+            System.out.println(yaw + "else");
+            location.add(3, -5, 0);
+            new BukkitRunnable() {
+                int steps = 0;
+                @Override
+                public void run() {
+                    if (steps == 0) {
+                        String[] mirror = StringListTools.mirrorX(riftStage0LayerAir);
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage0Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage0Layer0), characterMaterialMap, false, Material.MAGMA_BLOCK);
+                    } else if (steps == 1) {
+                        String[] mirror = StringListTools.mirrorX(riftStage1LayerAir);
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage1Layer0), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage1Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorX(riftStage1Layer2), characterMaterialMap, false, Material.AIR);
+                    } else if (steps == 2) {
+                        String[] mirror = StringListTools.mirrorX(riftStage2LayerAir);
+                        for (int i = 5; i > 1; i--) {
+                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
+                        }
+                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage2Layer0), characterMaterialMap, false, Material.LAVA);
+                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage2Layer1), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorX(riftStage2Layer2), characterMaterialMap, false, Material.AIR);
+                    } else {
+                        this.cancel();
+                    }
+                    steps++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        }
     }
 
 
