@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -418,28 +419,18 @@ public class LavaStone {
     // MOVE 6
     // Rift
     // -> Creates a gap in the earth in the direction of the player filled with lava
-//    public static void move6(ActivePlayer activePlayer) {
-//        Player player = activePlayer.getPlayer();
-//        Location location = player.getLocation();
-//        float yaw = Math.abs(location.getYaw());
-//        if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-//            earthWavePerpendicular(player.getWorld(), player, true, false);
-//        } else if (yaw >= 25 && yaw < 65) {
-//            earthWaveDiagonal(player.getWorld(), player, true, false);
-//        } else if (yaw >= 65 && yaw < 115) {
-//            earthWavePerpendicular(player.getWorld(), player, false, true);
-//        } else if (yaw >= 115 && yaw < 155) {
-//            earthWaveDiagonal(player.getWorld(), player, false, true);
-//        } else if (yaw >= 155 && yaw < 205) {
-//            earthWavePerpendicular(player.getWorld(), player, false, false);
-//        } else if (yaw >= 205 && yaw < 245) {
-//            earthWaveDiagonal(player.getWorld(), player, false, false);
-//        } else if (yaw >= 245 && yaw < 295) {
-//            earthWavePerpendicular(player.getWorld(), player, true, true);
-//        } else {
-//            earthWaveDiagonal(player.getWorld(), player, true, true);
-//        }
-//    }
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location location = player.getLocation();
+        String[] test = {
+                "aab",
+                "aaa",
+                "aaa"
+        };
+        for (String string : MathTools.mirrorY(MathTools.mirrorX(test))) {
+            System.out.println(string);
+        }
+    }
 
 
 
