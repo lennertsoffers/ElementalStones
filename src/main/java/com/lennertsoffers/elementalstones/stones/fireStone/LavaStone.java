@@ -418,6 +418,29 @@ public class LavaStone {
     // MOVE 6
     // Rift
     // -> Creates a gap in the earth in the direction of the player filled with lava
+//    public static void move6(ActivePlayer activePlayer) {
+//        Player player = activePlayer.getPlayer();
+//        Location location = player.getLocation();
+//        float yaw = Math.abs(location.getYaw());
+//        if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
+//            earthWavePerpendicular(player.getWorld(), player, true, false);
+//        } else if (yaw >= 25 && yaw < 65) {
+//            earthWaveDiagonal(player.getWorld(), player, true, false);
+//        } else if (yaw >= 65 && yaw < 115) {
+//            earthWavePerpendicular(player.getWorld(), player, false, true);
+//        } else if (yaw >= 115 && yaw < 155) {
+//            earthWaveDiagonal(player.getWorld(), player, false, true);
+//        } else if (yaw >= 155 && yaw < 205) {
+//            earthWavePerpendicular(player.getWorld(), player, false, false);
+//        } else if (yaw >= 205 && yaw < 245) {
+//            earthWaveDiagonal(player.getWorld(), player, false, false);
+//        } else if (yaw >= 245 && yaw < 295) {
+//            earthWavePerpendicular(player.getWorld(), player, true, true);
+//        } else {
+//            earthWaveDiagonal(player.getWorld(), player, true, true);
+//        }
+//    }
+
 
 
     // MOVE 7
@@ -469,10 +492,10 @@ public class LavaStone {
                     for (Entity entity : world.getNearbyEntities(location, 0, 0, 0)) {
                         if (entity instanceof LivingEntity) {
                             LivingEntity livingEntity = (LivingEntity) entity;
-//                            if (!(livingEntity == player)) {
+                            if (!(livingEntity == player)) {
                                 livingEntity.setVelocity(new Vector(0, 2, 0));
                                 livingEntity.setFireTicks(100);
-//                            }
+                            }
                         }
                     }
                 }

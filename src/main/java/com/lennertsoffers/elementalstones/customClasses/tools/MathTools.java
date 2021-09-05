@@ -30,4 +30,19 @@ public class MathTools {
         double particleZ = location.getZ() + radius * Math.sin(angle);
         return new Location(world, particleX, location.getY() , particleZ);
     }
+
+    public static String[] mirrorX(String[] inputString) {
+        inputString = new String[] {
+                "AAABAAA",
+                "AABABAA",
+                "ABAAABA",
+                "BAAAAAB"
+        };
+
+
+
+
+
+        return inputString;
+    }
 }
