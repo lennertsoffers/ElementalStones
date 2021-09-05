@@ -4,6 +4,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
 public class MathTools {
     public static double lengthOfVector(double x1, double x2, double y1, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
@@ -32,17 +36,58 @@ public class MathTools {
     }
 
     public static String[] mirrorX(String[] inputString) {
-        inputString = new String[] {
-                "AAABAAA",
-                "AABABAA",
-                "ABAAABA",
-                "BAAAAAB"
-        };
+        int length= inputString.length;
+        for (int i = 0; i < length / 2; i++) {
+            String mirrorLineTop = inputString[i];
+            String mirrorLineBottom = inputString[length - (i + 1)];
 
+            inputString[i] = mirrorLineBottom;
+            inputString[length - (i + 1)] = mirrorLineTop;
+        }
+        return inputString;
+    }
 
-
-
-
+    public static String[] mirrorY(String[] inputString) {
+        for (int i = 0; i < inputString.length; i++) {
+            String line = inputString[i];
+            ArrayList<Character> arrayList = new ArrayList<>();
+            for (Character character : line.toCharArray()) {
+                arrayList.add(character);
+            }
+            Collections.reverse(arrayList);
+            StringBuilder builder = new StringBuilder(arrayList.size());
+            for (Character character : arrayList) {
+                builder.append(character);
+            }
+            inputString[i] = builder.toString();
+        }
         return inputString;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
