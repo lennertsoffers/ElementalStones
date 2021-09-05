@@ -17,32 +17,32 @@ import java.lang.reflect.InvocationTargetException;
 
 public class ClickEvent implements Listener {
 
-    protected final ElementalStones plugin;
+//    protected final ElementalStones plugin;
+//
+//    public ClickEvent(ElementalStones plugin) {
+//        this.plugin = plugin;
+//    }
 
-    public ClickEvent(ElementalStones plugin) {
-        this.plugin = plugin;
-    }
-
-    @EventHandler
-    public void onClick(PlayerInteractEvent event) throws InvocationTargetException {
-        Player player = event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand())) {
-                ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
-                if (activePlayer != null) {
-                    if (activePlayer.isActive()) {
-                        activePlayer.setActive(false);
-                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
-                    } else {
-                        activePlayer.setActive(true);
-                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
-                    }
-                }
-            }
-        }
-
-        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            Location location = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
+//    @EventHandler
+//    public void onClick(PlayerInteractEvent event) throws InvocationTargetException {
+//        Player player = event.getPlayer();
+//        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+//            if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand())) {
+//                ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+//                if (activePlayer != null) {
+//                    if (activePlayer.isActive()) {
+//                        activePlayer.setActive(false);
+//                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
+//                    } else {
+//                        activePlayer.setActive(true);
+//                        player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+//                    }
+//                }
+//            }
+//        }
+//
+//        if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+//            Location location = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
 //            ProtocolManager manager = ProtocolLibrary.getProtocolManager();
 //            PacketContainer packet = manager.createPacket(PacketType.Play.Server.WORLD_PARTICLES);
 //            packet.getModifier().writeDefaults();
@@ -62,8 +62,8 @@ public class ClickEvent implements Listener {
 //                System.out.println(exception.getMessage());
 //            }
 //            (player, new PacketPlayOutWorldParticles(Particles.FLAME, false, location.getX(), location.getY(), location.getZ(), 0, 0, 0, 0, 0));
-        }
-    }
+//        }
+//    }
 }
 
 
