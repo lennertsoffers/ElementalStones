@@ -4,20 +4,21 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class LavaStone {
 
     // PASSIVE
-    public static void passive(ActivePlayer activePlayer) {
+    // Passive1: Lava Walker
+    public static void passive1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         Location location = player.getLocation().add(0, -1, 0);
@@ -60,54 +61,50 @@ public class LavaStone {
         });
     }
 
-
-
+    // Passive 2: No damage on magma
+    public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
+        if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+            event.setCancelled(true);
+        }
+    }
 
 
     // MOVE 4
-    // Lava Cross
-    // -> Spawns lava cross along the axes
-//    public static void move4(ActivePlayer activePlayer) {
-//        Player player = activePlayer.getPlayer();
-//        World world = player.getWorld();
-//        Location location = player.getLocation();
-//        String[] stringList = {
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "LLLLLALLLLL",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//                "AAAAALAAAAA",
-//        };
-//        Map<Character, Material> characterMaterialMap = new HashMap<>();
-//        characterMaterialMap.put('A', Material.AIR);
-//        characterMaterialMap.put('L', Material.LAVA);
-//        Vector vector = player.getLocation().getDirection();
-//        vector
-//
-//        new BukkitRunnable() {
-//            int tickCount = 0;
-//            @Override
-//            public void run() {
-//                Tools.setWorldMaterialsFromString(world, location, stringList, characterMaterialMap);
-//                if (tickCount > 60) {
-//                    this.cancel();
-//                }
-//                tickCount++;
-//            }
-//        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                Tools.set
-//            }
-//        }
-//    }
+    // Reverse Logic
+    // -> The player heals over time while standing on magma blocks
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+                Location location = player.getLocation().add(0, 1, 0);
+                for (int i = 0; i < 2; i++) {
+                    player.getWorld().spawnParticle(Particle.REDSTONE, location.getX() + StaticVariables.random.nextGaussian() / 3, location.getY() + StaticVariables.random.nextGaussian() / 3, location.getZ() + StaticVariables.random.nextGaussian() / 3, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
+                }
+                if (amountOfTicks >= 199) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        new BukkitRunnable() {
+            int amountOfSecs = 0;
+            @Override
+            public void run() {
+                Location location = player.getLocation();
+                if (world.getBlockAt(location.add(0, -1, 0)).getType() == Material.MAGMA_BLOCK) {
+                    player.setHealth(player.getHealth() + 3);
+                }
+                if (amountOfSecs >= 9) {
+                    this.cancel();
+                }
+                amountOfSecs++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
+    }
+
 
     // MOVE 5
     // Lava Wave
@@ -416,10 +413,86 @@ public class LavaStone {
     }
 
     // MOVE 6
+    // Rift
+    // -> Creates a gap in the earth in the direction of the player filled with lava
 
 
     // MOVE 7
-
+    // Lava Burst
+    // -> The blocks where the player is looking at burst open creating an intense flow of lava
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location midpoint = Objects.requireNonNull(player.getTargetBlockExact(25)).getLocation();
+        ArrayList<Location> lavaLocations = new ArrayList<>();
+        String[] lavaBeamCrossSection = {
+                "AAAAA",
+                "AALAA",
+                "AL*LA",
+                "AALAA",
+                "AAAAA"
+        };
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('L', Material.LAVA);
+        characterMaterialMap.put('S', Material.STONE);
+        BukkitRunnable removeLava = new BukkitRunnable() {
+            int height = 0;
+            @Override
+            public void run() {
+                final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                overrideBlocks.add(Material.LAVA);
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < height; i++) {
+                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (height <= 0) {
+                    this.cancel();
+                }
+                height--;
+            }
+        };
+        BukkitRunnable holdLavaInPosition = new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+                final ArrayList<Material> overrideBlocks = new ArrayList<>();
+                overrideBlocks.add(Material.LAVA);
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < 22; i++) {
+                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (amountOfTicks > 100) {
+                    removeLava.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        };
+        new BukkitRunnable() {
+            int height = 0;
+            @Override
+            public void run() {
+                Location variableMidpoint = midpoint.clone();
+                for (int i = 0; i < height; i++) {
+                    for (Location location : SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, Material.LAVA, activePlayer)) {
+                        if (!lavaLocations.contains(location)) {
+                            lavaLocations.add(location);
+                        }
+                    }
+                    variableMidpoint.add(0, 1, 0);
+                }
+                if (height > 20) {
+                    holdLavaInPosition.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    this.cancel();
+                }
+                height++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
     // MOVE 8
+    // Eruption
+
 }
