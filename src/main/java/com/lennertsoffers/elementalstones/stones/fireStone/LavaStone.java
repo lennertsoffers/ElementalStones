@@ -422,14 +422,6 @@ public class LavaStone {
     public static void move6(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation();
-        String[] test = {
-                "aab",
-                "aaa",
-                "aaa"
-        };
-        for (String string : MathTools.mirrorY(MathTools.mirrorX(test))) {
-            System.out.println(string);
-        }
     }
 
 
