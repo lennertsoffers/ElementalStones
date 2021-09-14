@@ -742,7 +742,6 @@ public class LavaStone {
         Map<Character, Material> characterMaterialMap = new HashMap<>();
         characterMaterialMap.put('A', Material.AIR);
         characterMaterialMap.put('L', Material.LAVA);
-        characterMaterialMap.put('S', Material.STONE);
         new BukkitRunnable() {
             int amountOfTicks = 0;
             @Override
@@ -834,6 +833,97 @@ public class LavaStone {
     }
 
     // MOVE 8
-    // Eruption
+    // Lava Rider
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        String[] lavaLevel0 = {
+                "AAAAAAAAA",
+                "AAALLLAAA",
+                "AALLLLLAA",
+                "ALLLLLLLA",
+                "ALLL*LLLA",
+                "ALLLLLLLA",
+                "AALLLLLAA",
+                "AAALLLAAA",
+                "AAAAAAAAA"
+        };
+        String[] lavaLevel1 = {
+                "AAAAAAA",
+                "AALLLAA",
+                "ALLLLLA",
+                "ALL*LLA",
+                "ALLLLLA",
+                "AALLLAA",
+                "AAAAAAA"
+        };
+        String[] lavaLevel2 = {
+                "AAAAA",
+                "AALAA",
+                "AL*LA",
+                "AALAA",
+                "AAAAA",
+        };
+        String[] lavaRemoveString = {
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAAA*AAAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA"
+        };
+        ArrayList<Material> overrideBlocks = new ArrayList<>();
+        overrideBlocks.add(Material.LAVA);
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('L', Material.LAVA);
+
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            Location previousLocation = player.getLocation();
+            @Override
+            public void run() {
+                for (int i = 1; i >= -3; i--) {
+                    SetBlockTools.setBlocks(previousLocation.clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                }
+                SetBlockTools.setBlocks(player.getLocation().clone().add(0, -3, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                SetBlockTools.setBlocks(player.getLocation().clone().add(0, -2, 0), lavaLevel0, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                SetBlockTools.setBlocks(player.getLocation().clone().add(0, -1, 0), lavaLevel1, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                SetBlockTools.setBlocks(player.getLocation(), lavaLevel2, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+                SetBlockTools.setBlocks(player.getLocation().clone().add(0, 1, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                previousLocation = player.getLocation().clone();
+                if (amountOfTicks > 200) {
+                    this.cancel();
+                    for (int i = 0; i >= -2; i--) {
+                        SetBlockTools.setBlocks(player.getLocation().clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                    }
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
