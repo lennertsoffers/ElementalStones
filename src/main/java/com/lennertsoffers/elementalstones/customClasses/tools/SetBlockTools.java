@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Objects;
 
 public class SetBlockTools {
 
@@ -68,14 +69,16 @@ public class SetBlockTools {
                     // Else, the material of the block is set to the corresponding material in the characterMaterialMap
                     if (string.charAt(column) == '*') {
                         if (locationBlockType != null) {
+                            Objects.requireNonNull(activePlayer).addLocationMaterialMapping(blockLocation, material);
                             world.getBlockAt(blockLocation).setType(locationBlockType);
                         }
                     } else if (string.charAt(column) != '?') {
+                        Objects.requireNonNull(activePlayer).addLocationMaterialMapping(blockLocation, material);
                         world.getBlockAt(blockLocation).setType(characterMaterialMap.get(string.charAt(column)));
                     }
                 }
 
-                // If the nearby entities have to be damaged by the wave, the amount of damage is set on all of them
+                // If the nearby entities have to be damaged, the amount of damage is set on all of them
                 if (amountOfDamage != -1) {
                     for (Entity entity : world.getNearbyEntities(blockLocation, 0.5, 0.5, 0.5)) {
                         if (entity instanceof LivingEntity) {

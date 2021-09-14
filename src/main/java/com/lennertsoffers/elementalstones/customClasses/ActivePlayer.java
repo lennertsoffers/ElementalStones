@@ -1,20 +1,21 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ActivePlayer {
     private final Player player;
     private boolean active;
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
+    private Map<Location, Material> resetMapping = new HashMap<>();
+
 
     // Earth Stone
     private FallingBlock fallingBlock;
@@ -43,8 +44,15 @@ public class ActivePlayer {
         return this.active;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void toggleActive() {
+        if (this.active) {
+            this.active = false;
+            this.resetMapping.forEach(((location, material) -> {
+                this.player.getWorld().getBlockAt(location).setType(material);
+            }));
+        } else {
+            this.active = true;
+        }
     }
 
     public FallingBlock getFallingBlock() {
@@ -145,6 +153,16 @@ public class ActivePlayer {
             }
         }
         return false;
+    }
+
+    public void addLocationMaterialMapping(Location location, Material material) {
+        if (!(this.resetMapping.containsKey(location))) {
+            this.resetMapping.put(location, material);
+        }
+    }
+
+    public void mergeLocationMaterialMapping(Map<Location, Material> locationMaterialMap) {
+        locationMaterialMap.forEach(((l, m) -> this.resetMapping.putIfAbsent(l, m)));
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {

@@ -417,21 +417,10 @@ public class LavaStone {
 
     }
 
-    // MOVE 6
-    // Rift
-    // -> Creates a gap in the earth in the direction of the player filled with lava
-    public static void move6(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        Location location = player.getLocation();
-        float yaw;
-        if (player.getLocation().getYaw() < 0) {
-            yaw = 360 + player.getLocation().getYaw();
-        } else {
-            yaw = player.getLocation().getYaw();
-        }
-
+    private static void placeRiftInWorld(Location location, boolean positiveX, boolean positiveZ, boolean negativeZ) {
+        Map<String, String[]> layerMapping= new HashMap<>();
         // Stage 0
-        String[] riftStage0Layer0 = new String[] {
+        layerMapping.put("riftStage0Layer0", new String[] {
                 "???",
                 "???",
                 "MBM",
@@ -445,8 +434,8 @@ public class LavaStone {
                 "MLB",
                 "MMB",
                 "B*M"
-        };
-        String[] riftStage0Layer1 = new String[] {
+        });
+        layerMapping.put("riftStage0Layer1", new String[] {
                 "?B?",
                 "?M?",
                 "MAM",
@@ -460,8 +449,8 @@ public class LavaStone {
                 "MAA",
                 "AAB",
                 "B*M"
-        };
-        String[] riftStage0LayerAir = new String[] {
+        });
+        layerMapping.put("riftStage0LayerAir", new String[] {
                 "?A?",
                 "?A?",
                 "AAA",
@@ -475,10 +464,10 @@ public class LavaStone {
                 "AAA",
                 "AAA",
                 "A*A"
-        };
+        });
 
         // Stage 1
-        String[] riftStage1Layer0 = new String[] {
+        layerMapping.put("riftStage1Layer0", new String[] {
                 "?????",
                 "?????",
                 "??M??",
@@ -494,8 +483,8 @@ public class LavaStone {
                 "BLMBB",
                 "MMMLB",
                 "BM*MM"
-        };
-        String[] riftStage1Layer1 = new String[] {
+        });
+        layerMapping.put("riftStage1Layer1", new String[] {
                 "??B??",
                 "??B??",
                 "?MAB?",
@@ -511,8 +500,8 @@ public class LavaStone {
                 "MAAAB",
                 "AAAAB",
                 "BA*AM",
-        };
-        String[] riftStage1Layer2 = new String[] {
+        });
+        layerMapping.put("riftStage1Layer2", new String[] {
                 "??A??",
                 "??B??",
                 "AAAAA",
@@ -528,8 +517,8 @@ public class LavaStone {
                 "AAAAB",
                 "AAAAA",
                 "AA*AA"
-        };
-        String[] riftStage1LayerAir = new String[] {
+        });
+        layerMapping.put("riftStage1LayerAir", new String[] {
                 "??A??",
                 "??A??",
                 "AAAAA",
@@ -545,10 +534,10 @@ public class LavaStone {
                 "AAAAA",
                 "AAAAA",
                 "AA*AA"
-        };
+        });
 
         // Stage 2
-        String[] riftStage2Layer0 = new String[] {
+        layerMapping.put("riftStage2Layer0", new String[] {
                 "???????",
                 "???B???",
                 "??BLB??",
@@ -566,8 +555,8 @@ public class LavaStone {
                 "MBLMLMB",
                 "MMMLLMB",
                 "BML*LBM",
-        };
-        String[] riftStage2Layer1 = new String[] {
+        });
+        layerMapping.put("riftStage2Layer1", new String[] {
                 "???B???",
                 "???B???",
                 "??BAM??",
@@ -585,8 +574,8 @@ public class LavaStone {
                 "MAAAAAB",
                 "MAAAAAB",
                 "BBA*AAM"
-        };
-        String[] riftStage2Layer2 = new String[] {
+        });
+        layerMapping.put("riftStage2Layer2", new String[] {
                 "???B???",
                 "???B???",
                 "??AAA??",
@@ -604,8 +593,8 @@ public class LavaStone {
                 "AAAAAAB",
                 "AAAAAAA",
                 "AAA*AAA",
-        };
-        String[] riftStage2LayerAir = new String[] {
+        });
+        layerMapping.put("riftStage2LayerAir", new String[] {
                 "???A???",
                 "???A???",
                 "??AAA??",
@@ -623,7 +612,7 @@ public class LavaStone {
                 "AAAAAAA",
                 "AAAAAAA",
                 "AAA*AAA",
-        };
+        });
 
         Map<Character, Material> characterMaterialMap = new HashMap<>();
         characterMaterialMap.put('B', Material.BASALT);
@@ -631,144 +620,86 @@ public class LavaStone {
         characterMaterialMap.put('M', Material.MAGMA_BLOCK);
         characterMaterialMap.put('L', Material.LAVA);
 
-        if ((yaw >= 0 && yaw < 45) || (yaw >= 315 && yaw <= 360)) {
-            location.add(0, -5, 3);
-            new BukkitRunnable() {
-                int steps = 0;
-                @Override
-                public void run() {
-                    if (steps == 0) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage0LayerAir)), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage0Layer1)), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage0Layer0)), characterMaterialMap, false, Material.MAGMA_BLOCK);
-                    } else if (steps == 1) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1LayerAir)), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer0)), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer1)), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage1Layer2)), characterMaterialMap, false, Material.AIR);
-                    } else if (steps == 2) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2LayerAir)), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer0)), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer1)), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorY(StringListTools.rotate(riftStage2Layer2)), characterMaterialMap, false, Material.AIR);
-                    } else {
-                        this.cancel();
-                    }
-                    steps++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        if (positiveZ) {
+            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
+                entry.setValue(StringListTools.mirrorY(StringListTools.rotate(entry.getValue())));
+            }
+        } else if (negativeZ) {
+            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
+                entry.setValue(StringListTools.rotate(entry.getValue()));
+            }
+        } else if (positiveX) {
+            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
+                entry.setValue(StringListTools.mirrorX(entry.getValue()));
+            }
         }
-        else if (yaw >= 45 && yaw < 135) {
-            System.out.println(yaw + "else if");
-            location.add(-3, -5, 0);
-            new BukkitRunnable() {
-                int steps = 0;
-                @Override
-                public void run() {
-                    if (steps == 0) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), riftStage0LayerAir, characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage0Layer1, characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location, riftStage0Layer0, characterMaterialMap, false, Material.MAGMA_BLOCK);
-                    } else if (steps == 1) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), riftStage1LayerAir, characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, riftStage1Layer0, characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage1Layer1, characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), riftStage1Layer2, characterMaterialMap, false, Material.AIR);
-                    } else if (steps == 2) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.mirrorY(riftStage2LayerAir), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, riftStage2Layer0, characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), riftStage2Layer1, characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), riftStage2Layer2, characterMaterialMap, false, Material.AIR);
-                    } else {
-                        this.cancel();
-                    }
-                    steps++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
 
-        } else if (yaw >= 135 && yaw < 225) {
-            location.add(0, -5, -3);
-            new BukkitRunnable() {
-                int steps = 0;
-                @Override
-                public void run() {
-                    if (steps == 0) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage0LayerAir), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage0Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage0Layer0), characterMaterialMap, false, Material.MAGMA_BLOCK);
-                    } else if (steps == 1) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage1LayerAir), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage1Layer0), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage1Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.rotate(riftStage1Layer2), characterMaterialMap, false, Material.AIR);
-                    } else if (steps == 2) {
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), StringListTools.rotate(riftStage2LayerAir), characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.rotate(riftStage2Layer0), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.rotate(riftStage2Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.rotate(riftStage2Layer2), characterMaterialMap, false, Material.AIR);
-                    } else {
-                        this.cancel();
+
+        new BukkitRunnable() {
+            int steps = 0;
+            @Override
+            public void run() {
+                if (steps == 0) {
+                    for (int i = 5; i > 1; i--) {
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage0LayerAir"), characterMaterialMap, false, Material.AIR);
                     }
-                    steps++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
-        } else {
-            System.out.println(yaw + "else");
-            location.add(3, -5, 0);
-            new BukkitRunnable() {
-                int steps = 0;
-                @Override
-                public void run() {
-                    if (steps == 0) {
-                        String[] mirror = StringListTools.mirrorX(riftStage0LayerAir);
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage0Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage0Layer0), characterMaterialMap, false, Material.MAGMA_BLOCK);
-                    } else if (steps == 1) {
-                        String[] mirror = StringListTools.mirrorX(riftStage1LayerAir);
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage1Layer0), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage1Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorX(riftStage1Layer2), characterMaterialMap, false, Material.AIR);
-                    } else if (steps == 2) {
-                        String[] mirror = StringListTools.mirrorX(riftStage2LayerAir);
-                        for (int i = 5; i > 1; i--) {
-                            SetBlockTools.setBlocks(location.clone().add(0, i, 0), mirror, characterMaterialMap, false, Material.AIR);
-                        }
-                        SetBlockTools.setBlocks(location, StringListTools.mirrorX(riftStage2Layer0), characterMaterialMap, false, Material.LAVA);
-                        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), StringListTools.mirrorX(riftStage2Layer1), characterMaterialMap, false, Material.AIR);
-                        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), StringListTools.mirrorX(riftStage2Layer2), characterMaterialMap, false, Material.AIR);
-                    } else {
-                        this.cancel();
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage0Layer1"), characterMaterialMap, false, Material.AIR);
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage0Layer0"), characterMaterialMap, false, Material.MAGMA_BLOCK);
+                } else if (steps == 1) {
+                    for (int i = 5; i > 1; i--) {
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage1LayerAir"), characterMaterialMap, false, Material.AIR);
                     }
-                    steps++;
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage1Layer0"), characterMaterialMap, false, Material.LAVA);
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage1Layer1"), characterMaterialMap, false, Material.AIR);
+                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage1Layer2"), characterMaterialMap, false, Material.AIR);
+                } else if (steps == 2) {
+                    for (int i = 5; i > 1; i--) {
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage2LayerAir"), characterMaterialMap, false, Material.AIR);
+                    }
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage2Layer0"), characterMaterialMap, false, Material.LAVA);
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage2Layer1"), characterMaterialMap, false, Material.AIR);
+                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage2Layer2"), characterMaterialMap, false, Material.AIR);
+                } else {
+                    this.cancel();
                 }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
-        }
+                steps++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
     }
 
+    // MOVE 6
+    // Rift
+    // -> Creates a gap in the earth in the direction of the player filled with lava
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location location = player.getLocation();
+        float yaw;
+        if (player.getLocation().getYaw() < 0) {
+            yaw = 360 + player.getLocation().getYaw();
+        } else {
+            yaw = player.getLocation().getYaw();
+        }
+
+        if ((yaw >= 0 && yaw < 45) || (yaw >= 315 && yaw <= 360)) {
+            location.add(0, -5, 3);
+            System.out.println("towards positive z");
+            placeRiftInWorld(location, false, true, false);
+        }
+        else if (yaw >= 45 && yaw < 135) {
+            System.out.println("towards negative x");
+            location.add(-3, -5, 0);
+            placeRiftInWorld(location, false, false, false);
+
+        } else if (yaw >= 135 && yaw < 225) {
+            System.out.println("towards negative z");
+            location.add(0, -5, -3);
+            placeRiftInWorld(location, false, false, true);
+        } else {
+            System.out.println("towards positive x");
+            location.add(3, -5, 0);
+            placeRiftInWorld(location, true, false, false);
+        }
+    }
 
 
     // MOVE 7
