@@ -417,7 +417,7 @@ public class LavaStone {
 
     }
 
-    private static void placeRiftInWorld(Location location, boolean positiveX, boolean positiveZ, boolean negativeZ) {
+    private static void placeRiftInWorld(Location location, boolean positiveX, boolean positiveZ, boolean negativeZ, ActivePlayer activePlayer) {
         Map<String, String[]> layerMapping= new HashMap<>();
         // Stage 0
         layerMapping.put("riftStage0Layer0", new String[] {
@@ -641,24 +641,24 @@ public class LavaStone {
             public void run() {
                 if (steps == 0) {
                     for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage0LayerAir"), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage0LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
                     }
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage0Layer1"), characterMaterialMap, false, Material.AIR);
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage0Layer0"), characterMaterialMap, false, Material.MAGMA_BLOCK);
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage0Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage0Layer0"), characterMaterialMap, false, Material.MAGMA_BLOCK, activePlayer);
                 } else if (steps == 1) {
                     for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage1LayerAir"), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage1LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
                     }
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage1Layer0"), characterMaterialMap, false, Material.LAVA);
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage1Layer1"), characterMaterialMap, false, Material.AIR);
-                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage1Layer2"), characterMaterialMap, false, Material.AIR);
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage1Layer0"), characterMaterialMap, false, Material.LAVA, activePlayer);
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage1Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
+                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage1Layer2"), characterMaterialMap, false, Material.AIR, activePlayer);
                 } else if (steps == 2) {
                     for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage2LayerAir"), characterMaterialMap, false, Material.AIR);
+                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage2LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
                     }
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage2Layer0"), characterMaterialMap, false, Material.LAVA);
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage2Layer1"), characterMaterialMap, false, Material.AIR);
-                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage2Layer2"), characterMaterialMap, false, Material.AIR);
+                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage2Layer0"), characterMaterialMap, false, Material.LAVA, activePlayer);
+                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage2Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
+                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage2Layer2"), characterMaterialMap, false, Material.AIR, activePlayer);
                 } else {
                     this.cancel();
                 }
@@ -683,21 +683,21 @@ public class LavaStone {
         if ((yaw >= 0 && yaw < 45) || (yaw >= 315 && yaw <= 360)) {
             location.add(0, -5, 3);
             System.out.println("towards positive z");
-            placeRiftInWorld(location, false, true, false);
+            placeRiftInWorld(location, false, true, false, activePlayer);
         }
         else if (yaw >= 45 && yaw < 135) {
             System.out.println("towards negative x");
             location.add(-3, -5, 0);
-            placeRiftInWorld(location, false, false, false);
+            placeRiftInWorld(location, false, false, false, activePlayer);
 
         } else if (yaw >= 135 && yaw < 225) {
             System.out.println("towards negative z");
             location.add(0, -5, -3);
-            placeRiftInWorld(location, false, false, true);
+            placeRiftInWorld(location, false, false, true, activePlayer);
         } else {
             System.out.println("towards positive x");
             location.add(3, -5, 0);
-            placeRiftInWorld(location, true, false, false);
+            placeRiftInWorld(location, true, false, false, activePlayer);
         }
     }
 

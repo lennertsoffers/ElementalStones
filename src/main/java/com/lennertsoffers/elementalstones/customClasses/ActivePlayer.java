@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
@@ -14,7 +15,7 @@ public class ActivePlayer {
     private final Player player;
     private boolean active;
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
-    private Map<Location, Material> resetMapping = new HashMap<>();
+    private final Map<Location, Material> resetMapping = new HashMap<>();
 
 
     // Earth Stone
@@ -47,11 +48,12 @@ public class ActivePlayer {
     public void toggleActive() {
         if (this.active) {
             this.active = false;
-            this.resetMapping.forEach(((location, material) -> {
-                this.player.getWorld().getBlockAt(location).setType(material);
-            }));
+            this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
+            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
+
         } else {
             this.active = true;
+            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
         }
     }
 
@@ -162,7 +164,7 @@ public class ActivePlayer {
     }
 
     public void mergeLocationMaterialMapping(Map<Location, Material> locationMaterialMap) {
-        locationMaterialMap.forEach(((l, m) -> this.resetMapping.putIfAbsent(l, m)));
+        locationMaterialMap.forEach((this.resetMapping::putIfAbsent));
     }
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
