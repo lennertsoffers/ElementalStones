@@ -55,7 +55,7 @@ public class SetBlockTools {
             for (int column = 0; column < stringList[0].length(); column++) {
 
                 // Create new location object with the current location on the grid
-                Location blockLocation = startingLocation.clone().add(row, 0, column);
+                Location blockLocation = startingLocation.clone().add(row, 0, column).getBlock().getLocation();
                 locationArrayList.add(blockLocation);
 
                 // Get the material of the current selected block
