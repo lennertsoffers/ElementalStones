@@ -153,14 +153,12 @@ public class ItemStones {
     public static ItemStack magicStonePotion3;
     public static ItemStack magicStonePotion4;
 
-    // MagicStones: Beasts and Creatures path
-    public static ItemStack magicStoneBeastsAndCreatures0;
-    public static ItemStack magicStoneBeastsAndCreatures1;
-    public static ItemStack magicStoneBeastsAndCreatures2;
-    public static ItemStack magicStoneBeastsAndCreatures3;
-    public static ItemStack magicStoneBeastsAndCreatures4;
-
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
+    public static ArrayList<ItemStack> waterStones = new ArrayList<>();
+    public static ArrayList<ItemStack> fireStones = new ArrayList<>();
+    public static ArrayList<ItemStack> airStones = new ArrayList<>();
+    public static ArrayList<ItemStack> earthStones = new ArrayList<>();
+    public static ArrayList<ItemStack> magicStones = new ArrayList<>();
 
     private static final String[][][] moveDeclaration = {
             {
@@ -292,14 +290,6 @@ public class ItemStones {
                             "Move 1: info",
                             "Move 2: info",
                             "Move 3: info"
-                    },
-                    {
-                            "Passive: info",
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
                     },
                     {
                             "Passive: info",
@@ -480,12 +470,6 @@ public class ItemStones {
         magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
         magicStonePotion3 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv4", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 4);
         magicStonePotion4 = createStone(ChatColor.DARK_PURPLE + "Completed-Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 5);
-        magicStoneBeastsAndCreatures0 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 1);
-        magicStoneBeastsAndCreatures1 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv2", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 2);
-        magicStoneBeastsAndCreatures2 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv3", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 3);
-        magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
-        magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed-Beasts-and-Creatures-Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 5);
-
         allStones.addAll(Arrays.asList(
                 waterStone0,
                 waterStone1,
@@ -576,12 +560,108 @@ public class ItemStones {
                 magicStonePotion1,
                 magicStonePotion2,
                 magicStonePotion3,
-                magicStonePotion4,
-                magicStoneBeastsAndCreatures0,
-                magicStoneBeastsAndCreatures1,
-                magicStoneBeastsAndCreatures2,
-                magicStoneBeastsAndCreatures3,
-                magicStoneBeastsAndCreatures4
+                magicStonePotion4
+        ));
+
+        waterStones.addAll(Arrays.asList(
+                waterStone0,
+                waterStone1,
+                waterStone2,
+                waterStoneOcean0,
+                waterStoneOcean1,
+                waterStoneOcean2,
+                waterStoneOcean3,
+                waterStoneOcean4,
+                waterStoneBending0,
+                waterStoneBending1,
+                waterStoneBending2,
+                waterStoneBending3,
+                waterStoneBending4,
+                waterStoneIce0,
+                waterStoneIce1,
+                waterStoneIce2,
+                waterStoneIce3,
+                waterStoneIce4
+        ));
+        fireStones.addAll(Arrays.asList(
+                fireStone0,
+                fireStone1,
+                fireStone2,
+                fireStoneLava0,
+                fireStoneLava1,
+                fireStoneLava2,
+                fireStoneLava3,
+                fireStoneLava4,
+                fireStoneExplosion0,
+                fireStoneExplosion1,
+                fireStoneExplosion2,
+                fireStoneExplosion3,
+                fireStoneExplosion4,
+                fireStoneHellFire0,
+                fireStoneHellFire1,
+                fireStoneHellFire2,
+                fireStoneHellFire3,
+                fireStoneHellFire4
+        ));
+        airStones.addAll(Arrays.asList(
+                airStone0,
+                airStone1,
+                airStone2,
+                airStoneAgility0,
+                airStoneAgility1,
+                airStoneAgility2,
+                airStoneAgility3,
+                airStoneAgility4,
+                airStoneBending0,
+                airStoneBending1,
+                airStoneBending2,
+                airStoneBending3,
+                airStoneBending4,
+                airStoneWeather0,
+                airStoneWeather1,
+                airStoneWeather2,
+                airStoneWeather3,
+                airStoneWeather4
+        ));
+        earthStones.addAll(Arrays.asList(
+                earthStone0,
+                earthStone1,
+                earthStone2,
+                earthStoneDefense0,
+                earthStoneDefense1,
+                earthStoneDefense2,
+                earthStoneDefense3,
+                earthStoneDefense4,
+                earthStoneBending0,
+                earthStoneBending1,
+                earthStoneBending2,
+                earthStoneBending3,
+                earthStoneBending4,
+                earthStoneMining0,
+                earthStoneMining1,
+                earthStoneMining2,
+                earthStoneMining3,
+                earthStoneMining4
+        ));
+        magicStones.addAll(Arrays.asList(
+                magicStone0,
+                magicStone1,
+                magicStone2,
+                magicStoneLife0,
+                magicStoneLife1,
+                magicStoneLife2,
+                magicStoneLife3,
+                magicStoneLife4,
+                magicStoneDarkMagic0,
+                magicStoneDarkMagic1,
+                magicStoneDarkMagic2,
+                magicStoneDarkMagic3,
+                magicStoneDarkMagic4,
+                magicStonePotion0,
+                magicStonePotion1,
+                magicStonePotion2,
+                magicStonePotion3,
+                magicStonePotion4
         ));
     }
 }

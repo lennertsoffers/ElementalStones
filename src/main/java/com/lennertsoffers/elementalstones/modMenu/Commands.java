@@ -1,13 +1,13 @@
 package com.lennertsoffers.elementalstones.modMenu;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -47,9 +47,53 @@ public class Commands implements CommandExecutor {
                 }
             }
             return true;
+        } else if (label.equalsIgnoreCase("stoneInventory")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                if (sender.isOp()) {
+                    if (args.length != 0) {
+                        if (args[0].matches("water|fire|air|earth|magic")) {
+                            ArrayList<ItemStack> selectedStones;
+                            switch (args[0]) {
+                                case "water":
+                                    selectedStones = ItemStones.waterStones;
+                                    break;
+                                case "fire":
+                                    selectedStones = ItemStones.fireStones;
+                                    break;
+                                case "air":
+                                    selectedStones = ItemStones.airStones;
+                                    break;
+                                case "earth":
+                                    selectedStones = ItemStones.earthStones;
+                                    break;
+                                default:
+                                    selectedStones = ItemStones.magicStones;
+                            }
+                            Inventory inventory = Bukkit.createInventory(player, 27, args[0]);
+                            for (int i = 0; i <= 18; i += 9) {
+                                inventory.setItem(i, selectedStones.get(0));
+                                selectedStones.remove(0);
+                            }
+                            for (int i = 4; i < 9; i++) {
+                                inventory.setItem(i, selectedStones.get(0));
+                                selectedStones.remove(0);
+                            }
+                            for (int i = 13; i < 18; i++) {
+                                inventory.setItem(i, selectedStones.get(0));
+                                selectedStones.remove(0);
+                            }
+                            for (int i = 22; i < 27; i++) {
+                                inventory.setItem(i, selectedStones.get(0));
+                                selectedStones.remove(0);
+                            }
+                            player.openInventory(inventory);
+                            return true;
+                        }
+                    }
+                }
+            }
         }
-
-
         return false;
     }
 }

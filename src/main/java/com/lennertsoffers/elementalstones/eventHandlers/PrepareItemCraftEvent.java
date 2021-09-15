@@ -38,7 +38,6 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack SC = new ItemStack(Material.SCUTE);
         ItemStack DE = new ItemStack(Material.DRAGON_EGG);
         ItemStack DB = new ItemStack(Material.DRAGON_BREATH);
-        ItemStack SA = new ItemStack(Material.SADDLE);
         ItemStack LA = new ItemStack(Material.LAVA_BUCKET);
         ItemStack AD = new ItemStack(Material.ANCIENT_DEBRIS);
         ItemStack NE = new ItemStack(Material.NETHERITE_INGOT);
@@ -73,7 +72,6 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack BM = new ItemStack(Material.BONE_MEAL);
         ItemStack WSS = new ItemStack(Material.WITHER_SKELETON_SKULL);
         ItemStack LP = new ItemStack(Material.LINGERING_POTION);
-        ItemStack DH = new ItemStack(Material.DRAGON_HEAD);
         ItemStack WS = new ItemStack(Material.WET_SPONGE);
         ItemStack DS = new ItemStack(Material.SPONGE);
 
@@ -171,11 +169,6 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] magicStonePotion2recipe = {null, LP, null, LP, ItemStones.magicStonePotion1, LP, null, LP, null};
         ItemStack[] magicStonePotion3recipe = {LP, LP, LP, LP, ItemStones.magicStonePotion2, LP, LP, LP, LP};
         ItemStack[] magicStonePotion4recipe = {WSS, WSS, WSS, WSS, ItemStones.magicStonePotion3, WSS, WSS, WSS, WSS};
-        ItemStack[] magicStoneBeastsAndCreatures0recipe = {null, SA, null, null, ItemStones.magicStone2, null, null, null, null};
-        ItemStack[] magicStoneBeastsAndCreatures1recipe = {null, SA, null, null, ItemStones.magicStoneBeastsAndCreatures0, null, null, SA, null};
-        ItemStack[] magicStoneBeastsAndCreatures2recipe = {null, SA, null, SA, ItemStones.magicStoneBeastsAndCreatures1, SA, null, SA, null};
-        ItemStack[] magicStoneBeastsAndCreatures3recipe = {SA, SA, SA, SA, ItemStones.magicStoneBeastsAndCreatures2, SA, SA, SA, SA};
-        ItemStack[] magicStoneBeastsAndCreatures4recipe = {DH, DH, DH, DH, ItemStones.magicStoneBeastsAndCreatures3, DH, DH, DH, DH};
 
         if (Arrays.equals(waterStone0recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.waterStone0);
@@ -357,16 +350,6 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.magicStonePotion3);
         } else if (Arrays.equals(magicStonePotion4recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.magicStonePotion4);
-        } else if (Arrays.equals(magicStoneBeastsAndCreatures0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures0);
-        } else if (Arrays.equals(magicStoneBeastsAndCreatures1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures1);
-        } else if (Arrays.equals(magicStoneBeastsAndCreatures2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures2);
-        } else if (Arrays.equals(magicStoneBeastsAndCreatures3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures3);
-        } else if (Arrays.equals(magicStoneBeastsAndCreatures4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneBeastsAndCreatures4);
         }
     }
 }
