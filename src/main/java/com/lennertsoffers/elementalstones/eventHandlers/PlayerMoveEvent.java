@@ -17,6 +17,5 @@ public class PlayerMoveEvent implements Listener {
         }
 //        HellfireStone.move4(Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId())), event);
 //        LavaStone.passive(activePlayer);
-        LavaStone.move8(activePlayer, event);
     }
 }
