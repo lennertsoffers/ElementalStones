@@ -51,7 +51,7 @@ public class ItemStones {
     public static ItemStack fireStone1;
     public static ItemStack fireStone2;
 
-    // FireStones: Lava path
+    // FireStones:-Lava path
     public static ItemStack fireStoneLava0;
     public static ItemStack fireStoneLava1;
     public static ItemStack fireStoneLava2;
@@ -132,7 +132,7 @@ public class ItemStones {
     public static ItemStack magicStone1;
     public static ItemStack magicStone2;
 
-    // MagicStones: Life path
+    // MagicStones:-Life path
     public static ItemStack magicStoneLife0;
     public static ItemStack magicStoneLife1;
     public static ItemStack magicStoneLife2;
@@ -381,110 +381,110 @@ public class ItemStones {
         createBaseStone();
 
         // WATER STONES
-        waterStone0 = createStone(ChatColor.BLUE + "Water Stone", "An old relic used to manipulate water in surroundings.", "", 0, 0, 1);
-        waterStone1 = createStone(ChatColor.BLUE + "Water Stone Lv2", "An old relic used to manipulate water in surroundings.", "", 0, 0, 2);
-        waterStone2 = createStone(ChatColor.BLUE + "Water Stone Lv3", "An old relic used to manipulate water in surroundings.", "", 0, 0, 3);
-        waterStoneOcean0 = createStone(ChatColor.BLUE + "Ocean Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 1);
-        waterStoneOcean1 = createStone(ChatColor.BLUE + "Ocean Stone Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 2);
-        waterStoneOcean2 = createStone(ChatColor.BLUE + "Ocean Stone Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 3);
-        waterStoneOcean3 = createStone(ChatColor.BLUE + "Ocean Stone Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 4);
-        waterStoneOcean4 = createStone(ChatColor.BLUE + "Completed Ocean Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 5);
-        waterStoneBending0 = createStone(ChatColor.BLUE + "Waterbending Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 1);
-        waterStoneBending1 = createStone(ChatColor.BLUE + "Waterbending Stone Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 2);
-        waterStoneBending2 = createStone(ChatColor.BLUE + "Waterbending Stone Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 3);
-        waterStoneBending3 = createStone(ChatColor.BLUE + "Waterbending Stone Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 4);
-        waterStoneBending4 = createStone(ChatColor.BLUE + "Completed Waterbending Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 5);
-        waterStoneIce0 = createStone(ChatColor.BLUE + "Waterbending Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 1);
-        waterStoneIce1 = createStone(ChatColor.BLUE + "Waterbending Stone Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 2);
-        waterStoneIce2 = createStone(ChatColor.BLUE + "Waterbending Stone Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 3);
-        waterStoneIce3 = createStone(ChatColor.BLUE + "Waterbending Stone Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 4);
-        waterStoneIce4 = createStone(ChatColor.BLUE + "Completed Waterbending Stone", "An old relic used to manipulate water in surroundings.",  "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 5);
+        waterStone0 = createStone(ChatColor.BLUE + "Water-Stone", "An old relic used to manipulate water in surroundings.", "", 0, 0, 1);
+        waterStone1 = createStone(ChatColor.BLUE + "Water-Stone-Lv2", "An old relic used to manipulate water in surroundings.", "", 0, 0, 2);
+        waterStone2 = createStone(ChatColor.BLUE + "Water-Stone-Lv3", "An old relic used to manipulate water in surroundings.", "", 0, 0, 3);
+        waterStoneOcean0 = createStone(ChatColor.BLUE + "Ocean-Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 1);
+        waterStoneOcean1 = createStone(ChatColor.BLUE + "Ocean-Stone-Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 2);
+        waterStoneOcean2 = createStone(ChatColor.BLUE + "Ocean-Stone-Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 3);
+        waterStoneOcean3 = createStone(ChatColor.BLUE + "Ocean-Stone-Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 4);
+        waterStoneOcean4 = createStone(ChatColor.BLUE + "Completed-Ocean-Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the behaviour of the ocean", 0, 1, 5);
+        waterStoneBending0 = createStone(ChatColor.BLUE + "Waterbending-Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 1);
+        waterStoneBending1 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 2);
+        waterStoneBending2 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 3);
+        waterStoneBending3 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 4);
+        waterStoneBending4 = createStone(ChatColor.BLUE + "Completed-Waterbending-Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to manipulate the movement of water in close range", 0, 2, 5);
+        waterStoneIce0 = createStone(ChatColor.BLUE + "Waterbending-Stone", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 1);
+        waterStoneIce1 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv2", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 2);
+        waterStoneIce2 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv3", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 3);
+        waterStoneIce3 = createStone(ChatColor.BLUE + "Waterbending-Stone-Lv4", "An old relic used to manipulate water in surroundings.", "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 4);
+        waterStoneIce4 = createStone(ChatColor.BLUE + "Completed-Waterbending-Stone", "An old relic used to manipulate water in surroundings.",  "This relic magical powers are especially useful to use ice in your advantage", 0, 3, 5);
 
         // FIRE STONES
-        fireStone0 = createStone(ChatColor.RED + "Fire Stone", "An old relic used to utilize the power of fire.", "", 1, 0, 1);
-        fireStone1 = createStone(ChatColor.RED + "Fire Stone Lv 2", "An old relic used to utilize the power of fire.", "", 1, 0, 2);
-        fireStone2 = createStone(ChatColor.RED + "Fire Stone Lv3", "An old relic used to utilize the power of fire.", "", 1, 0, 3);
-        fireStoneLava0 = createStone(ChatColor.RED + "Lava Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 1);
-        fireStoneLava1 = createStone(ChatColor.RED + "Lava Stone Lv2", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 2);
-        fireStoneLava2 = createStone(ChatColor.RED + "Lava Stone Lv3", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 3);
-        fireStoneLava3 = createStone(ChatColor.RED + "Lava Stone Lv4", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 4);
-        fireStoneLava4 = createStone(ChatColor.RED + "Completed Lava Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 5);
-        fireStoneExplosion0 = createStone(ChatColor.RED + "Explosion Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 1);
-        fireStoneExplosion1 = createStone(ChatColor.RED + "Explosion Stone Lv2", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 2);
-        fireStoneExplosion2 = createStone(ChatColor.RED + "Explosion Stone Lv3", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 3);
-        fireStoneExplosion3 = createStone(ChatColor.RED + "Explosion Stone Lv4", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 4);
-        fireStoneExplosion4 = createStone(ChatColor.RED + "Completed Explosion Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 5);
-        fireStoneHellFire0 = createStone(ChatColor.RED + "Hellfire Stone", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 1);
-        fireStoneHellFire1 = createStone(ChatColor.RED + "Hellfire Stone Lv2", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 2);
-        fireStoneHellFire2 = createStone(ChatColor.RED + "Hellfire Stone Lv3", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 3);
-        fireStoneHellFire3 = createStone(ChatColor.RED + "Hellfire Stone Lv4", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 4);
-        fireStoneHellFire4 = createStone(ChatColor.RED + "Completed Hellfire Stone", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 5);
+        fireStone0 = createStone(ChatColor.RED + "Fire-Stone", "An old relic used to utilize the power of fire.", "", 1, 0, 1);
+        fireStone1 = createStone(ChatColor.RED + "Fire-Stone-Lv2", "An old relic used to utilize the power of fire.", "", 1, 0, 2);
+        fireStone2 = createStone(ChatColor.RED + "Fire-Stone-Lv3", "An old relic used to utilize the power of fire.", "", 1, 0, 3);
+        fireStoneLava0 = createStone(ChatColor.RED + "Lava-Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 1);
+        fireStoneLava1 = createStone(ChatColor.RED + "Lava-Stone-Lv2", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 2);
+        fireStoneLava2 = createStone(ChatColor.RED + "Lava-Stone-Lv3", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 3);
+        fireStoneLava3 = createStone(ChatColor.RED + "Lava-Stone-Lv4", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 4);
+        fireStoneLava4 = createStone(ChatColor.RED + "Completed-Lava-Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are specialized to influence the flow of lava in your vicinity", 1, 1, 5);
+        fireStoneExplosion0 = createStone(ChatColor.RED + "Explosion-Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 1);
+        fireStoneExplosion1 = createStone(ChatColor.RED + "Explosion-Stone-Lv2", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 2);
+        fireStoneExplosion2 = createStone(ChatColor.RED + "Explosion-Stone-Lv3", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 3);
+        fireStoneExplosion3 = createStone(ChatColor.RED + "Explosion-Stone-Lv4", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 4);
+        fireStoneExplosion4 = createStone(ChatColor.RED + "Completed-Explosion-Stone", "An old relic used to utilize the power of fire.", "The powers of this relic are used to create explosions", 1, 2, 5);
+        fireStoneHellFire0 = createStone(ChatColor.RED + "Hellfire-Stone", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 1);
+        fireStoneHellFire1 = createStone(ChatColor.RED + "Hellfire-Stone-Lv2", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 2);
+        fireStoneHellFire2 = createStone(ChatColor.RED + "Hellfire-Stone-Lv3", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 3);
+        fireStoneHellFire3 = createStone(ChatColor.RED + "Hellfire-Stone-Lv4", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 4);
+        fireStoneHellFire4 = createStone(ChatColor.RED + "Completed-Hellfire-Stone", "An old relic used to utilize the power of fire.", "This path is an expansion on the fire related moves and aims on high damage", 1, 2, 5);
 
         // AIR STONES
-        airStone0 = createStone(ChatColor.WHITE + "Air Stone", "An old relic that befriends you with the air around you", "", 2, 0, 1);
-        airStone1 = createStone(ChatColor.WHITE + "Air Stone Lv2", "An old relic that befriends you with the air around you", "", 2, 0, 2);
-        airStone2 = createStone(ChatColor.WHITE + "Air Stone Lv3", "An old relic that befriends you with the air around you", "", 2, 0, 3);
-        airStoneAgility0 = createStone(ChatColor.WHITE + "Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 1);
-        airStoneAgility1 = createStone(ChatColor.WHITE + "Agility Stone Lv2", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 2);
-        airStoneAgility2 = createStone(ChatColor.WHITE + "Agility Stone Lv3", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 3);
-        airStoneAgility3 = createStone(ChatColor.WHITE + "Agility Stone Lv4", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 4);
-        airStoneAgility4 = createStone(ChatColor.WHITE + "Completed Agility Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 5);
-        airStoneBending0 = createStone(ChatColor.WHITE + "Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 1);
-        airStoneBending1 = createStone(ChatColor.WHITE + "Airbending Stone Lv2", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 2);
-        airStoneBending2 = createStone(ChatColor.WHITE + "Airbending Stone Lv3", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 3);
-        airStoneBending3 = createStone(ChatColor.WHITE + "Airbending Stone Lv4", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 4);
-        airStoneBending4 = createStone(ChatColor.WHITE + "Completed Airbending Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 5);
-        airStoneWeather0 = createStone(ChatColor.WHITE + "Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 1);
-        airStoneWeather1 = createStone(ChatColor.WHITE + "Weather Stone Lv2", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 2);
-        airStoneWeather2 = createStone(ChatColor.WHITE + "Weather Stone Lv3", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 3);
-        airStoneWeather3 = createStone(ChatColor.WHITE + "Weather Stone Lv4", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 4);
-        airStoneWeather4 = createStone(ChatColor.WHITE + "Completed Weather Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 5);
+        airStone0 = createStone(ChatColor.WHITE + "Air-Stone", "An old relic that befriends you with the air around you", "", 2, 0, 1);
+        airStone1 = createStone(ChatColor.WHITE + "Air-Stone-Lv2", "An old relic that befriends you with the air around you", "", 2, 0, 2);
+        airStone2 = createStone(ChatColor.WHITE + "Air-Stone-Lv3", "An old relic that befriends you with the air around you", "", 2, 0, 3);
+        airStoneAgility0 = createStone(ChatColor.WHITE + "Agility-Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 1);
+        airStoneAgility1 = createStone(ChatColor.WHITE + "Agility-Stone-Lv2", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 2);
+        airStoneAgility2 = createStone(ChatColor.WHITE + "Agility-Stone-Lv3", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 3);
+        airStoneAgility3 = createStone(ChatColor.WHITE + "Agility-Stone-Lv4", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 4);
+        airStoneAgility4 = createStone(ChatColor.WHITE + "Completed-Agility-Stone", "An old relic that befriends you with the air around you", "You use the powers of the agility stone to make you more agile", 2, 1, 5);
+        airStoneBending0 = createStone(ChatColor.WHITE + "Airbending-Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 1);
+        airStoneBending1 = createStone(ChatColor.WHITE + "Airbending-Stone-Lv2", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 2);
+        airStoneBending2 = createStone(ChatColor.WHITE + "Airbending-Stone-Lv3", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 3);
+        airStoneBending3 = createStone(ChatColor.WHITE + "Airbending-Stone-Lv4", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 4);
+        airStoneBending4 = createStone(ChatColor.WHITE + "Completed-Airbending-Stone", "An old relic that befriends you with the air around you", "The airbending stone makes it possible to move the air around you and use it as an offense", 2, 2, 5);
+        airStoneWeather0 = createStone(ChatColor.WHITE + "Weather-Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 1);
+        airStoneWeather1 = createStone(ChatColor.WHITE + "Weather-Stone-Lv2", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 2);
+        airStoneWeather2 = createStone(ChatColor.WHITE + "Weather-Stone-Lv3", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 3);
+        airStoneWeather3 = createStone(ChatColor.WHITE + "Weather-Stone-Lv4", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 4);
+        airStoneWeather4 = createStone(ChatColor.WHITE + "Completed-Weather-Stone", "An old relic that befriends you with the air around you", "The weather stone gives you the possibility to alter with the weather", 2, 3, 5);
 
 
         // EARTH STONES
-        earthStone0 = createStone(ChatColor.DARK_GRAY + "Earth Stone", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 1);
-        earthStone1 = createStone(ChatColor.DARK_GRAY + "Earth Stone Lv2", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 2);
-        earthStone2 = createStone(ChatColor.DARK_GRAY + "Earth Stone Lv3", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 3);
-        earthStoneDefense0 = createStone(ChatColor.DARK_GRAY + "Defense Stone", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 1);
-        earthStoneDefense1 = createStone(ChatColor.DARK_GRAY + "Defense Stone Lv2", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 2);
-        earthStoneDefense2 = createStone(ChatColor.DARK_GRAY + "Defense Stone Lv3", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 3);
-        earthStoneDefense3 = createStone(ChatColor.DARK_GRAY + "Defense Stone Lv4", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 4);
-        earthStoneDefense4 = createStone(ChatColor.DARK_GRAY + "Completed Defense Stone", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 5);
-        earthStoneBending0 = createStone(ChatColor.DARK_GRAY + "Earthbending Stone", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 1);
-        earthStoneBending1 = createStone(ChatColor.DARK_GRAY + "Earthbending Stone Lv2", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 2);
-        earthStoneBending2 = createStone(ChatColor.DARK_GRAY + "Earthbending Stone Lv3", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 3);
-        earthStoneBending3 = createStone(ChatColor.DARK_GRAY + "Earthbending Stone Lv4", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 4);
-        earthStoneBending4 = createStone(ChatColor.DARK_GRAY + "Completed Earthbending Stone", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 5);
-        earthStoneMining0 = createStone(ChatColor.DARK_GRAY + "Mining Stone", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 1);
-        earthStoneMining1 = createStone(ChatColor.DARK_GRAY + "Mining Stone Lv2", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 2);
-        earthStoneMining2 = createStone(ChatColor.DARK_GRAY + "Mining Stone Lv3", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 3);
-        earthStoneMining3 = createStone(ChatColor.DARK_GRAY + "Mining Stone Lv4", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 4);
-        earthStoneMining4 = createStone(ChatColor.DARK_GRAY + "Completed Mining Stone", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 5);
+        earthStone0 = createStone(ChatColor.DARK_GRAY + "Earth-Stone", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 1);
+        earthStone1 = createStone(ChatColor.DARK_GRAY + "Earth-Stone-Lv2", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 2);
+        earthStone2 = createStone(ChatColor.DARK_GRAY + "Earth-Stone-Lv3", "An old relic that makes it possible to alter with the earth around you", "", 3, 0, 3);
+        earthStoneDefense0 = createStone(ChatColor.DARK_GRAY + "Defense-Stone", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 1);
+        earthStoneDefense1 = createStone(ChatColor.DARK_GRAY + "Defense-Stone-Lv2", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 2);
+        earthStoneDefense2 = createStone(ChatColor.DARK_GRAY + "Defense-Stone-Lv3", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 3);
+        earthStoneDefense3 = createStone(ChatColor.DARK_GRAY + "Defense-Stone-Lv4", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 4);
+        earthStoneDefense4 = createStone(ChatColor.DARK_GRAY + "Completed-Defense-Stone", "An old relic that makes it possible to alter with the earth around you", "Holding this stone makes you harder than rock and gives you defensive abilities", 3, 1, 5);
+        earthStoneBending0 = createStone(ChatColor.DARK_GRAY + "Earthbending-Stone", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 1);
+        earthStoneBending1 = createStone(ChatColor.DARK_GRAY + "Earthbending-Stone-Lv2", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 2);
+        earthStoneBending2 = createStone(ChatColor.DARK_GRAY + "Earthbending-Stone-Lv3", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 3);
+        earthStoneBending3 = createStone(ChatColor.DARK_GRAY + "Earthbending-Stone-Lv4", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 4);
+        earthStoneBending4 = createStone(ChatColor.DARK_GRAY + "Completed-Earthbending-Stone", "An old relic that makes it possible to alter with the earth around you", "With this stone you can terraform the terrain or even use the terrain offensive against your enemies", 3, 2, 5);
+        earthStoneMining0 = createStone(ChatColor.DARK_GRAY + "Mining-Stone", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 1);
+        earthStoneMining1 = createStone(ChatColor.DARK_GRAY + "Mining-Stone-Lv2", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 2);
+        earthStoneMining2 = createStone(ChatColor.DARK_GRAY + "Mining-Stone-Lv3", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 3);
+        earthStoneMining3 = createStone(ChatColor.DARK_GRAY + "Mining-Stone-Lv4", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 4);
+        earthStoneMining4 = createStone(ChatColor.DARK_GRAY + "Completed-Mining-Stone", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 5);
 
         // MAGIC STONES
-        magicStone0 = createStone(ChatColor.DARK_PURPLE + "Magic Stone", "The most extraordinary base stone of them all", "", 4, 0, 1);
-        magicStone1 = createStone(ChatColor.DARK_PURPLE + "Magic Stone", "The most extraordinary base stone of them all", "", 4, 0, 2);
-        magicStone2 = createStone(ChatColor.DARK_PURPLE + "Magic Stone", "The most extraordinary base stone of them all", "", 4, 0, 3);
-        magicStoneLife0 = createStone(ChatColor.DARK_PURPLE + "Magic Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 1);
-        magicStoneLife1 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv2", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 2);
-        magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
-        magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic Stone Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
-        magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed Magic Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
-        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark Magic Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
-        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
-        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
-        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark Magic Stone Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
-        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed Dark Magic Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
-        magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
-        magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
-        magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
-        magicStonePotion3 = createStone(ChatColor.DARK_PURPLE + "Potion Stone Lv4", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 4);
-        magicStonePotion4 = createStone(ChatColor.DARK_PURPLE + "Completed Potion Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 5);
-        magicStoneBeastsAndCreatures0 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 1);
-        magicStoneBeastsAndCreatures1 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv2", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 2);
-        magicStoneBeastsAndCreatures2 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv3", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 3);
-        magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts and Creatures Stone Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
-        magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed Beasts and Creatures Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 5);
+        magicStone0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 1);
+        magicStone1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 2);
+        magicStone2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 3);
+        magicStoneLife0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 1);
+        magicStoneLife1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 2);
+        magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
+        magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
+        magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed-Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
+        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark-Magic-Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
+        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
+        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
+        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
+        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed-Dark-Magic-Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
+        magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
+        magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
+        magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
+        magicStonePotion3 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv4", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 4);
+        magicStonePotion4 = createStone(ChatColor.DARK_PURPLE + "Completed-Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 5);
+        magicStoneBeastsAndCreatures0 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 1);
+        magicStoneBeastsAndCreatures1 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv2", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 2);
+        magicStoneBeastsAndCreatures2 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv3", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 3);
+        magicStoneBeastsAndCreatures3 = createStone(ChatColor.DARK_PURPLE + "Beasts-and-Creatures-Stone-Lv4", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 4);
+        magicStoneBeastsAndCreatures4 = createStone(ChatColor.DARK_PURPLE + "Completed-Beasts-and-Creatures-Stone", "The most extraordinary base stone of them all", "Be careful for mutations on the wrong creatures", 4, 4, 5);
 
         allStones.addAll(Arrays.asList(
                 waterStone0,

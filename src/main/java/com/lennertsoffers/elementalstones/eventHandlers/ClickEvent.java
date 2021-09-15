@@ -34,26 +34,6 @@ public class ClickEvent implements Listener {
                 }
             }
         }
-
-        if (event.getAction() == Action.LEFT_CLICK_AIR) {
-            Location location = player.getLocation();
-            location.clone().add(1, 0, 0).getBlock().setType(Material.STONE);
-            location.clone().add(1, 0, 0).getBlock().setType(Material.STONE);
-            location.clone().add(1, 0, 1).getBlock().setType(Material.STONE);
-            location.clone().add(1, 0, 1).getBlock().setType(Material.STONE);
-            location.clone().add(0, 0, 1).getBlock().setType(Material.STONE);
-            location.clone().add(0, 0, 1).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, 0).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, 0).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(0, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(0, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(1, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(1, 0, -1).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, 1).getBlock().setType(Material.STONE);
-            location.clone().add(-1, 0, 1).getBlock().setType(Material.STONE);
-        }
     }
 }
 

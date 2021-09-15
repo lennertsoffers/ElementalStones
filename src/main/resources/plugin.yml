@@ -8,3 +8,6 @@ commands:
   r:
     description: Reloads the server
     usage: /r
+  givestone:
+    description: Gives particular stone to the selected player, if none selected, the executing player gets the itemstack
+    usage: /giveStone <player> <stone>
