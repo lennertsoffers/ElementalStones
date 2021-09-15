@@ -836,6 +836,9 @@ public class LavaStone {
 
     // MOVE 8
     // Lava Rider
+    // -> The player rides on a sphere of lava
+    // -> Increased movement speed
+    // -> Damages entities if they get caught by the lava
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
