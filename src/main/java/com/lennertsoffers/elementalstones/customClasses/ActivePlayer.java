@@ -192,4 +192,8 @@ public class ActivePlayer {
     public static void removeActivePlayer(UUID uuid) {
         activePlayers.removeIf(activePlayer -> activePlayer.getPlayer().getUniqueId() == uuid);
     }
+
+    public static void clearActivePlayers() {
+        activePlayers.clear();
+    }
 }
