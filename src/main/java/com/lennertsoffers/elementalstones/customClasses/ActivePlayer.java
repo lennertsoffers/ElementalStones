@@ -29,6 +29,7 @@ public class ActivePlayer {
     private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
     private ArrayList<Location> lavaBlockLocations = new ArrayList<>();
+    private boolean lavaStoneMove8Active = false;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -147,14 +148,22 @@ public class ActivePlayer {
     public boolean isInLavaBlockLocations(Location location) {
         for (Location lavaBlockLocation : this.lavaBlockLocations) {
             if (
-                (lavaBlockLocation.getBlockX() == location.getBlockX()) &&
-                (lavaBlockLocation.getBlockY() == location.getBlockY()) &&
-                (lavaBlockLocation.getBlockZ() == location.getBlockZ())
+                    (lavaBlockLocation.getBlockX() == location.getBlockX()) &&
+                            (lavaBlockLocation.getBlockY() == location.getBlockY()) &&
+                            (lavaBlockLocation.getBlockZ() == location.getBlockZ())
             ) {
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean isLavaStoneMove8Active() {
+        return this.lavaStoneMove8Active;
+    }
+
+    public void setLavaStoneMove8Active(boolean lavaStoneMove8Active) {
+        this.lavaStoneMove8Active = lavaStoneMove8Active;
     }
 
     public void addLocationMaterialMapping(Location location, Material material) {
