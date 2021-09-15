@@ -8,3 +8,9 @@ commands:
   r:
     description: Reloads the server
     usage: /r
+  givestone:
+    description: Gives particular stone to the selected player, if none selected, the executing player gets the itemstack
+    usage: /giveStone <player> <stone>
+  stoneInventory:
+    description: Opens inventory where you can pick a stone from, Magic Stone is default
+    usage: /stoneInventory <water-fire-air-earth-magic>

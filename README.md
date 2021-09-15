@@ -30,7 +30,6 @@ After level 3, you can choose a path in which you want to continue upgrading the
 * Magic Stone
     * Life Stone
     * Potion Stone
-    * Beasts and Creatures Stone
     * Dark Magic Stone
 
 👍 = done
