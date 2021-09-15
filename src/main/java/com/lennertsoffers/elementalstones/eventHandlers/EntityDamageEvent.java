@@ -14,11 +14,15 @@ public class EntityDamageEvent implements Listener {
         if (event.getEntity() instanceof Player){
             Player player = (Player) event.getEntity();
             ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+            if (activePlayer == null) {
+                return;
+            }
 //            if (event.getDamage() >= player.getHealth()) {
 //                event.setCancelled(true);
 //                DefenseStone.move8(player);
 //            }
             LavaStone.passive2(activePlayer, event);
+            LavaStone.move8(activePlayer, event);
         }
     }
 }

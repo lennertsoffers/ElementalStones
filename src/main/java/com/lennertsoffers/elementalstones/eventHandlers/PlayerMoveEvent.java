@@ -12,7 +12,11 @@ public class PlayerMoveEvent implements Listener {
     public void onPlayerMove(org.bukkit.event.player.PlayerMoveEvent event) {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+        if (activePlayer == null) {
+            return;
+        }
 //        HellfireStone.move4(Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId())), event);
 //        LavaStone.passive(activePlayer);
+        LavaStone.move8(activePlayer, event);
     }
 }

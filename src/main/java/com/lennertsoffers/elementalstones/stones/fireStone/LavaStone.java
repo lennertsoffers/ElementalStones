@@ -7,10 +7,12 @@ import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -836,6 +838,10 @@ public class LavaStone {
     // Lava Rider
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
+        activePlayer.setLavaStoneMove8Active(true);
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        player.teleport(player.getLocation().add(0, 2, 0));
         String[] lavaLevel0 = {
                 "AAAAAAAAA",
                 "AAALLLAAA",
@@ -895,15 +901,76 @@ public class LavaStone {
                 SetBlockTools.setBlocks(player.getLocation().clone().add(0, 1, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
                 previousLocation = player.getLocation().clone();
                 if (amountOfTicks > 200) {
+                    player.setAllowFlight(false);
+                    player.setFlying(false);
+                    player.setFireTicks(0);
+                    activePlayer.setLavaStoneMove8Active(false);
                     this.cancel();
                     for (int i = 0; i >= -2; i--) {
                         SetBlockTools.setBlocks(player.getLocation().clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
                     }
                 }
+                amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
+    // MOVE 8: Prevent player from getting fire damage
+    public static void move8(ActivePlayer activePlayer, EntityDamageEvent event) {
+        if (activePlayer.isLavaStoneMove8Active()) {
+            if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.LAVA || event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    // MOVE 8: Prevent player from flying higher than 3 blocks above the ground
+    public static void move8(ActivePlayer activePlayer, PlayerMoveEvent event) {
+        if (activePlayer.isLavaStoneMove8Active()) {
+            Player player = activePlayer.getPlayer();
+            Location location = player.getLocation();
+            World world = player.getWorld();
+            if (event.getFrom().getY() != Objects.requireNonNull(event.getTo()).getY()) {
+                event.setCancelled(true);
+
+            }
+            while (
+                    (
+                            location.clone().add(1, 0, 0).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(1, 0, 0).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(1, 0, 1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(1, 0, 1).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(0, 0, 1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(0, 0, 1).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(-1, 0, 0).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(-1, 0, 0).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(-1, 0, -1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(-1, 0, -1).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(0, 0, -1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(0, 0, -1).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(1, 0, -1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(1, 0, -1).getBlock().getType() != Material.AIR
+                    ) || (
+                            location.clone().add(-1, 0, 1).getBlock().getType() != Material.LAVA &&
+                                    location.clone().add(-1, 0, 1).getBlock().getType() != Material.AIR
+                    )
+            ) {
+                player.teleport(player.getLocation().add(0, 1, 0));
+            }
+
+            while (player.getLocation().add(0, -3, 0).getBlock().getType() == Material.AIR ||
+                   player.getLocation().add(0, -3, 0).getBlock().getType() == Material.LAVA) {
+                System.out.println("in while");
+                player.teleport(player.getLocation().add(0, -1, 0));
+            }
+        }
+    }
 }
 
 
