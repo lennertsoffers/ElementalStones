@@ -31,6 +31,9 @@ public class ActivePlayer {
     private ArrayList<Location> lavaBlockLocations = new ArrayList<>();
     private boolean lavaStoneMove8Active = false;
 
+    // Water Stone
+    private int remainingIceShards = 10;
+
     public ActivePlayer(Player player) {
         this.player = player;
         this.active = false;
@@ -178,6 +181,27 @@ public class ActivePlayer {
 
     public static ArrayList<ActivePlayer> getActivePlayers() {
         return activePlayers;
+    }
+
+    public int getRemainingIceShards() {
+        return this.remainingIceShards;
+    }
+
+    public boolean useIceShard() {
+        if (this.remainingIceShards >= 1) {
+            this.remainingIceShards--;
+            long ticksOfDelay = (10 - this.remainingIceShards) * 40L;
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (remainingIceShards < 10) {
+                        remainingIceShards++;
+                    }
+                }
+            }.runTaskLater(StaticVariables.plugin, ticksOfDelay);
+            return true;
+        }
+        return false;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {
