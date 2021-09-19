@@ -14,6 +14,7 @@ import java.util.*;
 public class ActivePlayer {
     private final Player player;
     private boolean active;
+    private ArrayList<Location> overrideLocations = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
 
@@ -59,6 +60,20 @@ public class ActivePlayer {
             this.active = true;
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
         }
+    }
+
+    public void addOverrideLocation(Location location) {
+        if (!this.overrideLocations.contains(location)) {
+            this.overrideLocations.add(location.getBlock().getLocation());
+        }
+    }
+
+    public void clearOverrideLocations() {
+        this.overrideLocations.clear();
+    }
+
+    public ArrayList<Location> getOverrideLocations() {
+        return this.overrideLocations;
     }
 
     public FallingBlock getFallingBlock() {
