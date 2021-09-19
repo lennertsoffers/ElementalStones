@@ -23,7 +23,8 @@ public class SetBlockTools {
                                      Material locationBlockType,
                                      double amountOfDamage,
                                      Player player,
-                                     ActivePlayer activePlayer)
+                                     ActivePlayer activePlayer,
+                                     ArrayList<Location> overrideLocations)
     {
         // Arraylist of locations to return
         ArrayList<Location> locationArrayList = new ArrayList<>();
@@ -62,7 +63,8 @@ public class SetBlockTools {
                 Material material = world.getBlockAt(blockLocation).getType();
 
                 // Only change the material of this block if the following statement is true
-                if (material == Material.AIR || !onlyFillAir || overrideBlocks.contains(material)) {
+                if (material == Material.AIR || !onlyFillAir || overrideBlocks.contains(material) || overrideLocations.contains(blockLocation)) {
+                    Objects.requireNonNull(activePlayer).addOverrideLocation(blockLocation);
 
                     // If the character on the grid equals '?', nothing is changed
                     // If the character on the grid equals '*' and locationBlockType contains a value, this block is set to this value
@@ -109,7 +111,7 @@ public class SetBlockTools {
                                  Map<Character, Material> characterMaterialMap,
                                  boolean onlyFillAir)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -120,7 +122,7 @@ public class SetBlockTools {
                                  boolean onlyFillAir,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, -1, null, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -131,7 +133,7 @@ public class SetBlockTools {
                                  boolean onlyFillAir,
                                  ArrayList<Material> overrideBlocks)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -144,7 +146,7 @@ public class SetBlockTools {
                                  ArrayList<Material> overrideBlocks,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, -1, null, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -155,7 +157,7 @@ public class SetBlockTools {
                                  boolean onlyFillAir,
                                  Material locationBlockType)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -168,8 +170,18 @@ public class SetBlockTools {
                                  Material locationBlockType,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, activePlayer, new ArrayList<>());
     }
+
+   public static ArrayList<Location> setBlocks(Location startLocation,
+                                               String[] stringList,
+                                               Map<Character, Material> characterMaterialMap,
+                                               boolean onlyFillAir,
+                                               Material locationBlockType,
+                                               ActivePlayer activePlayer,
+                                               ArrayList<Location> overrideLocations) {
+       return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, -1, null, activePlayer, overrideLocations);
+   }
 
     // -> Fill blocks and return locations
     // -> Damages nearby livingEntities except player
@@ -180,7 +192,7 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -194,7 +206,7 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), null, amountOfDamage, player, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -207,7 +219,7 @@ public class SetBlockTools {
                                  ArrayList<Material> overrideBlocks,
                                  Material locationBlockType)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -222,7 +234,7 @@ public class SetBlockTools {
                                  Material locationBlockType,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, -1, null, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -236,7 +248,7 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -252,7 +264,7 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, null, amountOfDamage, player, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -266,7 +278,7 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -282,7 +294,7 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, new ArrayList<>(), locationBlockType, amountOfDamage, player, activePlayer, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -298,7 +310,7 @@ public class SetBlockTools {
                                  double amountOfDamage,
                                  Player player)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, null);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, null, new ArrayList<>());
     }
 
     // -> Fill blocks and return locations
@@ -316,6 +328,6 @@ public class SetBlockTools {
                                  Player player,
                                  ActivePlayer activePlayer)
     {
-        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, activePlayer);
+        return setBlockTool(startLocation, stringList, characterMaterialMap, onlyFillAir, overrideBlocks, locationBlockType, amountOfDamage, player, activePlayer, new ArrayList<>());
     }
 }

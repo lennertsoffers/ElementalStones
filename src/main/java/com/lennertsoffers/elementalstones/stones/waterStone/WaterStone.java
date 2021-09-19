@@ -28,46 +28,44 @@ public class WaterStone {
     // -> Only further use in combination with other moves
     public static void move2(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        player.sendMessage("move 2");
-        player.sendMessage("" +     player.getLocation().getYaw());
-        World world = player.getWorld();
         new BukkitRunnable() {
             @Override
             public void run() {
                 String[] armsForm0 = {
-                        "AAAAAAA",
-                        "ABAAABA",
-                        "ABAAABA",
-                        "ABA*ABA",
-                        "ABAAABA",
-                        "AAAAAAA"
+                        "AAAAAAAAA",
+                        "AAAAAAAAA",
+                        "AABAAABAA",
+                        "AABAAABAA",
+                        "AABA*ABAA",
+                        "AABAAABAA",
+                        "AAAAAAAAA",
+                        "AAAAAAAAA"
                 };
                 String[] armsForm1 = {
-                        "AAAAAAAAAAA",
-                        "AAAAAAAAAAA",
-                        "AABAAABAAAA",
-                        "AABAAABAAAA",
-                        "AAABA*ABAAA",
-                        "AAABAAABAAA",
-                        "AAAAAAAAAAA",
-                        "AAAAAAAAAAA",
-                        "AAAAAAAAAAA"
+                        "AAAAAAAAAAAAA",
+                        "AAAAAAAAAAAAA",
+                        "AAABAAABAAAAA",
+                        "AAABAAABAAAAA",
+                        "AAAABA*ABAAAA",
+                        "AAAABAAABAAAA",
+                        "AAAAAAAAAAAAA",
+                        "AAAAAAAAAAAAA"
                 };
                 String[] armsForm2 = {
-                        "AAAAAAAAAAA",
-                        "AAAABAAAAAA",
-                        "AAAAABAAAAA",
-                        "AAAAAABAAAA",
-                        "ABAAAAABAAA",
-                        "AABAA*AAAAA",
-                        "AAABAAAAAAA",
-                        "AAAABAAAAAA",
-                        "AAAAAAAAAAA",
-                        "AAAAAAAAAAA",
-                        "AAAAAAAAAAA"
+                        "AAAAAAAAAAAAA",
+                        "AAAAAAAAAAAAA",
+                        "AAAAABAAAAAAA",
+                        "AAAAAABAAAAAA",
+                        "AAAAAAABAAAAA",
+                        "AABAAAAABAAAA",
+                        "AAABAA*AAAAAA",
+                        "AAAABAAAAAAAA",
+                        "AAAAABAAAAAAA",
+                        "AAAAAAAAAAAAA",
+                        "AAAAAAAAAAAAA"
                 };
                 Location location = player.getLocation();
-                double yaw = location.getYaw();
+                float yaw = Math.abs(location.getYaw());
                 double startVal = 11.25;
                 if (yaw >= (startVal * 31) || yaw < (startVal)) {
                     placeWaterArms(activePlayer, StringListTools.mirrorY(StringListTools.rotate(armsForm0)));
@@ -108,31 +106,36 @@ public class WaterStone {
 
     // place water arms in world
     private static void placeWaterArms(ActivePlayer activePlayer, String[] armsForm) {
-        Location location = activePlayer.getPlayer().getLocation().add(0, 1, 0);
-        String[] airLayer = {
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAA*AAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA",
-                "AAAAAAAAAAA"
-        };
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('A', Material.AIR);
-        characterMaterialMap.put('B', Material.WATER);
-        ArrayList<Material> overrideBlocks = new ArrayList<>();
-        overrideBlocks.add(Material.WATER);
+        Player player = activePlayer.getPlayer();
+        if (player.getVelocity().length() < 0.5) {
+            Location location = player.getLocation().add(0, 1, 0);
+            String[] airLayer = {
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAA*AAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA"
+            };
+            Map<Character, Material> characterMaterialMap = new HashMap<>();
+            characterMaterialMap.put('A', Material.AIR);
+            characterMaterialMap.put('B', Material.WATER);
 
-        SetBlockTools.setBlocks(location, airLayer, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-        SetBlockTools.setBlocks(location.clone().add(0, 1, 0), armsForm, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-        SetBlockTools.setBlocks(location.clone().add(0, 2, 0), airLayer, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-        SetBlockTools.setBlocks(location.clone().add(0, 3, 0), airLayer, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-
+            SetBlockTools.setBlocks(location.clone().add(0, -1, 0), airLayer, characterMaterialMap, true, Material.AIR, activePlayer, activePlayer.getOverrideLocations());
+            SetBlockTools.setBlocks(location, airLayer, characterMaterialMap, true, Material.AIR, activePlayer, activePlayer.getOverrideLocations());
+            SetBlockTools.setBlocks(location.clone().add(0, 1, 0), armsForm, characterMaterialMap, true, Material.AIR, activePlayer, activePlayer.getOverrideLocations());
+            SetBlockTools.setBlocks(location.clone().add(0, 2, 0), airLayer, characterMaterialMap, true, Material.AIR, activePlayer, activePlayer.getOverrideLocations());
+            SetBlockTools.setBlocks(location.clone().add(0, 3, 0), airLayer, characterMaterialMap, true, Material.AIR, activePlayer, activePlayer.getOverrideLocations());
+        } else {
+            for (Location location : activePlayer.getOverrideLocations()) {
+                location.getBlock().setType(Material.AIR);
+            }
+        }
     }
 
     // MOVE 3
