@@ -12,6 +12,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -30,42 +31,107 @@ public class WaterStone {
     // -> Only further use in combination with other moves
     public static void move2(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        new BukkitRunnable() {
+        int amountOfArms;
+        if (activePlayer.hasWaterArms()) {
+            amountOfArms = 1;
+            activePlayer.setWaterArmStage(activePlayer.getWaterArmStage() - 1);
+            activePlayer.clearWaterArms();
+            if (activePlayer.getWaterArmStage() == 0) {
+                activePlayer.setWaterArmStage(0);
+                placeWaterArms(activePlayer, new String[] {
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAA*AAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA",
+                        "AAAAAAAAAAA"}
+                        );
+                return;
+            }
+        } else {
+            amountOfArms = 2;
+            activePlayer.setWaterArmStage(2);
+        }
+        activePlayer.setWaterArms(new BukkitRunnable() {
             @Override
             public void run() {
-                String[] armsForm0 = {
-                        "AAAAAAAAA",
-                        "AAAAAAAAA",
-                        "AABAAABAA",
-                        "AABAAABAA",
-                        "AABA*ABAA",
-                        "AABAAABAA",
-                        "AAAAAAAAA",
-                        "AAAAAAAAA"
-                };
-                String[] armsForm1 = {
-                        "AAAAAAAAAAAAA",
-                        "AAAAAAAAAAAAA",
-                        "AAABAAABAAAAA",
-                        "AAABAAABAAAAA",
-                        "AAAABA*ABAAAA",
-                        "AAAABAAABAAAA",
-                        "AAAAAAAAAAAAA",
-                        "AAAAAAAAAAAAA"
-                };
-                String[] armsForm2 = {
-                        "AAAAAAAAAAAAA",
-                        "AAAAAAAAAAAAA",
-                        "AAAAABAAAAAAA",
-                        "AAAAAABAAAAAA",
-                        "AAAAAAABAAAAA",
-                        "AABAAAAABAAAA",
-                        "AAABAA*AAAAAA",
-                        "AAAABAAAAAAAA",
-                        "AAAAABAAAAAAA",
-                        "AAAAAAAAAAAAA",
-                        "AAAAAAAAAAAAA"
-                };
+                String[] armsForm0;
+                String[] armsForm1;
+                String[] armsForm2;
+                if (amountOfArms == 2) {
+                    armsForm0 = new String[] {
+                            "AAAAAAAAA",
+                            "AAAAAAAAA",
+                            "AABAAABAA",
+                            "AABAAABAA",
+                            "AABA*ABAA",
+                            "AABAAABAA",
+                            "AAAAAAAAA",
+                            "AAAAAAAAA"
+                    };
+                    armsForm1 = new String[] {
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAABAAABAAAAA",
+                            "AAABAAABAAAAA",
+                            "AAAABA*ABAAAA",
+                            "AAAABAAABAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA"
+                    };
+                    armsForm2 = new String[] {
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAABAAAAAAA",
+                            "AAAAAABAAAAAA",
+                            "AAAAAAABAAAAA",
+                            "AABAAAAABAAAA",
+                            "AAABAA*AAAAAA",
+                            "AAAABAAAAAAAA",
+                            "AAAAABAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA"
+                    };
+                } else {
+                    armsForm0 = new String[] {
+                            "AAAAAAAAA",
+                            "AAAAAAAAA",
+                            "AAAAAABAA",
+                            "AAAAAABAA",
+                            "AAAA*ABAA",
+                            "AAAAAABAA",
+                            "AAAAAAAAA",
+                            "AAAAAAAAA"
+                    };
+                    armsForm1 = new String[] {
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAABAAAAA",
+                            "AAAAAAABAAAAA",
+                            "AAAAAA*ABAAAA",
+                            "AAAAAAAABAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA"
+                    };
+                    armsForm2 = new String[] {
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAABAAAAAAA",
+                            "AAAAAABAAAAAA",
+                            "AAAAAAABAAAAA",
+                            "AAAAAAAABAAAA",
+                            "AAAAAA*AAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA",
+                            "AAAAAAAAAAAAA"
+                    };
+                }
                 Location location = player.getLocation();
                 float yaw = Math.abs(location.getYaw());
                 double startVal = 11.25;
@@ -103,7 +169,7 @@ public class WaterStone {
                     placeWaterArms(activePlayer, StringListTools.rotate(StringListTools.mirrorX(StringListTools.mirrorY(armsForm1))));
                 }
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
     }
 
     // place water arms in world
@@ -145,57 +211,62 @@ public class WaterStone {
     // -> Throw one of your water arms that damages entities on impact
     // -> Creates splash damage
     public static void move3(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        ArrayList<Location> spearLocations = new ArrayList<>();
-        Vector initialDirection = player.getLocation().getDirection();
-        Location startLocation = player.getLocation().add(initialDirection.rotateAroundY(90).multiply(1.5)).add(initialDirection.rotateAroundY(180)).add(0, 2, 0);
-        Vector direction = player.getLocation().getDirection().multiply(0.9);
-        new BukkitRunnable() {
-            final Location location = startLocation.clone();
-            int distance = 0;
-            @Override
-            public void run() {
-                Location currentLocation = location.clone();
-                for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1)) {
-                    if (entity instanceof LivingEntity) {
-                        LivingEntity livingEntity = (LivingEntity) entity;
-                        if (livingEntity != player) {
-                            livingEntity.damage(3);
+        if (activePlayer.hasWaterArms()) {
+            move2(activePlayer);
+            Player player = activePlayer.getPlayer();
+            ArrayList<Location> spearLocations = new ArrayList<>();
+            Vector initialDirection = player.getLocation().getDirection();
+            Location startLocation = player.getLocation().add(initialDirection.rotateAroundY(180)).add(0, 2, 0);
+            Vector direction = player.getLocation().getDirection().multiply(0.9);
+            new BukkitRunnable() {
+                final Location location = startLocation.clone();
+                int distance = 0;
+
+                @Override
+                public void run() {
+                    Location currentLocation = location.clone();
+                    for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1)) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (livingEntity != player) {
+                                livingEntity.damage(5);
+                            }
                         }
                     }
-                }
-                spearLocations.add(currentLocation);
-                for (Location location : spearLocations) {
-                    if (placeWaterBlock(location, false)) {
-                        this.cancel();
-                        new BukkitRunnable() {
-                            final ArrayList<Location> waterLocationsToRemove = spearLocations;
-                            @Override
-                            public void run() {
-                                if (waterLocationsToRemove.size() > 0) {
-                                    placeWaterBlock(waterLocationsToRemove.get(0), true);
-                                    waterLocationsToRemove.remove(0);
-                                } else {
-                                    this.cancel();
-                                }
-                            }
-                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                    }
-                }
-                location.add(direction);
-                if (spearLocations.size() > 6) {
-                    placeWaterBlock(spearLocations.get(0), true);
-                    spearLocations.remove(0);
-                }
-                if (distance > 70) {
-                    this.cancel();
+                    spearLocations.add(currentLocation);
                     for (Location location : spearLocations) {
-                        location.getBlock().setType(Material.AIR);
+                        if (placeWaterBlock(location, false)) {
+                            this.cancel();
+                            new BukkitRunnable() {
+                                final ArrayList<Location> waterLocationsToRemove = spearLocations;
+
+                                @Override
+                                public void run() {
+                                    if (waterLocationsToRemove.size() > 0) {
+                                        placeWaterBlock(waterLocationsToRemove.get(0), true);
+                                        waterLocationsToRemove.remove(0);
+                                    } else {
+                                        this.cancel();
+                                    }
+                                }
+                            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                        }
                     }
+                    location.add(direction);
+                    if (spearLocations.size() > 6) {
+                        placeWaterBlock(spearLocations.get(0), true);
+                        spearLocations.remove(0);
+                    }
+                    if (distance > 70) {
+                        this.cancel();
+                        for (Location location : spearLocations) {
+                            location.getBlock().setType(Material.AIR);
+                        }
+                    }
+                    distance++;
                 }
-                distance++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }
     }
 
     // place blocks if not already water

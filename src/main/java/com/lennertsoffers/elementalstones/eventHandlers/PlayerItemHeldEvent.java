@@ -17,15 +17,19 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
+                IceStone.move2(activePlayer);
+            }
+            else if (event.getNewSlot() == 1) {
                 IceStone.move3(activePlayer);
             }
-//            else if (event.getNewSlot() == 1) {
-//                HellfireStone.move2(activePlayer);
-//            } else if (event.getNewSlot() == 2) {
-//                HellfireStone.move3(activePlayer);
-//            } else if (event.getNewSlot() == 3) {
-//                HellfireStone.move4(activePlayer);
-//            } else if (event.getNewSlot()in == 4) {
+            else if (event.getNewSlot() == 2) {
+                IceStone.move4(activePlayer);
+            }
+            else if (event.getNewSlot() == 3) {
+                LavaStone.move8(activePlayer);
+            }
+
+//            else if (event.getNewSlot()in == 4) {
 //                HellfireStone.move5(activePlayer);
 //            } else if (event.getNewSlot() == 5) {
 //                HellfireStone.move6(activePlayer);
