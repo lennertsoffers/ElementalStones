@@ -142,6 +142,36 @@ public class WaterStone {
     // Water Spear
     // -> Throw one of your water arms that damages entities on impact
     // -> Creates splash damage
+    public static void move3(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        ArrayList<Location> spearLocations = new ArrayList<>();
+        Location startLocation = player.getLocation().add(player.getLocation().getDirection());
+        Vector direction = player.getLocation().getDirection().multiply(0.5);
+
+        new BukkitRunnable() {
+            Location location = startLocation.clone();
+            int distance = 0;
+            @Override
+            public void run() {
+                spearLocations.add(location);
+                location.getBlock().setType(Material.STONE);
+                location.add(direction);
+                if (spearLocations.size() > 4) {
+                    spearLocations.get(spearLocations.size() - 1).getBlock().setType(Material.GOLD_BLOCK);
+                    System.out.println("Lenght: " + spearLocations.size());
+                    spearLocations.remove(spearLocations.size() - 1);
+                }
+                if (distance > 50) {
+                    this.cancel();
+                    for (Location location : spearLocations) {
+                        location.getBlock().setType(Material.AIR);
+                    }
+                }
+                distance++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 }
 
 
