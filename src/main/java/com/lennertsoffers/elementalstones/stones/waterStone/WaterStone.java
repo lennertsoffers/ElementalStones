@@ -8,6 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -144,25 +146,48 @@ public class WaterStone {
     // -> Creates splash damage
     public static void move3(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
         ArrayList<Location> spearLocations = new ArrayList<>();
-        Location startLocation = player.getLocation().add(player.getLocation().getDirection());
-        Vector direction = player.getLocation().getDirection().multiply(0.5);
-
+        Vector initialDirection = player.getLocation().getDirection();
+        Location startLocation = player.getLocation().add(initialDirection.rotateAroundY(90).multiply(1.5)).add(initialDirection.rotateAroundY(180)).add(0, 2, 0);
+        Vector direction = player.getLocation().getDirection().multiply(0.9);
         new BukkitRunnable() {
-            Location location = startLocation.clone();
+            final Location location = startLocation.clone();
             int distance = 0;
             @Override
             public void run() {
-                spearLocations.add(location);
-                location.getBlock().setType(Material.STONE);
-                location.add(direction);
-                if (spearLocations.size() > 4) {
-                    spearLocations.get(spearLocations.size() - 1).getBlock().setType(Material.GOLD_BLOCK);
-                    System.out.println("Lenght: " + spearLocations.size());
-                    spearLocations.remove(spearLocations.size() - 1);
+                Location currentLocation = location.clone();
+                for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1)) {
+                    if (entity instanceof LivingEntity) {
+                        LivingEntity livingEntity = (LivingEntity) entity;
+                        if (livingEntity != player) {
+                            livingEntity.damage(3);
+                        }
+                    }
                 }
-                if (distance > 50) {
+                spearLocations.add(currentLocation);
+                for (Location location : spearLocations) {
+                    if (placeWaterBlock(location, false)) {
+                        this.cancel();
+                        new BukkitRunnable() {
+                            final ArrayList<Location> waterLocationsToRemove = spearLocations;
+                            @Override
+                            public void run() {
+                                if (waterLocationsToRemove.size() > 0) {
+                                    placeWaterBlock(waterLocationsToRemove.get(0), true);
+                                    waterLocationsToRemove.remove(0);
+                                } else {
+                                    this.cancel();
+                                }
+                            }
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    }
+                }
+                location.add(direction);
+                if (spearLocations.size() > 6) {
+                    placeWaterBlock(spearLocations.get(0), true);
+                    spearLocations.remove(0);
+                }
+                if (distance > 70) {
                     this.cancel();
                     for (Location location : spearLocations) {
                         location.getBlock().setType(Material.AIR);
@@ -171,6 +196,32 @@ public class WaterStone {
                 distance++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    // place blocks if not already water
+    private static boolean placeWaterBlock(Location location, boolean remove) {
+        Location locationTop = location.clone().add(0, 1, 0);
+        Location locationBottom = location.clone().add(0, -1, 0);
+        if (remove) {
+            if (location.getBlock().getType() == Material.WATER) {
+                location.getBlock().setType(Material.AIR);
+            }
+        } else {
+            if (location.getBlock().getType() == Material.AIR) {
+                location.getBlock().setType(Material.WATER);
+            } else {
+                if (location.getBlock().getType() != Material.WATER || (locationBottom.getBlock().getType() != Material.WATER && locationBottom.getBlock().getType() != Material.AIR)) {
+                    return true;
+                }
+            }
+        }
+        if (locationTop.getBlock().getType() == Material.AIR) {
+            locationTop.getBlock().setType(Material.AIR);
+        }
+        if (locationBottom.getBlock().getType() == Material.AIR || locationBottom.getBlock().getType() == Material.WATER) {
+            locationBottom.getBlock().setType(Material.AIR);
+        }
+        return false;
     }
 }
 
