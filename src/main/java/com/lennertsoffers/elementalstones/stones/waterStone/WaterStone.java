@@ -147,21 +147,20 @@ public class WaterStone {
     public static void move3(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         ArrayList<Location> spearLocations = new ArrayList<>();
-        Location startLocation = player.getLocation().add(player.getLocation().getDirection());
-        Vector direction = player.getLocation().getDirection();
-
+        Vector initialDirection = player.getLocation().getDirection();
+        Location startLocation = player.getLocation().add(initialDirection.rotateAroundY(90).multiply(1.5)).add(initialDirection.rotateAroundY(180)).add(0, 2, 0);
+        Vector direction = player.getLocation().getDirection().multiply(0.9);
         new BukkitRunnable() {
             final Location location = startLocation.clone();
             int distance = 0;
             @Override
             public void run() {
                 Location currentLocation = location.clone();
-                for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5)) {
+                for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1)) {
                     if (entity instanceof LivingEntity) {
                         LivingEntity livingEntity = (LivingEntity) entity;
                         if (livingEntity != player) {
-                            livingEntity.damage(5);
-                            livingEntity.setVelocity(direction);
+                            livingEntity.damage(3);
                         }
                     }
                 }
@@ -173,9 +172,10 @@ public class WaterStone {
                             final ArrayList<Location> waterLocationsToRemove = spearLocations;
                             @Override
                             public void run() {
-                                placeWaterBlock(waterLocationsToRemove.get(0), true);
-                                waterLocationsToRemove.remove(0);
-                                if (waterLocationsToRemove.size() == 0) {
+                                if (waterLocationsToRemove.size() > 0) {
+                                    placeWaterBlock(waterLocationsToRemove.get(0), true);
+                                    waterLocationsToRemove.remove(0);
+                                } else {
                                     this.cancel();
                                 }
                             }
@@ -187,7 +187,7 @@ public class WaterStone {
                     placeWaterBlock(spearLocations.get(0), true);
                     spearLocations.remove(0);
                 }
-                if (distance > 50) {
+                if (distance > 70) {
                     this.cancel();
                     for (Location location : spearLocations) {
                         location.getBlock().setType(Material.AIR);
@@ -210,7 +210,7 @@ public class WaterStone {
             if (location.getBlock().getType() == Material.AIR) {
                 location.getBlock().setType(Material.WATER);
             } else {
-                if (location.getBlock().getType() != Material.WATER) {
+                if (location.getBlock().getType() != Material.WATER || (locationBottom.getBlock().getType() != Material.WATER && locationBottom.getBlock().getType() != Material.AIR)) {
                     return true;
                 }
             }
