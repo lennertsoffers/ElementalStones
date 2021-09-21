@@ -279,7 +279,7 @@ public class WaterStone {
             }
         } else {
             if (location.getBlock().getType() == Material.AIR) {
-                location.getBlock().setType(Material.WATER);
+                location.getBlock().setType(Material.POWDER_SNOW);
             } else {
                 if (location.getBlock().getType() != Material.WATER || (locationBottom.getBlock().getType() != Material.WATER && locationBottom.getBlock().getType() != Material.AIR)) {
                     return true;
