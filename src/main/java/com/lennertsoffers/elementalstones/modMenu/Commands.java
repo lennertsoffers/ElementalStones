@@ -68,7 +68,8 @@ public class Commands implements CommandExecutor {
                                     selectedStones = ItemStones.earthStones;
                                     break;
                                 default:
-                                    selectedStones = ItemStones.magicStones;
+//                                    selectedStones = ItemStones.magicStones;
+                                    selectedStones = ItemStones.earthStones;
                             }
                             Inventory inventory = Bukkit.createInventory(player, 27, args[0]);
                             for (int i = 0; i <= 18; i += 9) {

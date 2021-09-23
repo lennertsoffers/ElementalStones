@@ -43,6 +43,7 @@ public class ActivePlayer {
         this.active = false;
         this.move8Stage = 0;
         activePlayers.add(this);
+        player.setAllowFlight(true);
     }
 
     public Player getPlayer() {
