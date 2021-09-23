@@ -151,24 +151,24 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] earthStoneMining3recipe = {DP, DP, DP, DP, ItemStones.earthStoneMining2, DP, DP, DP, DP};
         ItemStack[] earthStoneMining4recipe = {NP, NP, NP, NP, ItemStones.earthStoneMining3, NP, NP, NP, NP};
 
-        ItemStack[] magicStone0recipe = {BO, BO, BO, BO, s, BO, BO, BO, BO};
-        ItemStack[] magicStone1recipe = {BO, ET, BO, BO, ItemStones.magicStone0, BO, BO, ET, BO};
-        ItemStack[] magicStone2recipe = {BO, ET, BO, ET, ItemStones.magicStone1, ET, BO, ET, BO};
-        ItemStack[] magicStoneLife0recipe = {BM, BM, BM, BM, ItemStones.magicStone2, BM, BM, BM, BM};
-        ItemStack[] magicStoneLife1recipe = {SS, SS, SS, SS, ItemStones.magicStoneLife0, SS, SS, SS, SS};
-        ItemStack[] magicStoneLife2recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife1, SS, SS, SS, SS};
-        ItemStack[] magicStoneLife3recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife2, SS, SS, TO, SS};
-        ItemStack[] magicStoneLife4recipe = {TO, TO, TO, TO, ItemStones.magicStoneLife3, TO, TO, TO, TO};
-        ItemStack[] magicStoneDarkMagic0recipe = {null, W, null, null, ItemStones.magicStone2, null, null, null, null};
-        ItemStack[] magicStoneDarkMagic1recipe = {null, W, null, null, ItemStones.magicStoneDarkMagic0, null, null, W, null};
-        ItemStack[] magicStoneDarkMagic2recipe = {null, W, null, W, ItemStones.magicStoneDarkMagic1, W, null, W, null};
-        ItemStack[] magicStoneDarkMagic3recipe = {W, W, W, W, ItemStones.magicStoneDarkMagic2, W, W, W, W};
-        ItemStack[] magicStoneDarkMagic4recipe = {null, DE, null, null, ItemStones.magicStoneDarkMagic3, null, null, null, null};
-        ItemStack[] magicStonePotion0recipe = {null, LP, null, null, ItemStones.magicStone2, null, null, null, null};
-        ItemStack[] magicStonePotion1recipe = {null, LP, null, null, ItemStones.magicStonePotion0, null, null, LP, null};
-        ItemStack[] magicStonePotion2recipe = {null, LP, null, LP, ItemStones.magicStonePotion1, LP, null, LP, null};
-        ItemStack[] magicStonePotion3recipe = {LP, LP, LP, LP, ItemStones.magicStonePotion2, LP, LP, LP, LP};
-        ItemStack[] magicStonePotion4recipe = {WSS, WSS, WSS, WSS, ItemStones.magicStonePotion3, WSS, WSS, WSS, WSS};
+//        ItemStack[] magicStone0recipe = {BO, BO, BO, BO, s, BO, BO, BO, BO};
+//        ItemStack[] magicStone1recipe = {BO, ET, BO, BO, ItemStones.magicStone0, BO, BO, ET, BO};
+//        ItemStack[] magicStone2recipe = {BO, ET, BO, ET, ItemStones.magicStone1, ET, BO, ET, BO};
+//        ItemStack[] magicStoneLife0recipe = {BM, BM, BM, BM, ItemStones.magicStone2, BM, BM, BM, BM};
+//        ItemStack[] magicStoneLife1recipe = {SS, SS, SS, SS, ItemStones.magicStoneLife0, SS, SS, SS, SS};
+//        ItemStack[] magicStoneLife2recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife1, SS, SS, SS, SS};
+//        ItemStack[] magicStoneLife3recipe = {SS, TO, SS, SS, ItemStones.magicStoneLife2, SS, SS, TO, SS};
+//        ItemStack[] magicStoneLife4recipe = {TO, TO, TO, TO, ItemStones.magicStoneLife3, TO, TO, TO, TO};
+//        ItemStack[] magicStoneDarkMagic0recipe = {null, W, null, null, ItemStones.magicStone2, null, null, null, null};
+//        ItemStack[] magicStoneDarkMagic1recipe = {null, W, null, null, ItemStones.magicStoneDarkMagic0, null, null, W, null};
+//        ItemStack[] magicStoneDarkMagic2recipe = {null, W, null, W, ItemStones.magicStoneDarkMagic1, W, null, W, null};
+//        ItemStack[] magicStoneDarkMagic3recipe = {W, W, W, W, ItemStones.magicStoneDarkMagic2, W, W, W, W};
+//        ItemStack[] magicStoneDarkMagic4recipe = {null, DE, null, null, ItemStones.magicStoneDarkMagic3, null, null, null, null};
+//        ItemStack[] magicStonePotion0recipe = {null, LP, null, null, ItemStones.magicStone2, null, null, null, null};
+//        ItemStack[] magicStonePotion1recipe = {null, LP, null, null, ItemStones.magicStonePotion0, null, null, LP, null};
+//        ItemStack[] magicStonePotion2recipe = {null, LP, null, LP, ItemStones.magicStonePotion1, LP, null, LP, null};
+//        ItemStack[] magicStonePotion3recipe = {LP, LP, LP, LP, ItemStones.magicStonePotion2, LP, LP, LP, LP};
+//        ItemStack[] magicStonePotion4recipe = {WSS, WSS, WSS, WSS, ItemStones.magicStonePotion3, WSS, WSS, WSS, WSS};
 
         if (Arrays.equals(waterStone0recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.waterStone0);
@@ -314,42 +314,43 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.earthStoneMining3);
         } else if (Arrays.equals(earthStoneMining4recipe, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStoneMining4);
-        } else if (Arrays.equals(magicStone0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStone0);
-        } else if (Arrays.equals(magicStone1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStone1);
-        } else if (Arrays.equals(magicStone2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStone2);
-        } else if (Arrays.equals(magicStoneLife0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneLife0);
-        } else if (Arrays.equals(magicStoneLife1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneLife1);
-        } else if (Arrays.equals(magicStoneLife2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneLife2);
-        } else if (Arrays.equals(magicStoneLife3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneLife3);
-        } else if (Arrays.equals(magicStoneLife4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneLife4);
-        } else if (Arrays.equals(magicStoneDarkMagic0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneDarkMagic0);
-        } else if (Arrays.equals(magicStoneDarkMagic1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneDarkMagic1);
-        } else if (Arrays.equals(magicStoneDarkMagic2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneDarkMagic2);
-        } else if (Arrays.equals(magicStoneDarkMagic3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneDarkMagic3);
-        } else if (Arrays.equals(magicStoneDarkMagic4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStoneDarkMagic4);
-        } else if (Arrays.equals(magicStonePotion0recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStonePotion0);
-        } else if (Arrays.equals(magicStonePotion1recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStonePotion1);
-        } else if (Arrays.equals(magicStonePotion2recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStonePotion2);
-        } else if (Arrays.equals(magicStonePotion3recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStonePotion3);
-        } else if (Arrays.equals(magicStonePotion4recipe, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.magicStonePotion4);
         }
+//        else if (Arrays.equals(magicStone0recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStone0);
+//        } else if (Arrays.equals(magicStone1recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStone1);
+//        } else if (Arrays.equals(magicStone2recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStone2);
+//        } else if (Arrays.equals(magicStoneLife0recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneLife0);
+//        } else if (Arrays.equals(magicStoneLife1recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneLife1);
+//        } else if (Arrays.equals(magicStoneLife2recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneLife2);
+//        } else if (Arrays.equals(magicStoneLife3recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneLife3);
+//        } else if (Arrays.equals(magicStoneLife4recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneLife4);
+//        } else if (Arrays.equals(magicStoneDarkMagic0recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneDarkMagic0);
+//        } else if (Arrays.equals(magicStoneDarkMagic1recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneDarkMagic1);
+//        } else if (Arrays.equals(magicStoneDarkMagic2recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneDarkMagic2);
+//        } else if (Arrays.equals(magicStoneDarkMagic3recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneDarkMagic3);
+//        } else if (Arrays.equals(magicStoneDarkMagic4recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStoneDarkMagic4);
+//        } else if (Arrays.equals(magicStonePotion0recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStonePotion0);
+//        } else if (Arrays.equals(magicStonePotion1recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStonePotion1);
+//        } else if (Arrays.equals(magicStonePotion2recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStonePotion2);
+//        } else if (Arrays.equals(magicStonePotion3recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStonePotion3);
+//        } else if (Arrays.equals(magicStonePotion4recipe, craftingMatrix)) {
+//            event.getInventory().setResult(ItemStones.magicStonePotion4);
+//        }
     }
 }

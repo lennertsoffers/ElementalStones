@@ -2,8 +2,6 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import net.minecraft.server.PacketPlayOutWorldParticles;
-import net.minecraft.server.PlayerConnection;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -12,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class IceStone extends WaterStone {
@@ -88,14 +87,33 @@ public class IceStone extends WaterStone {
     }
 
     // MOVE 5
-
+    // Ice Arms
+    // ->
 
     // MOVE 6
-
+    // Snow Stomp
+    // -> Tuns the ground around the player to powder snow
+    // -> The player can move normally on it
+//    public static void move6(ActivePlayer activePlayer) {
+//        Player player = activePlayer.getPlayer();
+//        Location playerLocation = player.getLocation();
+//        ArrayList<Location> snowBlockLocations = new ArrayList<>();
+//        snowBlockLocations.add(playerLocation.add(-1, 0, 2));
+//        snowBlockLocations.add(playerLocation.add(0, 0, 2));
+//        snowBlockLocations.add(playerLocation.add(1, 0, 2));
+//        snowBlockLocations.add(playerLocation.add(-1, 0, -2));
+//        snowBlockLocations.add(playerLocation.add(0, 0, -2));
+//        snowBlockLocations.add(playerLocation.add(1, 0, -2));
+//        for (int i = 0; i < )
+//
+//    }
 
     // MOVE 7
-
+    // Ice Tornado
+    // -> Throws an ice tornado in the looking direction
+    // -> Inflicts slowness and throws entities up
 
     // MOVE 8
-
+    // Ice Aura
+    // -> All entities in the proximity become frozen and will not be able to move
 }

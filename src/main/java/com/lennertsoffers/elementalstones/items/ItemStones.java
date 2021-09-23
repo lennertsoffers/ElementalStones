@@ -128,37 +128,37 @@ public class ItemStones {
 
     // MAGIC STONES
     // MagicStones: Default
-    public static ItemStack magicStone0;
-    public static ItemStack magicStone1;
-    public static ItemStack magicStone2;
-
-    // MagicStones:-Life path
-    public static ItemStack magicStoneLife0;
-    public static ItemStack magicStoneLife1;
-    public static ItemStack magicStoneLife2;
-    public static ItemStack magicStoneLife3;
-    public static ItemStack magicStoneLife4;
-
-    // MagicStones: Energy path
-    public static ItemStack magicStoneDarkMagic0;
-    public static ItemStack magicStoneDarkMagic1;
-    public static ItemStack magicStoneDarkMagic2;
-    public static ItemStack magicStoneDarkMagic3;
-    public static ItemStack magicStoneDarkMagic4;
-
-    // MagicStones: Potions path
-    public static ItemStack magicStonePotion0;
-    public static ItemStack magicStonePotion1;
-    public static ItemStack magicStonePotion2;
-    public static ItemStack magicStonePotion3;
-    public static ItemStack magicStonePotion4;
+//    public static ItemStack magicStone0;
+//    public static ItemStack magicStone1;
+//    public static ItemStack magicStone2;
+//
+//    // MagicStones:-Life path
+//    public static ItemStack magicStoneLife0;
+//    public static ItemStack magicStoneLife1;
+//    public static ItemStack magicStoneLife2;
+//    public static ItemStack magicStoneLife3;
+//    public static ItemStack magicStoneLife4;
+//
+//    // MagicStones: Energy path
+//    public static ItemStack magicStoneDarkMagic0;
+//    public static ItemStack magicStoneDarkMagic1;
+//    public static ItemStack magicStoneDarkMagic2;
+//    public static ItemStack magicStoneDarkMagic3;
+//    public static ItemStack magicStoneDarkMagic4;
+//
+//    // MagicStones: Potions path
+//    public static ItemStack magicStonePotion0;
+//    public static ItemStack magicStonePotion1;
+//    public static ItemStack magicStonePotion2;
+//    public static ItemStack magicStonePotion3;
+//    public static ItemStack magicStonePotion4;
 
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
     public static ArrayList<ItemStack> waterStones = new ArrayList<>();
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
     public static ArrayList<ItemStack> airStones = new ArrayList<>();
     public static ArrayList<ItemStack> earthStones = new ArrayList<>();
-    public static ArrayList<ItemStack> magicStones = new ArrayList<>();
+//    public static ArrayList<ItemStack> magicStones = new ArrayList<>();
 
     private static final String[][][] moveDeclaration = {
             {
@@ -285,37 +285,37 @@ public class ItemStones {
                             "Move 8: info"
                     }
             },
-            {
-                    {
-                            "Move 1: info",
-                            "Move 2: info",
-                            "Move 3: info"
-                    },
-                    {
-                            "Passive: info",
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
-                            "Passive: info",
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    },
-                    {
-                            "Passive: info",
-                            "Move 4: info",
-                            "Move 5: info",
-                            "Move 6: info",
-                            "Move 7: info",
-                            "Move 8: info"
-                    }
-            }
+//            {
+//                    {
+//                            "Move 1: info",
+//                            "Move 2: info",
+//                            "Move 3: info"
+//                    },
+//                    {
+//                            "Passive: info",
+//                            "Move 4: info",
+//                            "Move 5: info",
+//                            "Move 6: info",
+//                            "Move 7: info",
+//                            "Move 8: info"
+//                    },
+//                    {
+//                            "Passive: info",
+//                            "Move 4: info",
+//                            "Move 5: info",
+//                            "Move 6: info",
+//                            "Move 7: info",
+//                            "Move 8: info"
+//                    },
+//                    {
+//                            "Passive: info",
+//                            "Move 4: info",
+//                            "Move 5: info",
+//                            "Move 6: info",
+//                            "Move 7: info",
+//                            "Move 8: info"
+//                    }
+//            }
     };
 
     private static void createBaseStone() {
@@ -452,24 +452,24 @@ public class ItemStones {
         earthStoneMining4 = createStone(ChatColor.DARK_GRAY + "Completed-Mining-Stone", "An old relic that makes it possible to alter with the earth around you", "Using this relic and its abilities, mining gets a lot easier", 3, 3, 5);
 
         // MAGIC STONES
-        magicStone0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 1);
-        magicStone1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 2);
-        magicStone2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 3);
-        magicStoneLife0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 1);
-        magicStoneLife1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 2);
-        magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
-        magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
-        magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed-Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
-        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark-Magic-Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
-        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
-        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
-        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
-        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed-Dark-Magic-Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
-        magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
-        magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
-        magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
-        magicStonePotion3 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv4", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 4);
-        magicStonePotion4 = createStone(ChatColor.DARK_PURPLE + "Completed-Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 5);
+//        magicStone0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 1);
+//        magicStone1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 2);
+//        magicStone2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "", 4, 0, 3);
+//        magicStoneLife0 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 1);
+//        magicStoneLife1 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 2);
+//        magicStoneLife2 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 3);
+//        magicStoneLife3 = createStone(ChatColor.DARK_PURPLE + "Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 4);
+//        magicStoneLife4 = createStone(ChatColor.DARK_PURPLE + "Completed-Magic-Stone", "The most extraordinary base stone of them all", "Giving life, takes life...", 4, 1, 5);
+//        magicStoneDarkMagic0 = createStone(ChatColor.BLACK+ "Dark-Magic-Stone", "The most extraordinary base stone of them all", "This relic contains more energy most can handle", 4, 2, 1);
+//        magicStoneDarkMagic1 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv2", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 2);
+//        magicStoneDarkMagic2 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv3", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 3);
+//        magicStoneDarkMagic3 = createStone(ChatColor.BLACK + "Dark-Magic-Stone-Lv4", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 4);
+//        magicStoneDarkMagic4 = createStone(ChatColor.BLACK + "Completed-Dark-Magic-Stone", "The most extraordinary base stone of them all", "Darkness is everywhere", 4, 2, 5);
+//        magicStonePotion0 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 1);
+//        magicStonePotion1 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv2", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 2);
+//        magicStonePotion2 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv3", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 3);
+//        magicStonePotion3 = createStone(ChatColor.DARK_PURPLE + "Potion-Stone-Lv4", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 4);
+//        magicStonePotion4 = createStone(ChatColor.DARK_PURPLE + "Completed-Potion-Stone", "The most extraordinary base stone of them all", "There are all kinds of potions, good ones and bad ones", 4, 3, 5);
         allStones.addAll(Arrays.asList(
                 waterStone0,
                 waterStone1,
@@ -542,25 +542,25 @@ public class ItemStones {
                 earthStoneMining1,
                 earthStoneMining2,
                 earthStoneMining3,
-                earthStoneMining4,
-                magicStone0,
-                magicStone1,
-                magicStone2,
-                magicStoneLife0,
-                magicStoneLife1,
-                magicStoneLife2,
-                magicStoneLife3,
-                magicStoneLife4,
-                magicStoneDarkMagic0,
-                magicStoneDarkMagic1,
-                magicStoneDarkMagic2,
-                magicStoneDarkMagic3,
-                magicStoneDarkMagic4,
-                magicStonePotion0,
-                magicStonePotion1,
-                magicStonePotion2,
-                magicStonePotion3,
-                magicStonePotion4
+                earthStoneMining4
+//                magicStone0,
+//                magicStone1,
+//                magicStone2,
+//                magicStoneLife0,
+//                magicStoneLife1,
+//                magicStoneLife2,
+//                magicStoneLife3,
+//                magicStoneLife4,
+//                magicStoneDarkMagic0,
+//                magicStoneDarkMagic1,
+//                magicStoneDarkMagic2,
+//                magicStoneDarkMagic3,
+//                magicStoneDarkMagic4,
+//                magicStonePotion0,
+//                magicStonePotion1,
+//                magicStonePotion2,
+//                magicStonePotion3,
+//                magicStonePotion4
         ));
 
         waterStones.addAll(Arrays.asList(
@@ -643,25 +643,25 @@ public class ItemStones {
                 earthStoneMining3,
                 earthStoneMining4
         ));
-        magicStones.addAll(Arrays.asList(
-                magicStone0,
-                magicStone1,
-                magicStone2,
-                magicStoneLife0,
-                magicStoneLife1,
-                magicStoneLife2,
-                magicStoneLife3,
-                magicStoneLife4,
-                magicStoneDarkMagic0,
-                magicStoneDarkMagic1,
-                magicStoneDarkMagic2,
-                magicStoneDarkMagic3,
-                magicStoneDarkMagic4,
-                magicStonePotion0,
-                magicStonePotion1,
-                magicStonePotion2,
-                magicStonePotion3,
-                magicStonePotion4
-        ));
+//        magicStones.addAll(Arrays.asList(
+//                magicStone0,
+//                magicStone1,
+//                magicStone2,
+//                magicStoneLife0,
+//                magicStoneLife1,
+//                magicStoneLife2,
+//                magicStoneLife3,
+//                magicStoneLife4,
+//                magicStoneDarkMagic0,
+//                magicStoneDarkMagic1,
+//                magicStoneDarkMagic2,
+//                magicStoneDarkMagic3,
+//                magicStoneDarkMagic4,
+//                magicStonePotion0,
+//                magicStonePotion1,
+//                magicStonePotion2,
+//                magicStonePotion3,
+//                magicStonePotion4
+//        ));
     }
 }
