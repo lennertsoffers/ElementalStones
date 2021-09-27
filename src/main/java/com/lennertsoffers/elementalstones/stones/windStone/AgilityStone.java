@@ -29,21 +29,30 @@ public class AgilityStone {
     }
 
     // MOVE 4
-    // Dash
-    // -> Player dashes in the moving direction
-    // -> If the player isn't moving, he dashes forwards
+    // Forward Dash
+    // -> Player dashes forwards
     public static void move4(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         player.setVelocity(player.getLocation().getDirection().multiply(2).setY(0.1));
     }
 
     // MOVE 5
-
+    // Backward Dash
+    // -> Player dashes backwards
+    public static void move5(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        player.setVelocity(player.getLocation().getDirection().multiply(-2).setY(0.1));
+    }
 
     // MOVE 6
 
 
     // MOVE 7
+    // Charge Jump
+    // -> Charges until next activation
+    // -> The longer you charge, the higher you jump
+    // -> Adds slowness when charging
+    public static void move7
 
 
     // MOVE 8
