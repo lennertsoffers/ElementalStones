@@ -1,7 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
-import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 import com.lennertsoffers.elementalstones.stones.fireStone.LavaStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

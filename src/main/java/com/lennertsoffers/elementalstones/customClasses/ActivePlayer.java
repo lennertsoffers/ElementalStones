@@ -9,12 +9,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
 public class ActivePlayer {
     private final Player player;
     private boolean active;
+    private Vector movingDirection;
     private ArrayList<Location> overrideLocations = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
@@ -37,6 +39,9 @@ public class ActivePlayer {
     private int remainingIceShards = 10;
     private int waterArmStage = 0;
     private BukkitTask waterArms;
+
+    // Wind Stone
+    private boolean canDoubleJump = true;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -241,6 +246,26 @@ public class ActivePlayer {
 
     public void clearWaterArms() {
         this.waterArms.cancel();
+    }
+
+    public void disableDoubleJump() {
+        this.canDoubleJump = false;
+    }
+
+    public void enableDoubleJump() {
+        this.canDoubleJump = true;
+    }
+
+    public boolean canDoubleJump() {
+        return this.canDoubleJump;
+    }
+
+    public Vector getMovingDirection() {
+        return this.movingDirection;
+    }
+
+    public void setMovingDirection(Vector movingDirection) {
+        this.movingDirection = movingDirection;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {
