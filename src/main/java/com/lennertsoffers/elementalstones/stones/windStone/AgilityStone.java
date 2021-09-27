@@ -23,13 +23,19 @@ public class AgilityStone {
             } else {
                 launchDirection = activePlayer.getMovingDirection();
             }
-            player.setVelocity(launchDirection.setY(1));
+            player.setVelocity(player.getVelocity().add(launchDirection.setY(1)));
             activePlayer.disableDoubleJump();
         }
     }
 
     // MOVE 4
-    //
+    // Dash
+    // -> Player dashes in the moving direction
+    // -> If the player isn't moving, he dashes forwards
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        player.setVelocity(player.getLocation().getDirection().multiply(2).setY(0.1));
+    }
 
     // MOVE 5
 
@@ -42,3 +48,24 @@ public class AgilityStone {
 
     // MOVE 8
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
