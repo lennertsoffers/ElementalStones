@@ -2,7 +2,8 @@ package com.lennertsoffers.elementalstones.stones.windStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.potion.PotionEffect;
@@ -53,7 +54,66 @@ public class AgilityStone {
     }
 
     // MOVE 6
+    // Smoke Ball
+    // -> Throw a smoke ball in the looking direction
+    // -> While the ball is being threw, control it by changing your looking direction
+    // -> Activate ability again to create the smoke screen or wait till the ball collides with a block or entity
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location startingLocation = player.getLocation().add(player.getLocation().getDirection().multiply(2)).add(0, 1, 0);
+        final Location[] impactLocation = {player.getLocation()};
+        BukkitRunnable smoke = new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+                for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                    double radius = Math.sin(i) * 3;
+                    double y = Math.cos(i) * 3;
+                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / 10) {
+                        double x = Math.cos(a) * radius;
+                        double z = Math.sin(a) * radius;
+                        Location particleLocation = impactLocation[0].clone().add(0, 2, 0).add(x, y, z);
+                        player.getWorld().spawnParticle(Particle.REDSTONE, particleLocation.add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, 0, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1000));
+                    }
+                }
+                if (amountOfTicks > 100) {
+                    this.cancel();
+                }
+                amountOfTicks += 1;
+            }
+        };
 
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            final Location currentLocation = startingLocation;
+            @Override
+            public void run() {
+                Vector playerDirection = player.getLocation().getDirection();
+                Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.CLOUD, startingLocation, 0, playerDirection.getX(), playerDirection.getY(), playerDirection.getZ());
+
+                if (currentLocation.getBlock().getType().isSolid()) {
+                    impactLocation[0] = currentLocation;
+                    this.cancel();
+                    smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                } else if (!player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5).isEmpty()) {
+                    for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5)) {
+                        if (entity != null) {
+                            impactLocation[0] = currentLocation;
+                            this.cancel();
+                            smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                        }
+                    }
+                } else if (amountOfTicks > 30) {
+                    impactLocation[0] = currentLocation;
+                    this.cancel();
+                    smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                }
+
+                amountOfTicks++;
+                currentLocation.add(playerDirection);
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
     // MOVE 7
     // Charge Jump
@@ -83,7 +143,6 @@ public class AgilityStone {
             player.setVelocity(new Vector(0, velocityY, 0));
         }
     }
-
 
     // MOVE 8
 }
