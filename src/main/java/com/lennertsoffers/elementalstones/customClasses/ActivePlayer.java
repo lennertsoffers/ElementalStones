@@ -1,5 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
+import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +19,6 @@ public class ActivePlayer {
     private final Player player;
     private boolean active;
     private Vector movingDirection;
-    private float fallingDistance = 0;
     private ArrayList<Location> overrideLocations = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
@@ -51,7 +52,6 @@ public class ActivePlayer {
         this.active = false;
         this.move8Stage = 0;
         activePlayers.add(this);
-        player.setAllowFlight(true);
     }
 
     public Player getPlayer() {
@@ -66,10 +66,18 @@ public class ActivePlayer {
         if (this.active) {
             this.active = false;
             this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
+            player.setAllowFlight(false);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
         } else {
             this.active = true;
+            if (player.getInventory().contains(ItemStones.airStoneAgility0) ||
+                player.getInventory().contains(ItemStones.airStoneAgility1) ||
+                player.getInventory().contains(ItemStones.airStoneAgility2) ||
+                player.getInventory().contains(ItemStones.airStoneAgility3) ||
+                player.getInventory().contains(ItemStones.airStoneAgility4)) {
+                player.setAllowFlight(true);
+            }
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
         }
     }
@@ -293,18 +301,6 @@ public class ActivePlayer {
 
     public void setNegateFallDamage(boolean negateFallDamage) {
         this.negateFallDamage = negateFallDamage;
-    }
-
-    public boolean wasFalling() {
-        return this.fallingDistance > 0;
-    }
-
-    public void setFalling(float fallingDistance) {
-        this.fallingDistance = fallingDistance;
-    }
-
-    public float getFallingDistance() {
-        return this.fallingDistance;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {

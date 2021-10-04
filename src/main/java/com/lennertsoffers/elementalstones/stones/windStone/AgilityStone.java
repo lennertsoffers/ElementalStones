@@ -13,6 +13,8 @@ import java.util.Objects;
 public class AgilityStone {
 
     // PASSIVE
+    // Double Jump
+    // -> The player can jump a second time after jumping in the air with space bar
     public static void passive(PlayerToggleFlightEvent event) {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
@@ -28,6 +30,9 @@ public class AgilityStone {
             activePlayer.disableDoubleJump();
         }
     }
+
+    // No fall damage
+    // -> The player cannot get fall damage
 
     // MOVE 4
     // Forward Dash
