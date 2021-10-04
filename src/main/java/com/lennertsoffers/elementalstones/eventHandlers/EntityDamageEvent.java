@@ -16,12 +16,6 @@ public class EntityDamageEvent implements Listener {
             if (activePlayer == null) {
                 return;
             }
-            if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) {
-                if (activePlayer.isNegateFallDamage()) {
-                    event.setCancelled(true);
-                    activePlayer.setNegateFallDamage(false);
-                }
-            }
 //            if (event.getDamage() >= player.getHealth()) {
 //                event.setCancelled(true);
 //                DefenseStone.move8(player);

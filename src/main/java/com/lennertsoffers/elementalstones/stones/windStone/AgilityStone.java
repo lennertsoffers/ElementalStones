@@ -5,6 +5,8 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -62,14 +64,23 @@ public class AgilityStone {
         Player player = activePlayer.getPlayer();
         if ((int) activePlayer.getCharge() == -1) {
             activePlayer.setChargingStart();
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 10, true, false, false));
+            activePlayer.setMove7LaunchState(1);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    if (activePlayer.getMove7LaunchState() == 1) {
+                        activePlayer.setMove7LaunchState(0);
+                        move7(activePlayer);
+                    }
+                }
+            }.runTaskLater(StaticVariables.plugin, 90);
         } else {
-            double velocityY = activePlayer.getCharge() / 2000;
+            double velocityY = activePlayer.getCharge() / 1000;
             activePlayer.resetCharge();
-            if (velocityY > 3) {
-                velocityY = 3;
-            }
+            player.removePotionEffect(PotionEffectType.SLOW);
+            activePlayer.setMove7LaunchState(2);
             player.setVelocity(new Vector(0, velocityY, 0));
-            activePlayer.setNegateFallDamage(true);
         }
     }
 

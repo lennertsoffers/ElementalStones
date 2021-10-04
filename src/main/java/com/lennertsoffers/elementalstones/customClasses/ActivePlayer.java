@@ -45,6 +45,7 @@ public class ActivePlayer {
     // Wind Stone
     private boolean canDoubleJump = true;
     private long chargingStart = -1;
+    private int move7LaunchState = 0;
     private boolean negateFallDamage = false;
 
     public ActivePlayer(Player player) {
@@ -295,12 +296,12 @@ public class ActivePlayer {
         this.chargingStart = -1;
     }
 
-    public boolean isNegateFallDamage() {
-        return this.negateFallDamage;
+    public int getMove7LaunchState() {
+        return this.move7LaunchState;
     }
 
-    public void setNegateFallDamage(boolean negateFallDamage) {
-        this.negateFallDamage = negateFallDamage;
+    public void setMove7LaunchState(int move7LaunchState) {
+        this.move7LaunchState = move7LaunchState;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {
