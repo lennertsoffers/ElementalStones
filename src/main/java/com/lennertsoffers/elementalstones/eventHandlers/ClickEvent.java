@@ -31,6 +31,7 @@ public class ClickEvent implements Listener {
                 ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
                 if (activePlayer != null) {
                     activePlayer.toggleActive();
+                    player.setAllowFlight(true);
                 }
             }
         }

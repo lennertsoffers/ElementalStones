@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
@@ -52,7 +53,20 @@ public class AgilityStone {
     // -> Charges until next activation
     // -> The longer you charge, the higher you jump
     // -> Adds slowness when charging
-    public static void move7
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        if ((int) activePlayer.getCharge() == -1) {
+            activePlayer.setChargingStart();
+        } else {
+            double velocityY = activePlayer.getCharge() / 2000;
+            activePlayer.resetCharge();
+            if (velocityY > 3) {
+                velocityY = 3;
+            }
+            player.setVelocity(new Vector(0, velocityY, 0));
+            activePlayer.setNegateFallDamage(true);
+        }
+    }
 
 
     // MOVE 8

@@ -23,9 +23,9 @@ public class PlayerItemHeldEvent implements Listener {
             else if (event.getNewSlot() == 1) {
                 AgilityStone.move5(activePlayer);
             }
-//            else if (event.getNewSlot() == 2) {
-//                IceStone.move4(activePlayer);
-//            }
+            else if (event.getNewSlot() == 2) {
+                AgilityStone.move7(activePlayer);
+            }
 //            else if (event.getNewSlot() == 3) {
 //                LavaStone.move8(activePlayer);
 //            }

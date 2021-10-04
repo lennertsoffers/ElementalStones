@@ -17,6 +17,7 @@ public class ActivePlayer {
     private final Player player;
     private boolean active;
     private Vector movingDirection;
+    private float fallingDistance = 0;
     private ArrayList<Location> overrideLocations = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
@@ -42,6 +43,8 @@ public class ActivePlayer {
 
     // Wind Stone
     private boolean canDoubleJump = true;
+    private long chargingStart = -1;
+    private boolean negateFallDamage = false;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -266,6 +269,42 @@ public class ActivePlayer {
 
     public void setMovingDirection(Vector movingDirection) {
         this.movingDirection = movingDirection;
+    }
+
+    public void setChargingStart() {
+        this.chargingStart = System.currentTimeMillis();
+    }
+
+    public double getCharge() {
+        if ((int) this.chargingStart != -1) {
+            return (double) System.currentTimeMillis() - this.chargingStart;
+        } else {
+            return -1;
+        }
+    }
+
+    public void resetCharge() {
+        this.chargingStart = -1;
+    }
+
+    public boolean isNegateFallDamage() {
+        return this.negateFallDamage;
+    }
+
+    public void setNegateFallDamage(boolean negateFallDamage) {
+        this.negateFallDamage = negateFallDamage;
+    }
+
+    public boolean wasFalling() {
+        return this.fallingDistance > 0;
+    }
+
+    public void setFalling(float fallingDistance) {
+        this.fallingDistance = fallingDistance;
+    }
+
+    public float getFallingDistance() {
+        return this.fallingDistance;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {
