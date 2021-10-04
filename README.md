@@ -12,7 +12,6 @@ After level 3, you can choose a path in which you want to continue upgrading the
 
 ## Current Stones
 * Water Stone
-    * Ocean Stone
     * Waterbending Stone
     * Ice Stone
 * Fire Stone
@@ -20,13 +19,11 @@ After level 3, you can choose a path in which you want to continue upgrading the
     * Hellfire Stone 👍
     * Explosion Stone
 * Wind Stone
-    * Agility Stone
+    * Agility Stone 👍
     * Airbending Stone
-    * Weather Stone
 * Earth Stone
     * Defense Stone 👍
     * Earthbending Stone 👍
-    * Mining Stone
   
 👍 = done
 
