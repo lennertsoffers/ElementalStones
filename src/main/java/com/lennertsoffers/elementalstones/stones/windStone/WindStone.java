@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.stones.windStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -14,6 +15,7 @@ public class WindStone {
     // MOVE 1
     // Air Ball
     // -> The player throws an air ball in the looking direction
+    // -> Damages entities on hit
     public static void move1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
@@ -57,8 +59,33 @@ public class WindStone {
 
 
     // MOVE 2
-
-
+    // A(i)rea Control
+    // -> Blast away every living entity in close range
+    public static void move2(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location location = player.getLocation().add(0, 1, 0);
+        for (int i = 0; i < 360; i++) {
+            Location particleLocation = MathTools.locationOnCircle(location, 4, i, world);
+            Vector direction = particleLocation.add(-location.getX(), 0, -location.getZ()).toVector().setY(0);
+            for (int j = 0; j < 3; j++) {
+                world.spawnParticle(Particle.SNOWFLAKE, location.clone().add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, direction.getX() / 5, 0, direction.getZ() / 5);
+            }
+        }
+        if (!world.getNearbyEntities(location, 7, 2, 7).isEmpty()) {
+            for (Entity entity : world.getNearbyEntities(location, 7, 2, 7)) {
+                if (entity != null) {
+                    if (entity instanceof LivingEntity) {
+                        LivingEntity livingEntity = (LivingEntity) entity;
+                        if (livingEntity != player) {
+                            Vector direction = livingEntity.getLocation().add(-location.getX(), 0, -location.getZ()).toVector().setY(0.2);
+                            livingEntity.setVelocity(direction);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     // MOVE 3
 
