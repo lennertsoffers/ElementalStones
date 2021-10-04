@@ -7,6 +7,7 @@ import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import wa.was.playerairevents.events.PlayerFallEvent;
 
 import java.util.Objects;
 
