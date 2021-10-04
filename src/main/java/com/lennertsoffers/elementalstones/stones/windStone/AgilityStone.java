@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AgilityStone {
+public class AgilityStone extends WindStone {
 
     private static void damageOnDash(ActivePlayer activePlayer) {
         ArrayList<LivingEntity> damagedEntities = new ArrayList<>();
