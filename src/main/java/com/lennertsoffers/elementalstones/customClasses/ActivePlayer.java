@@ -1,11 +1,11 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
-import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -46,7 +46,7 @@ public class ActivePlayer {
     private boolean canDoubleJump = true;
     private long chargingStart = -1;
     private int move7LaunchState = 0;
-    private boolean negateFallDamage = false;
+    private boolean inAirBoost = false;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -302,6 +302,24 @@ public class ActivePlayer {
 
     public void setMove7LaunchState(int move7LaunchState) {
         this.move7LaunchState = move7LaunchState;
+    }
+
+    public boolean isInAirBoost() {
+        return this.inAirBoost;
+    }
+
+    private void removeInAirBoost() {
+        this.inAirBoost = false;
+    }
+
+    public void activateAirBoost() {
+        this.inAirBoost = true;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                removeInAirBoost();
+            }
+        }.runTaskLater(StaticVariables.plugin, 1200);
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {

@@ -26,13 +26,15 @@ public class PlayerItemHeldEvent implements Listener {
             else if (event.getNewSlot() == 2) {
                 AgilityStone.move6(activePlayer);
             }
-//            else if (event.getNewSlot() == 3) {
-//                LavaStone.move8(activePlayer);
-//            }
+            else if (event.getNewSlot() == 3) {
+                AgilityStone.move7(activePlayer);
+            }
+            else if (event.getNewSlot() == 4) {
+                AgilityStone.move8(activePlayer);
+            }
 
-//            else if (event.getNewSlot()in == 4) {
-//                HellfireStone.move5(activePlayer);
-//            } else if (event.getNewSlot() == 5) {
+
+//            else if (event.getNewSlot() == 5) {
 //                HellfireStone.move6(activePlayer);
 //            } else if (event.getNewSlot() == 6) {
 //                HellfireStone.move7(activePlayer);
