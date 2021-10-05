@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -87,33 +88,59 @@ public class IceStone extends WaterStone {
     }
 
     // MOVE 5
-    // Ice Arms
+    // Ice Beam
     // ->
 
     // MOVE 6
     // Snow Stomp
-    // -> Tuns the ground around the player to powder snow
-    // -> The player can move normally on it
-//    public static void move6(ActivePlayer activePlayer) {
-//        Player player = activePlayer.getPlayer();
-//        Location playerLocation = player.getLocation();
-//        ArrayList<Location> snowBlockLocations = new ArrayList<>();
-//        snowBlockLocations.add(playerLocation.add(-1, 0, 2));
-//        snowBlockLocations.add(playerLocation.add(0, 0, 2));
-//        snowBlockLocations.add(playerLocation.add(1, 0, 2));
-//        snowBlockLocations.add(playerLocation.add(-1, 0, -2));
-//        snowBlockLocations.add(playerLocation.add(0, 0, -2));
-//        snowBlockLocations.add(playerLocation.add(1, 0, -2));
-//        for (int i = 0; i < )
-//
-//    }
+    // -> Turns a pad of ground into powder snow trapping entities standing on it
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location playerLocation = Objects.requireNonNull(player.getTargetBlockExact(20)).getLocation();
+        ArrayList<Location> snowBlockLocations = new ArrayList<>();
+        snowBlockLocations.add(playerLocation.clone().add(-1, 0, 2));
+        snowBlockLocations.add(playerLocation.clone().add(0, 0, 2));
+        snowBlockLocations.add(playerLocation.clone().add(1, 0, 2));
+        snowBlockLocations.add(playerLocation.clone().add(-1, 0, -2));
+        snowBlockLocations.add(playerLocation.clone().add(0, 0, -2));
+        snowBlockLocations.add(playerLocation.clone().add(1, 0, -2));
+        snowBlockLocations.add(playerLocation.clone().add(2, 0, -1));
+        snowBlockLocations.add(playerLocation.clone().add(2, 0, 0));
+        snowBlockLocations.add(playerLocation.clone().add(2, 0, 1));
+        snowBlockLocations.add(playerLocation.clone().add(-2, 0, -1));
+        snowBlockLocations.add(playerLocation.clone().add(-2, 0, 0));
+        snowBlockLocations.add(playerLocation.clone().add(-2, 0, 1));
+        playerLocation.add(-1, 0, -1);
+        for (int i = 1; i <= 9; i++) {
+            snowBlockLocations.add(playerLocation.clone());
+            if (i % 3 == 0) {
+                playerLocation.add(-3, 0, 1);
+            }
+            playerLocation.add(1, 0, 0);
+        }
+        for (Location location : snowBlockLocations) {
+            Block block = world.getHighestBlockAt(location);
+            Block block1 = world.getBlockAt(block.getLocation().add(0, -1, 0));
+            Block block2 = world.getBlockAt(block.getLocation().add(0, -2, 0));
+            Block block3 = world.getBlockAt(block.getLocation().add(0, -3, 0));
+            activePlayer.addLocationMaterialMapping(block.getLocation(), block.getType());
+            activePlayer.addLocationMaterialMapping(block1.getLocation(), block1.getType());
+            activePlayer.addLocationMaterialMapping(block2.getLocation(), block1.getType());
+            activePlayer.addLocationMaterialMapping(block3.getLocation(), block1.getType());
+            block.setType(Material.POWDER_SNOW);
+            block1.setType(Material.POWDER_SNOW);
+            block2.setType(Material.POWDER_SNOW);
+            block3.setType(Material.POWDER_SNOW);
+        }
+    }
 
     // MOVE 7
-    // Ice Tornado
-    // -> Throws an ice tornado in the looking direction
-    // -> Inflicts slowness and throws entities up
+    // Deep Freeze
+    // -> Throws an ice bal
+    // -> If an entity is hit by this ball, it will be unable to move and see
+
 
     // MOVE 8
-    // Ice Aura
-    // -> All entities in the proximity become frozen and will not be able to move
+
 }
