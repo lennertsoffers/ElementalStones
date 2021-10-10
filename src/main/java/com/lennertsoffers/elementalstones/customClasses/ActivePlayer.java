@@ -66,7 +66,7 @@ public class ActivePlayer {
     public void toggleActive() {
         if (this.active) {
             this.active = false;
-            this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
+            this.resetWorld();
             player.setAllowFlight(false);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
@@ -81,6 +81,10 @@ public class ActivePlayer {
             }
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
         }
+    }
+
+    public void resetWorld() {
+        this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
     }
 
     public void addOverrideLocation(Location location) {
