@@ -41,6 +41,7 @@ public class ActivePlayer {
     private int remainingIceShards = 10;
     private int waterArmStage = 0;
     private BukkitTask waterArms;
+    private BukkitTask iceSpear;
 
     // Wind Stone
     private boolean canDoubleJump = true;
@@ -262,6 +263,19 @@ public class ActivePlayer {
 
     public void clearWaterArms() {
         this.waterArms.cancel();
+    }
+
+    public boolean hasIceSpear() {
+        return this.iceSpear != null;
+    }
+
+    public void setIceSpear(BukkitTask bukkitTask) {
+        this.iceSpear = bukkitTask;
+    }
+
+    public void clearIceSpear() {
+        this.iceSpear.cancel();
+        this.iceSpear = null;
     }
 
     public void disableDoubleJump() {

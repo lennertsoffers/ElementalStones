@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
+import com.sun.jna.platform.win32.WinDef;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -93,8 +94,85 @@ public class IceStone extends WaterStone {
     }
 
     // MOVE 5
-    // Ice Beam
-    // ->
+    // Ice Spear
+    // -> Throw a spear of ice at your enemy
+
+    // move
+    public static void move5(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        if (!activePlayer.hasIceSpear()) {
+            activePlayer.setIceSpear(new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Location spearLocation = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection().rotateAroundY(90).multiply(1.5)).add(player.getLocation().getDirection().multiply(-0.7));
+                    move5spearAnimation(spearLocation, player.getLocation().getDirection());
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
+        } else {
+            Vector direction = player.getLocation().getDirection();
+            activePlayer.clearIceSpear();
+            Location spearLocation = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection().rotateAroundY(90).multiply(1.5)).add(player.getLocation().getDirection().multiply(-0.7));
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
+                @Override
+                public void run() {
+                    move5spearAnimation(spearLocation, direction);
+                    Location checkLocation = spearLocation.clone().add(player.getLocation().getDirection().multiply(3));
+                    if (world.getBlockAt(checkLocation).getType().isSolid()) {
+                        this.cancel();
+                        move5Impact(checkLocation);
+                    }
+                    for (Entity entity : world.getNearbyEntities(checkLocation, direction.getX() * 1.5, direction.getY() * 1.5, direction.getZ() * 1.5)) {
+                        if (entity != null) {
+                            if (entity instanceof LivingEntity) {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                if (livingEntity != player) {
+                                    livingEntity.setFreezeTicks(100);
+                                    livingEntity.damage(5);
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2, false, true, true));
+                                    move5Impact(checkLocation);
+                                }
+                            }
+                        }
+                    }
+                    spearLocation.add(direction);
+                    if (amountOfTicks > 100) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }
+    }
+
+    // impact animation
+    private static void move5Impact(Location location) {
+        World world = location.getWorld();
+        for (int i = 0; i < 400; i++) {
+            ItemStack stack;
+            if (StaticVariables.random.nextBoolean()) {
+                stack = new ItemStack(Material.ICE);
+            } else {
+                stack = new ItemStack(Material.SNOW_BLOCK);
+            }
+            Objects.requireNonNull(world).spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3), 0, 0, 0, 0, stack);
+
+        }
+    }
+
+    // spear animation
+    public static void move5spearAnimation(Location spearLocation, Vector direction) {
+        for (int i = 0; i < 30; i++) {
+            Particle.DustOptions dustOptions;
+            if (StaticVariables.random.nextBoolean()) {
+                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1.5f);
+            } else {
+                dustOptions = new Particle.DustOptions(Color.WHITE, 1.5f);
+            }
+            Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
+        }
+    }
 
     // MOVE 6
     // Snow Stomp
@@ -256,5 +334,7 @@ public class IceStone extends WaterStone {
 
 
     // MOVE 8
+    // Ice Burst
+    // ->
 
 }
