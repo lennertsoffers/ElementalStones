@@ -2,16 +2,21 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class IceStone extends WaterStone {
@@ -139,9 +144,12 @@ public class IceStone extends WaterStone {
     // Deep Freeze
     // -> Throws an ice bal that penetrates trough walls
     // -> If an entity is hit by this ball, it will be unable to move and see
+
+    // move
     public static void move7(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection());
+        World world = player.getWorld();
         new BukkitRunnable() {
             int amountOfTicks = 0;
             final Location currentLocation = location;
@@ -155,16 +163,95 @@ public class IceStone extends WaterStone {
                     } else {
                         stack = new ItemStack(Material.SNOW_BLOCK);
                     }
-                    Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10), 0, 0, 0, 0, 0, stack);
+                    world.spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10), 0, 0, 0, 0, 0, stack);
+                    if (!world.getNearbyEntities(location, 0.5, 0.5, 0.5).isEmpty()) {
+                        for (Entity entity : world.getNearbyEntities(location, 0.5, 0.5, 0.5)) {
+                            if (entity != null) {
+                                if (entity instanceof LivingEntity) {
+                                    LivingEntity livingEntity = (LivingEntity) entity;
+                                    if (livingEntity != player) {
+                                        freezeEffect(livingEntity, activePlayer);
+                                        this.cancel();
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
-                if (amountOfTicks > 400) {
+                if (amountOfTicks > 800) {
                     this.cancel();
                 }
                 amountOfTicks++;
-                currentLocation.add(playerDirection.multiply(0.3));
+                currentLocation.add(playerDirection.multiply(0.1));
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    // freeze effect
+    private static void freezeEffect(LivingEntity target, ActivePlayer activePlayer) {
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 100, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 100, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 10, false, false, false));
+        Location startLocation = target.getLocation();
+        String[] form1Layer0 = {
+                "?PBP?",
+                "BIIIB",
+                "BI*IP",
+                "PPPPI",
+                "?IBB?"
+        };
+        String[] form1Layer1 = {
+                "??P??",
+                "?PPI?",
+                "BP*PB",
+                "?PPP?",
+                "??B??"
+        };
+        String[] form1Layer2 = {
+                "?B?",
+                "I*B",
+                "?P?"
+        };
+        String[] form2Layer0 = {
+                "??I??",
+                "?PBI?",
+                "PP*PB",
+                "?BIP?",
+                "??P??"
+        };
+        String[] form2Layer1 = {
+                "?P?",
+                "I*B",
+                "?P?"
+        };
+        String[] form2Layer2 = {
+                "*"
+        };
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('I', Material.ICE);
+        characterMaterialMap.put('P', Material.PACKED_ICE);
+        characterMaterialMap.put('B', Material.BLUE_ICE);
+
+        SetBlockTools.setBlocks(startLocation, form1Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
+        SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form1Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+        SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form1Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+        target.setFreezeTicks(100);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                activePlayer.resetWorld();
+                SetBlockTools.setBlocks(startLocation, form2Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
+                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form2Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+                SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form2Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+            }
+        }.runTaskLater(StaticVariables.plugin, 100L);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                activePlayer.resetWorld();
+            }
+        }.runTaskLater(StaticVariables.plugin, 200L);
     }
 
 
