@@ -93,33 +93,36 @@ public class WindStone {
     // Launch
     // -> Launch all the entities standing on the targeted block
     public static void move3(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        Location targetBlock = Objects.requireNonNull(player.getTargetBlockExact(30)).getLocation();
-        World world = player.getWorld();
+        try {
+            Player player = activePlayer.getPlayer();
+            Location targetBlock = Objects.requireNonNull(player.getTargetBlockExact(30)).getLocation();
+            World world = player.getWorld();
 
-        if (!world.getNearbyEntities(targetBlock, 2, 20, 2).isEmpty()) {
-            for (Entity entity : world.getNearbyEntities(targetBlock, 2, 20, 2)) {
-                if (entity != null) {
-                    if (entity instanceof LivingEntity) {
-                        LivingEntity livingEntity = (LivingEntity) entity;
-                        if (livingEntity != player) {
-                            livingEntity.setVelocity(new Vector(0, 2, 0));
-                            new BukkitRunnable() {
-                                int amountOfTicks = 0;
-                                @Override
-                                public void run() {
-                                    world.spawnParticle(Particle.CLOUD, livingEntity.getLocation().add(StaticVariables.random.nextGaussian() / 10, 0, StaticVariables.random.nextGaussian() / 10), 0);
-                                    if (amountOfTicks > 20) {
-                                        this.cancel();
+            if (!world.getNearbyEntities(targetBlock, 2, 20, 2).isEmpty()) {
+                for (Entity entity : world.getNearbyEntities(targetBlock, 2, 20, 2)) {
+                    if (entity != null) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (livingEntity != player) {
+                                livingEntity.setVelocity(new Vector(0, 2, 0));
+                                new BukkitRunnable() {
+                                    int amountOfTicks = 0;
+                                    @Override
+                                    public void run() {
+                                        world.spawnParticle(Particle.CLOUD, livingEntity.getLocation().add(StaticVariables.random.nextGaussian() / 10, 0, StaticVariables.random.nextGaussian() / 10), 0);
+                                        if (amountOfTicks > 20) {
+                                            this.cancel();
+                                        }
+                                        amountOfTicks++;
                                     }
-                                    amountOfTicks++;
-                                }
-                            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                            }
                         }
                     }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("problem");
         }
-
     }
 }
