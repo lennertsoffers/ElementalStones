@@ -137,8 +137,35 @@ public class IceStone extends WaterStone {
 
     // MOVE 7
     // Deep Freeze
-    // -> Throws an ice bal
+    // -> Throws an ice bal that penetrates trough walls
     // -> If an entity is hit by this ball, it will be unable to move and see
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location location = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection());
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            final Location currentLocation = location;
+            @Override
+            public void run() {
+                Vector playerDirection = player.getLocation().getDirection();
+                for (int i = 0; i < 10; i++) {
+                    ItemStack stack;
+                    if (StaticVariables.random.nextBoolean()) {
+                        stack = new ItemStack(Material.ICE);
+                    } else {
+                        stack = new ItemStack(Material.SNOW_BLOCK);
+                    }
+                    Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10), 0, 0, 0, 0, 0, stack);
+                }
+
+                if (amountOfTicks > 400) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+                currentLocation.add(playerDirection.multiply(0.3));
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
 
     // MOVE 8
