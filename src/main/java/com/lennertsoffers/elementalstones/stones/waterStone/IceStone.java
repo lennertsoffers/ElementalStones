@@ -137,7 +137,7 @@ public class IceStone extends WaterStone {
                         }
                     }
                     spearLocation.add(direction);
-                    if (amountOfTicks > 100) {
+                    if (amountOfTicks > 200) {
                         this.cancel();
                     }
                     amountOfTicks++;
@@ -166,9 +166,9 @@ public class IceStone extends WaterStone {
         for (int i = 0; i < 30; i++) {
             Particle.DustOptions dustOptions;
             if (StaticVariables.random.nextBoolean()) {
-                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1.5f);
+                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1f);
             } else {
-                dustOptions = new Particle.DustOptions(Color.WHITE, 1.5f);
+                dustOptions = new Particle.DustOptions(Color.WHITE, 1f);
             }
             Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
         }
@@ -180,7 +180,11 @@ public class IceStone extends WaterStone {
     public static void move6(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        Location playerLocation = Objects.requireNonNull(player.getTargetBlockExact(20)).getLocation();
+        Block targetBlock = player.getTargetBlockExact(20);
+        if (targetBlock == null) {
+            return;
+        }
+        Location playerLocation = targetBlock.getLocation();
         ArrayList<Location> snowBlockLocations = new ArrayList<>();
         snowBlockLocations.add(playerLocation.clone().add(-1, 0, 2));
         snowBlockLocations.add(playerLocation.clone().add(0, 0, 2));
@@ -314,7 +318,7 @@ public class IceStone extends WaterStone {
         SetBlockTools.setBlocks(startLocation, form1Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
         SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form1Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
         SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form1Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-        target.setFreezeTicks(100);
+        target.setFreezeTicks(600);
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -323,18 +327,94 @@ public class IceStone extends WaterStone {
                 SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form2Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
                 SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form2Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
             }
-        }.runTaskLater(StaticVariables.plugin, 100L);
+        }.runTaskLater(StaticVariables.plugin, 300L);
         new BukkitRunnable() {
             @Override
             public void run() {
                 activePlayer.resetWorld();
             }
-        }.runTaskLater(StaticVariables.plugin, 200L);
+        }.runTaskLater(StaticVariables.plugin, 600L);
     }
 
 
     // MOVE 8
-    // Ice Burst
+    // Ice Beam
     // ->
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Location playerLocation = player.getLocation();
+        World world = player.getWorld();
+        Vector direction = playerLocation.getDirection();
+        Vector perpendicularDirection = direction.clone().rotateAroundY(90);
+        new BukkitRunnable() {
+            double angle = 1;
+            double angle2 = 180;
+            Location particleLocation0;
+            Location particleLocation1;
+            Location particleLocation2;
+            int amountOfTicks;
+            @Override
+            public void run() {
+                angle += 0.3;
+                angle2 += 0.3;
+                particleLocation0 = playerLocation.clone().add(direction.clone().multiply(2)).add(0, 1.5, 0).add(direction.clone().multiply(0.5 * amountOfTicks));
+                particleLocation1 = playerLocation.clone().add(direction.clone().multiply(2)).add(0, 1.5, 0).add(perpendicularDirection.clone().rotateAroundAxis(direction, angle).multiply(0.5)).add(direction.clone().multiply(0.5 * amountOfTicks));
+                particleLocation2 = playerLocation.clone().add(direction.clone().multiply(2)).add(0, 1.5, 0).add(perpendicularDirection.clone().rotateAroundAxis(direction, angle2).multiply(0.5)).add(direction.clone().multiply(0.5 * amountOfTicks));
+                for (int i = 0; i < 5; i++) {
+                    double x1 = particleLocation1.getX() + StaticVariables.random.nextGaussian() / 20;
+                    double y1 = particleLocation1.getY() + StaticVariables.random.nextGaussian() / 20;
+                    double z1 = particleLocation1.getZ() + StaticVariables.random.nextGaussian() / 20;
+                    double x2 = particleLocation2.getX() + StaticVariables.random.nextGaussian() / 20;
+                    double y2 = particleLocation2.getY() + StaticVariables.random.nextGaussian() / 20;
+                    double z2 = particleLocation2.getZ() + StaticVariables.random.nextGaussian() / 20;
+                    world.spawnParticle(Particle.REDSTONE, x1, y1, z1, 0, new Particle.DustOptions(Color.fromRGB(0, 165, 255), 2f));
+                    world.spawnParticle(Particle.REDSTONE, x2, y2, z2, 0, new Particle.DustOptions(Color.WHITE, 2f));
+                }
+                if (!world.getNearbyEntities(particleLocation0, 0.5, 0.5, 0.5).isEmpty()) {
+                    for (Entity entity : world.getNearbyEntities(particleLocation0, 0.5, 0.5, 0.5)) {
+                        if (entity != null) {
+                            if (entity instanceof LivingEntity) {
+                                LivingEntity livingEntity = (LivingEntity) entity;
+                                if (livingEntity == player) {
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 10, false, true, false));
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 10, false, true, false));
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 100, false, true, false));
+                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 100, false, true, false));
+                                    livingEntity.setFreezeTicks(livingEntity.getMaxFreezeTicks());
+                                    livingEntity.damage(5);
+                                    this.cancel();
+                                    new BukkitRunnable() {
+                                        int amountOfTicks = 0;
+                                        @Override
+                                        public void run() {
+                                            Location targetLocation = livingEntity.getLocation();
+                                            livingEntity.setFreezeTicks(livingEntity.getMaxFreezeTicks());
+                                            for (int i = 0; i < 50; i++) {
+                                                ItemStack stack;
+                                                if (StaticVariables.random.nextBoolean()) {
+                                                    stack = new ItemStack(Material.ICE);
+                                                } else {
+                                                    stack = new ItemStack(Material.SNOW_BLOCK);
+                                                }
+                                                world.spawnParticle(Particle.ITEM_CRACK, targetLocation.clone().add(StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3), 0, 0, 0, 0, 0, stack);
+                                            }
+                                            if (amountOfTicks > 200) {
+                                                this.cancel();
+                                            }
+                                            amountOfTicks++;
+                                        }
+                                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (amountOfTicks > 200) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
 }
