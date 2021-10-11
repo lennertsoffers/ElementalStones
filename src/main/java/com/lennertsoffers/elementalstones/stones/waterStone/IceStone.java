@@ -2,11 +2,13 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.sun.jna.platform.win32.WinDef;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -375,7 +377,7 @@ public class IceStone extends WaterStone {
                         if (entity != null) {
                             if (entity instanceof LivingEntity) {
                                 LivingEntity livingEntity = (LivingEntity) entity;
-                                if (livingEntity == player) {
+                                if (livingEntity != player) {
                                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 10, false, true, false));
                                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 10, false, true, false));
                                     livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 100, false, true, false));
@@ -388,6 +390,15 @@ public class IceStone extends WaterStone {
                                         @Override
                                         public void run() {
                                             Location targetLocation = livingEntity.getLocation();
+                                            Location snowballTargetLocation = targetLocation.clone().add(0, 1.5, 0);
+                                            if (amountOfTicks % 10 == 0) {
+                                                Location snowBallLocation = MathTools.locationOnCircle(snowballTargetLocation, 6, Math.abs(livingEntity.getLocation().getYaw()), world);
+                                                snowBallLocation.setY(snowBallLocation.getY() + 1);
+                                                Vector velocity = new Vector(snowballTargetLocation.getX() - snowBallLocation.getX(), snowballTargetLocation.getY() - snowBallLocation.getY(), snowballTargetLocation.getZ() - snowBallLocation.getZ());
+                                                Entity entity = world.spawnEntity(snowBallLocation, EntityType.SNOWBALL);
+                                                entity.setVelocity(velocity.multiply(0.2));
+                                                System.out.println(snowBallLocation);
+                                            }
                                             livingEntity.setFreezeTicks(livingEntity.getMaxFreezeTicks());
                                             for (int i = 0; i < 50; i++) {
                                                 ItemStack stack;
