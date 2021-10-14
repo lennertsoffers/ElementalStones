@@ -16,7 +16,7 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                IceStone.move8(activePlayer);
+                IceStone.move1(activePlayer);
             }
 //            else if (event.getNewSlot() == 1) {
 //                IceStone.move4(activePlayer);

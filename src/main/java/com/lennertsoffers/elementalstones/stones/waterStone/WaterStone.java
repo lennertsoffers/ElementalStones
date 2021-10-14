@@ -2,10 +2,12 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -22,8 +24,34 @@ import java.util.Map;
 public class WaterStone {
 
     // MOVE 1
-    // Ocean splitter
-    // -> Splits the water in front of the player
+    // Splash
+    // -> Splashes around some water
+    // -> The higher your level, the more damage it does
+    public static void move1(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        for (int i = 0; i < 360; i++) {
+            Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
+            if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
+                for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
+                    if (entity != null) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (livingEntity != player) {
+                                livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
+                            }
+                        }
+                    }
+                }
+            }
+            for (int j = 0; j < 10; j++) {
+                double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
+                double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
+                double locationZ = centerLocation.getZ() + StaticVariables.random.nextGaussian() / 2;
+                world.spawnParticle(Particle.BUBBLE_POP, locationX, locationY, locationZ, 0);
+            }
+        }
+    }
 
     // MOVE 2
     // Water Arms
