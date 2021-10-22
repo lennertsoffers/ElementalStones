@@ -2,12 +2,12 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import org.bukkit.Location;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
@@ -119,10 +119,31 @@ public class WaterbendingStone extends WaterStone {
 
 
     // MOVE 5
-    // Water ball
-    // -> The player is able to pick up a ball of water
-    // -> The water used for this ball is used from the world
-    // -> The player will be unable to do this move if he isn't pointing at a water source
+    // Healing water
+    // -> The player heals himself if he/she stands in water using this move
+    public static void move5(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        new BukkitRunnable() {
+            int amountOfSeconds = 0;
+            @Override
+            public void run() {
+                Location location = player.getLocation();
+                if (location.getBlock().getType() == Material.WATER) {
+                    if (player.getHealth() > 19) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 1, true, true, true));
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, true, true, true));
+                    }
+                    player.setHealth(player.getHealth() + 1);
+
+                }
+                location.add(0, 1, 0);
+                if (amountOfSeconds > 10 ) {
+                    this.cancel();
+                }
+                amountOfSeconds++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
+    }
 
 
     // MOVE 6
