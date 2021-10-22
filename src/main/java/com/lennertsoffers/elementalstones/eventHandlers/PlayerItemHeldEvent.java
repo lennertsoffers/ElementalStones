@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
+import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +17,7 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                IceStone.move1(activePlayer);
+                WaterbendingStone.move4(activePlayer);
             }
 //            else if (event.getNewSlot() == 1) {
 //                IceStone.move4(activePlayer);
