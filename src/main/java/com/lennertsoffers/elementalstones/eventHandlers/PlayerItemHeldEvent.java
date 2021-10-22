@@ -17,7 +17,7 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                WaterbendingStone.move5(activePlayer);
+                WaterbendingStone.move6(activePlayer);
             }
             else if (event.getNewSlot() == 1) {
                 IceStone.move1(activePlayer);

@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -149,7 +150,25 @@ public class WaterbendingStone extends WaterStone {
     // MOVE 6
     // Puffer Beam
     // -> Rapidly shoots 100 puffer fish in the looking direction
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+                Location location = player.getLocation().add(0, 1, 0);
+                location.add(location.getDirection());
 
+                Entity pufferFish = player.getWorld().spawnEntity(location, EntityType.PUFFERFISH);
+                pufferFish.setVelocity(location.getDirection().multiply(2));
+
+                if (amountOfTicks >= 100) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
 
     // MOVE 7
