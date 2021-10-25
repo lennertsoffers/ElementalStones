@@ -2,7 +2,9 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -10,8 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
-import java.util.Objects;
+import java.util.*;
 
 public class WaterbendingStone extends WaterStone {
 
@@ -172,12 +175,111 @@ public class WaterbendingStone extends WaterStone {
 
 
     // MOVE 7
-    // Air bubble
-    // -> When the player goes underwater there is an air bubble created around it
-
-
-
-    // MOVE 8
     // Wave
     // -> Creates a huge wave knocking back entities
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('A', Material.AIR);
+        characterMaterialMap.put('W', Material.WATER);
+        ArrayList<Material> overrideBlocks = new ArrayList<>();
+        overrideBlocks.add(Material.WATER);
+        String[] waveLayer0 = {
+                "AAAAAAAAA",
+                "AAAAAAAAA",
+                "AAWWWWWAA",
+                "AWWWWWWWA",
+                "AWWW*WWWA",
+                "AWWWWWWWA",
+                "AAWWWWWAA",
+                "AAAAAAAAA",
+                "AAAAAAAAA"
+        };
+        String[] waveLayer1 = {
+                "AAAAAAA",
+                "AWWWWWA",
+                "AWW*WWA",
+                "AWWWWWA",
+                "AAAAAAA"
+        };
+        Location startLocation1 = player.getLocation().add(2, 0, 0);
+        Location startLocation2 = player.getLocation().add(-2, 0, 0);
+        Location startLocation3 = player.getLocation().add(0, 0, 2);
+        Location startLocation4 = player.getLocation().add(0, 0, -2);
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+
+//                SetBlockTools.setBlocks(startLocation, waveLayer0, characterMaterialMap, true, overrideBlocks, Material.WATER, activePlayer);
+//                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), waveLayer1, characterMaterialMap, true, overrideBlocks, Material.WATER, activePlayer);
+//                startLocation.add(1, 0, 0);
+                if (amountOfTicks > 100) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    // MOVE 8
+    // Water Wall
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+
+                Block targetBlock = player.getTargetBlockExact(10);
+                if (targetBlock != null) {
+                    targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.WATER);
+                    new BukkitRunnable() {
+                        int amountOfAliveTicks = 0;
+                        @Override
+                        public void run() {
+                            if (!player.getWorld().getNearbyEntities(targetBlock.getLocation(), 2, 4, 2).isEmpty()) {
+                                for (Entity entity : player.getWorld().getNearbyEntities(targetBlock.getLocation(), 1, 4, 1)) {
+                                    if (entity != null) {
+                                        entity.setVelocity(new Vector(0, 0, 0));
+                                    }
+                                }
+                            }
+                            if (amountOfAliveTicks > 200) {
+                                this.cancel();
+                                targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.AIR);
+                            }
+                            amountOfAliveTicks++;
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                }
+
+
+                if (amountOfTicks > 19) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
