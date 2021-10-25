@@ -17,13 +17,13 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                WaterbendingStone.move4(activePlayer);
+                WaterbendingStone.move7(activePlayer);
             }
 //            else if (event.getNewSlot() == 1) {
-//                IceStone.move4(activePlayer);
+//                WaterbendingStone.move4(activePlayer);
 //            }
 //            else if (event.getNewSlot() == 2) {
-//                IceStone.move5(activePlayer);
+//                WaterbendingStone.move5(activePlayer);
 //            }
 //            else if (event.getNewSlot() == 3) {
 //                IceStone.move6(activePlayer);

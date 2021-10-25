@@ -340,7 +340,7 @@ public class IceStone extends WaterStone {
 
     // MOVE 8
     // Ice Beam
-    // ->
+    // -> Shoots a beam of ice freezing your targets
     public static void move8(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location playerLocation = player.getLocation();
