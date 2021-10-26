@@ -13,7 +13,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.io.Console;
 import java.util.*;
 
 public class WaterbendingStone extends WaterStone {
@@ -51,7 +50,11 @@ public class WaterbendingStone extends WaterStone {
                     player.getInventory().contains(ItemStones.waterStoneBending4)
             ) {
                 if (player.getPose() != Pose.SNEAKING) {
-                    player.setVelocity(player.getLocation().getDirection().multiply(0.3));
+                    if (!activePlayer.isDoublePassive1()) {
+                        player.setVelocity(player.getLocation().getDirection().multiply(0.3));
+                    } else {
+                        player.setVelocity(player.getLocation().getDirection());
+                    }
                 }
             }
         }

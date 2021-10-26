@@ -39,8 +39,7 @@ public class ActivePlayer {
 
     // Water Stone
     private int remainingIceShards = 10;
-    private int waterArmStage = 0;
-    private BukkitTask waterArms;
+    private boolean doublePassive1 = false;
     private BukkitTask iceSpear;
 
     // Wind Stone
@@ -245,26 +244,6 @@ public class ActivePlayer {
         return false;
     }
 
-    public boolean hasWaterArms() {
-        return this.waterArmStage > 0;
-    }
-
-    public void setWaterArmStage(int waterArmStage) {
-        this.waterArmStage = waterArmStage;
-    }
-
-    public int getWaterArmStage() {
-        return this.waterArmStage;
-    }
-
-    public void setWaterArms(BukkitTask bukkitTask) {
-        this.waterArms = bukkitTask;
-    }
-
-    public void clearWaterArms() {
-        this.waterArms.cancel();
-    }
-
     public boolean hasIceSpear() {
         return this.iceSpear != null;
     }
@@ -276,6 +255,14 @@ public class ActivePlayer {
     public void clearIceSpear() {
         this.iceSpear.cancel();
         this.iceSpear = null;
+    }
+
+    public boolean isDoublePassive1() {
+        return this.doublePassive1;
+    }
+
+    public void setDoublePassive1(boolean doublePassive1) {
+        this.doublePassive1 = doublePassive1;
     }
 
     public void disableDoubleJump() {

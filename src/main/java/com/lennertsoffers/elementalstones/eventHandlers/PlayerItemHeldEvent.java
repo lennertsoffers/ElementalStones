@@ -17,30 +17,30 @@ public class PlayerItemHeldEvent implements Listener {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
-//            if (event.getNewSlot() == 0) {
-//                EarthbendingStone.move1();
+            if (event.getNewSlot() == 0) {
+                WaterbendingStone.move2(activePlayer);
+            }
+//            else if (event.getNewSlot() == 1) {
+//                EarthbendingStone.move2(activePlayer);
 //            }
-            if (event.getNewSlot() == 1) {
-                EarthbendingStone.move2(activePlayer);
-            }
-            else if (event.getNewSlot() == 2) {
-                EarthbendingStone.move3(player);
-            }
-            else if (event.getNewSlot() == 3) {
-                EarthbendingStone.move4(activePlayer);
-            }
-            else if (event.getNewSlot() == 4) {
-                EarthbendingStone.move5(player);
-            }
-            else if (event.getNewSlot() == 5) {
-                EarthbendingStone.move6(player);
-            }
-            else if (event.getNewSlot() == 6) {
-                EarthbendingStone.move7(player);
-            }
-            else if (event.getNewSlot() == 7) {
-                EarthbendingStone.move8(activePlayer);
-            }
+//            else if (event.getNewSlot() == 2) {
+//                EarthbendingStone.move3(player);
+//            }
+//            else if (event.getNewSlot() == 3) {
+//                EarthbendingStone.move4(activePlayer);
+//            }
+//            else if (event.getNewSlot() == 4) {
+//                EarthbendingStone.move5(player);
+//            }
+//            else if (event.getNewSlot() == 5) {
+//                EarthbendingStone.move6(player);
+//            }
+//            else if (event.getNewSlot() == 6) {
+//                EarthbendingStone.move7(player);
+//            }
+//            else if (event.getNewSlot() == 7) {
+//                EarthbendingStone.move8(activePlayer);
+//            }
             if (activePlayer.isActive()) {
                 ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
                 if (!(previousItem == null)) {
