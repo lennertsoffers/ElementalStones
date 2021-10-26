@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -179,47 +180,94 @@ public class WaterbendingStone extends WaterStone {
     // -> Creates a huge wave knocking back entities
     public static void move7(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('A', Material.AIR);
-        characterMaterialMap.put('W', Material.WATER);
-        ArrayList<Material> overrideBlocks = new ArrayList<>();
-        overrideBlocks.add(Material.WATER);
-        String[] waveLayer0 = {
-                "AAAAAAAAA",
-                "AAAAAAAAA",
-                "AAWWWWWAA",
-                "AWWWWWWWA",
-                "AWWW*WWWA",
-                "AWWWWWWWA",
-                "AAWWWWWAA",
-                "AAAAAAAAA",
-                "AAAAAAAAA"
-        };
-        String[] waveLayer1 = {
-                "AAAAAAA",
-                "AWWWWWA",
-                "AWW*WWA",
-                "AWWWWWA",
-                "AAAAAAA"
-        };
-        Location startLocation1 = player.getLocation().add(2, 0, 0);
-        Location startLocation2 = player.getLocation().add(-2, 0, 0);
-        Location startLocation3 = player.getLocation().add(0, 0, 2);
-        Location startLocation4 = player.getLocation().add(0, 0, -2);
+        Location location = player.getLocation();
+        Vector direction = location.getDirection().setY(0);
+        ArrayList<Location> waterBlockLocations = new ArrayList<>();
+        ArrayList<Integer> ignoreAnglesB = new ArrayList<>();
+        ArrayList<Integer> ignoreAnglesM = new ArrayList<>();
+        ArrayList<Integer> ignoreAnglesT = new ArrayList<>();
         new BukkitRunnable() {
-            int amountOfTicks = 0;
+            int amountOfTicks = 1;
             @Override
             public void run() {
 
-//                SetBlockTools.setBlocks(startLocation, waveLayer0, characterMaterialMap, true, overrideBlocks, Material.WATER, activePlayer);
-//                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), waveLayer1, characterMaterialMap, true, overrideBlocks, Material.WATER, activePlayer);
-//                startLocation.add(1, 0, 0);
-                if (amountOfTicks > 100) {
+                replaceWater(waterBlockLocations);
+                waterBlockLocations.clear();
+                for (int i = 0; i < 360; i++) {
+                    System.out.println(i);
+                    Location waterBlockLocationB = location.clone().add(direction.clone().rotateAroundY(i).multiply(amountOfTicks));
+                    Location waterBlockLocationM = waterBlockLocationB.clone().add(0, 1, 0);
+                    Location waterBlockLocationT = waterBlockLocationB.clone().add(0, 2, 0);
+
+                    if (waterBlockLocationB.getBlock().getType() != Material.AIR && waterBlockLocationB.getBlock().getType() != Material.WATER) {
+                        ignoreAnglesB.add(i);
+                        System.out.println("test");
+                    }
+                    if (waterBlockLocationM.getBlock().getType() != Material.AIR && waterBlockLocationM.getBlock().getType() != Material.WATER) {
+                        ignoreAnglesM.add(i);
+                        System.out.println("test");
+                    }
+                    if (waterBlockLocationT.getBlock().getType() != Material.AIR && waterBlockLocationT.getBlock().getType() != Material.WATER) {
+                        ignoreAnglesT.add(i);
+                        System.out.println("test");
+                    }
+
+                    if (!ignoreAnglesB.contains(i)) {
+                        waterBlockLocations.add(waterBlockLocationB);
+                        waterBlockLocationB.getBlock().setType(Material.WATER);
+                        knockBackEntities(waterBlockLocationB, player);
+                    }
+                    if (!ignoreAnglesM.contains(i)) {
+                        waterBlockLocations.add(waterBlockLocationM);
+                        waterBlockLocationM.getBlock().setType(Material.WATER);
+                        knockBackEntities(waterBlockLocationM, player);
+                    }
+                    if (!ignoreAnglesT.contains(i)) {
+                        waterBlockLocations.add(waterBlockLocationT);
+                        waterBlockLocationT.getBlock().setType(Material.WATER);
+                        knockBackEntities(waterBlockLocationT, player);
+                    }
+                }
+
+                if (amountOfTicks > 20) {
                     this.cancel();
+                    replaceWater(waterBlockLocations);
+                    waterBlockLocations.clear();
                 }
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    // Check if entity collision
+    private static void knockBackEntities(Location location, Player player) {
+        if (location.getWorld() != null) {
+            if (!location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5).isEmpty()) {
+                for (Entity entity : location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5)) {
+                    if (entity != null) {
+                        if (entity != player) {
+                            System.out.println(MathTools.getDirectionNormVector(player.getLocation(), entity.getLocation()).multiply(0.05));
+                            entity.setVelocity(MathTools.getDirectionNormVector(player.getLocation(), entity.getLocation()).multiply(0.05));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Replace water with air again
+    private static void replaceWater(ArrayList<Location> waterBlockLocations) {
+        for (Location waterBlockLocation : waterBlockLocations) {
+            if (waterBlockLocation.getBlock().getType() == Material.WATER) {
+                waterBlockLocation.getBlock().setType(Material.AIR);
+            }
+            if (waterBlockLocation.clone().add(0, 1, 0).getBlock().getType() == Material.WATER) {
+                waterBlockLocation.clone().add(0, 1, 0).getBlock().setType(Material.AIR);
+            }
+            if (waterBlockLocation.clone().add(0, 2, 0).getBlock().getType() == Material.WATER) {
+                waterBlockLocation.clone().add(0, 2, 0).getBlock().setType(Material.AIR);
+            }
+        }
     }
 
     // MOVE 8

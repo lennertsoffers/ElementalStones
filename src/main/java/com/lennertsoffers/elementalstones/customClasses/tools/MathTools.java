@@ -29,6 +29,12 @@ public class MathTools {
         return new Vector(x, z, y);
     }
 
+    public static Vector getDirectionNormVector(Location a, Location b) {
+        Vector direction = new Vector(b.getX() - a.getX(), 0, b.getZ() - a.getZ());
+        double lengthOfVector = Math.sqrt(Math.pow(direction.getX(), 2) + Math.pow(direction.getZ(), 2));
+        return direction.multiply(lengthOfVector);
+    }
+
     public static Location locationOnCircle(Location location, double radius, double angle, World world) {
         double particleX = location.getX() + radius * Math.cos(angle);
         double particleZ = location.getZ() + radius * Math.sin(angle);

@@ -19,9 +19,9 @@ public class PlayerItemHeldEvent implements Listener {
             if (event.getNewSlot() == 0) {
                 WaterbendingStone.move7(activePlayer);
             }
-//            else if (event.getNewSlot() == 1) {
-//                WaterbendingStone.move4(activePlayer);
-//            }
+            else if (event.getNewSlot() == 1) {
+                WaterbendingStone.move8(activePlayer);
+            }
 //            else if (event.getNewSlot() == 2) {
 //                WaterbendingStone.move5(activePlayer);
 //            }
