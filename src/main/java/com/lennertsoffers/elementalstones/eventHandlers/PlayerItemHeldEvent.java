@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
@@ -16,30 +17,30 @@ public class PlayerItemHeldEvent implements Listener {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
-            if (event.getNewSlot() == 0) {
-                WaterbendingStone.move7(activePlayer);
+//            if (event.getNewSlot() == 0) {
+//                EarthbendingStone.move1();
+//            }
+            if (event.getNewSlot() == 1) {
+                EarthbendingStone.move2(activePlayer);
             }
-//            else if (event.getNewSlot() == 1) {
-//                WaterbendingStone.move4(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 2) {
-//                WaterbendingStone.move5(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 3) {
-//                IceStone.move6(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 4) {
-//                IceStone.move7(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 5) {
-//                AgilityStone.move6(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 6) {
-//                AgilityStone.move7(activePlayer);
-//            }
-//            else if (event.getNewSlot() == 7) {
-//                AgilityStone.move8(activePlayer);
-//            }
+            else if (event.getNewSlot() == 2) {
+                EarthbendingStone.move3(player);
+            }
+            else if (event.getNewSlot() == 3) {
+                EarthbendingStone.move4(activePlayer);
+            }
+            else if (event.getNewSlot() == 4) {
+                EarthbendingStone.move5(player);
+            }
+            else if (event.getNewSlot() == 5) {
+                EarthbendingStone.move6(player);
+            }
+            else if (event.getNewSlot() == 6) {
+                EarthbendingStone.move7(player);
+            }
+            else if (event.getNewSlot() == 7) {
+                EarthbendingStone.move8(activePlayer);
+            }
             if (activePlayer.isActive()) {
                 ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
                 if (!(previousItem == null)) {
