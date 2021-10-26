@@ -30,27 +30,35 @@ public class WaterStone {
     public static void move1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        for (int i = 0; i < 360; i++) {
-            Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
-            if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
-                for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
-                    if (entity != null) {
-                        if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            if (livingEntity != player) {
-                                livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
+        player.setVelocity(new Vector(0, 0.2, 0));
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (
+                        int i = 0;
+                        i < 360; i++) {
+                    Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
+                    if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
+                        for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
+                            if (entity != null) {
+                                if (entity instanceof LivingEntity) {
+                                    LivingEntity livingEntity = (LivingEntity) entity;
+                                    if (livingEntity != player) {
+                                        livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
+                                    }
+                                }
                             }
                         }
                     }
+                    for (int j = 0; j < 10; j++) {
+                        double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
+                        double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
+                        double locationZ = centerLocation.getZ() + StaticVariables.random.nextGaussian() / 2;
+                        world.spawnParticle(Particle.BUBBLE_POP, locationX, locationY, locationZ, 0);
+                    }
                 }
             }
-            for (int j = 0; j < 10; j++) {
-                double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
-                double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
-                double locationZ = centerLocation.getZ() + StaticVariables.random.nextGaussian() / 2;
-                world.spawnParticle(Particle.BUBBLE_POP, locationX, locationY, locationZ, 0);
-            }
-        }
+        }.runTaskLater(StaticVariables.plugin, 5L);
     }
 
     // MOVE 2

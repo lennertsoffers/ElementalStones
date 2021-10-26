@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EarthbendingStone {
+public class EarthbendingStone extends EarthStone {
 
     private static void damageLivingEntities(World world, Location location, Player player) {
         for (Entity entity : world.getNearbyEntities(location, 0.5, 3, 0.5)) {
