@@ -25,7 +25,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
-        AirbendingStone.passive();
+
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
