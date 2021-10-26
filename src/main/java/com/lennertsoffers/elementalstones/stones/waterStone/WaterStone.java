@@ -62,6 +62,13 @@ public class WaterStone {
     }
 
     // MOVE 2
+
+
+    // Dolphin Dive
+    // -> Player gets dolphin effect for 1 minute
+
+
+
     // Water Arms
     // -> Create two arms of water next to the player
     // -> Only further use in combination with other moves

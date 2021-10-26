@@ -4,22 +4,58 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.io.Console;
 import java.util.*;
 
 public class WaterbendingStone extends WaterStone {
 
-    // Passive
+    // PASSIVE
+    // Passive 1: Deep breath
+    // -> When the player is in the water, he gets the water breathing effect
+    public static void passive1(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (player.getInventory().contains(ItemStones.waterStoneBending0) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending1) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending2) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending3) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending4)
+                ) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 210, 1, false, false, false));
+                }
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 200L);
+    }
+
+    // Passive 2: Water Walker
+    // -> Move normal in water
+    public static void passive2(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        if (player.getLocation().getBlock().getType() == Material.WATER) {
+            System.out.println("water");
+            if (player.getInventory().contains(ItemStones.waterStoneBending0) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending1) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending2) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending3) ||
+                    player.getInventory().contains(ItemStones.waterStoneBending4)
+            ) {
+                if (player.getPose() != Pose.SNEAKING) {
+                    player.setVelocity(player.getLocation().getDirection().multiply(0.3));
+                }
+            }
+        }
+    }
 
 
     // MOVE 4
