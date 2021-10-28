@@ -63,19 +63,30 @@ public class AirbendingStone {
                 int amountOfTicks = 0;
                 @Override
                 public void run() {
-                    Location targetLocation = finalTarget.getLocation().add(0, 1, 0);
 
+                    Location targetLocation = finalTarget.getLocation().add(0, 1, 0);
                     Vector pathDirection = MathTools.getDirectionNormVector3d(currentLocation, targetLocation);
 
-                    for (int i = 0; i < 10; i++) {
-                        double particleLocationX = currentLocation.getX() + StaticVariables.random.nextGaussian() / 10;
-                        double particleLocationZ = currentLocation.getZ() + StaticVariables.random.nextGaussian() / 10;
+                    for (int i = 0; i < 20; i++) {
+                        double particleLocationX = currentLocation.getX() + StaticVariables.random.nextGaussian() / 4;
+                        double particleLocationZ = currentLocation.getZ() + StaticVariables.random.nextGaussian() / 4;
                         world.spawnParticle(Particle.END_ROD, particleLocationX, currentLocation.getY(), particleLocationZ, 0);
                     }
 
                     currentLocation.add(pathDirection.multiply(0.2));
 
-                    if (amountOfTicks > 2000 || finalTarget.isDead()) {
+                    if (targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04 ||
+                            targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04 ||
+                            targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04
+                    ) {
+                        this.cancel();
+                        finalTarget.damage(5);
+                        finalTarget.setGlowing(false);
+                        for (int i = 0; i < 200; i++) {
+                            world.spawnParticle(Particle.END_ROD, currentLocation, 0, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10);
+                        }
+                    }
+                    else if (amountOfTicks > 400 || finalTarget.isDead()) {
                         this.cancel();
                     }
                     amountOfTicks++;
