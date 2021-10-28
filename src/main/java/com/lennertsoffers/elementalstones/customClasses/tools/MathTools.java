@@ -32,7 +32,21 @@ public class MathTools {
     public static Vector getDirectionNormVector(Location a, Location b) {
         Vector direction = new Vector(b.getX() - a.getX(), 0, b.getZ() - a.getZ());
         double lengthOfVector = Math.sqrt(Math.pow(direction.getX(), 2) + Math.pow(direction.getZ(), 2));
-        return direction.multiply(lengthOfVector);
+        return direction.multiply(1/lengthOfVector);
+    }
+
+    public static Vector getDirectionNormVector3d(Location a, Location b) {
+        Vector direction = new Vector(b.getX() - a.getX(), b.getY() - a.getY(), b.getZ() - a.getZ());
+        double lengthOfVector = Math.sqrt(Math.pow(direction.getX(), 2)+ Math.pow(direction.getY(), 2) + Math.pow(direction.getZ(), 2));
+        return direction.multiply(1/lengthOfVector);
+    }
+
+    public static double calculate2dDistance(Location a, Location b) {
+        return Math.sqrt(Math.pow(b.getX() - a.getX(), 2) + Math.pow(b.getZ() - a.getY(), 2));
+    }
+
+    public static double calculate3dDistance(Location a, Location b) {
+        return Math.sqrt(Math.pow(b.getX() - a.getX(), 2) + Math.pow(b.getY() - a.getY(), 2) + Math.pow(b.getZ() - a.getZ(), 2));
     }
 
     public static Location locationOnCircle(Location location, double radius, double angle, World world) {
