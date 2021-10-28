@@ -42,7 +42,6 @@ public class WaterbendingStone extends WaterStone {
     public static void passive2(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         if (player.getLocation().getBlock().getType() == Material.WATER) {
-            System.out.println("water");
             if (player.getInventory().contains(ItemStones.waterStoneBending0) ||
                     player.getInventory().contains(ItemStones.waterStoneBending1) ||
                     player.getInventory().contains(ItemStones.waterStoneBending2) ||
