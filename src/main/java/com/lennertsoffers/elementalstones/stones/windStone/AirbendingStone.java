@@ -104,6 +104,50 @@ public class AirbendingStone {
     // MOVE 7
     // Tornado
     // -> Shoots a tornado launching entities up
+    public static void move7(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        final Location location = player.getLocation();
+        final Vector direction = location.getDirection();
+        location.add(direction);
+
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            int angle1 = 0;
+            @Override
+            public void run() {
+
+                Location centerLocation = location.clone();
+                for (int i = 10; i < 100; i++) {
+                    Location particle1Location = MathTools.locationOnCircle(centerLocation, i / 20f, angle1, world);
+                    world.spawnParticle(Particle.SPELL_MOB, particle1Location, 0, 1 ,1 ,1);
+                    angle1+= 37;
+                    centerLocation.add(0, 0.1, 0);
+                    if (i % 10 == 0) {
+                        if (!world.getNearbyEntities(centerLocation, i/20f, 1, i/20f).isEmpty()) {
+                            for (Entity entity : world.getNearbyEntities(centerLocation, i/20f, 1, i/20f)) {
+                                if (entity != null) {
+                                    if (entity instanceof LivingEntity) {
+                                        LivingEntity livingEntity = (LivingEntity) entity;
+                                        if (livingEntity != player) {
+                                            livingEntity.setVelocity(new Vector(0, 2, 0));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+                location.add(direction.clone().multiply(0.2));
+
+                if (amountOfTicks > 200) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
 
 
     // MOVE 8
