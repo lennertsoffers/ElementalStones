@@ -11,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -21,7 +22,7 @@ public class AirbendingStone {
 
 
     // MOVE 4
-    // Air cutter
+    // Arial Ace
     // ->
 
 
@@ -97,8 +98,36 @@ public class AirbendingStone {
 
 
     // MOVE 6
-    // Breathtaking
-    // -> Sucks
+    // Wind Cloak
+    // -> Gives the player a cloak of wind
+    // -> If the player gets damaged by an entity, the entity gets knocked back hard
+
+    // activation
+    public static void move6(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+
+                Location location = player.getLocation().add(0, 1.1, 0);
+                for (int i = 0; i < 10; i++) {
+                    world.spawnParticle(Particle.SPIT, MathTools.locationOnCircle(location, 0.5, i, world), 0);
+                }
+
+                if (amountOfTicks > 200) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    }
+
+    // knockback entities on damage
+    public static void move6knockback(ActivePlayer activePlayer, EntityDamageByEntityEvent event) {
+
+    }
 
 
     // MOVE 7
