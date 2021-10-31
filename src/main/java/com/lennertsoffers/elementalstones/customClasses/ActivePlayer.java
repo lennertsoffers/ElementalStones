@@ -47,6 +47,7 @@ public class ActivePlayer {
     private long chargingStart = -1;
     private int move7LaunchState = 0;
     private boolean inAirBoost = false;
+    private boolean windCloak = false;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -325,6 +326,14 @@ public class ActivePlayer {
                 removeInAirBoost();
             }
         }.runTaskLater(StaticVariables.plugin, 1200);
+    }
+
+    public void setWindCloak(boolean windCloak) {
+        this.windCloak = windCloak;
+    }
+
+    public boolean hasWindCloak() {
+        return this.windCloak;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {
