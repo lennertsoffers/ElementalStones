@@ -106,6 +106,8 @@ public class AirbendingStone {
     public static void move6(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
+        activePlayer.setWindCloak(true);
+
         new BukkitRunnable() {
             int amountOfTicks = 0;
             @Override
@@ -118,6 +120,7 @@ public class AirbendingStone {
 
                 if (amountOfTicks > 200) {
                     this.cancel();
+                    activePlayer.setWindCloak(false);
                 }
                 amountOfTicks++;
             }
@@ -126,7 +129,18 @@ public class AirbendingStone {
 
     // knockback entities on damage
     public static void move6knockback(ActivePlayer activePlayer, EntityDamageByEntityEvent event) {
-
+        if (activePlayer.hasWindCloak()) {
+            Player player = activePlayer.getPlayer();
+            Entity entity = event.getDamager();
+            if (entity != player) {
+                if (entity instanceof LivingEntity) {
+                    LivingEntity damager = (LivingEntity) entity;
+                    Vector direction = MathTools.getDirectionNormVector(player.getLocation(), damager.getLocation());
+                    damager.setVelocity(direction.clone().multiply(5).setY(0.5));
+                    damager.damage(3, player);
+                }
+            }
+        }
     }
 
 
