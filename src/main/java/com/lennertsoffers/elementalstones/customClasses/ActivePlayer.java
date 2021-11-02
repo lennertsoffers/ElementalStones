@@ -4,8 +4,8 @@ import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -27,7 +27,7 @@ public class ActivePlayer {
     // Earth Stone
     private FallingBlock fallingBlock;
     private List<FallingBlock> move8FallingBlocks;
-    private int move8Stage;
+    private int move8Stage = 0;
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
@@ -48,11 +48,15 @@ public class ActivePlayer {
     private int move7LaunchState = 0;
     private boolean inAirBoost = false;
     private boolean windCloak = false;
+    private Entity possibleTarget = null;
+    private Entity target = null;
+    private BukkitTask levitatingTask = null;
+    private Location move8from = null;
+    private Location move8to = null;
 
     public ActivePlayer(Player player) {
         this.player = player;
         this.active = false;
-        this.move8Stage = 0;
         activePlayers.add(this);
     }
 
@@ -334,6 +338,66 @@ public class ActivePlayer {
 
     public boolean hasWindCloak() {
         return this.windCloak;
+    }
+
+    public void setPossibleTarget(Entity entity) {
+        this.possibleTarget = entity;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                possibleTarget.setGlowing(false);
+                possibleTarget = null;
+            }
+        }.runTaskLater(StaticVariables.plugin, 60L);
+    }
+
+    public boolean hasPossibleTarget() {
+        return this.possibleTarget != null;
+    }
+
+    public Entity getPossibleTarget() {
+        return this.possibleTarget;
+    }
+
+    public void setLevitatingTask(BukkitTask bukkitTask) {
+        this.levitatingTask = bukkitTask;
+    }
+
+    public void stopLevitatingTask() {
+        this.levitatingTask.cancel();
+        this.levitatingTask = null;
+    }
+
+    public boolean isNotLevitatingTarget() {
+        return this.levitatingTask == null;
+    }
+
+    public void setTarget(Entity target) {
+        this.target = target;
+    }
+
+    public Entity getTarget() {
+        return this.target;
+    }
+
+    public void clearTarget() {
+        this.target = null;
+    }
+
+    public void setMove8from(Location move8from) {
+        this.move8from = move8from;
+    }
+
+    public void setMove8to(Location move8to) {
+        this.move8to = move8to;
+    }
+
+    public Location getMove8from() {
+        return this.move8from;
+    }
+
+    public Location getMove8to() {
+        return this.move8to;
     }
 
     public static ActivePlayer getActivePlayer(UUID uuid) {

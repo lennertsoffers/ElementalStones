@@ -3,14 +3,10 @@ package com.lennertsoffers.elementalstones.stones.windStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
-import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -272,4 +268,85 @@ public class AirbendingStone extends WindStone {
     // MOVE 8
     // Levitate
     // -> Gives player the ability to select an entity and move it in the air for 10 seconds
+    public static void move8(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location location = player.getLocation().add(0, 1, 0);
+        Vector direction = location.getDirection();
+
+        if (!activePlayer.hasPossibleTarget() && activePlayer.isNotLevitatingTarget()) {
+            // Finding target
+            System.out.println("finding");
+            Entity target = null;
+            for (int i = 1; i < 40; i++) {
+                if (!world.getNearbyEntities(location.clone().add(direction.clone().multiply(i)), 1, 1, 1).isEmpty()) {
+                    for (Entity entity : world.getNearbyEntities(location.clone().add(direction.clone().multiply(i)), 1, 1, 1)) {
+                        if (entity != null) {
+                            if (entity != player) {
+                                if (target != null) {
+                                    if (MathTools.calculate3dDistance(location, entity.getLocation()) < MathTools.calculate3dDistance(location, target.getLocation())) {
+                                        target = entity;
+                                    }
+                                } else {
+                                    target = entity;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (target != null) {
+                target.setGlowing(true);
+                activePlayer.setPossibleTarget(target);
+            }
+        } else if (activePlayer.isNotLevitatingTarget()) {
+            // Levitating target
+            System.out.println("levitating");
+            activePlayer.clearTarget();
+            activePlayer.setMove8from(null);
+            activePlayer.setMove8to(null);
+            Entity target = activePlayer.getPossibleTarget();
+            activePlayer.setTarget(target);
+            activePlayer.setLevitatingTask(new BukkitRunnable() {
+                int amountOfTicks = 0;
+                @Override
+                public void run() {
+                    Location playerLocation = player.getLocation();
+                    Vector playerDirection = playerLocation.getDirection();
+                    playerLocation.add(playerDirection.clone().multiply(10));
+                    activePlayer.setMove8from(activePlayer.getMove8to());
+                    activePlayer.setMove8to(playerLocation);
+                    target.teleport(playerLocation);
+                    if (amountOfTicks > 200) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
+        } else {
+            System.out.println("stopping");
+            activePlayer.stopLevitatingTask();
+            Entity target = activePlayer.getTarget();
+            target.setVelocity(MathTools.getDirectionNormVector3d(activePlayer.getMove8from(), activePlayer.getMove8to()).multiply(4));
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
