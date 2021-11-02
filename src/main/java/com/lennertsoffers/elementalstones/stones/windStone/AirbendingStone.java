@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Wolf;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -27,41 +28,77 @@ public class AirbendingStone {
     public static void move4(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        Location location = player.getLocation();
-        Vector direction = location.getDirection();
-        location.add(0, 2, 0);
+
+        boolean critical = !player.isOnGround();
+        if (critical) {
+            player.setVelocity(player.getVelocity().add(new Vector(0, -1, 0)));
+        } else {
+            player.setVelocity(new Vector(0, 0.1, 0));
+        }
+        player.setGliding(true);
 
         new BukkitRunnable() {
-            int amountOfTicks = 0;
             @Override
             public void run() {
+                Location location = player.getLocation();
+                Vector direction = location.getDirection();
+                location.add(0, 2, 0);
 
-                Location runnableLocation = location.clone();
+                new BukkitRunnable() {
+                    int amountOfTicks = 0;
+                    @Override
+                    public void run() {
 
-                for (int i = 70; i >= (70 - (amountOfTicks * 46.66)); i--) {
-                    Location particleLocation = runnableLocation.clone().add(direction.clone().rotateAroundY(i/100f).multiply(2));
+                        Location runnableLocation = location.clone();
 
-                    double nominator = Math.abs(i) / 2.5;
+                        for (int i = 70; i >= (70 - (amountOfTicks * 46.66)); i--) {
+                            Location particleLocation = runnableLocation.clone().add(direction.clone().rotateAroundY(i/100f).multiply(2));
 
-                    if (nominator < 10) {
-                        nominator = 10;
+                            double nominator = Math.abs(i) / 2.5;
+
+                            if (nominator < 10) {
+                                nominator = 10;
+                            }
+
+                            double locationX = particleLocation.getX() + StaticVariables.random.nextGaussian() / nominator;
+                            double locationY = particleLocation.getY() + StaticVariables.random.nextGaussian() / nominator;
+                            double locationZ = particleLocation.getZ() + StaticVariables.random.nextGaussian() / nominator;
+
+                            world.spawnParticle(Particle.SPELL_MOB, locationX, locationY, locationZ, 0, 1, 1, 1);
+
+                            if (i % 10 == 0) {
+                                int damage = 3;
+                                if (critical) {
+                                    world.spawnParticle(Particle.CRIT, particleLocation.clone().add(0, 0.3, 0), 0);
+                                    damage = 6;
+                                }
+                                if (!world.getNearbyEntities(particleLocation, 0.3, 0.3, 0.3).isEmpty()) {
+                                    for (Entity entity : world.getNearbyEntities(particleLocation, 0.3, 0.3, 0.3)) {
+                                        if (entity != null) {
+                                            if (entity instanceof LivingEntity) {
+                                                LivingEntity livingEntity = (LivingEntity) entity;
+                                                if (entity != player) {
+                                                    livingEntity.damage(damage);
+                                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, 2, false, false, false));
+                                                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 20, 100, false, false, false));
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            runnableLocation.add(0, -1/100f, 0);
+                        }
+
+                        if (amountOfTicks > 3) {
+                            this.cancel();
+                        }
+                        amountOfTicks++;
                     }
-
-                    double locationX = particleLocation.getX() + StaticVariables.random.nextGaussian() / nominator;
-                    double locationY = particleLocation.getY() + StaticVariables.random.nextGaussian() / nominator;
-                    double locationZ = particleLocation.getZ() + StaticVariables.random.nextGaussian() / nominator;
-
-                    world.spawnParticle(Particle.SPELL_MOB, locationX, locationY, locationZ, 0, 1, 1, 1);
-                    runnableLocation.add(0, -1/100f, 0);
-                }
-
-                if (amountOfTicks > 3) {
-                    this.cancel();
-                }
-                amountOfTicks++;
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-
+        }.runTaskLater(StaticVariables.plugin, 2L);
     }
 
 
