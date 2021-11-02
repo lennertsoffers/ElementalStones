@@ -314,11 +314,16 @@ public class AirbendingStone extends WindStone {
                     Location playerLocation = player.getLocation();
                     Vector playerDirection = playerLocation.getDirection();
                     playerLocation.add(playerDirection.clone().multiply(10));
+
+                    if (playerLocation.getBlock().getType().isSolid()) {
+                        playerLocation.setY(world.getHighestBlockYAt(playerLocation) + 1);
+                    }
+
                     activePlayer.setMove8from(activePlayer.getMove8to());
                     activePlayer.setMove8to(playerLocation);
                     target.teleport(playerLocation);
-                    if (amountOfTicks > 200) {
-                        this.cancel();
+                    if (amountOfTicks > 100) {
+                        activePlayer.stopLevitatingTask();
                     }
                     amountOfTicks++;
                 }
@@ -327,7 +332,13 @@ public class AirbendingStone extends WindStone {
             System.out.println("stopping");
             activePlayer.stopLevitatingTask();
             Entity target = activePlayer.getTarget();
-            target.setVelocity(MathTools.getDirectionNormVector3d(activePlayer.getMove8from(), activePlayer.getMove8to()).multiply(4));
+            if (
+                    activePlayer.getMove8from().getX() != activePlayer.getMove8to().getX() &&
+                    activePlayer.getMove8from().getY() != activePlayer.getMove8to().getY() &&
+                    activePlayer.getMove8from().getZ() != activePlayer.getMove8to().getZ()
+            ) {
+                target.setVelocity(MathTools.getDirectionNormVector3d(activePlayer.getMove8from(), activePlayer.getMove8to()).multiply(4));
+            }
         }
     }
 }
