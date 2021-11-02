@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -90,39 +91,28 @@ public class WindStone {
     }
 
     // MOVE 3
-    // Launch
-    // -> Launch all the entities standing on the targeted block
+    // Suction
+    // -> Sucks all the items in close range towards the player
     public static void move3(ActivePlayer activePlayer) {
-        try {
-            Player player = activePlayer.getPlayer();
-            Location targetBlock = Objects.requireNonNull(player.getTargetBlockExact(30)).getLocation();
-            World world = player.getWorld();
-
-            if (!world.getNearbyEntities(targetBlock, 2, 20, 2).isEmpty()) {
-                for (Entity entity : world.getNearbyEntities(targetBlock, 2, 20, 2)) {
-                    if (entity != null) {
-                        if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            if (livingEntity != player) {
-                                livingEntity.setVelocity(new Vector(0, 2, 0));
-                                new BukkitRunnable() {
-                                    int amountOfTicks = 0;
-                                    @Override
-                                    public void run() {
-                                        world.spawnParticle(Particle.CLOUD, livingEntity.getLocation().add(StaticVariables.random.nextGaussian() / 10, 0, StaticVariables.random.nextGaussian() / 10), 0);
-                                        if (amountOfTicks > 20) {
-                                            this.cancel();
-                                        }
-                                        amountOfTicks++;
-                                    }
-                                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        if (!world.getNearbyEntities(player.getLocation(), 15, 15, 15).isEmpty()) {
+            for (Entity entity : world.getNearbyEntities(player.getLocation(), 15, 15, 15)) {
+                if (entity != null) {
+                    if (entity instanceof Item) {
+                        Item item = (Item) entity;
+                        item.setGlowing(true);
+                        item.setPickupDelay(0);
+                        item.setVelocity(new Vector(0, 0.7, 0));
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                item.setVelocity(MathTools.getDirectionNormVector3d(item.getLocation(), player.getLocation()).multiply(3));
                             }
-                        }
+                        }.runTaskLater(StaticVariables.plugin, 10L);
                     }
                 }
             }
-        } catch (Exception e) {
-            System.out.println("problem");
         }
     }
 }

@@ -72,9 +72,6 @@ public class AgilityStone extends WindStone {
         }
     }
 
-    // No fall damage
-    // -> The player cannot get fall damage
-
     // MOVE 4
     // Forward Dash
     // -> Player dashes forwards and damages entities along the way
