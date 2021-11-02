@@ -22,8 +22,47 @@ public class AirbendingStone {
 
 
     // MOVE 4
-    // Arial Ace
-    // ->
+    // Air Slash
+    // -> A high speed high damage air slash
+    public static void move4(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        Location location = player.getLocation();
+        Vector direction = location.getDirection();
+        location.add(0, 2, 0);
+
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+            @Override
+            public void run() {
+
+                Location runnableLocation = location.clone();
+
+                for (int i = 70; i >= (70 - (amountOfTicks * 46.66)); i--) {
+                    Location particleLocation = runnableLocation.clone().add(direction.clone().rotateAroundY(i/100f).multiply(2));
+
+                    double nominator = Math.abs(i) / 2.5;
+
+                    if (nominator < 10) {
+                        nominator = 10;
+                    }
+
+                    double locationX = particleLocation.getX() + StaticVariables.random.nextGaussian() / nominator;
+                    double locationY = particleLocation.getY() + StaticVariables.random.nextGaussian() / nominator;
+                    double locationZ = particleLocation.getZ() + StaticVariables.random.nextGaussian() / nominator;
+
+                    world.spawnParticle(Particle.SPELL_MOB, locationX, locationY, locationZ, 0, 1, 1, 1);
+                    runnableLocation.add(0, -1/100f, 0);
+                }
+
+                if (amountOfTicks > 3) {
+                    this.cancel();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+    }
 
 
     // MOVE 5
