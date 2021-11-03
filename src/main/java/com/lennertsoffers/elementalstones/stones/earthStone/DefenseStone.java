@@ -21,13 +21,15 @@ public class DefenseStone extends EarthStone {
 
     private static ItemStack addEnchantments(ItemStack item) {
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5, true);
-        itemMeta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
-        itemMeta.addEnchant(Enchantment.PROTECTION_FALL, 5, true);
-        itemMeta.addEnchant(Enchantment.PROTECTION_FIRE, 5, true);
-        itemMeta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 5, true);
-        itemMeta.addEnchant(Enchantment.BINDING_CURSE, 1, true);
-        item.setItemMeta(itemMeta);
+        if (itemMeta != null) {
+            itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5, true);
+            itemMeta.addEnchant(Enchantment.PROTECTION_EXPLOSIONS, 5, true);
+            itemMeta.addEnchant(Enchantment.PROTECTION_FALL, 5, true);
+            itemMeta.addEnchant(Enchantment.PROTECTION_FIRE, 5, true);
+            itemMeta.addEnchant(Enchantment.PROTECTION_PROJECTILE, 5, true);
+            itemMeta.addEnchant(Enchantment.BINDING_CURSE, 1, true);
+            item.setItemMeta(itemMeta);
+        }
         return item;
     }
 

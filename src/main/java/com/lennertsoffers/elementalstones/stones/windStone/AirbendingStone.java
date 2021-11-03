@@ -3,11 +3,14 @@ package com.lennertsoffers.elementalstones.stones.windStone;
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -16,7 +19,35 @@ import org.bukkit.util.Vector;
 public class AirbendingStone extends WindStone {
 
     // PASSIVE
+    public static void passive1(ActivePlayer activePlayer, EntityDamageEvent event) {
+        Player player = activePlayer.getPlayer();
+        if (
+                player.getInventory().contains(ItemStones.airStoneBending0) ||
+                player.getInventory().contains(ItemStones.airStoneBending1) ||
+                player.getInventory().contains(ItemStones.airStoneBending2) ||
+                player.getInventory().contains(ItemStones.airStoneBending3) ||
+                player.getInventory().contains(ItemStones.airStoneBending4)
+        ) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+                event.setCancelled(true);
+            }
+        }
+    }
 
+    public static void passive2(ActivePlayer activePlayer, EntityToggleGlideEvent event) {
+        Player player = activePlayer.getPlayer();
+        if (
+                player.getInventory().contains(ItemStones.airStoneBending0) ||
+                        player.getInventory().contains(ItemStones.airStoneBending1) ||
+                        player.getInventory().contains(ItemStones.airStoneBending2) ||
+                        player.getInventory().contains(ItemStones.airStoneBending3) ||
+                        player.getInventory().contains(ItemStones.airStoneBending4)
+        ) {
+            if (!event.isGliding()) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 2, true, true, true));
+            }
+        }
+    }
 
     // MOVE 4
     // Air Slash
@@ -110,23 +141,27 @@ public class AirbendingStone extends WindStone {
         bladeStartLocation.add(bladeStartDirection).add(0, 1, 0);
 
         LivingEntity target = null;
-        double closest = -1;
-        if (!world.getNearbyEntities(playerLocation, 50, 5, 50).isEmpty()) {
-            for (Entity entity : world.getNearbyEntities(playerLocation, 50, 5, 50)) {
-                if (entity != null) {
-                    if (entity instanceof LivingEntity) {
-                        LivingEntity livingEntity = (LivingEntity) entity;
-                        if (livingEntity != player) {
-                            double distance = MathTools.calculate3dDistance(playerLocation, livingEntity.getLocation());
-                            if (closest == -1 || distance < closest ) {
-                                closest = distance;
-                                target = livingEntity;
+        for (int i = 1; i < 50; i++) {
+            if (!world.getNearbyEntities(playerLocation.clone().add(bladeStartDirection.clone().multiply(i)), 5, 2, 5).isEmpty()) {
+                for (Entity entity : world.getNearbyEntities(playerLocation.clone().add(bladeStartDirection.clone().multiply(i)), 5, 2, 5)) {
+                    if (entity != null) {
+                        if (entity instanceof LivingEntity) {
+                            LivingEntity livingEntity = (LivingEntity) entity;
+                            if (entity != player) {
+                                if (target != null) {
+                                    if (MathTools.calculate3dDistance(playerLocation, entity.getLocation()) < MathTools.calculate3dDistance(playerLocation, target.getLocation())) {
+                                        target = livingEntity;
+                                    }
+                                } else {
+                                    target = livingEntity;
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
         if (target != null) {
             target.setGlowing(true);
             LivingEntity finalTarget = target;
@@ -141,16 +176,16 @@ public class AirbendingStone extends WindStone {
                     Vector pathDirection = MathTools.getDirectionNormVector3d(currentLocation, targetLocation);
 
                     for (int i = 0; i < 20; i++) {
-                        double particleLocationX = currentLocation.getX() + StaticVariables.random.nextGaussian() / 4;
-                        double particleLocationZ = currentLocation.getZ() + StaticVariables.random.nextGaussian() / 4;
+                        double particleLocationX = currentLocation.getX() + StaticVariables.random.nextGaussian() / 10;
+                        double particleLocationZ = currentLocation.getZ() + StaticVariables.random.nextGaussian() / 10;
                         world.spawnParticle(Particle.END_ROD, particleLocationX, currentLocation.getY(), particleLocationZ, 0);
                     }
 
                     currentLocation.add(pathDirection.multiply(0.2));
 
-                    if (targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04 ||
-                            targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04 ||
-                            targetLocation.getX() > currentLocation.getX() - 0.04 && targetLocation.getX() < currentLocation.getX() + 0.04
+                    if (targetLocation.getX() > currentLocation.getX() - 0.1 && targetLocation.getX() < currentLocation.getX() + 0.1 ||
+                            targetLocation.getX() > currentLocation.getX() - 0.1 && targetLocation.getX() < currentLocation.getX() + 0.1 ||
+                            targetLocation.getX() > currentLocation.getX() - 0.1 && targetLocation.getX() < currentLocation.getX() + 0.1
                     ) {
                         this.cancel();
                         finalTarget.damage(5);
@@ -208,6 +243,7 @@ public class AirbendingStone extends WindStone {
                 if (entity instanceof LivingEntity) {
                     LivingEntity damager = (LivingEntity) entity;
                     Vector direction = MathTools.getDirectionNormVector(player.getLocation(), damager.getLocation());
+                    damager.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100, 3, true, true, true));
                     damager.setVelocity(direction.clone().multiply(5).setY(0.5));
                     damager.damage(3, player);
                 }
@@ -276,19 +312,20 @@ public class AirbendingStone extends WindStone {
 
         if (!activePlayer.hasPossibleTarget() && activePlayer.isNotLevitatingTarget()) {
             // Finding target
-            System.out.println("finding");
             Entity target = null;
             for (int i = 1; i < 40; i++) {
                 if (!world.getNearbyEntities(location.clone().add(direction.clone().multiply(i)), 1, 1, 1).isEmpty()) {
                     for (Entity entity : world.getNearbyEntities(location.clone().add(direction.clone().multiply(i)), 1, 1, 1)) {
                         if (entity != null) {
-                            if (entity != player) {
-                                if (target != null) {
-                                    if (MathTools.calculate3dDistance(location, entity.getLocation()) < MathTools.calculate3dDistance(location, target.getLocation())) {
+                            if (!(entity instanceof Item || entity instanceof Arrow)) {
+                                if (entity != player) {
+                                    if (target != null) {
+                                        if (MathTools.calculate3dDistance(location, entity.getLocation()) < MathTools.calculate3dDistance(location, target.getLocation())) {
+                                            target = entity;
+                                        }
+                                    } else {
                                         target = entity;
                                     }
-                                } else {
-                                    target = entity;
                                 }
                             }
                         }
@@ -301,7 +338,6 @@ public class AirbendingStone extends WindStone {
             }
         } else if (activePlayer.isNotLevitatingTarget()) {
             // Levitating target
-            System.out.println("levitating");
             activePlayer.clearTarget();
             activePlayer.setMove8from(null);
             activePlayer.setMove8to(null);
@@ -322,6 +358,13 @@ public class AirbendingStone extends WindStone {
                     activePlayer.setMove8from(activePlayer.getMove8to());
                     activePlayer.setMove8to(playerLocation);
                     target.teleport(playerLocation);
+                    for (int i = 0; i < 10; i++) {
+                        double particleX = playerLocation.clone().getX() + StaticVariables.random.nextGaussian() / 5;
+                        double particleY = playerLocation.clone().getY() + StaticVariables.random.nextGaussian() / 5 + 1;
+                        double particleZ = playerLocation.clone().getZ() + StaticVariables.random.nextGaussian() / 5;
+                        int grayValue = (1 + StaticVariables.random.nextInt(30));
+                        world.spawnParticle(Particle.SPELL_MOB, particleX, particleY, particleZ, 0, grayValue, grayValue, grayValue);
+                    }
                     if (amountOfTicks > 100) {
                         activePlayer.stopLevitatingTask();
                     }
@@ -329,7 +372,6 @@ public class AirbendingStone extends WindStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
         } else {
-            System.out.println("stopping");
             activePlayer.stopLevitatingTask();
             Entity target = activePlayer.getTarget();
             if (
