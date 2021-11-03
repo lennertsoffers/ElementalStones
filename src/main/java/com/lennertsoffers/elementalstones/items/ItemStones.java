@@ -14,6 +14,9 @@ import java.util.List;
 
 public class ItemStones {
 
+    // test
+    public static ItemStack testStone;
+
     // BASE STONE
     public static ItemStack baseStone;
 
@@ -318,6 +321,21 @@ public class ItemStones {
 //            }
     };
 
+    private static void createTestStone() {
+        ItemStack stack = new ItemStack(Material.DIAMOND_HOE);
+        ItemMeta meta = stack.getItemMeta();
+        meta.setDisplayName(ChatColor.GOLD + "TEST");
+        meta.setCustomModelData(1);
+        stack.setItemMeta(meta);
+
+        testStone = stack;
+
+        ShapedRecipe recipe = new ShapedRecipe(NamespacedKey.minecraft("test"), stack);
+        recipe.shape("   ", " D ", "   ");
+        recipe.setIngredient('D', Material.DIAMOND);
+        Bukkit.getServer().addRecipe(recipe);
+    }
+
     private static void createBaseStone() {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
@@ -366,6 +384,10 @@ public class ItemStones {
     }
 
     public static void init() {
+
+        createTestStone();
+
+
 
         // BASE STONE
         createBaseStone();
