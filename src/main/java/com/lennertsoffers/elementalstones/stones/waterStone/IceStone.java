@@ -4,13 +4,19 @@ import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
+import io.netty.handler.codec.http.multipart.Attribute;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,6 +30,66 @@ import java.util.Objects;
 public class IceStone extends WaterStone {
 
     // PASSIVE
+    public static void passive1(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        if (
+                player.getInventory().contains(ItemStones.waterStoneIce0) ||
+                player.getInventory().contains(ItemStones.waterStoneIce1) ||
+                player.getInventory().contains(ItemStones.waterStoneIce2) ||
+                player.getInventory().contains(ItemStones.waterStoneIce3) ||
+                player.getInventory().contains(ItemStones.waterStoneIce4)
+        ) {
+            // Leather boots
+            ItemStack leatherBoots = new ItemStack(Material.LEATHER_BOOTS, 1);
+            leatherBoots.addEnchantment(Enchantment.FROST_WALKER, 2);
+            leatherBoots.addEnchantment(Enchantment.BINDING_CURSE, 1);
+            ItemMeta leatherBootsMeta = leatherBoots.getItemMeta();
+            if (leatherBootsMeta != null) {
+                leatherBootsMeta.setDisplayName(ChatColor.BLUE + "Ice Boots");
+                leatherBootsMeta.setUnbreakable(true);
+                leatherBootsMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                leatherBootsMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                leatherBootsMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            }
+            leatherBoots.setItemMeta(leatherBootsMeta);
+
+            if (player.getInventory().getBoots() != null) {
+                // Player has boots
+                ItemStack boots = player.getInventory().getBoots();
+                if (!boots.containsEnchantment(Enchantment.FROST_WALKER)) {
+                    // Don't have frost walker
+                    boots.addEnchantment(Enchantment.FROST_WALKER, 2);
+                    boots.addEnchantment(Enchantment.BINDING_CURSE, 1);
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    if (bootsMeta != null) {
+                        if (bootsMeta.getDisplayName().isEmpty()) {
+                            bootsMeta.setDisplayName(WordUtils.capitalizeFully(boots.getType().name().toLowerCase().replace("_", " ")));
+                        }
+                        bootsMeta.setDisplayName(ChatColor.BLUE + "Upgraded " + bootsMeta.getDisplayName());
+                    }
+                    boots.setItemMeta(bootsMeta);
+                } else {
+                    // Already have frost walker
+                    ItemMeta bootsMeta = boots.getItemMeta();
+                    if (bootsMeta != null) {
+                        if (bootsMeta.getDisplayName().startsWith(ChatColor.BLUE + "Upgraded ")) {
+                            // Upgraded boots -> Remove enchantment
+                            bootsMeta.setDisplayName(ChatColor.WHITE + bootsMeta.getDisplayName().replace(ChatColor.BLUE + "Upgraded ", ""));
+                            boots.setItemMeta(bootsMeta);
+                            boots.removeEnchantment(Enchantment.FROST_WALKER);
+                            boots.removeEnchantment(Enchantment.BINDING_CURSE);
+                        } else if (bootsMeta.getDisplayName().contains(ChatColor.BLUE + "Ice Boots")) {
+                            // New boots -> Remove boots
+                            player.getInventory().setBoots(null);
+                        }
+                    }
+                }
+            } else {
+                // Player doesn't have boots
+                player.getInventory().setBoots(leatherBoots);
+            }
+        }
+    }
 
 
     // MOVE 4
@@ -396,7 +462,6 @@ public class IceStone extends WaterStone {
                                                 Vector velocity = new Vector(snowballTargetLocation.getX() - snowBallLocation.getX(), snowballTargetLocation.getY() - snowBallLocation.getY(), snowballTargetLocation.getZ() - snowBallLocation.getZ());
                                                 Entity entity = world.spawnEntity(snowBallLocation, EntityType.SNOWBALL);
                                                 entity.setVelocity(velocity.multiply(0.2));
-                                                System.out.println(snowBallLocation);
                                             }
                                             livingEntity.setFreezeTicks(livingEntity.getMaxFreezeTicks());
                                             for (int i = 0; i < 50; i++) {

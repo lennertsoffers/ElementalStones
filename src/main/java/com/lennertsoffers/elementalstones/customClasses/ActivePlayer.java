@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -73,10 +74,12 @@ public class ActivePlayer {
             this.active = false;
             this.resetWorld();
             player.setAllowFlight(false);
+            IceStone.passive1(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
         } else {
             this.active = true;
+            IceStone.passive1(this);
             if (player.getInventory().contains(ItemStones.airStoneAgility0) ||
                 player.getInventory().contains(ItemStones.airStoneAgility1) ||
                 player.getInventory().contains(ItemStones.airStoneAgility2) ||
