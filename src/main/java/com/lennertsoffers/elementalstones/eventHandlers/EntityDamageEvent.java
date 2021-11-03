@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.fireStone.LavaStone;
+import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ public class EntityDamageEvent implements Listener {
             if (activePlayer == null) {
                 return;
             }
+            AirbendingStone.passive1(activePlayer, event);
 //            if (event.getDamage() >= player.getHealth()) {
 //                event.setCancelled(true);
 //                DefenseStone.move8(player);

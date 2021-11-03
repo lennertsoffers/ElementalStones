@@ -32,8 +32,8 @@ public class WindStone {
                 for (int i = 0; i < 20; i++) {
                     world.spawnParticle(Particle.CLOUD, location.clone().add(StaticVariables.random.nextGaussian() / 6, StaticVariables.random.nextGaussian() / 6, StaticVariables.random.nextGaussian() / 6), 0, direction.getX() * 1.2, direction.getY() * 1.2, direction.getZ() * 1.2);
                 }
-                if (!world.getNearbyEntities(location, 0.6, 0.6, 0.6).isEmpty()) {
-                    for (Entity entity : world.getNearbyEntities(location, 0.6, 0.6, 0.6)) {
+                if (!world.getNearbyEntities(location, 0.6, 0.8, 0.6).isEmpty()) {
+                    for (Entity entity : world.getNearbyEntities(location, 0.6, 0.8, 0.6)) {
                         if (entity != null) {
                             if (entity instanceof LivingEntity) {
                                 LivingEntity livingEntity = (LivingEntity) entity;
