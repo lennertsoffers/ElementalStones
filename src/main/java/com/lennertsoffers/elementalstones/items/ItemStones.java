@@ -17,6 +17,9 @@ import java.util.List;
 
 public class ItemStones {
 
+    // test
+    public static ItemStack testStone;
+
     // BASE STONE
     public static ItemStack baseStone;
 
@@ -222,10 +225,6 @@ public class ItemStones {
             }
     };
 
-
-
-    // Build Methods
-    // Method to build base stone
     private static void createBaseStone() {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
@@ -294,6 +293,10 @@ public class ItemStones {
     }
 
     public static void init() {
+
+        createTestStone();
+
+
 
         // BASE STONE
         createBaseStone();
