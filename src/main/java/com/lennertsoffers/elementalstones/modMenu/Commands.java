@@ -68,9 +68,10 @@ public class Commands implements CommandExecutor {
                                     selectedStones = (ArrayList<ItemStack>) ItemStones.earthStones.clone();
                             }
                             Inventory inventory = Bukkit.createInventory(player, 18, args[0]);
-                            for (int i = 0; i < selectedStones.size(); i++) {
-                                inventory.setItem(i, selectedStones.get(0));
-                                selectedStones.remove(0);
+                            int slot = 0;
+                            for (ItemStack itemStack : selectedStones) {
+                                inventory.setItem(slot, itemStack);
+                                slot++;
                             }
                             player.openInventory(inventory);
                             return true;

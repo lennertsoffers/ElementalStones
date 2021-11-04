@@ -28,7 +28,7 @@ public class ClickEvent implements Listener {
     public void onClick(PlayerInteractEvent event) throws InvocationTargetException {
         Player player = event.getPlayer();
         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand())) {
+            if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                 ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
                 if (activePlayer != null) {
                     activePlayer.toggleActive();

@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class AgilityStone extends WindStone {
+public class AgilityStone extends AirStone {
 
     private static void damageOnDash(ActivePlayer activePlayer) {
         ArrayList<LivingEntity> damagedEntities = new ArrayList<>();
@@ -75,27 +75,31 @@ public class AgilityStone extends WindStone {
     // MOVE 4
     // Forward Dash
     // -> Player dashes forwards and damages entities along the way
-    public static void move4(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        damageOnDash(activePlayer);
-        int multiplier = 2;
-        if (activePlayer.isInAirBoost()) {
-            multiplier = 4;
-        }
-        player.setVelocity(player.getLocation().getDirection().multiply(multiplier).setY(0.1));
+    public static Runnable move4(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            damageOnDash(activePlayer);
+            int multiplier = 2;
+            if (activePlayer.isInAirBoost()) {
+                multiplier = 4;
+            }
+            player.setVelocity(player.getLocation().getDirection().multiply(multiplier).setY(0.1));
+        };
     }
 
     // MOVE 5
     // Backward Dash
     // -> Player dashes backwards and damages entities along the way
-    public static void move5(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        damageOnDash(activePlayer);
-        int multiplier = 2;
-        if (activePlayer.isInAirBoost()) {
-            multiplier = 4;
-        }
-        player.setVelocity(player.getLocation().getDirection().multiply(-multiplier).setY(0.1));
+    public static Runnable move5(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            damageOnDash(activePlayer);
+            int multiplier = 2;
+            if (activePlayer.isInAirBoost()) {
+                multiplier = 4;
+            }
+            player.setVelocity(player.getLocation().getDirection().multiply(-multiplier).setY(0.1));
+        };
     }
 
     // MOVE 6
@@ -103,61 +107,65 @@ public class AgilityStone extends WindStone {
     // -> Throw a smoke ball in the looking direction
     // -> While the ball is being threw, control it by changing your looking direction
     // -> Activate ability again to create the smoke screen or wait till the ball collides with a block or entity
-    public static void move6(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        Location startingLocation = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
-        final Location[] impactLocation = {player.getLocation()};
-        BukkitRunnable smoke = new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
-                for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-                    double radius = Math.sin(i) * 3;
-                    double y = Math.cos(i) * 3;
-                    for (double a = 0; a < Math.PI * 2; a+= Math.PI / 10) {
-                        double x = Math.cos(a) * radius;
-                        double z = Math.sin(a) * radius;
-                        Location particleLocation = impactLocation[0].clone().add(0, 2, 0).add(x, y, z);
-                        player.getWorld().spawnParticle(Particle.REDSTONE, particleLocation.add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, 0, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1000));
-                    }
-                }
-                if (amountOfTicks > 100) {
-                    this.cancel();
-                }
-                amountOfTicks += 1;
-            }
-        };
+    public static Runnable move6(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            Location startingLocation = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
+            final Location[] impactLocation = {player.getLocation()};
+            BukkitRunnable smoke = new BukkitRunnable() {
+                int amountOfTicks = 0;
 
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            final Location currentLocation = startingLocation;
-            @Override
-            public void run() {
-                Vector playerDirection = player.getLocation().getDirection();
-                Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.CLOUD, startingLocation, 0, playerDirection.getX(), playerDirection.getY(), playerDirection.getZ());
-
-                if (currentLocation.getBlock().getType().isSolid()) {
-                    impactLocation[0] = currentLocation;
-                    this.cancel();
-                    smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
-                } else if (!player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5).isEmpty()) {
-                    for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5)) {
-                        if (entity != null) {
-                            impactLocation[0] = currentLocation;
-                            this.cancel();
-                            smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                @Override
+                public void run() {
+                    for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                        double radius = Math.sin(i) * 3;
+                        double y = Math.cos(i) * 3;
+                        for (double a = 0; a < Math.PI * 2; a += Math.PI / 10) {
+                            double x = Math.cos(a) * radius;
+                            double z = Math.sin(a) * radius;
+                            Location particleLocation = impactLocation[0].clone().add(0, 2, 0).add(x, y, z);
+                            player.getWorld().spawnParticle(Particle.REDSTONE, particleLocation.add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, 0, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1000));
                         }
                     }
-                } else if (amountOfTicks > 30) {
-                    impactLocation[0] = currentLocation;
-                    this.cancel();
-                    smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                    if (amountOfTicks > 100) {
+                        this.cancel();
+                    }
+                    amountOfTicks += 1;
                 }
+            };
 
-                amountOfTicks++;
-                currentLocation.add(playerDirection);
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
+                final Location currentLocation = startingLocation;
+
+                @Override
+                public void run() {
+                    Vector playerDirection = player.getLocation().getDirection();
+                    Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.CLOUD, startingLocation, 0, playerDirection.getX(), playerDirection.getY(), playerDirection.getZ());
+
+                    if (currentLocation.getBlock().getType().isSolid()) {
+                        impactLocation[0] = currentLocation;
+                        this.cancel();
+                        smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                    } else if (!player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5).isEmpty()) {
+                        for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5)) {
+                            if (entity != null) {
+                                impactLocation[0] = currentLocation;
+                                this.cancel();
+                                smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                            }
+                        }
+                    } else if (amountOfTicks > 30) {
+                        impactLocation[0] = currentLocation;
+                        this.cancel();
+                        smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                    }
+
+                    amountOfTicks++;
+                    currentLocation.add(playerDirection);
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 
     // MOVE 7
@@ -165,32 +173,34 @@ public class AgilityStone extends WindStone {
     // -> Charges until next activation
     // -> The longer you charge, the higher you jump
     // -> Adds slowness when charging
-    public static void move7(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        if ((int) activePlayer.getCharge() == -1) {
-            activePlayer.setChargingStart();
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 3, true, false, false));
-            activePlayer.setMove7LaunchState(1);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (activePlayer.getMove7LaunchState() == 1) {
-                        activePlayer.setMove7LaunchState(0);
-                        move7(activePlayer);
+    public static Runnable move7(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            if ((int) activePlayer.getCharge() == -1) {
+                activePlayer.setChargingStart();
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 3, true, false, false));
+                activePlayer.setMove7LaunchState(1);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        if (activePlayer.getMove7LaunchState() == 1) {
+                            activePlayer.setMove7LaunchState(0);
+                            move7(activePlayer);
+                        }
                     }
+                }.runTaskLater(StaticVariables.plugin, 90);
+            } else {
+                int nominator = 2000;
+                if (activePlayer.isInAirBoost()) {
+                    nominator = 1000;
                 }
-            }.runTaskLater(StaticVariables.plugin, 90);
-        } else {
-            int nominator = 2000;
-            if (activePlayer.isInAirBoost()) {
-                nominator = 1000;
+                double velocityY = activePlayer.getCharge() / nominator;
+                activePlayer.resetCharge();
+                player.removePotionEffect(PotionEffectType.SLOW);
+                activePlayer.setMove7LaunchState(2);
+                player.setVelocity(new Vector(0, velocityY, 0));
             }
-            double velocityY = activePlayer.getCharge() / nominator;
-            activePlayer.resetCharge();
-            player.removePotionEffect(PotionEffectType.SLOW);
-            activePlayer.setMove7LaunchState(2);
-            player.setVelocity(new Vector(0, velocityY, 0));
-        }
+        };
     }
 
     // MOVE 8
@@ -200,11 +210,13 @@ public class AgilityStone extends WindStone {
     // -> Dashes do more damage
     // -> Charge jump charges faster
     // -> Cooldowns shorter
-    public static void move8(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        activePlayer.activateAirBoost();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 3, false, false, false));
-        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 1, false, false, false));
+    public static Runnable move8(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            activePlayer.activateAirBoost();
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 3, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 1, false, false, false));
+        };
     }
 }
 

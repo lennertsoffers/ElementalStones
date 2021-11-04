@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
@@ -107,6 +108,7 @@ public class ItemStones {
 
 
 
+    // Lists of stones
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
     public static ArrayList<ItemStack> waterStones = new ArrayList<>();
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
@@ -115,6 +117,12 @@ public class ItemStones {
 
 
 
+    // Id of the current stone
+    private static int stoneId = 0;
+
+
+
+    // Move declarations
     private static final String[][][] moveDeclaration =
             {
                     {
@@ -214,53 +222,74 @@ public class ItemStones {
             }
     };
 
+
+
+    // Build Methods
+    // Method to build base stone
     private static void createBaseStone() {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName(ChatColor.GOLD + "Base Stone");
-        List<String> lore = new ArrayList<>();
-        lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful");
-        lore.add(ChatColor.YELLOW + "stones you can control the elements with");
-        meta.setLore(lore);
-        stack.setItemMeta(meta);
-
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.GOLD + "Base Stone");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful");
+            lore.add(ChatColor.YELLOW + "stones you can control the elements with");
+            meta.setLore(lore);
+            meta.setCustomModelData(stoneId);
+            stoneId++;
+            stack.setItemMeta(meta);
+        }
         baseStone = stack;
     }
 
+    // Method to build stone
     private static ItemStack createStone(String displayName, String stoneTypeLore, String moveTypeLore, int stoneType, int moveType, int numberOfMoves) {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
 
-        // Set display name of item
-        meta.setDisplayName(displayName);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        if (meta != null) {
+            // Set display name of item
+            meta.setDisplayName(displayName);
 
-        // Set stone type lore of item
-        List<String> lore = new ArrayList<>(StringListTools.formatLore(stoneTypeLore, ChatColor.GRAY));
+            // Set stone type lore of item
+            List<String> lore = new ArrayList<>(StringListTools.formatLore(stoneTypeLore, ChatColor.GRAY));
 
-        lore.add("");
-
-        // Set path lore of item
-        if (!(moveTypeLore.equals(""))) {
-            lore.addAll(StringListTools.formatLore(moveTypeLore, ChatColor.GRAY));
             lore.add("");
 
-            lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][0]);
-            for (int i = 0; i < moveDeclaration[stoneType][0].length; i++) {
-                lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
+            if (!(moveTypeLore.equals(""))) {
+                // Set path lore of item
+                lore.addAll(StringListTools.formatLore(moveTypeLore, ChatColor.GRAY));
+                lore.add("");
+
+                // Set passive declaration
+                int firstMoveIndex = 1;
+                lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][0]);
+                if (moveDeclaration[stoneType][moveType][1].contains("Passive")) {
+                    lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][1]);
+                    firstMoveIndex = 2;
+                }
+
+                // Set base move declaration
+                for (int i = 0; i < 3; i++) {
+                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
+                }
+
+                // Set type move declaration
+                for (int i = firstMoveIndex; i <= (numberOfMoves + (firstMoveIndex - 1)); i++) {
+                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][moveType][i], ChatColor.YELLOW));
+                }
+            } else {
+                // Set base move declaration
+                for (int i = 0; i < numberOfMoves; i++) {
+                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
+                }
             }
-            for (int i = 1; i <= numberOfMoves; i++) {
-                lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][moveType][i], ChatColor.YELLOW));
-            }
-        } else {
-            lore.add(ChatColor.YELLOW + "");
-            for (int i = 0; i < numberOfMoves; i++) {
-                lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
-            }
+            lore.add("");
+            meta.setLore(lore);
+            meta.setCustomModelData(stoneId);
+            stoneId++;
+            stack.setItemMeta(meta);
         }
-        lore.add("");
-        meta.setLore(lore);
-        stack.setItemMeta(meta);
         return stack;
     }
 

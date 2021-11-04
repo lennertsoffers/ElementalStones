@@ -19,28 +19,44 @@ public class PlayerItemHeldEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
             if (event.getNewSlot() == 0) {
-                AirbendingStone.move1(activePlayer);
+                if (activePlayer.move1 != null) {
+                    activePlayer.move1.run();
+                }
             }
             else if (event.getNewSlot() == 1) {
-                AirbendingStone.move2(activePlayer);
+                if (activePlayer.move2 != null) {
+                    activePlayer.move2.run();
+                }
             }
             else if (event.getNewSlot() == 2) {
-                AirbendingStone.move3(activePlayer);
+                if (activePlayer.move3 != null) {
+                    activePlayer.move3.run();
+                }
             }
             else if (event.getNewSlot() == 3) {
-                AirbendingStone.move4(activePlayer);
+                if (activePlayer.move4 != null) {
+                    activePlayer.move4.run();
+                }
             }
             else if (event.getNewSlot() == 4) {
-                AirbendingStone.move5(activePlayer);
+                if (activePlayer.move5 != null) {
+                    activePlayer.move5.run();
+                }
             }
             else if (event.getNewSlot() == 5) {
-                AirbendingStone.move6(activePlayer);
+                if (activePlayer.move6 != null) {
+                    activePlayer.move6.run();
+                }
             }
             else if (event.getNewSlot() == 6) {
-                AirbendingStone.move7(activePlayer);
+                if (activePlayer.move7 != null) {
+                    activePlayer.move7.run();
+                }
             }
             else if (event.getNewSlot() == 7) {
-                AirbendingStone.move8(activePlayer);
+                if (activePlayer.move8 != null) {
+                    activePlayer.move8.run();
+                }
             }
             if (activePlayer.isActive()) {
                 ItemStack previousItem = player.getInventory().getItem(event.getPreviousSlot());
