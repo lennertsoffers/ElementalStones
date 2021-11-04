@@ -1,13 +1,27 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.FireStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.LavaStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
+import com.lennertsoffers.elementalstones.stones.waterStone.WaterStone;
+import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
+import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
+import com.lennertsoffers.elementalstones.stones.windStone.AirStone;
+import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,8 +35,19 @@ public class ActivePlayer {
     private boolean active;
     private Vector movingDirection;
     private ArrayList<Location> overrideLocations = new ArrayList<>();
+    private ArrayList<ItemStack> hotbarContents = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
+
+    public Runnable move1;
+    public Runnable move2;
+    public Runnable move3;
+    public Runnable move4;
+    public Runnable move5;
+    public Runnable move6;
+    public Runnable move7;
+    public Runnable move8;
+
 
 
     // Earth Stone
@@ -55,6 +80,8 @@ public class ActivePlayer {
     private Location move8from = null;
     private Location move8to = null;
 
+
+
     public ActivePlayer(Player player) {
         this.player = player;
         this.active = false;
@@ -72,22 +99,373 @@ public class ActivePlayer {
     public void toggleActive() {
         if (this.active) {
             this.active = false;
+//            Inventory inventory = player.getInventory();
+//            for (int i = 0; i < 8; i++) {
+//                inventory.setItem(i, hotbarContents.get(i));
+//                hotbarContents.clear();
+//            }
             this.resetWorld();
             player.setAllowFlight(false);
             IceStone.passive1(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
         } else {
+            // Set player to active
             this.active = true;
+
+            // Switch contents of hotbar with moves
+            Inventory inventory = player.getInventory();
+            for (int i = 0; i < 8; i++) {
+                hotbarContents.add(inventory.getItem(i));
+                inventory.setItem(i, null);
+            }
+
+            // Select correct moves and cooldowns
+            move1 = null;
+            move2 = null;
+            move3 = null;
+            move4 = null;
+            move5 = null;
+            move6 = null;
+            move7 = null;
+            move8 = null;
+            ItemStack activeStone = inventory.getItem(8);
+            assert activeStone != null;
+            if (activeStone.isSimilar(ItemStones.waterStone0)) {
+                move1 = WaterStone.move1(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStone1)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStone2)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneBending0)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = WaterbendingStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneBending1)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = WaterbendingStone.move4(this);
+                move5 = WaterbendingStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneBending2)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = WaterbendingStone.move4(this);
+                move5 = WaterbendingStone.move5(this);
+                move6 = WaterbendingStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneBending3)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = WaterbendingStone.move4(this);
+                move5 = WaterbendingStone.move5(this);
+                move6 = WaterbendingStone.move6(this);
+                move7 = WaterbendingStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneBending4)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = WaterbendingStone.move4(this);
+                move5 = WaterbendingStone.move5(this);
+                move6 = WaterbendingStone.move6(this);
+                move7 = WaterbendingStone.move7(this);
+                move8 = WaterbendingStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneIce0)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = IceStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneIce1)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = IceStone.move4(this);
+                move5 = IceStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneIce2)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = IceStone.move4(this);
+                move5 = IceStone.move5(this);
+                move6 = IceStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneIce3)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = IceStone.move4(this);
+                move5 = IceStone.move5(this);
+                move6 = IceStone.move6(this);
+                move7 = IceStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.waterStoneIce4)) {
+                move1 = WaterStone.move1(this);
+                move2 = WaterStone.move2(this);
+                move3 = WaterStone.move3(this);
+                move4 = IceStone.move4(this);
+                move5 = IceStone.move5(this);
+                move6 = IceStone.move6(this);
+                move7 = IceStone.move7(this);
+                move8 = IceStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStone0)) {
+                move1 = FireStone.move1(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStone1)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStone2)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneHellFire0)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = HellfireStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneHellFire1)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = HellfireStone.move4(this);
+                move5 = HellfireStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneHellFire2)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = HellfireStone.move4(this);
+                move5 = HellfireStone.move5(this);
+                move6 = HellfireStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneHellFire3)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = HellfireStone.move4(this);
+                move5 = HellfireStone.move5(this);
+                move6 = HellfireStone.move6(this);
+                move7 = HellfireStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneHellFire4)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = HellfireStone.move4(this);
+                move5 = HellfireStone.move5(this);
+                move6 = HellfireStone.move6(this);
+                move7 = HellfireStone.move7(this);
+                move8 = HellfireStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneLava0)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = LavaStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneLava1)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = LavaStone.move4(this);
+                move5 = LavaStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneLava2)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = LavaStone.move4(this);
+                move5 = LavaStone.move5(this);
+                move6 = LavaStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneLava3)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = LavaStone.move4(this);
+                move5 = LavaStone.move5(this);
+                move6 = LavaStone.move6(this);
+                move7 = LavaStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.fireStoneLava4)) {
+                move1 = FireStone.move1(this);
+                move2 = FireStone.move2(this);
+                move3 = FireStone.move3(this);
+                move4 = LavaStone.move4(this);
+                move5 = LavaStone.move5(this);
+                move6 = LavaStone.move6(this);
+                move7 = LavaStone.move7(this);
+                move8 = LavaStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.airStone0)) {
+                move1 = AirStone.move1(this);
+            } else if (activeStone.isSimilar(ItemStones.airStone1)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+            } else if (activeStone.isSimilar(ItemStones.airStone2)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneAgility0)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AgilityStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneAgility1)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AgilityStone.move4(this);
+                move5 = AgilityStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneAgility2)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AgilityStone.move4(this);
+                move5 = AgilityStone.move5(this);
+                move6 = AgilityStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneAgility3)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AgilityStone.move4(this);
+                move5 = AgilityStone.move5(this);
+                move6 = AgilityStone.move6(this);
+                move7 = AgilityStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneAgility4)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AgilityStone.move4(this);
+                move5 = AgilityStone.move5(this);
+                move6 = AgilityStone.move6(this);
+                move7 = AgilityStone.move7(this);
+                move8 = AgilityStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneBending0)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AirbendingStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneBending1)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AirbendingStone.move4(this);
+                move5 = AirbendingStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneBending2)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AirbendingStone.move4(this);
+                move5 = AirbendingStone.move5(this);
+                move6 = AirbendingStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneBending3)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AirbendingStone.move4(this);
+                move5 = AirbendingStone.move5(this);
+                move6 = AirbendingStone.move6(this);
+                move7 = AirbendingStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.airStoneBending4)) {
+                move1 = AirStone.move1(this);
+                move2 = AirStone.move2(this);
+                move3 = AirStone.move3(this);
+                move4 = AirbendingStone.move4(this);
+                move5 = AirbendingStone.move5(this);
+                move6 = AirbendingStone.move6(this);
+                move7 = AirbendingStone.move7(this);
+                move8 = AirbendingStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStone0)) {
+                move1 = EarthStone.move2(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStone1)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStone2)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneBending0)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = EarthbendingStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneBending1)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = EarthbendingStone.move4(this);
+                move5 = EarthbendingStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneBending2)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = EarthbendingStone.move4(this);
+                move5 = EarthbendingStone.move5(this);
+                move6 = EarthbendingStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneBending3)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = EarthbendingStone.move4(this);
+                move5 = EarthbendingStone.move5(this);
+                move6 = EarthbendingStone.move6(this);
+                move7 = EarthbendingStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneBending4)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = EarthbendingStone.move4(this);
+                move5 = EarthbendingStone.move5(this);
+                move6 = EarthbendingStone.move6(this);
+                move7 = EarthbendingStone.move7(this);
+                move8 = EarthbendingStone.move8(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneDefense0)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = DefenseStone.move4(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneDefense1)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = DefenseStone.move4(this);
+                move5 = DefenseStone.move5(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneDefense2)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = DefenseStone.move4(this);
+                move5 = DefenseStone.move5(this);
+                move6 = DefenseStone.move6(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneDefense3)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = DefenseStone.move4(this);
+                move5 = DefenseStone.move5(this);
+                move6 = DefenseStone.move6(this);
+                move7 = DefenseStone.move7(this);
+            } else if (activeStone.isSimilar(ItemStones.earthStoneDefense4)) {
+                move1 = EarthStone.move2(this);
+                move2 = EarthStone.move2(this);
+                move3 = EarthStone.move3(this);
+                move4 = DefenseStone.move4(this);
+                move5 = DefenseStone.move5(this);
+                move6 = DefenseStone.move6(this);
+                move7 = DefenseStone.move7(this);
+                move8 = DefenseStone.move8(this);
+            }
+
+
+            // Initialize passives
             IceStone.passive1(this);
-            if (player.getInventory().contains(ItemStones.airStoneAgility0) ||
+            initAgilityStonePassive();
+
+            // Inform player of his/her state
+            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+        }
+    }
+
+    private void initAgilityStonePassive() {
+        if (player.getInventory().contains(ItemStones.airStoneAgility0) ||
                 player.getInventory().contains(ItemStones.airStoneAgility1) ||
                 player.getInventory().contains(ItemStones.airStoneAgility2) ||
                 player.getInventory().contains(ItemStones.airStoneAgility3) ||
                 player.getInventory().contains(ItemStones.airStoneAgility4)) {
-                player.setAllowFlight(true);
-            }
-            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+            player.setAllowFlight(true);
         }
     }
 

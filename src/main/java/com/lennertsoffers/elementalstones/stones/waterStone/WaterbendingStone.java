@@ -63,72 +63,77 @@ public class WaterbendingStone extends WaterStone {
     // MOVE 4
     // Bubblebeam
     // -> Shoots beam of bubbles in the looking direction of the player
-    public static void move4(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
+    public static Runnable move4(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
 
-        // Creation of beam
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
+            // Creation of beam
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
 
-                Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
+                @Override
+                public void run() {
 
-                for (int i = 0; i < amountOfTicks; i++) {
-                    spawnParticles(location);
-                    move4damageEntities(location, player);
-                    location.add(player.getLocation().getDirection().multiply(0.4));
+                    Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
+
+                    for (int i = 0; i < amountOfTicks; i++) {
+                        spawnParticles(location);
+                        move4damageEntities(location, player);
+                        location.add(player.getLocation().getDirection().multiply(0.4));
+                    }
+
+                    if (amountOfTicks > 30) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
                 }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
 
-                if (amountOfTicks > 30) {
-                    this.cancel();
+            // Static beam
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
+
+                @Override
+                public void run() {
+
+                    Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
+
+                    for (int i = 0; i < 30; i++) {
+                        spawnParticles(location);
+                        move4damageEntities(location, player);
+                        location.add(player.getLocation().getDirection().multiply(0.4));
+                    }
+
+                    if (amountOfTicks > 30) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
                 }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 30L, 1L);
 
-        // Static beam
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
+            // Removing beam
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
 
-                Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
+                @Override
+                public void run() {
 
-                for (int i = 0; i < 30; i++) {
-                    spawnParticles(location);
-                    move4damageEntities(location, player);
-                    location.add(player.getLocation().getDirection().multiply(0.4));
+                    Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
+                    location.add(player.getLocation().getDirection().multiply(0.4 * 30));
+                    for (int i = amountOfTicks; i < 30; i++) {
+                        spawnParticles(location);
+                        move4damageEntities(location, player);
+                        location.add(player.getLocation().getDirection().multiply(-0.4));
+                    }
+
+                    if (amountOfTicks > 30) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
                 }
-
-                if (amountOfTicks > 30) {
-                    this.cancel();
-                }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 30L, 1L);
-
-        // Removing beam
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
-
-                Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
-                location.add(player.getLocation().getDirection().multiply(0.4 * 30));
-                for (int i = amountOfTicks; i < 30; i++) {
-                    spawnParticles(location);
-                    move4damageEntities(location, player);
-                    location.add(player.getLocation().getDirection().multiply(-0.4));
-                }
-
-                if (amountOfTicks > 30) {
-                    this.cancel();
-                }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 60L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 60L, 1L);
+        };
     }
 
     // play particle beam
@@ -164,117 +169,126 @@ public class WaterbendingStone extends WaterStone {
     // MOVE 5
     // Healing water
     // -> The player heals himself if he/she stands in water using this move
-    public static void move5(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        new BukkitRunnable() {
-            int amountOfSeconds = 0;
-            @Override
-            public void run() {
-                Location location = player.getLocation();
-                if (location.getBlock().getType() == Material.WATER) {
-                    if (player.getHealth() > 19) {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 1, true, true, true));
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, true, true, true));
-                    }
-                    player.setHealth(player.getHealth() + 1);
+    public static Runnable move5(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            new BukkitRunnable() {
+                int amountOfSeconds = 0;
 
+                @Override
+                public void run() {
+                    Location location = player.getLocation();
+                    if (location.getBlock().getType() == Material.WATER) {
+                        if (player.getHealth() > 19) {
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 1, true, true, true));
+                            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, true, true, true));
+                        }
+                        player.setHealth(player.getHealth() + 1);
+
+                    }
+                    location.add(0, 1, 0);
+                    if (amountOfSeconds > 10) {
+                        this.cancel();
+                    }
+                    amountOfSeconds++;
                 }
-                location.add(0, 1, 0);
-                if (amountOfSeconds > 10 ) {
-                    this.cancel();
-                }
-                amountOfSeconds++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
+        };
     }
 
 
     // MOVE 6
     // Puffer Beam
     // -> Rapidly shoots 100 puffer fish in the looking direction
-    public static void move6(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
-                Location location = player.getLocation().add(0, 1, 0);
-                location.add(location.getDirection());
+    public static Runnable move6(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
 
-                Entity pufferFish = player.getWorld().spawnEntity(location, EntityType.PUFFERFISH);
-                pufferFish.setVelocity(location.getDirection().multiply(2));
+                @Override
+                public void run() {
+                    Location location = player.getLocation().add(0, 1, 0);
+                    location.add(location.getDirection());
 
-                if (amountOfTicks >= 100) {
-                    this.cancel();
+                    Entity pufferFish = player.getWorld().spawnEntity(location, EntityType.PUFFERFISH);
+                    pufferFish.setVelocity(location.getDirection().multiply(2));
+
+                    if (amountOfTicks >= 100) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
                 }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 
 
     // MOVE 7
     // Wave
     // -> Creates a huge wave knocking back entities
-    public static void move7(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        Location location = player.getLocation();
-        Vector direction = location.getDirection().setY(0);
-        ArrayList<Location> waterBlockLocations = new ArrayList<>();
-        ArrayList<Integer> ignoreAnglesB = new ArrayList<>();
-        ArrayList<Integer> ignoreAnglesM = new ArrayList<>();
-        ArrayList<Integer> ignoreAnglesT = new ArrayList<>();
-        new BukkitRunnable() {
-            int amountOfTicks = 1;
-            @Override
-            public void run() {
+    public static Runnable move7(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            Location location = player.getLocation();
+            Vector direction = location.getDirection().setY(0);
+            ArrayList<Location> waterBlockLocations = new ArrayList<>();
+            ArrayList<Integer> ignoreAnglesB = new ArrayList<>();
+            ArrayList<Integer> ignoreAnglesM = new ArrayList<>();
+            ArrayList<Integer> ignoreAnglesT = new ArrayList<>();
+            new BukkitRunnable() {
+                int amountOfTicks = 1;
 
-                replaceWater(waterBlockLocations);
-                waterBlockLocations.clear();
-                for (int i = 0; i < 360; i++) {
-                    System.out.println(i);
-                    Location waterBlockLocationB = location.clone().add(direction.clone().rotateAroundY(i).multiply(amountOfTicks));
-                    Location waterBlockLocationM = waterBlockLocationB.clone().add(0, 1, 0);
-                    Location waterBlockLocationT = waterBlockLocationB.clone().add(0, 2, 0);
+                @Override
+                public void run() {
 
-                    if (waterBlockLocationB.getBlock().getType() != Material.AIR && waterBlockLocationB.getBlock().getType() != Material.WATER) {
-                        ignoreAnglesB.add(i);
-                        System.out.println("test");
-                    }
-                    if (waterBlockLocationM.getBlock().getType() != Material.AIR && waterBlockLocationM.getBlock().getType() != Material.WATER) {
-                        ignoreAnglesM.add(i);
-                        System.out.println("test");
-                    }
-                    if (waterBlockLocationT.getBlock().getType() != Material.AIR && waterBlockLocationT.getBlock().getType() != Material.WATER) {
-                        ignoreAnglesT.add(i);
-                        System.out.println("test");
-                    }
-
-                    if (!ignoreAnglesB.contains(i)) {
-                        waterBlockLocations.add(waterBlockLocationB);
-                        waterBlockLocationB.getBlock().setType(Material.WATER);
-                        knockBackEntities(waterBlockLocationB, player);
-                    }
-                    if (!ignoreAnglesM.contains(i)) {
-                        waterBlockLocations.add(waterBlockLocationM);
-                        waterBlockLocationM.getBlock().setType(Material.WATER);
-                        knockBackEntities(waterBlockLocationM, player);
-                    }
-                    if (!ignoreAnglesT.contains(i)) {
-                        waterBlockLocations.add(waterBlockLocationT);
-                        waterBlockLocationT.getBlock().setType(Material.WATER);
-                        knockBackEntities(waterBlockLocationT, player);
-                    }
-                }
-
-                if (amountOfTicks > 20) {
-                    this.cancel();
                     replaceWater(waterBlockLocations);
                     waterBlockLocations.clear();
+                    for (int i = 0; i < 360; i++) {
+                        System.out.println(i);
+                        Location waterBlockLocationB = location.clone().add(direction.clone().rotateAroundY(i).multiply(amountOfTicks));
+                        Location waterBlockLocationM = waterBlockLocationB.clone().add(0, 1, 0);
+                        Location waterBlockLocationT = waterBlockLocationB.clone().add(0, 2, 0);
+
+                        if (waterBlockLocationB.getBlock().getType() != Material.AIR && waterBlockLocationB.getBlock().getType() != Material.WATER) {
+                            ignoreAnglesB.add(i);
+                            System.out.println("test");
+                        }
+                        if (waterBlockLocationM.getBlock().getType() != Material.AIR && waterBlockLocationM.getBlock().getType() != Material.WATER) {
+                            ignoreAnglesM.add(i);
+                            System.out.println("test");
+                        }
+                        if (waterBlockLocationT.getBlock().getType() != Material.AIR && waterBlockLocationT.getBlock().getType() != Material.WATER) {
+                            ignoreAnglesT.add(i);
+                            System.out.println("test");
+                        }
+
+                        if (!ignoreAnglesB.contains(i)) {
+                            waterBlockLocations.add(waterBlockLocationB);
+                            waterBlockLocationB.getBlock().setType(Material.WATER);
+                            knockBackEntities(waterBlockLocationB, player);
+                        }
+                        if (!ignoreAnglesM.contains(i)) {
+                            waterBlockLocations.add(waterBlockLocationM);
+                            waterBlockLocationM.getBlock().setType(Material.WATER);
+                            knockBackEntities(waterBlockLocationM, player);
+                        }
+                        if (!ignoreAnglesT.contains(i)) {
+                            waterBlockLocations.add(waterBlockLocationT);
+                            waterBlockLocationT.getBlock().setType(Material.WATER);
+                            knockBackEntities(waterBlockLocationT, player);
+                        }
+                    }
+
+                    if (amountOfTicks > 20) {
+                        this.cancel();
+                        replaceWater(waterBlockLocations);
+                        waterBlockLocations.clear();
+                    }
+                    amountOfTicks++;
                 }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 
     // Check if entity collision
@@ -310,43 +324,47 @@ public class WaterbendingStone extends WaterStone {
 
     // MOVE 8
     // Water Wall
-    public static void move8(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
+    public static Runnable move8(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
 
-                Block targetBlock = player.getTargetBlockExact(10);
-                if (targetBlock != null) {
-                    targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.WATER);
-                    new BukkitRunnable() {
-                        int amountOfAliveTicks = 0;
-                        @Override
-                        public void run() {
-                            if (!player.getWorld().getNearbyEntities(targetBlock.getLocation(), 2, 4, 2).isEmpty()) {
-                                for (Entity entity : player.getWorld().getNearbyEntities(targetBlock.getLocation(), 1, 4, 1)) {
-                                    if (entity != null) {
-                                        entity.setVelocity(new Vector(0, 0, 0));
+                @Override
+                public void run() {
+
+                    Block targetBlock = player.getTargetBlockExact(10);
+                    if (targetBlock != null) {
+                        targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.WATER);
+                        new BukkitRunnable() {
+                            int amountOfAliveTicks = 0;
+
+                            @Override
+                            public void run() {
+                                if (!player.getWorld().getNearbyEntities(targetBlock.getLocation(), 2, 4, 2).isEmpty()) {
+                                    for (Entity entity : player.getWorld().getNearbyEntities(targetBlock.getLocation(), 1, 4, 1)) {
+                                        if (entity != null) {
+                                            entity.setVelocity(new Vector(0, 0, 0));
+                                        }
                                     }
                                 }
+                                if (amountOfAliveTicks > 200) {
+                                    this.cancel();
+                                    targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.AIR);
+                                }
+                                amountOfAliveTicks++;
                             }
-                            if (amountOfAliveTicks > 200) {
-                                this.cancel();
-                                targetBlock.getLocation().add(0, 4, 0).getBlock().setType(Material.AIR);
-                            }
-                            amountOfAliveTicks++;
-                        }
-                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                }
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    }
 
 
-                if (amountOfTicks > 19) {
-                    this.cancel();
+                    if (amountOfTicks > 19) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
                 }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 }
 

@@ -29,53 +29,57 @@ public class WaterStone {
     // Splash
     // -> Splashes around some water
     // -> The higher your level, the more damage it does
-    public static void move1(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
-        player.setVelocity(new Vector(0, 0.2, 0));
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (
-                        int i = 0;
-                        i < 360; i++) {
-                    Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
-                    if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
-                        for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
-                            if (entity != null) {
-                                if (entity instanceof LivingEntity) {
-                                    LivingEntity livingEntity = (LivingEntity) entity;
-                                    if (livingEntity != player) {
-                                        livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
+    public static Runnable move1(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+            player.setVelocity(new Vector(0, 0.2, 0));
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (
+                            int i = 0;
+                            i < 360; i++) {
+                        Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
+                        if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
+                            for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
+                                if (entity != null) {
+                                    if (entity instanceof LivingEntity) {
+                                        LivingEntity livingEntity = (LivingEntity) entity;
+                                        if (livingEntity != player) {
+                                            livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    for (int j = 0; j < 10; j++) {
-                        double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
-                        double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
-                        double locationZ = centerLocation.getZ() + StaticVariables.random.nextGaussian() / 2;
-                        world.spawnParticle(Particle.BUBBLE_POP, locationX, locationY, locationZ, 0);
+                        for (int j = 0; j < 10; j++) {
+                            double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
+                            double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
+                            double locationZ = centerLocation.getZ() + StaticVariables.random.nextGaussian() / 2;
+                            world.spawnParticle(Particle.BUBBLE_POP, locationX, locationY, locationZ, 0);
+                        }
                     }
                 }
-            }
-        }.runTaskLater(StaticVariables.plugin, 5L);
+            }.runTaskLater(StaticVariables.plugin, 5L);
+        };
     }
 
     // MOVE 2
     // Dolphin Dive
     // -> Player gets dolphin effect for 1 minute
-    public static void move2(ActivePlayer activePlayer) {
-        activePlayer.setDoublePassive1(true);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                activePlayer.setDoublePassive1(false);
-            }
-        }.runTaskLater(StaticVariables.plugin, 1800L);
-        Player player = activePlayer.getPlayer();
-        player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 1800, 10, true, true, true));
+    public static Runnable move2(ActivePlayer activePlayer) {
+        return () -> {
+            activePlayer.setDoublePassive1(true);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    activePlayer.setDoublePassive1(false);
+                }
+            }.runTaskLater(StaticVariables.plugin, 1800L);
+            Player player = activePlayer.getPlayer();
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 1800, 10, true, true, true));
+        };
     }
 
 
@@ -85,8 +89,8 @@ public class WaterStone {
     // Water Spear
     // -> Throw one of your water arms that damages entities on impact
     // -> Creates splash damage
-    public static void move3(ActivePlayer activePlayer) {
-            move2(activePlayer);
+    public static Runnable move3(ActivePlayer activePlayer) {
+        return () -> {
             Player player = activePlayer.getPlayer();
             ArrayList<Location> spearLocations = new ArrayList<>();
             Vector initialDirection = player.getLocation().getDirection();
@@ -140,6 +144,7 @@ public class WaterStone {
                     distance++;
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 
     // place blocks if not already water
