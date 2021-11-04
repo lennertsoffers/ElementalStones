@@ -19,6 +19,7 @@ import org.bukkit.util.Vector;
 public class AirbendingStone extends WindStone {
 
     // PASSIVE
+    // Passive 1: Feather Falling
     public static void passive1(ActivePlayer activePlayer, EntityDamageEvent event) {
         Player player = activePlayer.getPlayer();
         if (
@@ -34,6 +35,7 @@ public class AirbendingStone extends WindStone {
         }
     }
 
+    // Passive 2: Speed Boost
     public static void passive2(ActivePlayer activePlayer, EntityToggleGlideEvent event) {
         Player player = activePlayer.getPlayer();
         if (

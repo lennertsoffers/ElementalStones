@@ -149,7 +149,7 @@ public class DefenseStone extends EarthStone {
     }
 
     // MOVE 6
-    // Stone Wall
+    // Wall
     // -> Place a stone wall a few blocks before the player to block attacks
     public static void move6(Player player) {
         Location location = player.getLocation();

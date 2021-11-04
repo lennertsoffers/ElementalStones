@@ -68,7 +68,7 @@ public class LavaStone {
         });
     }
 
-    // Passive 2: No damage on magma
+    // Passive 2: Magma Master
     public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
         if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
             event.setCancelled(true);
@@ -419,6 +419,7 @@ public class LavaStone {
 
     }
 
+    // MOVE 6: Rift
     private static void placeRiftInWorld(Location location, boolean positiveX, boolean positiveZ, boolean negativeZ, ActivePlayer activePlayer) {
         Map<String, String[]> layerMapping= new HashMap<>();
         // Stage 0

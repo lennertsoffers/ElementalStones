@@ -58,6 +58,7 @@ public class HellfireStone extends FireStone {
     }
 
     // PASSIVE
+    // Friendly Fire
     public static void passive(ActivePlayer activePlayer, EntityDamageEvent event) {
         if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
             event.setCancelled(true);
@@ -243,7 +244,7 @@ public class HellfireStone extends FireStone {
     }
 
     // MOVE 7
-    // Fire Blast
+    // Fire Beam
     // Shoot an array of destructing fire out of your hands
     public static void move7(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();

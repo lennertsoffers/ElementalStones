@@ -1,5 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.tools;
 
+import org.bukkit.ChatColor;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -47,5 +49,23 @@ public class StringListTools {
             outputString[i] = stringList.get(i);
         }
         return outputString;
+    }
+
+    public static ArrayList<String> formatLore(String lore, ChatColor chatColor) {
+        ArrayList<String> formatLore = new ArrayList<>();
+        String[] stoneTypeLoreList = lore.split(" ");
+        int charCount = 0;
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String word : stoneTypeLoreList) {
+            charCount += word.length();
+            if (charCount > 25) {
+                charCount = 0;
+                formatLore.add(chatColor + stringBuilder.toString());
+                stringBuilder = new StringBuilder();
+            }
+            stringBuilder.append(word).append(" ");
+        }
+        formatLore.add(chatColor + stringBuilder.toString());
+        return formatLore;
     }
 }

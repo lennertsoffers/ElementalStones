@@ -56,35 +56,19 @@ public class Commands implements CommandExecutor {
                             ArrayList<ItemStack> selectedStones;
                             switch (args[0]) {
                                 case "water":
-                                    selectedStones = ItemStones.waterStones;
+                                    selectedStones = (ArrayList<ItemStack>) ItemStones.waterStones.clone();
                                     break;
                                 case "fire":
-                                    selectedStones = ItemStones.fireStones;
+                                    selectedStones = (ArrayList<ItemStack>) ItemStones.fireStones.clone();
                                     break;
                                 case "air":
-                                    selectedStones = ItemStones.airStones;
-                                    break;
-                                case "earth":
-                                    selectedStones = ItemStones.earthStones;
+                                    selectedStones = (ArrayList<ItemStack>) ItemStones.airStones.clone();
                                     break;
                                 default:
-//                                    selectedStones = ItemStones.magicStones;
-                                    selectedStones = ItemStones.earthStones;
+                                    selectedStones = (ArrayList<ItemStack>) ItemStones.earthStones.clone();
                             }
-                            Inventory inventory = Bukkit.createInventory(player, 27, args[0]);
-                            for (int i = 0; i <= 18; i += 9) {
-                                inventory.setItem(i, selectedStones.get(0));
-                                selectedStones.remove(0);
-                            }
-                            for (int i = 4; i < 9; i++) {
-                                inventory.setItem(i, selectedStones.get(0));
-                                selectedStones.remove(0);
-                            }
-                            for (int i = 13; i < 18; i++) {
-                                inventory.setItem(i, selectedStones.get(0));
-                                selectedStones.remove(0);
-                            }
-                            for (int i = 22; i < 27; i++) {
+                            Inventory inventory = Bukkit.createInventory(player, 18, args[0]);
+                            for (int i = 0; i < selectedStones.size(); i++) {
                                 inventory.setItem(i, selectedStones.get(0));
                                 selectedStones.remove(0);
                             }
