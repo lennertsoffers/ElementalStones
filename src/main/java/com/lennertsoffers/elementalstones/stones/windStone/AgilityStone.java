@@ -194,7 +194,7 @@ public class AgilityStone extends WindStone {
     }
 
     // MOVE 8
-    // Air Boost
+    // Hyperspeed
     // -> Makes the player run faster
     // -> Makes the player jump higher
     // -> Dashes do more damage

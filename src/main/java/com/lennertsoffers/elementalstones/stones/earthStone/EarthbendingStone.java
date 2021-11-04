@@ -194,6 +194,7 @@ public class EarthbendingStone extends EarthStone {
     }
 
     // PASSIVE
+    // Joinker
     public static void passive(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         Location location = player.getLocation();
@@ -219,7 +220,7 @@ public class EarthbendingStone extends EarthStone {
 
 
     // MOVE 4
-    // Rock Sniper
+    // Rock Throw
     // -> Following up to flying rock
     // -> Shoots the flying rock in the looking direction of the player
     public static void move4(ActivePlayer activePlayer) {
@@ -344,7 +345,7 @@ public class EarthbendingStone extends EarthStone {
 
 
     // MOVE 8
-    // Reverse Machine Gun
+    // Reverse Turret
     // -> Selects 8 blocks around player and shoots them up
     // -> Second time you activate this ability the stones fly in the looking direction of the player
     // -> (On third activation you let the stones come back to the player)
