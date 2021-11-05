@@ -1,0 +1,81 @@
+
+# COOLDOWNS
+# Set to true to disable cooldowns
+disable_cooldowns: false
+
+# Cooldown time per stone in ms
+# Water stone
+water_stone:
+  default:
+    move1: 10000
+    move2: 10000
+    move3: 10000
+  waterbending_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+  ice_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+
+# Fire stone
+fire_stone:
+  default:
+    move1: 10000
+    move2: 10000
+    move3: 10000
+  hellfire_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+  lava_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+
+# Air stone
+air_stone:
+  default:
+    move1: 10000
+    move2: 10000
+    move3: 10000
+  agility_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+  airbending_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+
+# Earth stone
+earth_stone:
+  default:
+    move1: 10000
+    move2: 10000
+    move3: 10000
+  earthbending_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
+  defense_stone:
+    move4: 10000
+    move5: 10000
+    move6: 10000
+    move7: 10000
+    move8: 10000
