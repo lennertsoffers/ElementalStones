@@ -17,9 +17,6 @@ import java.util.List;
 
 public class ItemStones {
 
-    // BASE STONE
-    public static ItemStack baseStone;
-
     // WATER STONES
     // WaterStones: Default
     public static ItemStack waterStone0;
@@ -114,13 +111,6 @@ public class ItemStones {
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
     public static ArrayList<ItemStack> airStones = new ArrayList<>();
     public static ArrayList<ItemStack> earthStones = new ArrayList<>();
-
-
-
-    // Id of the current stone
-    private static int stoneId = 0;
-
-
 
     // Move declarations
     private static final String[][][] moveDeclaration =
@@ -225,25 +215,16 @@ public class ItemStones {
 
 
     // Build Methods
-    // Method to build base stone
-    private static void createBaseStone() {
-        ItemStack stack = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta meta = stack.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName(ChatColor.GOLD + "Base Stone");
-            List<String> lore = new ArrayList<>();
-            lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful");
-            lore.add(ChatColor.YELLOW + "stones you can control the elements with");
-            meta.setLore(lore);
-            meta.setCustomModelData(stoneId);
-            stoneId++;
-            stack.setItemMeta(meta);
-        }
-        baseStone = stack;
-    }
-
     // Method to build stone
-    private static ItemStack createStone(String displayName, String stoneTypeLore, String moveTypeLore, int stoneType, int moveType, int numberOfMoves) {
+    private static ItemStack createStone(
+            String displayName,
+            String stoneTypeLore,
+            String moveTypeLore,
+            int stoneType,
+            int moveType,
+            int numberOfMoves,
+            int customModelData
+    ) {
         ItemStack stack = new ItemStack(Material.BLAZE_ROD);
         ItemMeta meta = stack.getItemMeta();
 
@@ -286,19 +267,13 @@ public class ItemStones {
             }
             lore.add("");
             meta.setLore(lore);
-            meta.setCustomModelData(stoneId);
-            stoneId++;
+            meta.setCustomModelData(customModelData);
             stack.setItemMeta(meta);
         }
         return stack;
     }
 
     public static void init() {
-
-        // BASE STONE
-        createBaseStone();
-
-
 
         // WATER STONES
         String waterStoneTypeLore = "An old relic used to manipulate water in surroundings";
@@ -312,7 +287,8 @@ public class ItemStones {
                 "",
                 0,
                 0,
-                1
+                1,
+                0
         );
         waterStone1 = createStone(
                 ChatColor.BLUE + "Water Stone Lv2",
@@ -320,7 +296,8 @@ public class ItemStones {
                 "",
                 0,
                 0,
-                2
+                2,
+                0
         );
         waterStone2 = createStone(
                 ChatColor.BLUE + "Water Stone Lv3",
@@ -328,7 +305,8 @@ public class ItemStones {
                 "",
                 0,
                 0,
-                3
+                3,
+                0
         );
 
         // WaterStones: Bending path
@@ -338,6 +316,7 @@ public class ItemStones {
                 moveWaterbendingTypeLore,
                 0,
                 1,
+                1,
                 1
         );
         waterStoneBending1 = createStone(
@@ -346,7 +325,8 @@ public class ItemStones {
                 moveWaterbendingTypeLore,
                 0,
                 1,
-                2
+                2,
+                1
         );
         waterStoneBending2 = createStone(
                 ChatColor.BLUE + "Waterbending Stone Lv3",
@@ -354,7 +334,8 @@ public class ItemStones {
                 moveWaterbendingTypeLore,
                 0,
                 1,
-                3
+                3,
+                1
         );
         waterStoneBending3 = createStone(
                 ChatColor.BLUE + "Waterbending Stone Lv4",
@@ -362,7 +343,8 @@ public class ItemStones {
                 moveWaterbendingTypeLore,
                 0,
                 1,
-                4
+                4,
+                1
         );
         waterStoneBending4 = createStone(
                 ChatColor.BLUE + "Completed Waterbending Stone",
@@ -370,7 +352,8 @@ public class ItemStones {
                 moveWaterbendingTypeLore,
                 0,
                 1,
-                5
+                5,
+                1
         );
 
         // WaterStones: Ice path
@@ -380,13 +363,15 @@ public class ItemStones {
                 moveIceTypeLore,
                 0,
                 2,
-                1
+                1,
+                2
         );
         waterStoneIce1 = createStone(
                 ChatColor.BLUE + "Ice Stone Lv2",
                 waterStoneTypeLore,
                 moveIceTypeLore,
                 0,
+                2,
                 2,
                 2
         );
@@ -396,7 +381,8 @@ public class ItemStones {
                 moveIceTypeLore,
                 0,
                 2,
-                3
+                3,
+                2
         );
         waterStoneIce3 = createStone(
                 ChatColor.BLUE + "Ice Stone Lv4",
@@ -404,7 +390,8 @@ public class ItemStones {
                 moveIceTypeLore,
                 0,
                 2,
-                4
+                4,
+                2
         );
         waterStoneIce4 = createStone(
                 ChatColor.BLUE + "Completed Ice Stone",
@@ -412,7 +399,8 @@ public class ItemStones {
                 moveIceTypeLore,
                 0,
                 2,
-                5
+                5,
+                2
         );
 
 
@@ -428,7 +416,8 @@ public class ItemStones {
                 "",
                 1,
                 0,
-                1
+                1,
+                3
         );
         fireStone1 = createStone(
                 ChatColor.RED + "Fire Stone Lv2",
@@ -436,7 +425,8 @@ public class ItemStones {
                 "",
                 1,
                 0,
-                2
+                2,
+                3
         );
         fireStone2 = createStone(
                 ChatColor.RED + "Fire Stone Lv3",
@@ -444,6 +434,7 @@ public class ItemStones {
                 "",
                 1,
                 0,
+                3,
                 3
         );
 
@@ -454,7 +445,8 @@ public class ItemStones {
                 moveLavaTypeLore,
                 1,
                 1,
-                1
+                1,
+                4
         );
         fireStoneLava1 = createStone(
                 ChatColor.RED + "Lava Stone Lv2",
@@ -462,7 +454,8 @@ public class ItemStones {
                 moveLavaTypeLore,
                 1,
                 1,
-                2
+                2,
+                4
         );
         fireStoneLava2 = createStone(
                 ChatColor.RED + "Lava Stone Lv3",
@@ -470,7 +463,8 @@ public class ItemStones {
                 moveLavaTypeLore,
                 1,
                 1,
-                3
+                3,
+                4
         );
         fireStoneLava3 = createStone(
                 ChatColor.RED + "Lava Stone Lv4",
@@ -478,6 +472,7 @@ public class ItemStones {
                 moveLavaTypeLore,
                 1,
                 1,
+                4,
                 4
         );
         fireStoneLava4 = createStone(
@@ -486,7 +481,8 @@ public class ItemStones {
                 moveLavaTypeLore,
                 1,
                 1,
-                5
+                5,
+                4
         );
 
         // FireStones: Hellfire path
@@ -496,7 +492,8 @@ public class ItemStones {
                 moveHellfireTypeLore,
                 1,
                 2,
-                1
+                1,
+                5
         );
         fireStoneHellFire1 = createStone(
                 ChatColor.RED + "Hellfire Stone Lv2",
@@ -504,7 +501,8 @@ public class ItemStones {
                 moveHellfireTypeLore,
                 1,
                 2,
-                2
+                2,
+                5
         );
         fireStoneHellFire2 = createStone(
                 ChatColor.RED + "Hellfire Stone Lv3",
@@ -512,7 +510,8 @@ public class ItemStones {
                 moveHellfireTypeLore,
                 1,
                 2,
-                3
+                3,
+                5
         );
         fireStoneHellFire3 = createStone(
                 ChatColor.RED + "Hellfire Stone Lv4",
@@ -520,7 +519,8 @@ public class ItemStones {
                 moveHellfireTypeLore,
                 1,
                 2,
-                4
+                4,
+                5
         );
         fireStoneHellFire4 = createStone(
                 ChatColor.RED + "Completed Hellfire Stone",
@@ -528,6 +528,7 @@ public class ItemStones {
                 moveHellfireTypeLore,
                 1,
                 2,
+                5,
                 5
         );
 
@@ -544,7 +545,8 @@ public class ItemStones {
                 "",
                 2,
                 0,
-                1
+                1,
+                6
         );
         airStone1 = createStone(
                 ChatColor.WHITE + "Air Stone Lv2",
@@ -552,7 +554,8 @@ public class ItemStones {
                 "",
                 2,
                 0,
-                2
+                2,
+                6
         );
         airStone2 = createStone(
                 ChatColor.WHITE + "Air Stone Lv3",
@@ -560,7 +563,8 @@ public class ItemStones {
                 "",
                 2,
                 0,
-                3
+                3,
+                6
         );
 
         // AirStones: Agility path
@@ -570,7 +574,8 @@ public class ItemStones {
                 moveAgilityTypeLore,
                 2,
                 1,
-                1
+                1,
+                7
         );
         airStoneAgility1 = createStone(
                 ChatColor.WHITE + "Agility Stone Lv2",
@@ -578,7 +583,8 @@ public class ItemStones {
                 moveAgilityTypeLore,
                 2,
                 1,
-                2
+                2,
+                7
         );
         airStoneAgility2 = createStone(
                 ChatColor.WHITE + "Agility Stone Lv3",
@@ -586,7 +592,8 @@ public class ItemStones {
                 moveAgilityTypeLore,
                 2,
                 1,
-                3
+                3,
+                7
         );
         airStoneAgility3 = createStone(
                 ChatColor.WHITE + "Agility Stone Lv4",
@@ -594,7 +601,8 @@ public class ItemStones {
                 moveAgilityTypeLore,
                 2,
                 1,
-                4
+                4,
+                7
         );
         airStoneAgility4 = createStone(
                 ChatColor.WHITE + "Completed Agility Stone",
@@ -602,7 +610,8 @@ public class ItemStones {
                 moveAgilityTypeLore,
                 2,
                 1,
-                5
+                5,
+                7
         );
 
         // AirStones: Bending path
@@ -612,7 +621,8 @@ public class ItemStones {
                 moveAirbendingTypeLore,
                 2,
                 2,
-                1
+                1,
+                8
         );
         airStoneBending1 = createStone(
                 ChatColor.WHITE + "Airbending Stone Lv2",
@@ -620,7 +630,8 @@ public class ItemStones {
                 moveAirbendingTypeLore,
                 2,
                 2,
-                2
+                2,
+                8
         );
         airStoneBending2 = createStone(
                 ChatColor.WHITE + "Airbending Stone Lv3",
@@ -628,7 +639,8 @@ public class ItemStones {
                 moveAirbendingTypeLore,
                 2,
                 2,
-                3
+                3,
+                8
         );
         airStoneBending3 = createStone(
                 ChatColor.WHITE + "Airbending Stone Lv4",
@@ -636,7 +648,8 @@ public class ItemStones {
                 moveAirbendingTypeLore,
                 2,
                 2,
-                4
+                4,
+                8
         );
         airStoneBending4 = createStone(
                 ChatColor.WHITE + "Completed Airbending Stone",
@@ -644,7 +657,8 @@ public class ItemStones {
                 moveAirbendingTypeLore,
                 2,
                 2,
-                5
+                5,
+                8
         );
 
 
@@ -660,7 +674,8 @@ public class ItemStones {
                 "",
                 3,
                 0,
-                1
+                1,
+                9
         );
         earthStone1 = createStone(
                 ChatColor.DARK_GREEN + "Earth Stone Lv2",
@@ -668,7 +683,8 @@ public class ItemStones {
                 "",
                 3,
                 0,
-                2
+                2,
+                9
         );
         earthStone2 = createStone(
                 ChatColor.DARK_GREEN + "Earth Stone Lv3",
@@ -676,7 +692,8 @@ public class ItemStones {
                 "",
                 3,
                 0,
-                3
+                3,
+                9
         );
 
         // EarthStones: Defense path
@@ -686,7 +703,8 @@ public class ItemStones {
                 moveDefenseTypeLore,
                 3,
                 1,
-                1
+                1,
+                10
         );
         earthStoneDefense1 = createStone(
                 ChatColor.DARK_GREEN + "Defense Stone Lv2",
@@ -694,7 +712,8 @@ public class ItemStones {
                 moveDefenseTypeLore,
                 3,
                 1,
-                2
+                2,
+                10
         );
         earthStoneDefense2 = createStone(
                 ChatColor.DARK_GREEN + "Defense Stone Lv3",
@@ -702,7 +721,8 @@ public class ItemStones {
                 moveDefenseTypeLore,
                 3,
                 1,
-                3
+                3,
+                10
         );
         earthStoneDefense3 = createStone(
                 ChatColor.DARK_GREEN + "Defense Stone Lv4",
@@ -710,7 +730,8 @@ public class ItemStones {
                 moveDefenseTypeLore,
                 3,
                 1,
-                4
+                4,
+                10
         );
         earthStoneDefense4 = createStone(
                 ChatColor.DARK_GREEN + "Completed Defense Stone",
@@ -718,7 +739,8 @@ public class ItemStones {
                 moveDefenseTypeLore,
                 3,
                 1,
-                5
+                5,
+                10
         );
 
         // EarthStones: Bending path
@@ -728,7 +750,8 @@ public class ItemStones {
                 moveEarthbendingTypeLore,
                 3,
                 2,
-                1
+                1,
+                11
         );
         earthStoneBending1 = createStone(
                 ChatColor.DARK_GREEN + "Earthbending Stone Lv2",
@@ -736,7 +759,8 @@ public class ItemStones {
                 moveEarthbendingTypeLore,
                 3,
                 2,
-                2
+                2,
+                11
         );
         earthStoneBending2 = createStone(
                 ChatColor.DARK_GREEN + "Earthbending Stone Lv3",
@@ -744,7 +768,8 @@ public class ItemStones {
                 moveEarthbendingTypeLore,
                 3,
                 2,
-                3
+                3,
+                11
         );
         earthStoneBending3 = createStone(
                 ChatColor.DARK_GREEN + "Earthbending Stone Lv4",
@@ -752,7 +777,8 @@ public class ItemStones {
                 moveEarthbendingTypeLore,
                 3,
                 2,
-                4
+                4,
+                11
         );
         earthStoneBending4 = createStone(
                 ChatColor.DARK_GREEN + "Completed Earthbending Stone",
@@ -760,7 +786,8 @@ public class ItemStones {
                 moveEarthbendingTypeLore,
                 3,
                 2,
-                5
+                5,
+                11
         );
 
         allStones.addAll(Arrays.asList(

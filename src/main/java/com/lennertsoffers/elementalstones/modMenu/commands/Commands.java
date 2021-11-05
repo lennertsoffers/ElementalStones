@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.modMenu;
+package com.lennertsoffers.elementalstones.modMenu.commands;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
