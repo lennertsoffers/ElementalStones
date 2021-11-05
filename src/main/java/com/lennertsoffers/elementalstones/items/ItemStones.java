@@ -17,6 +17,15 @@ import java.util.List;
 
 public class ItemStones {
 
+<<<<<<< HEAD
+=======
+    // test
+    public static ItemStack testStone;
+
+    // BASE STONE
+    public static ItemStack baseStone;
+
+>>>>>>> 8eb42de2bfa2303c99ccb0d9de23e778389c3899
     // WATER STONES
     // WaterStones: Default
     public static ItemStack waterStone0;
@@ -212,9 +221,28 @@ public class ItemStones {
             }
     };
 
+<<<<<<< HEAD
 
 
     // Build Methods
+=======
+    private static void createBaseStone() {
+        ItemStack stack = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta meta = stack.getItemMeta();
+        if (meta != null) {
+            meta.setDisplayName(ChatColor.GOLD + "Base Stone");
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.YELLOW + "This relic is the basis for many powerful");
+            lore.add(ChatColor.YELLOW + "stones you can control the elements with");
+            meta.setLore(lore);
+            meta.setCustomModelData(stoneId);
+            stoneId++;
+            stack.setItemMeta(meta);
+        }
+        baseStone = stack;
+    }
+
+>>>>>>> 8eb42de2bfa2303c99ccb0d9de23e778389c3899
     // Method to build stone
     private static ItemStack createStone(
             String displayName,
@@ -275,6 +303,18 @@ public class ItemStones {
 
     public static void init() {
 
+<<<<<<< HEAD
+=======
+        createTestStone();
+
+
+
+        // BASE STONE
+        createBaseStone();
+
+
+
+>>>>>>> 8eb42de2bfa2303c99ccb0d9de23e778389c3899
         // WATER STONES
         String waterStoneTypeLore = "An old relic used to manipulate water in surroundings";
         String moveIceTypeLore = "This relic magical powers are especially useful to use ice in your advantage";
