@@ -3,7 +3,6 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
-import org.apache.commons.lang.WordUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.*;

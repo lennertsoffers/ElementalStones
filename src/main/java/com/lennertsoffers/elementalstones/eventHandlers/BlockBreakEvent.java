@@ -73,6 +73,7 @@ public class BlockBreakEvent implements Listener {
                 }
             }
 
+            // Dead Flower
             else if (
                     blockMaterial == Material.WITHER_ROSE ||
                     blockMaterial == Material.CRIMSON_ROOTS ||
@@ -85,6 +86,7 @@ public class BlockBreakEvent implements Listener {
                 }
             }
 
+            // Twig
             else if (blockMaterial == Material.DEAD_BUSH) {
                 if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.twig")) == 0) {
                     world.dropItemNaturally(blockLocation, CraftItemManager.TWIG);

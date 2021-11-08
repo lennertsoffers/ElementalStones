@@ -1,8 +1,11 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import org.bukkit.entity.Item;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
