@@ -79,3 +79,19 @@ earth_stone:
     move6: 10000
     move7: 10000
     move8: 10000
+
+
+
+# DROP CHANCE
+# Set to one ensure drop
+drop_chance:
+  baby_zombie_hide: 10
+  rotten_apple: 10
+  insect: 10
+  bat: 10
+  herb: 10
+  golden_feather: 10
+  dead_flower: 10
+  twig: 10
+  soul_of_evoker: 10
+  villager_blood: 10
