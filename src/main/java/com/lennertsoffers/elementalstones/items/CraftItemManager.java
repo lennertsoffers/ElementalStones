@@ -34,6 +34,13 @@ public class CraftItemManager {
     public static ItemStack CARNIVOROUS_PLANT;
     public static ItemStack SCENTED_CANDLE;
 
+    // Shards
+    public static ItemStack COMMON_SHARD;
+    public static ItemStack UNCOMMON_SHARD;
+    public static ItemStack RARE_SHARD;
+    public static ItemStack ULTRA_RARE_SHARD;
+    public static ItemStack LEGENDARY_SHARD;
+
 
     // Create Item
     private static int itemId = 0;
@@ -76,5 +83,11 @@ public class CraftItemManager {
         POISONED_APPLE = createItem("Poisoned Apple", "");
         CARNIVOROUS_PLANT = createItem("Carnivorous Plant", "");
         SCENTED_CANDLE = createItem("Scented Candle", "");
+
+        COMMON_SHARD = createItem("Common Shard", "");
+        UNCOMMON_SHARD = createItem("Uncommon Shard", "");
+        RARE_SHARD = createItem("Rare Shard", "");
+        ULTRA_RARE_SHARD = createItem("Ultra Rare Shard", "");
+        LEGENDARY_SHARD = createItem("Legendary Shard", "");
     }
 }
