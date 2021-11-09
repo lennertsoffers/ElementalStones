@@ -1,28 +1,36 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
+import jdk.nashorn.internal.runtime.UnwarrantedOptimismException;
 import org.bukkit.Material;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ShamanVillager {
 
     private final Villager villager;
-    private final int level;
     private final ArrayList<MerchantRecipe> trades = new ArrayList<>();
 
+    public static HashSet<ShamanVillager> shamanVillagers = new HashSet<>();
     private static final HashMap<String, ArrayList<ItemStack>> shamanIngredients = new HashMap<>();
 
     public ShamanVillager(Villager villager) {
         this.villager = villager;
-        this.level = 5;
+        villager.setCustomName("Shaman");
         initShamanIngredients();
-        generateTrades();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                generateTrades();
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 24000L);
+
+        shamanVillagers.add(this);
     }
 
     public void generateTrades() {
@@ -36,7 +44,7 @@ public class ShamanVillager {
     private MerchantRecipe generateTrade() {
         MerchantRecipe merchantRecipe;
         List<ItemStack> ingredients = new ArrayList<>();
-        if (this.level == 1) {
+        if (this.villager.getVillagerLevel() == 1) {
             if (StaticVariables.random.nextInt(20) == 0) {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
@@ -47,7 +55,7 @@ public class ShamanVillager {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
-        } else if (this.level == 2) {
+        } else if (this.villager.getVillagerLevel() == 2) {
             if (StaticVariables.random.nextInt(30) == 0) {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("ultraRareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("ultraRareIngredients").size())));
@@ -61,7 +69,7 @@ public class ShamanVillager {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
-        } else if (this.level == 3) {
+        } else if (this.villager.getVillagerLevel() == 3) {
             if (StaticVariables.random.nextInt(30) == 0) {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("legendaryIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("legendaryIngredients").size())));
@@ -78,7 +86,7 @@ public class ShamanVillager {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
-        } else if (this.level == 4) {
+        } else if (this.villager.getVillagerLevel() == 4) {
             if (StaticVariables.random.nextInt(15) == 0) {
                 merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
                 ingredients.add(shamanIngredients.get("legendaryIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("legendaryIngredients").size())));
@@ -183,5 +191,19 @@ public class ShamanVillager {
         shamanIngredients.put("rareIngredients", rareIngredientsPool);
         shamanIngredients.put("ultraRareIngredients", ultraRareIngredientsPool);
         shamanIngredients.put("legendaryIngredients", legendaryIngredientsPool);
+    }
+
+
+    public static boolean isShamanVillager(UUID uuid) {
+        for (ShamanVillager shamanVillager : shamanVillagers) {
+            if (shamanVillager.villager.getUniqueId() == uuid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void deadShamanVillager(UUID uuid) {
+        shamanVillagers.removeIf(shamanVillager -> shamanVillager.villager.getUniqueId() == uuid);
     }
 }
