@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.customClasses.ShamanVillager;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,8 +16,8 @@ public class PlayerInteractAtEntityEvent implements Listener {
         // Is Villager
         if (event.getRightClicked() instanceof Villager) {
             Villager villager = (Villager) event.getRightClicked();
-            if (villager.getProfession().equals(Villager.Profession.NITWIT)) {
-                ArrayList<MerchantRecipe> trades = new ArrayList<>();
+            if (villager.getProfession().equals(Villager.Profession.FLETCHER)) {
+                new ShamanVillager(villager);
             }
 
 
