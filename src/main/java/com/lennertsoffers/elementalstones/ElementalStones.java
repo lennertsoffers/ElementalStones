@@ -31,6 +31,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityToggleGlideEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this);
 
         configuration = this.getConfig();
 
