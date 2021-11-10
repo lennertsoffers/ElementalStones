@@ -22,6 +22,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -29,7 +30,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
-import javax.jws.Oneway;
 import java.util.*;
 
 public class ActivePlayer {
@@ -72,6 +72,9 @@ public class ActivePlayer {
     private Location move8from = null;
     private Location move8to = null;
 
+    // Shaman Trading
+    private Inventory shamanInventory;
+    private ShamanVillager interactingWith;
 
 
     public ActivePlayer(Player player) {
@@ -850,5 +853,21 @@ public class ActivePlayer {
 
     public MoveController getMoveController() {
         return this.moveController;
+    }
+
+    public Inventory getShamanInventory() {
+        return this.shamanInventory;
+    }
+
+    public void setShamanInventory(Inventory inventoryView) {
+        this.shamanInventory = inventoryView;
+    }
+
+    public ShamanVillager getInteractingWith() {
+        return this.interactingWith;
+    }
+
+    public void setInteractingWith(ShamanVillager shamanVillager) {
+        this.interactingWith = shamanVillager;
     }
 }

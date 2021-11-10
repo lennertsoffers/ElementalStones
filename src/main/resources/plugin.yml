@@ -14,3 +14,5 @@ commands:
   stoneInventory:
     description: Opens inventory where you can pick a stone from, Magic Stone is default
     usage: /stoneInventory <water-fire-air-earth-magic>
+  giveItem:
+    description: Gives you the Rosemary Itemstack
