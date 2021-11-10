@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -76,6 +77,16 @@ public class Commands implements CommandExecutor {
                             player.openInventory(inventory);
                             return true;
                         }
+                    }
+                }
+            }
+        } else if (label.equalsIgnoreCase("giveItem")) {
+            if (sender instanceof Player) {
+                if (sender.isOp()) {
+                    if (args.length == 0) {
+                        Player player = (Player) sender;
+                        player.getInventory().addItem(CraftItemManager.ROSEMARY);
+                        return true;
                     }
                 }
             }

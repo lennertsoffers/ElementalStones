@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import jdk.nashorn.internal.runtime.UnwarrantedOptimismException;
 import org.bukkit.Material;
 import org.bukkit.entity.Villager;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,83 +42,101 @@ public class ShamanVillager {
         villager.setRecipes(trades);
     }
 
+    public void acceptItems(Inventory inventory) {
+        ArrayList<ItemStack> contents = (ArrayList<ItemStack>) Arrays.asList(inventory.getContents());
+        for (ItemStack itemStack : contents) {
+            System.out.println(itemStack);
+        }
+    };
+
+
+    // Getters
+    public Villager getVillager() {
+        return this.villager;
+    }
+
+    public ArrayList<MerchantRecipe> getTrades() {
+        return this.trades;
+    }
+
+
     private MerchantRecipe generateTrade() {
         MerchantRecipe merchantRecipe;
         List<ItemStack> ingredients = new ArrayList<>();
         if (this.villager.getVillagerLevel() == 1) {
             if (StaticVariables.random.nextInt(20) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
             } else if (StaticVariables.random.nextInt(8) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("uncommonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("uncommonIngredients").size())));
             } else {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         } else if (this.villager.getVillagerLevel() == 2) {
             if (StaticVariables.random.nextInt(30) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("ultraRareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("ultraRareIngredients").size())));
             } else if (StaticVariables.random.nextInt(15) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
             } else if (StaticVariables.random.nextInt(6) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("uncommonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("uncommonIngredients").size())));
             } else {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         } else if (this.villager.getVillagerLevel() == 3) {
             if (StaticVariables.random.nextInt(30) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("legendaryIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("legendaryIngredients").size())));
             } else if (StaticVariables.random.nextInt(20) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("ultraRareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("ultraRareIngredients").size())));
             } else if (StaticVariables.random.nextInt(10) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
             } else if (StaticVariables.random.nextInt(4) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("uncommonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("uncommonIngredients").size())));
             } else {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         } else if (this.villager.getVillagerLevel() == 4) {
             if (StaticVariables.random.nextInt(15) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("legendaryIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("legendaryIngredients").size())));
             } else if (StaticVariables.random.nextInt(10) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("ultraRareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("ultraRareIngredients").size())));
             } else if (StaticVariables.random.nextInt(4) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
             } else if (StaticVariables.random.nextInt(3) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("uncommonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("uncommonIngredients").size())));
             } else {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         } else {
             if (StaticVariables.random.nextInt(8) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.LEGENDARY_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("legendaryIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("legendaryIngredients").size())));
             } else if (StaticVariables.random.nextInt(6) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.ULTRA_RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("ultraRareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("ultraRareIngredients").size())));
             } else if (StaticVariables.random.nextInt(3) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.RARE_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("rareIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("rareIngredients").size())));
             } else if (StaticVariables.random.nextInt(2) == 0) {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.UNCOMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("uncommonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("uncommonIngredients").size())));
             } else {
-                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, true);
+                merchantRecipe = new MerchantRecipe(CraftItemManager.COMMON_SHARD, 0, StaticVariables.random.nextInt(3) + 1, false);
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         }
@@ -193,14 +212,13 @@ public class ShamanVillager {
         shamanIngredients.put("legendaryIngredients", legendaryIngredientsPool);
     }
 
-
-    public static boolean isShamanVillager(UUID uuid) {
+    public static ShamanVillager getShamanVillager(UUID uuid) {
         for (ShamanVillager shamanVillager : shamanVillagers) {
             if (shamanVillager.villager.getUniqueId() == uuid) {
-                return true;
+                return shamanVillager;
             }
         }
-        return false;
+        return null;
     }
 
     public static void deadShamanVillager(UUID uuid) {

@@ -6,6 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class CraftItemManager {
 
     // Base items
@@ -34,6 +37,8 @@ public class CraftItemManager {
     public static ItemStack CARNIVOROUS_PLANT;
     public static ItemStack SCENTED_CANDLE;
 
+    public static ArrayList<ItemStack> tradeItems = new ArrayList<>();
+
     // Shards
     public static ItemStack COMMON_SHARD;
     public static ItemStack UNCOMMON_SHARD;
@@ -44,8 +49,23 @@ public class CraftItemManager {
 
     // Create Item
     private static int itemId = 0;
-    private static ItemStack createItem(String displayName, String lore) {
-        ItemStack itemStack = new ItemStack(Material.BOWL);
+    private static ItemStack createNormalItem(String displayName, String lore) {
+        ItemStack itemStack = new ItemStack(Material.CARROT);
+        return setLore(displayName, lore, itemStack);
+    }
+    
+    private static ItemStack createAlterMaterialItem(String displayName, String lore, Material material) {
+        ItemStack itemStack = new ItemStack(material);
+        return setLore(displayName, lore, itemStack);
+
+    }
+    
+    private static ItemStack createShard(String displayName, String lore) {
+        ItemStack itemStack = new ItemStack(Material.DIAMOND);
+        return setLore(displayName, lore, itemStack);
+    }
+    
+    private static ItemStack setLore(String displayName, String lore, ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
         if (itemMeta != null) {
             itemMeta.setDisplayName(displayName);
@@ -55,39 +75,64 @@ public class CraftItemManager {
         }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
-    }
+    } 
 
 
     // Set Items
     public static void init() {
-        BABY_ZOMBIE_HIDE = createItem("Baby Zombie Hide", "");
-        ROTTEN_APPLE = createItem("Rotten Apple", "");
-        INSECT = createItem("Insect", "");
-        BAT = createItem("Bat", "");
-        THYME = createItem("Thyme", "");
-        OREGANO = createItem("Oregano", "");
-        DILL = createItem("Dill", "");
-        ROSEMARY = createItem("Rosemary", "");
-        GOLDEN_FEATHER = createItem("Golden Feather", "");
-        DEAD_FLOWER = createItem("Dead Flower", "");
-        TWIG = createItem("Twig", "");
-        SOUL_OF_EVOKER = createItem("Soul Of Evoker", "");
-        VILLAGER_BLOOD = createItem("Blood", "");
+        BABY_ZOMBIE_HIDE = createNormalItem("Baby Zombie Hide", "");
+        ROTTEN_APPLE = createAlterMaterialItem("Rotten Apple", "", Material.APPLE);
+        INSECT = createNormalItem("Insect", "");
+        BAT = createNormalItem("Bat", "");
+        THYME = createNormalItem("Thyme", "");
+        OREGANO = createNormalItem("Oregano", "");
+        DILL = createNormalItem("Dill", "");
+        ROSEMARY = createNormalItem("Rosemary", "");
+        GOLDEN_FEATHER = createNormalItem("Golden Feather", "");
+        DEAD_FLOWER = createNormalItem("Dead Flower", "");
+        TWIG = createNormalItem("Twig", "");
+        SOUL_OF_EVOKER = createNormalItem("Soul Of Evoker", "");
+        VILLAGER_BLOOD = createNormalItem("Blood", "");
 
-        VOODOO_DOLL = createItem("Voodoo Doll", "");
-        SHIP_IN_BOTTLE = createItem("Ship In Bottle", "");
-        PALANTIR = createItem("Palantir", "");
-        BLOOD_AND_QUIL = createItem("Blood And Quil", "");
-        BUNDLE_OF_HERBS = createItem("Bundle Of Herbs", "");
-        MYSTERY_POTION = createItem("Mystery Potion", "");
-        POISONED_APPLE = createItem("Poisoned Apple", "");
-        CARNIVOROUS_PLANT = createItem("Carnivorous Plant", "");
-        SCENTED_CANDLE = createItem("Scented Candle", "");
+        VOODOO_DOLL = createNormalItem("Voodoo Doll", "");
+        SHIP_IN_BOTTLE = createNormalItem("Ship In Bottle", "");
+        PALANTIR = createNormalItem("Palantir", "");
+        BLOOD_AND_QUIL = createNormalItem("Blood And Quil", "");
+        BUNDLE_OF_HERBS = createNormalItem("Bundle Of Herbs", "");
+        MYSTERY_POTION = createAlterMaterialItem("Mystery Potion", "", Material.POTION);
+        POISONED_APPLE = createAlterMaterialItem("Poisoned Apple", "", Material.APPLE);
+        CARNIVOROUS_PLANT = createNormalItem("Carnivorous Plant", "");
+        SCENTED_CANDLE = createAlterMaterialItem("Scented Candle", "", Material.CANDLE);
 
-        COMMON_SHARD = createItem("Common Shard", "");
-        UNCOMMON_SHARD = createItem("Uncommon Shard", "");
-        RARE_SHARD = createItem("Rare Shard", "");
-        ULTRA_RARE_SHARD = createItem("Ultra Rare Shard", "");
-        LEGENDARY_SHARD = createItem("Legendary Shard", "");
+        COMMON_SHARD = createShard("Common Shard", "");
+        UNCOMMON_SHARD = createShard("Uncommon Shard", "");
+        RARE_SHARD = createShard("Rare Shard", "");
+        ULTRA_RARE_SHARD = createShard("Ultra Rare Shard", "");
+        LEGENDARY_SHARD = createShard("Legendary Shard", "");
+
+        tradeItems.addAll(Arrays.asList(
+                BABY_ZOMBIE_HIDE,
+                ROTTEN_APPLE,
+                INSECT,
+                BAT,
+                THYME,
+                OREGANO,
+                DILL,
+                ROSEMARY,
+                GOLDEN_FEATHER,
+                DEAD_FLOWER,
+                TWIG,
+                SOUL_OF_EVOKER,
+                VILLAGER_BLOOD,
+                VOODOO_DOLL,
+                SHIP_IN_BOTTLE,
+                PALANTIR,
+                BLOOD_AND_QUIL,
+                BUNDLE_OF_HERBS,
+                MYSTERY_POTION,
+                POISONED_APPLE,
+                CARNIVOROUS_PLANT,
+                SCENTED_CANDLE
+        ));
     }
 }
