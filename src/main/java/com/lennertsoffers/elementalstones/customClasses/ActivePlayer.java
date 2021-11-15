@@ -73,9 +73,7 @@ public class ActivePlayer {
     private Location move8to = null;
 
     // Shaman Trading
-    private Inventory shamanInventory;
-    private ShamanVillager interactingWith;
-
+    private boolean closeTradingInventories = false;
 
     public ActivePlayer(Player player) {
         this.player = player;
@@ -855,19 +853,11 @@ public class ActivePlayer {
         return this.moveController;
     }
 
-    public Inventory getShamanInventory() {
-        return this.shamanInventory;
+    public boolean closeTradingInventories() {
+        return this.closeTradingInventories;
     }
 
-    public void setShamanInventory(Inventory inventoryView) {
-        this.shamanInventory = inventoryView;
-    }
-
-    public ShamanVillager getInteractingWith() {
-        return this.interactingWith;
-    }
-
-    public void setInteractingWith(ShamanVillager shamanVillager) {
-        this.interactingWith = shamanVillager;
+    public void setCloseTradingInventories(boolean closeTradingInventories) {
+        this.closeTradingInventories = closeTradingInventories;
     }
 }

@@ -49,6 +49,7 @@ public class PrepareItemCraftEvent implements Listener {
         ItemStack[] broom = {null, null, null, HAY, CraftItemManager.TWIG, CraftItemManager.TWIG, null, null, null};
         ItemStack[] gingerbread_man = {null, MILK, null, SUGAR, WHEAT, HONEY, WHITE_DYE, EGG, RED_DYE};
         ItemStack[] antidote = {null, CraftItemManager.STINGER, null, null, CraftItemManager.BLOOD_OF_WANDERING_TRADER, null, null, MILK, null};
+        ItemStack[] war_horn = {null, CraftItemManager.HOGLIN_TUSK, null, CraftItemManager.HOGLIN_TUSK, CraftItemManager.HOGLIN_TUSK, CraftItemManager.HOGLIN_TUSK, null, null, null};
 
 
         // Check CraftingMatrix
@@ -81,6 +82,8 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(CraftItemManager.GINGERBREAD_MAN);
         } else if (Arrays.equals(antidote, craftingMatrix)) {
             event.getInventory().setResult(CraftItemManager.ANTIDOTE);
+        } else if (Arrays.equals(war_horn, craftingMatrix)) {
+            event.getInventory().setResult(CraftItemManager.WAR_HORN);
         }
     }
 }

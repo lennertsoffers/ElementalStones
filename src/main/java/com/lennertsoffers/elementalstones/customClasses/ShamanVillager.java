@@ -42,23 +42,26 @@ public class ShamanVillager {
         villager.setRecipes(trades);
     }
 
-    public void acceptItems(Inventory inventory) {
-        ArrayList<ItemStack> contents = (ArrayList<ItemStack>) Arrays.asList(inventory.getContents());
-        for (ItemStack itemStack : contents) {
-            System.out.println(itemStack);
+    public boolean acceptItem(ItemStack item) {
+        for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
+            if (shamanTradeItem.getItem().isSimilar(item)) {
+                villager.setVillagerExperience(villager.getVillagerExperience() + shamanTradeItem.getXpValue());
+                if (villager.getVillagerExperience() >= 10) {
+                    if (villager.getVillagerLevel() < 5) {
+                        villager.setVillagerLevel(villager.getVillagerLevel() + 1);
+                        generateTrades();
+                    }
+                }
+                return true;
+            }
         }
-    };
-
+        return false;
+    }
 
     // Getters
     public Villager getVillager() {
         return this.villager;
     }
-
-    public ArrayList<MerchantRecipe> getTrades() {
-        return this.trades;
-    }
-
 
     private MerchantRecipe generateTrade() {
         MerchantRecipe merchantRecipe;
@@ -140,8 +143,6 @@ public class ShamanVillager {
                 ingredients.add(shamanIngredients.get("commonIngredients").get(StaticVariables.random.nextInt(shamanIngredients.get("commonIngredients").size())));
             }
         }
-        System.out.println(ingredients);
-
         merchantRecipe.setIngredients(ingredients);
         return merchantRecipe;
     }
@@ -175,7 +176,7 @@ public class ShamanVillager {
         uncommonIngredientsPool.add(new ItemStack(Material.FERMENTED_SPIDER_EYE, 64));
         uncommonIngredientsPool.add(new ItemStack(Material.GLISTERING_MELON_SLICE, 32));
         uncommonIngredientsPool.add(new ItemStack(Material.AMETHYST_SHARD, 32));
-        uncommonIngredientsPool.add(new ItemStack(Material.BEE_NEST, 32));
+        uncommonIngredientsPool.add(new ItemStack(Material.BEE_NEST, 1));
         uncommonIngredientsPool.add(new ItemStack(Material.CHAINMAIL_HELMET, 32));
 
         ArrayList<ItemStack> rareIngredientsPool = new ArrayList<>();
@@ -228,6 +229,15 @@ public class ShamanVillager {
             }
         }
         return null;
+    }
+
+    public static boolean isShamanVillager(Villager villager) {
+        for (ShamanVillager shamanVillager : shamanVillagers) {
+            if (shamanVillager.villager.getUniqueId() == villager.getUniqueId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void deadShamanVillager(UUID uuid) {

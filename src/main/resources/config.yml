@@ -81,7 +81,6 @@ earth_stone:
     move8: 10000
 
 
-
 # DROP CHANCE
 # Set to one ensure drop
 drop_chance:
@@ -95,3 +94,59 @@ drop_chance:
   twig: 10
   soul_of_evoker: 10
   villager_blood: 10
+
+
+# XP VALUE
+xp_value:
+  # Base items
+  baby_zombie_hide: 10
+  rotten_apple: 10
+  insect: 10
+  bat: 10
+  thyme: 10
+  oregano: 10
+  dill: 10
+  rosemary: 7
+  golden_feather: 10
+  dead_flower: 10
+  twig: 10
+  soul_of_evoker: 10
+  blood_of_wandering_trader: 10
+  stinger: 10
+  hoglin_tusk: 10
+  finn: 10
+
+  # Craft items
+  voodoo_doll: 20
+  ship_in_bottle: 20
+  palantir: 20
+  blood_and_quil: 20
+  bundle_of_herbs: 20
+  carnivorous_plant: 20
+  scented_candle: 20
+  finn_soup: 20
+  war_horn: 20
+  poisonous_dart: 20
+  broom: 20
+  poisoned_apple: 20
+  mystery_potion: 20
+  antidote: 20
+  gingerbread_man: 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

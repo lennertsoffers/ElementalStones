@@ -18,6 +18,7 @@ public final class ElementalStones extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        configuration = this.getConfig();
         ItemStones.init();
         CraftItemManager.init();
         StaticVariables.staticVariablesInit(this);
@@ -26,7 +27,6 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityToggleGlideEvent(), this);
-        getServer().getPluginManager().registerEvents(new InventoryCloseEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this);
@@ -36,8 +36,6 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
         getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this);
         getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this);
-
-        configuration = this.getConfig();
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
