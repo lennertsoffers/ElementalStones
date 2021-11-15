@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.ShamanVillager;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Bukkit;
@@ -20,14 +21,28 @@ public class PlayerInteractAtEntityEvent implements Listener {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
 
         if (activePlayer != null) {
-            // Is Villager
             if (event.getRightClicked() instanceof Villager) {
-                if (player.getInventory().getItemInMainHand().isSimilar(CraftItemManager.ROSEMARY)) {
-                    Villager villager = (Villager) event.getRightClicked();
-                    ShamanVillager shamanVillager = ShamanVillager.getShamanVillager(villager.getUniqueId());
-                    Inventory inventory = Bukkit.createInventory(player, 9);
-                    activePlayer.setShamanInventory(inventory);
-                    activePlayer.setInteractingWith(shamanVillager);
+                Villager villager = (Villager) event.getRightClicked();
+                if (villager.getProfession() == Villager.Profession.FLETCHER) {
+                    if (ShamanVillager.isShamanVillager(villager)) {
+                        ShamanVillager shamanVillager = ShamanVillager.getShamanVillager(villager.getUniqueId());
+                        if (shamanVillager != null) {
+                            ItemStack clickItemStackType = player.getInventory().getItemInMainHand().clone();
+                            clickItemStackType.setAmount(1);
+                            for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
+                                if (clickItemStackType.isSimilar(shamanTradeItem.getItem())) {
+                                    activePlayer.setCloseTradingInventories(true);
+                                    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+                                    ItemStack itemToGive = itemInMainHand.clone();
+                                    itemToGive.setAmount(1);
+                                    if (shamanVillager.acceptItem(itemToGive)) {
+                                        itemInMainHand.setAmount(itemInMainHand.getAmount() - 1);
+                                        player.getInventory().setItemInMainHand(itemInMainHand);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

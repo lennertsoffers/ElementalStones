@@ -1,11 +1,13 @@
 package com.lennertsoffers.elementalstones.items;
 
+import com.lennertsoffers.elementalstones.customClasses.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import javax.jws.Oneway;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,7 +15,6 @@ public class CraftItemManager {
 
     // Base items
     public static ItemStack BABY_ZOMBIE_HIDE;
-    public static ItemStack ROTTEN_APPLE;
     public static ItemStack INSECT;
     public static ItemStack BAT;
     public static ItemStack THYME;
@@ -24,7 +25,10 @@ public class CraftItemManager {
     public static ItemStack DEAD_FLOWER;
     public static ItemStack TWIG;
     public static ItemStack SOUL_OF_EVOKER;
-    public static ItemStack VILLAGER_BLOOD;
+    public static ItemStack BLOOD_OF_WANDERING_TRADER;
+    public static ItemStack STINGER;
+    public static ItemStack HOGLIN_TUSK;
+    public static ItemStack FINN;
 
     // Craft Items
     public static ItemStack VOODOO_DOLL;
@@ -32,10 +36,20 @@ public class CraftItemManager {
     public static ItemStack PALANTIR;
     public static ItemStack BLOOD_AND_QUIL;
     public static ItemStack BUNDLE_OF_HERBS;
-    public static ItemStack MYSTERY_POTION;
-    public static ItemStack POISONED_APPLE;
     public static ItemStack CARNIVOROUS_PLANT;
     public static ItemStack SCENTED_CANDLE;
+    public static ItemStack FINN_SOUP;
+    public static ItemStack WAR_HORN;
+    public static ItemStack POISONOUS_DART;
+    public static ItemStack BROOM;
+
+    // Consumables
+    public static ItemStack ROTTEN_APPLE;
+    public static ItemStack POISONED_APPLE;
+    public static ItemStack MYSTERY_POTION;
+    public static ItemStack ANTIDOTE;
+    public static ItemStack GINGERBREAD_MAN;
+    public static ItemStack BOTTLE_OF_LIGHTNING;
 
     public static ArrayList<ItemStack> tradeItems = new ArrayList<>();
 
@@ -80,8 +94,8 @@ public class CraftItemManager {
 
     // Set Items
     public static void init() {
+        // Set items
         BABY_ZOMBIE_HIDE = createNormalItem("Baby Zombie Hide", "");
-        ROTTEN_APPLE = createAlterMaterialItem("Rotten Apple", "", Material.APPLE);
         INSECT = createNormalItem("Insect", "");
         BAT = createNormalItem("Bat", "");
         THYME = createNormalItem("Thyme", "");
@@ -92,17 +106,28 @@ public class CraftItemManager {
         DEAD_FLOWER = createNormalItem("Dead Flower", "");
         TWIG = createNormalItem("Twig", "");
         SOUL_OF_EVOKER = createNormalItem("Soul Of Evoker", "");
-        VILLAGER_BLOOD = createNormalItem("Blood", "");
+        BLOOD_OF_WANDERING_TRADER = createNormalItem("Blood Of Wandering Trader", "");
+        STINGER = createNormalItem("Stinger", "");
+        HOGLIN_TUSK = createNormalItem("Hoglin Tusk", "");
+        FINN = createNormalItem("Finn", "");
 
         VOODOO_DOLL = createNormalItem("Voodoo Doll", "");
         SHIP_IN_BOTTLE = createNormalItem("Ship In Bottle", "");
         PALANTIR = createNormalItem("Palantir", "");
         BLOOD_AND_QUIL = createNormalItem("Blood And Quil", "");
         BUNDLE_OF_HERBS = createNormalItem("Bundle Of Herbs", "");
-        MYSTERY_POTION = createAlterMaterialItem("Mystery Potion", "", Material.POTION);
-        POISONED_APPLE = createAlterMaterialItem("Poisoned Apple", "", Material.APPLE);
         CARNIVOROUS_PLANT = createNormalItem("Carnivorous Plant", "");
         SCENTED_CANDLE = createAlterMaterialItem("Scented Candle", "", Material.CANDLE);
+        FINN_SOUP = createNormalItem("Finn Soup", "");
+        POISONOUS_DART = createNormalItem("Poisonous Dart", "");
+        BROOM = createNormalItem("Broom", "");
+        WAR_HORN = createNormalItem("War Horn", "");
+
+        ROTTEN_APPLE = createAlterMaterialItem("Rotten Apple", "", Material.APPLE);
+        POISONED_APPLE = createAlterMaterialItem("Poisoned Apple", "", Material.APPLE);
+        MYSTERY_POTION = createAlterMaterialItem("Mystery Potion", "", Material.POTION);
+        ANTIDOTE = createAlterMaterialItem("Antidote", "", Material.POTION);
+        GINGERBREAD_MAN = createAlterMaterialItem("Gingerbread Man", "", Material.COOKIE);
 
         COMMON_SHARD = createShard("Common Shard", "");
         UNCOMMON_SHARD = createShard("Uncommon Shard", "");
@@ -110,29 +135,32 @@ public class CraftItemManager {
         ULTRA_RARE_SHARD = createShard("Ultra Rare Shard", "");
         LEGENDARY_SHARD = createShard("Legendary Shard", "");
 
-        tradeItems.addAll(Arrays.asList(
-                BABY_ZOMBIE_HIDE,
-                ROTTEN_APPLE,
-                INSECT,
-                BAT,
-                THYME,
-                OREGANO,
-                DILL,
-                ROSEMARY,
-                GOLDEN_FEATHER,
-                DEAD_FLOWER,
-                TWIG,
-                SOUL_OF_EVOKER,
-                VILLAGER_BLOOD,
-                VOODOO_DOLL,
-                SHIP_IN_BOTTLE,
-                PALANTIR,
-                BLOOD_AND_QUIL,
-                BUNDLE_OF_HERBS,
-                MYSTERY_POTION,
-                POISONED_APPLE,
-                CARNIVOROUS_PLANT,
-                SCENTED_CANDLE
-        ));
+        // Create ShamanTradeItems
+        new ShamanTradeItem(BABY_ZOMBIE_HIDE);
+        new ShamanTradeItem(INSECT);
+        new ShamanTradeItem(BAT);
+        new ShamanTradeItem(THYME);
+        new ShamanTradeItem(OREGANO);
+        new ShamanTradeItem(DILL);
+        new ShamanTradeItem(ROSEMARY);
+        new ShamanTradeItem(GOLDEN_FEATHER);
+        new ShamanTradeItem(DEAD_FLOWER);
+        new ShamanTradeItem(TWIG);
+        new ShamanTradeItem(SOUL_OF_EVOKER);
+        new ShamanTradeItem(BLOOD_OF_WANDERING_TRADER);
+        new ShamanTradeItem(STINGER);
+        new ShamanTradeItem(HOGLIN_TUSK);
+        new ShamanTradeItem(FINN);
+        new ShamanTradeItem(VOODOO_DOLL);
+        new ShamanTradeItem(SHIP_IN_BOTTLE);
+        new ShamanTradeItem(PALANTIR);
+        new ShamanTradeItem(BLOOD_AND_QUIL);
+        new ShamanTradeItem(BUNDLE_OF_HERBS);
+        new ShamanTradeItem(CARNIVOROUS_PLANT);
+        new ShamanTradeItem(SCENTED_CANDLE);
+        new ShamanTradeItem(FINN_SOUP);
+        new ShamanTradeItem(POISONOUS_DART);
+        new ShamanTradeItem(BROOM);
+        new ShamanTradeItem(WAR_HORN);
     }
 }

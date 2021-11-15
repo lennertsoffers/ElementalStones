@@ -57,12 +57,15 @@ public class EntityDeathEvent implements Listener {
                 }
             }
 
-            // Villager Blood
+            // Wandering Trader Blood
+            else if (entity instanceof WanderingTrader) {
+                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.villager_blood")) == 0) {
+                    world.dropItemNaturally(deathLocation, CraftItemManager.BLOOD_OF_WANDERING_TRADER);
+                }
+            }
+
             else if (entity instanceof Villager) {
                 ShamanVillager.deadShamanVillager(entity.getUniqueId());
-                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.villager_blood")) == 0) {
-                    world.dropItemNaturally(deathLocation, CraftItemManager.VILLAGER_BLOOD);
-                }
             }
         }
     }
