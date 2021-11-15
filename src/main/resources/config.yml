@@ -81,8 +81,10 @@ earth_stone:
     move8: 10000
 
 
+
 # DROP CHANCE
 # Set to one ensure drop
+# The higher the number, the lower the drop chance (formula: 1/x)
 drop_chance:
   baby_zombie_hide: 10
   rotten_apple: 10
@@ -94,6 +96,10 @@ drop_chance:
   twig: 10
   soul_of_evoker: 10
   villager_blood: 10
+
+  # Drop chance for a spell when a shaman reaches level 5
+  spell: 2
+
 
 
 # XP VALUE

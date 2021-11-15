@@ -1,8 +1,13 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
+import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import jdk.nashorn.internal.runtime.UnwarrantedOptimismException;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -43,16 +48,32 @@ public class ShamanVillager {
     }
 
     public boolean acceptItem(ItemStack item) {
-        for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
-            if (shamanTradeItem.getItem().isSimilar(item)) {
-                villager.setVillagerExperience(villager.getVillagerExperience() + shamanTradeItem.getXpValue());
-                if (villager.getVillagerExperience() >= 10) {
-                    if (villager.getVillagerLevel() < 5) {
-                        villager.setVillagerLevel(villager.getVillagerLevel() + 1);
-                        generateTrades();
+        if (villager.getVillagerLevel() < 5) {
+            for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
+                if (shamanTradeItem.getItem().isSimilar(item)) {
+                    villager.setVillagerExperience(villager.getVillagerExperience() + shamanTradeItem.getXpValue());
+                    if (villager.getVillagerExperience() >= 10) {
+                        World world = villager.getWorld();
+                        if (villager.getVillagerLevel() < 5) {
+                            villager.setVillagerLevel(villager.getVillagerLevel() + 1);
+                            for (int i = 0; i < 30; i++) {
+                                Location particleLocation = villager.getLocation().add(0, 1.5, 0);
+                                double x = particleLocation.getX() + StaticVariables.random.nextGaussian() / 6;
+                                double y = particleLocation.getY() + StaticVariables.random.nextGaussian() / 6;
+                                double z = particleLocation.getZ() + StaticVariables.random.nextGaussian() / 6;
+                                world.spawnParticle(Particle.VILLAGER_HAPPY, x, y, z, 0);
+                            }
+                            generateTrades();
+                            if (villager.getVillagerLevel() == 5) {
+                                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.spell")) == 0) {
+                                    Location location = villager.getLocation();
+                                    world.dropItem(location, CraftItemManager.spells.get(StaticVariables.random.nextInt(CraftItemManager.spells.size())));
+                                }
+                            }
+                        }
                     }
+                    return true;
                 }
-                return true;
             }
         }
         return false;

@@ -85,7 +85,9 @@ public class Commands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (args.length == 0) {
                         Player player = (Player) sender;
-                        player.getInventory().addItem(CraftItemManager.ROSEMARY);
+                        ItemStack itemStack = CraftItemManager.ROSEMARY.clone();
+                        itemStack.setAmount(64);
+                        player.getInventory().addItem(itemStack);
                         return true;
                     }
                 }

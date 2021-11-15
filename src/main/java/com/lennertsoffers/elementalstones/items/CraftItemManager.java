@@ -51,17 +51,28 @@ public class CraftItemManager {
     public static ItemStack GINGERBREAD_MAN;
     public static ItemStack BOTTLE_OF_LIGHTNING;
 
-    public static ArrayList<ItemStack> tradeItems = new ArrayList<>();
-
     // Shards
     public static ItemStack COMMON_SHARD;
     public static ItemStack UNCOMMON_SHARD;
     public static ItemStack RARE_SHARD;
     public static ItemStack ULTRA_RARE_SHARD;
     public static ItemStack LEGENDARY_SHARD;
+    
+    // Path keys
+    public static ItemStack WATERBENDING_SPELL;
+    public static ItemStack ICE_SPELL;
+    public static ItemStack LAVA_SPELL;
+    public static ItemStack HELLFIRE_SPELL;
+    public static ItemStack AGILITY_SPELL;
+    public static ItemStack AIRBENDING_SPELL;
+    public static ItemStack DEFENSE_SPELL;
+    public static ItemStack EARTHBENDING_SPELL;
+
+    public static ArrayList<ItemStack> spells = new ArrayList<>();
 
 
-    // Create Item
+
+    // Create Items
     private static int itemId = 0;
     private static ItemStack createNormalItem(String displayName, String lore) {
         ItemStack itemStack = new ItemStack(Material.CARROT);
@@ -72,11 +83,6 @@ public class CraftItemManager {
         ItemStack itemStack = new ItemStack(material);
         return setLore(displayName, lore, itemStack);
 
-    }
-    
-    private static ItemStack createShard(String displayName, String lore) {
-        ItemStack itemStack = new ItemStack(Material.DIAMOND);
-        return setLore(displayName, lore, itemStack);
     }
     
     private static ItemStack setLore(String displayName, String lore, ItemStack itemStack) {
@@ -91,8 +97,6 @@ public class CraftItemManager {
         return itemStack;
     } 
 
-
-    // Set Items
     public static void init() {
         // Set items
         BABY_ZOMBIE_HIDE = createNormalItem("Baby Zombie Hide", "");
@@ -129,11 +133,33 @@ public class CraftItemManager {
         ANTIDOTE = createAlterMaterialItem("Antidote", "", Material.POTION);
         GINGERBREAD_MAN = createAlterMaterialItem("Gingerbread Man", "", Material.COOKIE);
 
-        COMMON_SHARD = createShard("Common Shard", "");
-        UNCOMMON_SHARD = createShard("Uncommon Shard", "");
-        RARE_SHARD = createShard("Rare Shard", "");
-        ULTRA_RARE_SHARD = createShard("Ultra Rare Shard", "");
-        LEGENDARY_SHARD = createShard("Legendary Shard", "");
+        COMMON_SHARD = createAlterMaterialItem("Common Shard", "", Material.DIAMOND);
+        UNCOMMON_SHARD = createAlterMaterialItem("Uncommon Shard", "", Material.DIAMOND);
+        RARE_SHARD = createAlterMaterialItem("Rare Shard", "", Material.DIAMOND);
+        ULTRA_RARE_SHARD = createAlterMaterialItem("Ultra Rare Shard", "", Material.DIAMOND);
+        LEGENDARY_SHARD = createAlterMaterialItem("Legendary Shard", "", Material.DIAMOND);
+
+        WATERBENDING_SPELL = createAlterMaterialItem("Waterbending Spell", "", Material.DIAMOND);
+        ICE_SPELL = createAlterMaterialItem("Ice Spell", "", Material.DIAMOND);
+        LAVA_SPELL = createAlterMaterialItem("Lava Spell", "", Material.DIAMOND);
+        HELLFIRE_SPELL = createAlterMaterialItem("Hellfire Spell", "", Material.DIAMOND);
+        AGILITY_SPELL = createAlterMaterialItem("Agility Spell", "", Material.DIAMOND);
+        AIRBENDING_SPELL = createAlterMaterialItem("Airbending Spell", "", Material.DIAMOND);
+        DEFENSE_SPELL = createAlterMaterialItem("Defense Spell", "", Material.DIAMOND);
+        EARTHBENDING_SPELL = createAlterMaterialItem("Earthbending Spell", "", Material.DIAMOND);
+
+
+        // Add spells to list
+        spells.addAll(Arrays.asList(
+                WATERBENDING_SPELL,
+                ICE_SPELL,
+                LAVA_SPELL,
+                HELLFIRE_SPELL,
+                AGILITY_SPELL,
+                AIRBENDING_SPELL,
+                DEFENSE_SPELL,
+                EARTHBENDING_SPELL
+        ));
 
         // Create ShamanTradeItems
         new ShamanTradeItem(BABY_ZOMBIE_HIDE);
