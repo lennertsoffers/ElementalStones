@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.customClasses;
+package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
 import org.bukkit.inventory.ItemStack;

@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses.tools;
 
-import com.lennertsoffers.elementalstones.customClasses.Move;
+import com.lennertsoffers.elementalstones.customClasses.models.Move;
 
 public class MoveController {
 

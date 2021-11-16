@@ -16,3 +16,5 @@ commands:
     usage: /stoneInventory <water-fire-air-earth-magic>
   giveItem:
     description: Gives you the Rosemary Itemstack
+  shamanMajor:
+    description: Spawns in a shaman major

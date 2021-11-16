@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;

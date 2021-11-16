@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.Location;

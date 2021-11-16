@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

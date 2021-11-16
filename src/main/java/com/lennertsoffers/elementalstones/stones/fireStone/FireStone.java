@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.fireStone;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Location;
 import org.bukkit.Material;

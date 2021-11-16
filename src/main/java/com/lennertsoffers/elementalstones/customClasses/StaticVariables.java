@@ -1,11 +1,8 @@
 package com.lennertsoffers.elementalstones.customClasses;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
-import org.bukkit.entity.Item;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -16,12 +13,12 @@ public class StaticVariables {
     public static Random random;
     public static HashMap<String, HashMap<String, Integer>> coolDownMapping = new HashMap<>();
 
+
     public static void staticVariablesInit(ElementalStones p) {
         plugin = p;
         scheduler = plugin.getServer().getScheduler();
         random = new Random();
         fillCoolDownMapping();
-
     }
 
     private static void fillCoolDownMapping() {
