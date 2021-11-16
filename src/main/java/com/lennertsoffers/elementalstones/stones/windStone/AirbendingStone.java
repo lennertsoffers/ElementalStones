@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.stones.windStone;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;

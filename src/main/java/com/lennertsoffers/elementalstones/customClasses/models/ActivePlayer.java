@@ -1,6 +1,7 @@
-package com.lennertsoffers.elementalstones.customClasses;
+package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MoveController;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
@@ -22,7 +23,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

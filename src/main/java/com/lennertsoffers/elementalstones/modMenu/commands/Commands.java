@@ -1,13 +1,15 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.Boss;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -85,9 +87,19 @@ public class Commands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (args.length == 0) {
                         Player player = (Player) sender;
-                        ItemStack itemStack = CraftItemManager.ROSEMARY.clone();
+                        ItemStack itemStack = CraftItemManager.VOODOO_DOLL.clone();
                         itemStack.setAmount(64);
                         player.getInventory().addItem(itemStack);
+                        return true;
+                    }
+                }
+            }
+        } else if (label.equalsIgnoreCase("shamanMajor")) {
+            if (sender instanceof Player) {
+                if (sender.isOp()) {
+                    if (args.length == 0) {
+                        Player player = (Player) sender;
+                        new Boss(player.getLocation());
                         return true;
                     }
                 }

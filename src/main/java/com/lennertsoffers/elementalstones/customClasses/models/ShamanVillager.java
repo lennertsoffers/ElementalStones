@@ -1,17 +1,19 @@
-package com.lennertsoffers.elementalstones.customClasses;
+package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
-import jdk.nashorn.internal.runtime.UnwarrantedOptimismException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
-import org.bukkit.inventory.Inventory;
+
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.Metadatable;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -27,15 +29,9 @@ public class ShamanVillager {
     public ShamanVillager(Villager villager) {
         this.villager = villager;
         villager.setCustomName("Shaman");
+        villager.setCustomNameVisible(false);
         initShamanIngredients();
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                generateTrades();
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 24000L);
-
+        generateTrades();
         shamanVillagers.add(this);
     }
 
@@ -77,11 +73,6 @@ public class ShamanVillager {
             }
         }
         return false;
-    }
-
-    // Getters
-    public Villager getVillager() {
-        return this.villager;
     }
 
     private MerchantRecipe generateTrade() {

@@ -1,17 +1,13 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.ShamanTradeItem;
-import com.lennertsoffers.elementalstones.customClasses.ShamanVillager;
-import com.lennertsoffers.elementalstones.items.CraftItemManager;
-import org.bukkit.Bukkit;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
+import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.*;
-
-import java.util.ArrayList;
 
 public class PlayerInteractAtEntityEvent implements Listener {
 

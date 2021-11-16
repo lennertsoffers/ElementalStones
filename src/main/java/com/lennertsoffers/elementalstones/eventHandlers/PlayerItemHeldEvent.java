@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

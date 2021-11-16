@@ -4,12 +4,10 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.modMenu.commands.Commands;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 
-import java.io.File;
 import java.util.Objects;
 
 public final class ElementalStones extends JavaPlugin {
@@ -26,6 +24,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ClickEvent(this), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
+        getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityToggleGlideEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this);
@@ -42,6 +41,7 @@ public final class ElementalStones extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("giveStone")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("stoneInventory")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("giveItem")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("shamanMajor")).setExecutor(new Commands());
     }
 
     @Override

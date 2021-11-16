@@ -1,13 +1,12 @@
 package com.lennertsoffers.elementalstones.items;
 
-import com.lennertsoffers.elementalstones.customClasses.ShamanTradeItem;
+import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.jws.Oneway;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -75,7 +74,7 @@ public class CraftItemManager {
     // Create Items
     private static int itemId = 0;
     private static ItemStack createNormalItem(String displayName, String lore) {
-        ItemStack itemStack = new ItemStack(Material.CARROT);
+        ItemStack itemStack = new ItemStack(Material.BOWL);
         return setLore(displayName, lore, itemStack);
     }
     
