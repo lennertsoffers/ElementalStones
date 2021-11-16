@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.Boss;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
@@ -101,6 +102,14 @@ public class Commands implements CommandExecutor {
                         Player player = (Player) sender;
                         new Boss(player.getLocation());
                         return true;
+                    }
+                }
+            }
+        } else if (label.equalsIgnoreCase("saveDefaultConfig")) {
+            if (sender instanceof Player) {
+                if (sender.isOp()) {
+                    if (args.length == 0) {
+                        StaticVariables.plugin.saveDefaultConfig();
                     }
                 }
             }

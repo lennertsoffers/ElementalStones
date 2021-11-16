@@ -3,12 +3,22 @@ package com.lennertsoffers.elementalstones.customClasses.tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
 public class CheckLocationTools {
-    public static boolean checkPlayerCollision(double player, double block) {
-        return !(player > block + 1.3 || player < block - 0.3);
+    public static boolean checkEntityCollision(Entity entity, Location blockLocation) {
+        Location playerLocation = entity.getLocation();
+
+        double diffX = Math.abs(playerLocation.getX() - blockLocation.getX());
+        double diffZ = Math.abs(playerLocation.getZ() - blockLocation.getZ());
+
+        System.out.println(diffX);
+        System.out.println(diffZ);
+
+        return diffX < entity.getWidth() || diffZ < entity.getWidth();
     }
 
     public static boolean locationAroundClear(Location location, World world) {

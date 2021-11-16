@@ -2,7 +2,6 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.MoveController;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
@@ -441,32 +440,32 @@ public class ActivePlayer {
         } else if (activeStone.isSimilar(ItemStones.earthStone0)) {
             moveController.getMove1().setMove(EarthStone.move2(this));
         } else if (activeStone.isSimilar(ItemStones.earthStone1)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
         } else if (activeStone.isSimilar(ItemStones.earthStone2)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneBending0)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(EarthbendingStone.move4(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneBending1)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(EarthbendingStone.move4(this));
             moveController.getMove5().setMove(EarthbendingStone.move5(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneBending2)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(EarthbendingStone.move4(this));
             moveController.getMove5().setMove(EarthbendingStone.move5(this));
             moveController.getMove6().setMove(EarthbendingStone.move6(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneBending3)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(EarthbendingStone.move4(this));
@@ -474,7 +473,7 @@ public class ActivePlayer {
             moveController.getMove6().setMove(EarthbendingStone.move6(this));
             moveController.getMove7().setMove(EarthbendingStone.move7(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneBending4)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(EarthbendingStone.move4(this));
@@ -483,25 +482,25 @@ public class ActivePlayer {
             moveController.getMove7().setMove(EarthbendingStone.move7(this));
             moveController.getMove8().setMove(EarthbendingStone.move8(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense0)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(DefenseStone.move4(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense1)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(DefenseStone.move4(this));
             moveController.getMove5().setMove(DefenseStone.move5(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense2)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(DefenseStone.move4(this));
             moveController.getMove5().setMove(DefenseStone.move5(this));
             moveController.getMove6().setMove(DefenseStone.move6(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense3)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(DefenseStone.move4(this));
@@ -509,7 +508,7 @@ public class ActivePlayer {
             moveController.getMove6().setMove(DefenseStone.move6(this));
             moveController.getMove7().setMove(DefenseStone.move7(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense4)) {
-            moveController.getMove1().setMove(EarthStone.move2(this));
+            moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
             moveController.getMove4().setMove(DefenseStone.move4(this));

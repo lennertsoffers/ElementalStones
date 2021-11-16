@@ -9,10 +9,12 @@ import org.bukkit.Material;
 import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
@@ -31,23 +33,55 @@ public class EarthStone {
     // -> Creates a pillar on the targeted location
     // -> If an entity collides with the pillar it flies up
     // -> The player will not get fall damage when he lands
-    public static Runnable move1(Player player, PlayerInteractEvent event, ElementalStones plugin) {
+    public static Runnable move1(ActivePlayer activePlayer) {
         return () -> {
-            if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-                Location location = Objects.requireNonNull(event.getClickedBlock()).getLocation();
-                Server server = player.getServer();
-                double playerX = player.getLocation().getX();
-                double playerZ = player.getLocation().getZ();
-                double blockX = location.getX();
-                double blockZ = location.getZ();
+            Player player = activePlayer.getPlayer();
+            Block targetBlock = player.getTargetBlockExact(20);
+            if (targetBlock != null) {
+                World world = player.getWorld();
+                Location targetLocation = targetBlock.getLocation();
+                Material material = targetBlock.getType();
+                Location location = player.getLocation();
+                if (targetBlock.getType().isSolid()) {
+                    if (
+                            world.getBlockAt(targetLocation.clone().add(0, 1, 0)).getType() == Material.AIR &&
+                                    world.getBlockAt(targetLocation.clone().add(0, 2, 0)).getType() == Material.AIR &&
+                                    world.getBlockAt(targetLocation.clone().add(0, 3, 0)).getType() == Material.AIR
+                    ) {
+                        for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
+                            entity.setVelocity(new Vector(0, 1, 0));
+                        }
+                        new BukkitRunnable() {
+                            int amountOfBlocks = 0;
 
-                if (CheckLocationTools.checkPlayerCollision(playerX, blockX) && CheckLocationTools.checkPlayerCollision(playerZ, blockZ)) {
-                    player.setVelocity(new Vector(0, 1, 0));
-                    server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        placePillar(location);
-                    }, 3L);
-                } else {
-                    placePillar(location);
+                            @Override
+                            public void run() {
+                                targetLocation.add(0, 1, 0);
+                                Material placeMaterial = material;
+                                if (
+                                        material == Material.DIAMOND_BLOCK ||
+                                                material == Material.NETHERITE_BLOCK ||
+                                                material == Material.IRON_BLOCK ||
+                                                material == Material.GOLD_BLOCK ||
+                                                material == Material.BEACON ||
+                                                material == Material.EMERALD_BLOCK ||
+                                                material == Material.DIAMOND_ORE ||
+                                                material == Material.ANCIENT_DEBRIS
+                                ) {
+                                    placeMaterial = Material.DIRT;
+                                }
+                                world.getBlockAt(targetLocation).setType(placeMaterial);
+                                for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
+                                    entity.setVelocity(new Vector(0, 1, 0));
+                                }
+
+                                amountOfBlocks++;
+                                if (amountOfBlocks > 2) {
+                                    this.cancel();
+                                }
+                            }
+                        }.runTaskTimer(StaticVariables.plugin, 3L, 1L);
+                    }
                 }
             }
         };
