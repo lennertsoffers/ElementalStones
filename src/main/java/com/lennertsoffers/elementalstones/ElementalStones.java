@@ -42,6 +42,7 @@ public final class ElementalStones extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("stoneInventory")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("giveItem")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("shamanMajor")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("saveDefaultConfig")).setExecutor(new Commands());
     }
 
     @Override

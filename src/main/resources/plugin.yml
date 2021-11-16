@@ -18,3 +18,5 @@ commands:
     description: Gives you the Rosemary Itemstack
   shamanMajor:
     description: Spawns in a shaman major
+  saveDefaultConfig:
+    description: Saves the default config file

@@ -22,6 +22,7 @@ public class Move {
         if (this.move != null) {
             if (this.blockedUntil < System.currentTimeMillis()) {
                 this.move.run();
+//                this.blockedUntil = System.currentTimeMillis() + cooldown;
                 return true;
             }
         }
