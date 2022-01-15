@@ -47,4 +47,33 @@ public class CheckLocationTools {
         }
         return false;
     }
+
+    public static Location getClosestAirBlockLocation(Location location) {
+        World world = location.getWorld();
+        if (world != null) {
+            Location startLocation = location.clone();
+            int difference = 0;
+
+            while (Math.abs(difference) <= 50) {
+                Location positiveLoopLocation = startLocation.clone().add(0, difference, 0);
+                Location negativeLoopLocation = startLocation.clone().add(0, -difference, 0);
+
+                if (
+                        world.getBlockAt(positiveLoopLocation).getType() == Material.AIR &&
+                        world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR
+                ) {
+                    return positiveLoopLocation.add(0, 0, 0);
+                } else if (
+                        world.getBlockAt(negativeLoopLocation).getType() == Material.AIR &&
+                        world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR
+                ) {
+                    return negativeLoopLocation.add(0, 0, 0);
+                }
+
+                difference++;
+            }
+        }
+
+        return null;
+    }
 }
