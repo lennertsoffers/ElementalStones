@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -19,173 +20,157 @@ import java.util.*;
 
 public class EarthbendingStone extends EarthStone {
 
-    private static void damageLivingEntities(World world, Location location, Player player) {
-        for (Entity entity : world.getNearbyEntities(location, 0.5, 3, 0.5)) {
-            if (entity instanceof LivingEntity) {
-                LivingEntity livingEntity = (LivingEntity) entity;
-                if (livingEntity != player) {
-                    livingEntity.setVelocity(new Vector(0, 1, 0));
-                    livingEntity.damage(10);
-                    livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 140, 2));
-                }
-            }
-        }
-    }
+    private static void earthWavePerpendicularNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {
 
-    private static void damageLivingEntitiesCollidedWithFallingBlock(Player player, FallingBlock fallingBlock, double amount) {
-        List<Entity> nearbyEntities = fallingBlock.getNearbyEntities(1, 1, 1);
-        if (!(nearbyEntities.isEmpty())) {
-            for (Entity entity : nearbyEntities) {
-                if (entity instanceof LivingEntity) {
-                    if (entity != player) {
-                        LivingEntity livingEntity = (LivingEntity) entity;
-                        livingEntity.damage(amount);
+        Player player = activePlayer.getPlayer();
+
+        World world = location.getWorld();
+        if (world == null) {
+            return;
+        }
+
+        int startX;
+        int startZ;
+        Vector additionRow;
+        Vector additionRowBlock;
+        Vector additionRowStage1;
+        Vector additionRowStage2;
+
+        if (perpendicular) {
+            if (var0) {
+                if (var1) {
+                    startX = 2;
+                    additionRow = new Vector(1, 0, 0);
+                } else {
+                    startX = -2;
+                    additionRow = new Vector(-1, 0, 0);
+                }
+                startZ = -1;
+                additionRowBlock = new Vector(0, 0, 1);
+            } else {
+                if (var1) {
+                    startZ = 2;
+                    additionRow = new Vector(0, 0, 1);
+                } else {
+                    startZ = -2;
+                    additionRow = new Vector(0, 0, -1);
+                }
+                startX = -1;
+                additionRowBlock = new Vector(1, 0, 0);
+            }
+
+            Location rowLocation = location.clone().add(startX, 0, startZ);
+            Vector velocity = new Vector(0, 0.3, 0);
+
+            new BukkitRunnable() {
+                int lengthOfWave = 0;
+
+                @Override
+                public void run() {
+                    Location blockOnRowLocation = rowLocation.clone();
+
+                    for (int i = 0; i < 3; i++) {
+                        Location launchBlockLocation = CheckLocationTools.getClosestAirBlockLocation(blockOnRowLocation);
+
+                        if (launchBlockLocation != null) {
+                            launchBlockLocation.add(0, -1, 0);
+                            spawnFallingBlock(launchBlockLocation, world, velocity, player);
+                        }
+
+                        blockOnRowLocation.add(additionRowBlock);
+                    }
+
+                    rowLocation.add(additionRow);
+
+                    lengthOfWave++;
+                    if (lengthOfWave >= 50) {
+                        this.cancel();
                     }
                 }
-            }
-        }
-    }
-
-    private static int checkAirBlocks(World world, Location location) {
-        int amountAdded = 0;
-        while (world.getBlockAt(location.getBlockX(), location.getBlockY() + 1, location.getBlockZ()).getType() != Material.AIR && amountAdded < 50) {
-            location.add(0, 1, 0);
-            amountAdded++;
-        }
-        while (world.getBlockAt(location).getType() == Material.AIR) {
-            location.add(0, -1, 0);
-            amountAdded--;
-        }
-        return amountAdded;
-    }
-
-    private static void earthWavePerpendicular(World world, Player player, boolean positive, boolean x) {
-        Location location = player.getLocation();
-        if (x) {
-            if (positive) {
-                location.add(1, -1, -1);
-            } else {
-                location.add(-1, -1, -1);
-            }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else {
-            if (positive) {
-                location.add(-1, -1, 1);
+            if (var0) {
+                if (var1) {
+                    startX = 3;
+                    startZ = 1;
+                    additionRowStage1 = new Vector(0, 0, 1);
+                    additionRowStage2 = new Vector(1, 0, 0);
+                    additionRowBlock = new Vector(-1, 0, 1);
+                } else {
+                    startX = -3;
+                    startZ = -1;
+                    additionRowStage1 = new Vector(0, 0, -1);
+                    additionRowStage2 = new Vector(-1, 0, 0);
+                    additionRowBlock = new Vector(1, 0, -1);
+                }
             } else {
-                location.add(-1, -1, -1);
+                if (var1) {
+                    startX = 3;
+                    startZ = -1;
+                    additionRowStage1 = new Vector(0, 0, -1);
+                    additionRowStage2 = new Vector(1, 0, 0);
+                    additionRowBlock = new Vector(-1, 0, -1);
+                } else {
+                    startX = -3;
+                    startZ = 1;
+                    additionRowStage1 = new Vector(0, 0, 1);
+                    additionRowStage2 = new Vector(-1, 0, 0);
+                    additionRowBlock = new Vector(1, 0, 1);
+                }
             }
+
+            Location rowLocation = location.clone().add(startX, 0, startZ);
+            Vector velocity = new Vector(0, 0.3, 0);
+
+            new BukkitRunnable() {
+                int lengthOfWave = 0;
+                int blocksToPlace = 3;
+
+                @Override
+                public void run() {
+                    Location blockOnRowLocation = rowLocation.clone();
+
+                    for (int i = 0; i < blocksToPlace; i++) {
+                        Location launchBlockLocation = CheckLocationTools.getClosestAirBlockLocation(blockOnRowLocation);
+
+                        if (launchBlockLocation != null) {
+                            launchBlockLocation.add(0, -1, 0);
+                            spawnFallingBlock(launchBlockLocation, world, velocity, player);
+                        }
+
+                        blockOnRowLocation.add(additionRowBlock);
+                    }
+
+
+                    if (blocksToPlace == 3) {
+                        rowLocation.add(additionRowStage1);
+                        blocksToPlace = 2;
+                    } else {
+                        rowLocation.add(additionRowStage2);
+                        blocksToPlace = 3;
+                    }
+
+                    lengthOfWave++;
+                    if (lengthOfWave >= 50) {
+                        this.cancel();
+                    }
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         }
-
-        new BukkitRunnable() {
-            int counter = 0;
-            int amountAdded = 0;
-
-            private void spawnFlyingBlocks() {
-                amountAdded = checkAirBlocks(world, location);
-                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
-                world.getBlockAt(location).setType(Material.AIR);
-                damageLivingEntities(world, location, player);
-                if (x) {
-                    location.add(0, -amountAdded, 1);
-                } else {
-                    location.add(1, -amountAdded, 0);
-                }
-            }
-            @Override
-            public void run() {
-                spawnFlyingBlocks();
-                spawnFlyingBlocks();
-                amountAdded = checkAirBlocks(world, location);
-                world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData()).setVelocity(new Vector(0, 0.3, 0));
-                world.getBlockAt(location).setType(Material.AIR);
-                damageLivingEntities(world, location, player);
-
-                if (x) {
-                    if (positive) {
-                        location.add(1, 0, -2);
-                    } else {
-                        location.add(-1, 0, -2);
-                    }
-                } else {
-                    if (positive) {
-                        location.add(-2, 0, 1);
-                    } else {
-                        location.add(-2, 0, -1);
-                    }
-                }
-                location.add(0, -amountAdded, 0);
-                counter++;
-                if (counter > 24) {
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
     }
 
-    private static void earthWaveDiagonal(World world, Player player, boolean positive, boolean x) {
-        Location location = player.getLocation();
-        if (x) {
-            if (positive) {
-                location.add(2, -1, 0);
-            } else {
-                location.add(0, -1, -2);
-            }
-        } else {
-            if (positive) {
-                location.add(0, -1, 2);
-            } else {
-                location.add(2, -1, 0);
-            }
-        }
+    private static void spawnFallingBlock(Location location, World world, Vector velocity, Player player) {
+        Block launchBlock = world.getBlockAt(location);
+        FallingBlock fallingBlock = world.spawnFallingBlock(location, launchBlock.getBlockData());
+        fallingBlock.setDropItem(false);
+        fallingBlock.setVelocity(velocity);
+        launchBlock.setType(Material.AIR);
 
-        new BukkitRunnable() {
-            int counter = 0;
-            int amountAdded = 0;
+        Vector direction = new Vector(0, 1, 0);
+        List<PotionEffect> potionEffects = new ArrayList<>();
+        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 100, 1, true, true, true));
 
-            private void spawnFlyingBlocks() {
-                amountAdded = checkAirBlocks(world, location);
-                FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
-                fallingBlock.setDropItem(false);
-                fallingBlock.setVelocity(new Vector(0, 0.3, 0));
-                world.getBlockAt(location).setType(Material.AIR);
-                damageLivingEntities(world, location, player);
-                if (x) {
-                    location.add(-1, 0, 1);
-                } else {
-                    location.add(-1, 0, -1);
-                }
-            }
-            @Override
-            public void run() {
-                spawnFlyingBlocks();
-                if (counter % 2 == 0) {
-                    spawnFlyingBlocks();
-                }
-                amountAdded = checkAirBlocks(world, location);
-                FallingBlock fallingBlock = world.spawnFallingBlock(location, world.getBlockAt(location).getBlockData());
-                fallingBlock.setDropItem(false);
-                fallingBlock.setVelocity(new Vector(0, 0.3, 0));
-                damageLivingEntities(world, location, player);
-                world.getBlockAt(location).setType(Material.AIR);
-
-                if (x) {
-                    if (positive) {
-                        location.add(2, 0, -1);
-                    } else {
-                        location.add(1, 0, -2);
-                    }
-                } else {
-                    if (positive) {
-                        location.add(1, 0, 2);
-                    } else {
-                        location.add(2, 0, 1);
-                    }
-                }
-                counter++;
-                if (counter > 24) {
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
+        NearbyEntityTools.damageNearbyEntities(player, location, 0, 1.5, 1.5, 1.5, direction ,potionEffects);
     }
 
     private static void spikeWavePerpendicular(Location location, boolean var0, boolean var1, boolean perpendicular, Player player) {
@@ -524,7 +509,7 @@ public class EarthbendingStone extends EarthStone {
                     activePlayer.getMove6LaunchedFallingBlocks().add(fallingBlock);
                 }
 
-                activePlayer.clearMove6FallingBlocks();
+                activePlayer.getMove6FallingBlocks().clear();
             }
         };
     }
@@ -536,23 +521,27 @@ public class EarthbendingStone extends EarthStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location location = player.getLocation();
-            float yaw = Math.abs(location.getYaw());
-            if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-                earthWavePerpendicular(player.getWorld(), player, true, false);
+            float yaw = location.getYaw();
+            if (yaw > -25 && yaw < 25) {
+                earthWavePerpendicularNew(location, false, true, true, activePlayer);
             } else if (yaw >= 25 && yaw < 65) {
-                earthWaveDiagonal(player.getWorld(), player, true, false);
+                System.out.println("1");
+                earthWavePerpendicularNew(location, false, false, false, activePlayer);
             } else if (yaw >= 65 && yaw < 115) {
-                earthWavePerpendicular(player.getWorld(), player, false, true);
+                earthWavePerpendicularNew(location, true, false, true, activePlayer);
             } else if (yaw >= 115 && yaw < 155) {
-                earthWaveDiagonal(player.getWorld(), player, false, true);
-            } else if (yaw >= 155 && yaw < 205) {
-                earthWavePerpendicular(player.getWorld(), player, false, false);
-            } else if (yaw >= 205 && yaw < 245) {
-                earthWaveDiagonal(player.getWorld(), player, false, false);
-            } else if (yaw >= 245 && yaw < 295) {
-                earthWavePerpendicular(player.getWorld(), player, true, true);
+                System.out.println("2");
+                earthWavePerpendicularNew(location, true, false, false, activePlayer);
+            } else if (yaw < -155 || yaw > 155) {
+                earthWavePerpendicularNew(location, false, false, true, activePlayer);
+            } else if (yaw <= -25 && yaw > -65) {
+                System.out.println("3");
+                earthWavePerpendicularNew(location, true, true, false, activePlayer);
+            } else if (yaw <= -65 && yaw > -115) {
+                earthWavePerpendicularNew(location, true, true, true, activePlayer);
             } else {
-                earthWaveDiagonal(player.getWorld(), player, true, true);
+                System.out.println("4");
+                earthWavePerpendicularNew(location, false, true, false, activePlayer);
             }
         };
     }
@@ -566,71 +555,7 @@ public class EarthbendingStone extends EarthStone {
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            if (activePlayer.getMove8Stage() > 0 && activePlayer.getMove8FallingBlocks() == null) {
-                activePlayer.setMove8Stage(0);
-                activePlayer.setMove8FallingBlocks(null);
-            }
-            if (activePlayer.getMove8Stage() == 0) {
-                World world = player.getWorld();
-                Location location = player.getLocation();
-                List<FallingBlock> fallingBlocks = new ArrayList<>();
-                fallingBlocks.add(world.spawnFallingBlock(location.add(3, -1, -1), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, 2), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 2), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, 0), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(-2, 0, -2), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(0, 0, -2), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, -2), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                fallingBlocks.add(world.spawnFallingBlock(location.add(2, 0, 0), location.getBlock().getBlockData()));
-                world.getBlockAt(location).setType(Material.AIR);
-                for (FallingBlock fallingBlock : fallingBlocks) {
-                    fallingBlock.setDropItem(false);
-                    fallingBlock.setVelocity(new Vector(0, 1, 0));
-                }
-                activePlayer.setMove8FallingBlocks(fallingBlocks);
-                activePlayer.increaseMove8Stage();
-            } else if (activePlayer.getMove8Stage() == 1) {
-                Vector direction = player.getLocation().getDirection();
-                for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
-                    fallingBlock.setVelocity(new Vector(direction.getX() * 4, direction.getY() * 4, direction.getZ() * 4));
-                    new BukkitRunnable() {
-                        int tickCount = 0;
 
-                        @Override
-                        public void run() {
-                            damageLivingEntitiesCollidedWithFallingBlock(player, fallingBlock, 7.5);
-                            tickCount++;
-                            if (tickCount >= 100) {
-                                this.cancel();
-                            }
-                        }
-                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                }
-                activePlayer.increaseMove8Stage();
-            } else if (activePlayer.getMove8Stage() == 2) {
-                Location playerLocation = player.getLocation();
-                double playerX = playerLocation.getX();
-                double playerY = playerLocation.getY();
-                double playerZ = playerLocation.getZ();
-                for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
-                    Location fallingBlockLocation = fallingBlock.getLocation();
-                    double fallingBlockX = fallingBlockLocation.getX();
-                    double fallingBlockY = fallingBlockLocation.getY();
-                    double fallingBlockZ = fallingBlockLocation.getZ();
-                    double length = MathTools.lengthOfVector(playerX, fallingBlockX, playerY, fallingBlockY, playerZ, fallingBlockZ);
-                    fallingBlock.setVelocity(new Vector(-(fallingBlockX - playerX) / length * 5, -(fallingBlockY - playerY) / length * 2, -(fallingBlockZ - playerZ) / length * 5));
-                }
-                activePlayer.setMove8FallingBlocks(null);
-            } else {
-                activePlayer.setMove8Stage(0);
-            }
         };
     }
 }

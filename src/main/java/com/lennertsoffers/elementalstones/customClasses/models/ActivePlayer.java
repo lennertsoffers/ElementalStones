@@ -44,6 +44,7 @@ public class ActivePlayer {
     // Earth Stone
     private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> move7FallingBlocks = new ArrayList<>();
     private List<FallingBlock> move8FallingBlocks;
     private int move8Stage = 0;
 
@@ -100,8 +101,7 @@ public class ActivePlayer {
             this.resetWorld();
             player.setAllowFlight(false);
 
-            this.getMove6LaunchedFallingBlocks().clear();
-            this.getMove6FallingBlocks().clear();
+            clearMoves();
 
             IceStone.passive1(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
@@ -524,9 +524,23 @@ public class ActivePlayer {
         }
     }
 
+    private void clearMoves() {
+        List<FallingBlock> allFallingBlocks = new ArrayList<>();
+        allFallingBlocks.addAll(this.getMove6FallingBlocks());
+        allFallingBlocks.addAll(this.getMove6LaunchedFallingBlocks());
+
+        for (FallingBlock fallingBlock : allFallingBlocks) {
+            fallingBlock.remove();
+        }
+
+        this.getMove6LaunchedFallingBlocks().clear();
+        this.getMove6FallingBlocks().clear();
+    }
+
     public void resetWorld() {
         this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
     }
+
 
     public void addOverrideLocation(Location location) {
         if (!this.overrideLocations.contains(location)) {
@@ -536,10 +550,6 @@ public class ActivePlayer {
 
     public List<FallingBlock> getMove6FallingBlocks() {
         return this.move6FallingBlocks;
-    }
-
-    public void clearMove6FallingBlocks() {
-        move6FallingBlocks.clear();
     }
 
     public List<FallingBlock> getMove6LaunchedFallingBlocks() {

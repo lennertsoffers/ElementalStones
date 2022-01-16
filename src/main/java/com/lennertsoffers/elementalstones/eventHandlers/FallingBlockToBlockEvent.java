@@ -5,6 +5,7 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class FallingBlockToBlockEvent implements Listener {
 
@@ -15,9 +16,6 @@ public class FallingBlockToBlockEvent implements Listener {
             FallingBlock fallingBlock = (FallingBlock) e.getEntity();
 
             for (ActivePlayer activePlayer : ActivePlayer.getActivePlayers()) {
-
-                System.out.println(activePlayer.getMove6LaunchedFallingBlocks());
-
                 if (activePlayer.getMove6LaunchedFallingBlocks().contains(fallingBlock)) {
                     e.setCancelled(true);
                     activePlayer.getMove6LaunchedFallingBlocks().remove(fallingBlock);
