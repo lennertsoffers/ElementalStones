@@ -4,8 +4,6 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
-import com.sun.javafx.scene.control.skin.TooltipSkin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -21,6 +19,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -195,28 +194,51 @@ public class EarthbendingStone extends EarthStone {
         }.runTaskTimer(StaticVariables.plugin, 0L, 2L);
     }
 
-    private static void spikeWavePerpendicular(Location location, boolean x, boolean positiveDirection) {
+    private static void spikeWavePerpendicular(Location location, boolean var0, boolean var1, boolean perpendicular, Player player) {
 
         World world = location.getWorld();
         if (world == null) {
             return;
         }
 
+        // Determines the shape of the spikes of the arguments given
         int startX;
         int startZ;
-        if (x) {
-            startX = 2;
-            startZ = 0;
+
+        if (perpendicular) {
+            if (var0) {
+                startX = 2;
+                startZ = 0;
+            } else {
+                startX = 0;
+                startZ = 2;
+            }
+
+            if (!var1) {
+                startX *= -1;
+                startZ *= -1;
+            }
         } else {
-            startX = 0;
-            startZ = 2;
+            if (var0) {
+                if (var1) {
+                    startX = 2;
+                    startZ = 2;
+                } else {
+                    startX = 2;
+                    startZ = -2;
+                }
+            } else {
+                if (var1) {
+                    startX = -2;
+                    startZ = 2;
+                } else {
+                    startX = -2;
+                    startZ = -2;
+                }
+            }
         }
 
-        if (!positiveDirection) {
-            startX *= -1;
-            startZ *= -1;
-        }
-
+        // Creates a list with all the base locations for the spikes
         List<List<Location>> spikeRows = new ArrayList<>();
         Location startLocation = location.add(startX, 0, startZ);
 
@@ -228,25 +250,43 @@ public class EarthbendingStone extends EarthStone {
 
             Vector startLocationAdditionVector;
             Vector rowLocationAdditionVector;
-            if (x) {
-                if (positiveDirection) {
-                    startLocationAdditionVector = new Vector(j, 0, -width);
+            if (perpendicular) {
+                if (var0) {
+                    if (var1) {
+                        startLocationAdditionVector = new Vector(j, 0, -width);
+                    } else {
+                        startLocationAdditionVector = new Vector(-j, 0, -width);
+                    }
+                    rowLocationAdditionVector = new Vector(0, 0, 1);
                 } else {
-                    startLocationAdditionVector = new Vector(-j, 0, -width);
+                    if (var1) {
+                        startLocationAdditionVector = new Vector(-width, 0, j);
+                    } else {
+                        startLocationAdditionVector = new Vector(-width, 0, -j);
+                    }
+                    rowLocationAdditionVector = new Vector(1, 0, 0);
                 }
-                rowLocationAdditionVector = new Vector(0, 0, 1);
             } else {
-                if (positiveDirection) {
-                    startLocationAdditionVector = new Vector(-width, 0, j);
+                if (var0) {
+                    if (var1) {
+                        rowLocationAdditionVector = new Vector(-1, 0, 1);
+                    } else {
+                        rowLocationAdditionVector = new Vector(-1, 0, -1);
+                    }
+                    startLocationAdditionVector = new Vector(j, 0, 0);
                 } else {
-                    startLocationAdditionVector = new Vector(-width, 0, -j);
+                    if (var1) {
+                        rowLocationAdditionVector = new Vector(1, 0, 1);
+                    } else {
+                        rowLocationAdditionVector = new Vector(1, 0, -1);
+                    }
+                    startLocationAdditionVector = new Vector(-j, 0, 0);
                 }
-                rowLocationAdditionVector = new Vector(1, 0, 0);
             }
 
             Location rowLocation = startLocation.clone().add(startLocationAdditionVector);
             for (int i = 0; i < widthParam; i++) {
-                row.add(rowLocation.clone());
+                row.add(CheckLocationTools.getClosestAirBlockLocation(rowLocation.clone()));
                 rowLocation.add(rowLocationAdditionVector);
             }
 
@@ -257,6 +297,7 @@ public class EarthbendingStone extends EarthStone {
             }
         }
 
+        // Placement of spikes
         new BukkitRunnable() {
             int rowIndex = 0;
 
@@ -266,33 +307,45 @@ public class EarthbendingStone extends EarthStone {
                 List<Location> spikeRow = spikeRows.get(rowIndex);
 
                 for (Location loc : spikeRow) {
-                    Location spikeLocation = CheckLocationTools.getClosestAirBlockLocation(loc);
 
-                    if (spikeLocation != null) {
-                        Location spikeBlockLocation = spikeLocation.clone();
+                    Location spikeBlockLocation = loc.clone();
 
-                        new BukkitRunnable() {
-                            int i;
-                            final int maxHeight = rowIndex;
+                    new BukkitRunnable() {
+                        int i;
+                        final int maxHeight = rowIndex;
 
-                            @Override
-                            public void run() {
-                                Block spikeBlock = world.getBlockAt(spikeBlockLocation);
-                                if (spikeBlock.getType() == Material.AIR) {
-                                    spikeBlock.setType(Material.POINTED_DRIPSTONE);
-                                    spikeBlockLocation.add(0, 1, 0);
-                                } else {
-                                    this.cancel();
+                        @Override
+                        public void run() {
+                            Block spikeBlock = world.getBlockAt(spikeBlockLocation);
+                            if (spikeBlock.getType() == Material.AIR) {
+
+                                Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
+                                if (!nearbyEntities.isEmpty()) {
+                                    for (Entity entity : nearbyEntities) {
+                                        if (entity instanceof LivingEntity) {
+                                            LivingEntity livingEntity = (LivingEntity) entity;
+
+                                            if (livingEntity != player) {
+                                                livingEntity.damage(2, player);
+                                                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                            }
+                                        }
+                                    }
                                 }
 
-                                if (i >= maxHeight) {
-                                    this.cancel();
-                                }
-
-                                i++;
+                                spikeBlock.setType(Material.POINTED_DRIPSTONE);
+                                spikeBlockLocation.add(0, 1, 0);
+                            } else {
+                                this.cancel();
                             }
-                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                    }
+
+                            if (i >= maxHeight) {
+                                this.cancel();
+                            }
+
+                            i++;
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
                 }
 
                 rowIndex++;
@@ -301,116 +354,34 @@ public class EarthbendingStone extends EarthStone {
                     this.cancel();
                 }
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
-    }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
 
-    private static void spikeWaveDiagonal(Location location, boolean var0, boolean var1) {
-        World world = location.getWorld();
-        if (world == null) {
-            return;
-        }
-
-        int startX;
-        int startZ;
-        if (var0) {
-            if (var1) {
-                startX = 2;
-                startZ = 2;
-            } else {
-                startX = -2;
-                startZ = -2;
-            }
-        } else {
-            if (var1) {
-                startX = -2;
-                startZ = 2;
-            } else {
-                startX = 2;
-                startZ = -2;
-            }
-        }
-
-        List<List<Location>> spikeRows = new ArrayList<>();
-        Location startLocation = location.add(startX, 0, startZ);
-
-        int widthParam = 2;
-
-        for (int j = 1; j < 7; j++) {
-            List<Location> row = new ArrayList<>();
-
-            Vector startLocationAdditionVector;
-            Vector rowLocationAdditionVector;
-            if (var0) {
-                if (var1) {
-                    rowLocationAdditionVector = new Vector(-1, 0, 1);
-                } else {
-                    rowLocationAdditionVector = new Vector(1, 0, -1);
-                }
-                startLocationAdditionVector = new Vector(j, 0, 0);
-            } else {
-                if (var1) {
-                    rowLocationAdditionVector = new Vector(1, 0, 1);
-                } else {
-                    rowLocationAdditionVector = new Vector(-1, 0, -1);
-                }
-                startLocationAdditionVector = new Vector(-j, 0, 0);
-            }
-
-            Location rowLocation = startLocation.clone().add(startLocationAdditionVector);
-            for (int i = 0; i < widthParam; i++) {
-                row.add(rowLocation.clone());
-                rowLocation.add(rowLocationAdditionVector);
-            }
-
-            spikeRows.add(row);
-            widthParam++;
-        }
-
+        // Removal of spikes
         new BukkitRunnable() {
-            int rowIndex = 0;
+            int iterations = 5;
 
             @Override
             public void run() {
+                for (int i = iterations; i >= 0; i--) {
+                    List<Location> row = spikeRows.get(i);
 
-                List<Location> spikeRow = spikeRows.get(rowIndex);
+                    for (Location spikeLocation : row) {
+                        Block block = world.getBlockAt(spikeLocation.clone().add(0, i, 0));
 
-                for (Location loc : spikeRow) {
-                    Location spikeLocation = CheckLocationTools.getClosestAirBlockLocation(loc);
-
-                    if (spikeLocation != null) {
-                        Location spikeBlockLocation = spikeLocation.clone();
-
-                        new BukkitRunnable() {
-                            int i;
-                            final int maxHeight = rowIndex;
-
-                            @Override
-                            public void run() {
-                                Block spikeBlock = world.getBlockAt(spikeBlockLocation);
-                                if (spikeBlock.getType() == Material.AIR) {
-                                    spikeBlock.setType(Material.POINTED_DRIPSTONE);
-                                    spikeBlockLocation.add(0, 1, 0);
-                                } else {
-                                    this.cancel();
-                                }
-
-                                if (i >= maxHeight) {
-                                    this.cancel();
-                                }
-
-                                i++;
-                            }
-                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                        if (block.getType() == Material.POINTED_DRIPSTONE) {
+                            block.setType(Material.AIR);
+                        }
                     }
                 }
+                spikeRows.remove(0);
 
-                rowIndex++;
-
-                if (rowIndex == spikeRows.size()) {
+                if (iterations == 0) {
                     this.cancel();
                 }
+
+                iterations--;
             }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+        }.runTaskTimer(StaticVariables.plugin, 60L, 3L);
     }
 
 
@@ -443,9 +414,9 @@ public class EarthbendingStone extends EarthStone {
 
 
     // MOVE 4
-    // Rock Throw
-    // -> Following up to flying rock
-    // -> Shoots the flying rock in the looking direction of the player
+    // Earth Spikes
+    // Summons an array of spikes out of the ground in the players looking direction
+    // Entities hurt get mining fatigue for a brief moment
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -453,33 +424,31 @@ public class EarthbendingStone extends EarthStone {
             Vector direction = location.getDirection();
             direction.setY(0);
 
-//            System.out.println(location.getYaw());
-
             float yaw = location.getYaw();
             if (yaw > -25 && yaw < 25) {
                 System.out.println("section 1");
-                spikeWavePerpendicular(location, false, true);
+                spikeWavePerpendicular(location, false, true, true, player);
             } else if (yaw >= 25 && yaw < 65) {
                 System.out.println("section 2");
-                spikeWaveDiagonal(location, false, true);
+                spikeWavePerpendicular(location, false, true, false, player);
             } else if (yaw >= 65 && yaw < 115) {
                 System.out.println("section 3");
-                spikeWavePerpendicular(location, true, false);
+                spikeWavePerpendicular(location, true, false, true, player);
             } else if (yaw >= 115 && yaw < 155) {
                 System.out.println("section 4");
-                spikeWaveDiagonal(location, false, true);
+                spikeWavePerpendicular(location, false, false, false, player);
             } else if (yaw < -155 || yaw > 155) {
                 System.out.println("section 5");
-                spikeWavePerpendicular(location, false, false);
+                spikeWavePerpendicular(location, false, false, true, player);
             } else if (yaw <= -25 && yaw > -65) {
                 System.out.println("section 6");
-                spikeWaveDiagonal(location, true, true);
+                spikeWavePerpendicular(location, true, true, false, player);
             } else if (yaw <= -65 && yaw > -115) {
                 System.out.println("section 7");
-                spikeWavePerpendicular(location, true, true);
+                spikeWavePerpendicular(location, true, true, true, player);
             } else {
                 System.out.println("section 8");
-                spikeWaveDiagonal(location, true, false);
+                spikeWavePerpendicular(location, true, false, false, player);
             }
         };
     }
