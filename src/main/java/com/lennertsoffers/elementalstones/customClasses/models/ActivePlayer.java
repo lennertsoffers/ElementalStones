@@ -42,7 +42,9 @@ public class ActivePlayer {
     private final MoveController moveController = new MoveController();
 
     // Earth Stone
-    private FallingBlock fallingBlock;
+    private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> move7FallingBlocks = new ArrayList<>();
     private List<FallingBlock> move8FallingBlocks;
     private int move8Stage = 0;
 
@@ -98,6 +100,9 @@ public class ActivePlayer {
 //            }
             this.resetWorld();
             player.setAllowFlight(false);
+
+            clearMoves();
+
             IceStone.passive1(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
@@ -519,9 +524,23 @@ public class ActivePlayer {
         }
     }
 
+    private void clearMoves() {
+        List<FallingBlock> allFallingBlocks = new ArrayList<>();
+        allFallingBlocks.addAll(this.getMove6FallingBlocks());
+        allFallingBlocks.addAll(this.getMove6LaunchedFallingBlocks());
+
+        for (FallingBlock fallingBlock : allFallingBlocks) {
+            fallingBlock.remove();
+        }
+
+        this.getMove6LaunchedFallingBlocks().clear();
+        this.getMove6FallingBlocks().clear();
+    }
+
     public void resetWorld() {
         this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
     }
+
 
     public void addOverrideLocation(Location location) {
         if (!this.overrideLocations.contains(location)) {
@@ -529,25 +548,12 @@ public class ActivePlayer {
         }
     }
 
-    public void clearOverrideLocations() {
-        this.overrideLocations.clear();
+    public List<FallingBlock> getMove6FallingBlocks() {
+        return this.move6FallingBlocks;
     }
 
-    public ArrayList<Location> getOverrideLocations() {
-        return this.overrideLocations;
-    }
-
-    public FallingBlock getFallingBlock() {
-        return this.fallingBlock;
-    }
-
-    private void setFallingBlockValue(FallingBlock fallingBlock) {
-        this.fallingBlock = fallingBlock;
-    }
-
-    public void setFallingBlock(FallingBlock fallingBlock) {
-        setFallingBlockValue(fallingBlock);
-        StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> setFallingBlockValue(null), 100L);
+    public List<FallingBlock> getMove6LaunchedFallingBlocks() {
+        return this.move6LaunchedFallingBlocks;
     }
 
     public List<FallingBlock> getMove8FallingBlocks() {

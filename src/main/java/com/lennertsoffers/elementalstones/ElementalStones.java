@@ -35,6 +35,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
         getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this);
         getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this);
+        getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this);
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
