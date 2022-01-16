@@ -96,13 +96,9 @@ public class DefenseStone extends EarthStone {
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            FallingBlock move4Block = activePlayer.getFallingBlock();
-            if (move4Block == null) {
-                return;
-            }
+
             World world = player.getWorld();
-            Location location = move4Block.getLocation();
-            move4Block.remove();
+            Location location = player.getLocation();
             new BukkitRunnable() {
                 int counter = 0;
 

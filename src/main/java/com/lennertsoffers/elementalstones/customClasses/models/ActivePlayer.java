@@ -42,7 +42,8 @@ public class ActivePlayer {
     private final MoveController moveController = new MoveController();
 
     // Earth Stone
-    private FallingBlock fallingBlock;
+    private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
     private List<FallingBlock> move8FallingBlocks;
     private int move8Stage = 0;
 
@@ -98,6 +99,10 @@ public class ActivePlayer {
 //            }
             this.resetWorld();
             player.setAllowFlight(false);
+
+            this.getMove6LaunchedFallingBlocks().clear();
+            this.getMove6FallingBlocks().clear();
+
             IceStone.passive1(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
@@ -529,25 +534,16 @@ public class ActivePlayer {
         }
     }
 
-    public void clearOverrideLocations() {
-        this.overrideLocations.clear();
+    public List<FallingBlock> getMove6FallingBlocks() {
+        return this.move6FallingBlocks;
     }
 
-    public ArrayList<Location> getOverrideLocations() {
-        return this.overrideLocations;
+    public void clearMove6FallingBlocks() {
+        move6FallingBlocks.clear();
     }
 
-    public FallingBlock getFallingBlock() {
-        return this.fallingBlock;
-    }
-
-    private void setFallingBlockValue(FallingBlock fallingBlock) {
-        this.fallingBlock = fallingBlock;
-    }
-
-    public void setFallingBlock(FallingBlock fallingBlock) {
-        setFallingBlockValue(fallingBlock);
-        StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> setFallingBlockValue(null), 100L);
+    public List<FallingBlock> getMove6LaunchedFallingBlocks() {
+        return this.move6LaunchedFallingBlocks;
     }
 
     public List<FallingBlock> getMove8FallingBlocks() {

@@ -4,10 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
@@ -18,10 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class EarthbendingStone extends EarthStone {
 
@@ -505,32 +499,33 @@ public class EarthbendingStone extends EarthStone {
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            Location location = Objects.requireNonNull(player.getTargetBlockExact(20)).getLocation().add(2, 1, -1);
             World world = player.getWorld();
-            new BukkitRunnable() {
-                int counter = 0;
 
-                @Override
-                public void run() {
-                    world.getBlockAt(location).setType(Material.STONE);
-                    world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(0, 0, 1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(-1, 0, 1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
-                    world.getBlockAt(location.add(-1, 0, 0)).setType(Material.STONE);
-                    world.getBlockAt(location.add(-1, 0, -1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(0, 0, -1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(1, 0, -1)).setType(Material.STONE);
-                    world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
-                    world.getBlockAt(location.add(1, 0, 0)).setType(Material.STONE);
-                    location.add(1, 1, 1);
-                    counter++;
-                    if (!(counter < 3)) {
-                        this.cancel();
-                    }
+            // Select blocks to shoot
+            if (!player.isSneaking()) {
+                Block block = player.getTargetBlockExact(80, FluidCollisionMode.NEVER);
+
+                if (block != null && block.getType().isSolid()) {
+                    FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getBlockData());
+                    fallingBlock.setVelocity(new Vector(0, 0.8, 0));
+                    fallingBlock.setDropItem(false);
+
+                    activePlayer.addLocationMaterialMapping(block.getLocation(), block.getType());
+                    block.setType(Material.AIR);
+
+                    activePlayer.getMove6FallingBlocks().add(fallingBlock);
                 }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }
+
+            // Shoot selected blocks in looking direction
+            else {
+                for (FallingBlock fallingBlock : activePlayer.getMove6FallingBlocks()) {
+                    fallingBlock.setVelocity(player.getLocation().getDirection().multiply(3));
+                    activePlayer.getMove6LaunchedFallingBlocks().add(fallingBlock);
+                }
+
+                activePlayer.clearMove6FallingBlocks();
+            }
         };
     }
 
