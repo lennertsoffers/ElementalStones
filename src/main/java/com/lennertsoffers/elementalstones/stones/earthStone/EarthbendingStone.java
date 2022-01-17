@@ -3,7 +3,6 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -490,6 +489,10 @@ public class EarthbendingStone extends EarthStone {
             if (!player.isSneaking()) {
                 Block block = player.getTargetBlockExact(80, FluidCollisionMode.NEVER);
 
+                if (block != null && !block.getType().isSolid() && !block.getType().isAir()) {
+                    block = world.getBlockAt(block.getLocation().add(0, -1, 0));
+                }
+
                 if (block != null && block.getType().isSolid()) {
                     FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getBlockData());
                     fallingBlock.setVelocity(new Vector(0, 0.8, 0));
@@ -504,9 +507,22 @@ public class EarthbendingStone extends EarthStone {
 
             // Shoot selected blocks in looking direction
             else {
+                Vector direction = player.getLocation().getDirection();
                 for (FallingBlock fallingBlock : activePlayer.getMove6FallingBlocks()) {
-                    fallingBlock.setVelocity(player.getLocation().getDirection().multiply(3));
+                    fallingBlock.setVelocity(direction.clone().multiply(3));
                     activePlayer.getMove6LaunchedFallingBlocks().add(fallingBlock);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            if (!fallingBlock.isDead()) {
+                                NearbyEntityTools.damageNearbyEntities(player, fallingBlock.getLocation(), 4, 1.5, 1.5, 1.5, direction);
+                            } else {
+                                System.out.println("fallingblock removed");
+                                this.cancel();
+                            }
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
                 }
 
                 activePlayer.getMove6FallingBlocks().clear();
