@@ -158,9 +158,10 @@ public class EarthbendingStone extends EarthStone {
         }
     }
 
-    private static void spawnFallingBlock(Location location, World world, Vector velocity, Player player) {
+    private static void spawnFallingBlock(Location l, World world, Vector velocity, Player player) {
+        Location location = new Location(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
         Block launchBlock = world.getBlockAt(location);
-        FallingBlock fallingBlock = world.spawnFallingBlock(location, launchBlock.getBlockData());
+        FallingBlock fallingBlock = world.spawnFallingBlock(location.clone().add(0.5, 0, 0.5), launchBlock.getBlockData());
         fallingBlock.setDropItem(false);
         fallingBlock.setVelocity(velocity);
         launchBlock.setType(Material.AIR);
@@ -285,45 +286,46 @@ public class EarthbendingStone extends EarthStone {
                 List<Location> spikeRow = spikeRows.get(rowIndex);
 
                 for (Location loc : spikeRow) {
+                    if (loc != null) {
+                        Location spikeBlockLocation = loc.clone();
 
-                    Location spikeBlockLocation = loc.clone();
+                        new BukkitRunnable() {
+                            int i;
+                            final int maxHeight = rowIndex;
 
-                    new BukkitRunnable() {
-                        int i;
-                        final int maxHeight = rowIndex;
+                            @Override
+                            public void run() {
+                                Block spikeBlock = world.getBlockAt(spikeBlockLocation);
+                                if (spikeBlock.getType() == Material.AIR) {
 
-                        @Override
-                        public void run() {
-                            Block spikeBlock = world.getBlockAt(spikeBlockLocation);
-                            if (spikeBlock.getType() == Material.AIR) {
+                                    Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
+                                    if (!nearbyEntities.isEmpty()) {
+                                        for (Entity entity : nearbyEntities) {
+                                            if (entity instanceof LivingEntity) {
+                                                LivingEntity livingEntity = (LivingEntity) entity;
 
-                                Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
-                                if (!nearbyEntities.isEmpty()) {
-                                    for (Entity entity : nearbyEntities) {
-                                        if (entity instanceof LivingEntity) {
-                                            LivingEntity livingEntity = (LivingEntity) entity;
-
-                                            if (livingEntity != player) {
-                                                livingEntity.damage(2, player);
-                                                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                                if (livingEntity != player) {
+                                                    livingEntity.damage(2, player);
+                                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                                }
                                             }
                                         }
                                     }
+
+                                    spikeBlock.setType(Material.POINTED_DRIPSTONE);
+                                    spikeBlockLocation.add(0, 1, 0);
+                                } else {
+                                    this.cancel();
                                 }
 
-                                spikeBlock.setType(Material.POINTED_DRIPSTONE);
-                                spikeBlockLocation.add(0, 1, 0);
-                            } else {
-                                this.cancel();
-                            }
+                                if (i >= maxHeight) {
+                                    this.cancel();
+                                }
 
-                            if (i >= maxHeight) {
-                                this.cancel();
+                                i++;
                             }
-
-                            i++;
-                        }
-                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    }
                 }
 
                 rowIndex++;
@@ -347,7 +349,7 @@ public class EarthbendingStone extends EarthStone {
                         Block block = world.getBlockAt(spikeLocation.clone().add(0, i, 0));
 
                         if (block.getType() == Material.POINTED_DRIPSTONE) {
-                            block.setType(Material.AIR);
+                            block.setType(Material.GOLD_BLOCK);
                         }
                     }
                 }
@@ -478,8 +480,9 @@ public class EarthbendingStone extends EarthStone {
     }
 
     // MOVE 6
-    // Earth Prison
-    // Creates an hard to escape prison at the targeted block
+    // Rock Throw
+    // Select a set of blocks by doing this move on them
+    // Shoot the selected blocks in your looking direction by crouching and executing this move
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -541,22 +544,18 @@ public class EarthbendingStone extends EarthStone {
             if (yaw > -25 && yaw < 25) {
                 earthWavePerpendicularNew(location, false, true, true, activePlayer);
             } else if (yaw >= 25 && yaw < 65) {
-                System.out.println("1");
                 earthWavePerpendicularNew(location, false, false, false, activePlayer);
             } else if (yaw >= 65 && yaw < 115) {
                 earthWavePerpendicularNew(location, true, false, true, activePlayer);
             } else if (yaw >= 115 && yaw < 155) {
-                System.out.println("2");
                 earthWavePerpendicularNew(location, true, false, false, activePlayer);
             } else if (yaw < -155 || yaw > 155) {
                 earthWavePerpendicularNew(location, false, false, true, activePlayer);
             } else if (yaw <= -25 && yaw > -65) {
-                System.out.println("3");
                 earthWavePerpendicularNew(location, true, true, false, activePlayer);
             } else if (yaw <= -65 && yaw > -115) {
                 earthWavePerpendicularNew(location, true, true, true, activePlayer);
             } else {
-                System.out.println("4");
                 earthWavePerpendicularNew(location, false, true, false, activePlayer);
             }
         };
@@ -571,7 +570,57 @@ public class EarthbendingStone extends EarthStone {
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+            Location location = player.getLocation().add(0, -1, 0);
+            player.setAllowFlight(true);
+            player.setFlying(true);
 
+            List<FallingBlock> platform = new ArrayList<>();
+            for (int i = -2; i <= 2; i++) {
+                for (int j = -2; j <= 2; j++) {
+                    FallingBlock fallingBlock = world.spawnFallingBlock(location.clone().add(i, 0, j), Material.SAND.createBlockData());
+                    platform.add(fallingBlock);
+                }
+            }
+
+            // Platform of earth beneath the player
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
+
+                @Override
+                public void run() {
+                    Location playerLocation = player.getLocation().add(0, -1, 0);
+
+                    int fallingBlockIndex = 0;
+                    for (int i = -2; i <= 2; i++) {
+                        for (int j = -2; j <= 2; j++) {
+                            FallingBlock fallingBlock = platform.get(fallingBlockIndex);
+
+                            Location blockLocation = fallingBlock.getLocation();
+                            Location newBlockLocation = playerLocation.clone().add(i, 0, j);
+
+                            double differenceX = newBlockLocation.getX() - blockLocation.getX();
+                            double differenceY = newBlockLocation.getY() - blockLocation.getY();
+                            double differenceZ = newBlockLocation.getZ() - blockLocation.getZ();
+                            Vector velocity = new Vector(differenceX, differenceY, differenceZ);
+
+                            fallingBlock.setVelocity(velocity);
+                            fallingBlock.setTicksLived(1);
+
+                            fallingBlockIndex++;
+                        }
+                    }
+
+                    if (amountOfTicks >= 60) {
+                        this.cancel();
+                        for (FallingBlock fallingBlock : platform) {
+                            fallingBlock.remove();
+                        }
+                    }
+
+                    amountOfTicks++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 }

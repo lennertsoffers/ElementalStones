@@ -16,7 +16,7 @@ public class PlayerToggleFlightEvent implements Listener {
             player.getInventory().contains(ItemStones.airStoneAgility3) ||
             player.getInventory().contains(ItemStones.airStoneAgility4)) {
             AgilityStone.passive(event);
+            event.setCancelled(true);
         }
-        event.setCancelled(true);
     }
 }

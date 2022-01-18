@@ -63,13 +63,13 @@ public class CheckLocationTools {
                         world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
                         world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
                 ) {
-                    return positiveLoopLocation.add(0, 0, 0);
+                    return positiveLoopLocation;
                 } else if (
                         world.getBlockAt(negativeLoopLocation).getType() == Material.AIR &&
                         world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
-                        world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
+                        world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
                 ) {
-                    return negativeLoopLocation.add(0, 0, 0);
+                    return negativeLoopLocation;
                 }
 
                 difference++;
