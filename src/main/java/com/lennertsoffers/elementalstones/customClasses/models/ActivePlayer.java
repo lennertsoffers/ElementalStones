@@ -45,8 +45,8 @@ public class ActivePlayer {
     private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move7FallingBlocks = new ArrayList<>();
+    private boolean move8active = false;
     private List<FallingBlock> move8FallingBlocks;
-    private int move8Stage = 0;
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
@@ -556,6 +556,15 @@ public class ActivePlayer {
         return this.move6LaunchedFallingBlocks;
     }
 
+
+    public void setMove8active(boolean move8active) {
+        this.move8active = move8active;
+    }
+
+    public boolean isMove8active() {
+        return this.move8active;
+    }
+
     public List<FallingBlock> getMove8FallingBlocks() {
         return this.move8FallingBlocks;
     }
@@ -564,17 +573,11 @@ public class ActivePlayer {
         this.move8FallingBlocks = fallingBlocks;
     }
 
-    public int getMove8Stage() {
-        return this.move8Stage;
+    public void clearMove8FallingBlocks() {
+        this.move8FallingBlocks.clear();
     }
 
-    public void increaseMove8Stage() {
-        this.move8Stage++;
-    }
 
-    public void setMove8Stage(int newValue) {
-        this.move8Stage = newValue;
-    }
 
     public BukkitRunnable getFloatingFire() {
         return this.floatingFire;

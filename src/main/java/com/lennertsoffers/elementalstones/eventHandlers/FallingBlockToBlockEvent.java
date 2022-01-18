@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +24,11 @@ public class FallingBlockToBlockEvent implements Listener {
                 if (activePlayer.getMove6FallingBlocks().contains(fallingBlock)) {
                     e.setCancelled(true);
                     activePlayer.getMove6FallingBlocks().remove(fallingBlock);
+                }
+                if (activePlayer.getMove8FallingBlocks().contains(fallingBlock)) {
+                    e.setCancelled(true);
+                    activePlayer.clearMove8FallingBlocks();
+                    EarthbendingStone.move8ending(activePlayer);
                 }
             }
         }

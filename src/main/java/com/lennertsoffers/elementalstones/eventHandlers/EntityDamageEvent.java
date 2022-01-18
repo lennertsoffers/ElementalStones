@@ -17,6 +17,13 @@ public class EntityDamageEvent implements Listener {
                 return;
             }
             AirbendingStone.passive1(activePlayer, event);
+
+            if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) {
+                if (activePlayer.isMove8active()) {
+                    event.setCancelled(true);
+                }
+            }
+
 //            if (event.getDamage() >= player.getHealth()) {
 //                event.setCancelled(true);
 //                DefenseStone.move8(player);

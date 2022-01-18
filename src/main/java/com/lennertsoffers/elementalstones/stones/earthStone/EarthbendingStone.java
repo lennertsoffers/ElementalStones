@@ -2,8 +2,8 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.FlyingPlatform;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -159,9 +159,10 @@ public class EarthbendingStone extends EarthStone {
         }
     }
 
-    private static void spawnFallingBlock(Location location, World world, Vector velocity, Player player) {
+    private static void spawnFallingBlock(Location l, World world, Vector velocity, Player player) {
+        Location location = new Location(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
         Block launchBlock = world.getBlockAt(location);
-        FallingBlock fallingBlock = world.spawnFallingBlock(location, launchBlock.getBlockData());
+        FallingBlock fallingBlock = world.spawnFallingBlock(location.clone().add(0.5, 0, 0.5), launchBlock.getBlockData());
         fallingBlock.setDropItem(false);
         fallingBlock.setVelocity(velocity);
         launchBlock.setType(Material.AIR);
@@ -286,45 +287,46 @@ public class EarthbendingStone extends EarthStone {
                 List<Location> spikeRow = spikeRows.get(rowIndex);
 
                 for (Location loc : spikeRow) {
+                    if (loc != null) {
+                        Location spikeBlockLocation = loc.clone();
 
-                    Location spikeBlockLocation = loc.clone();
+                        new BukkitRunnable() {
+                            int i;
+                            final int maxHeight = rowIndex;
 
-                    new BukkitRunnable() {
-                        int i;
-                        final int maxHeight = rowIndex;
+                            @Override
+                            public void run() {
+                                Block spikeBlock = world.getBlockAt(spikeBlockLocation);
+                                if (spikeBlock.getType() == Material.AIR) {
 
-                        @Override
-                        public void run() {
-                            Block spikeBlock = world.getBlockAt(spikeBlockLocation);
-                            if (spikeBlock.getType() == Material.AIR) {
+                                    Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
+                                    if (!nearbyEntities.isEmpty()) {
+                                        for (Entity entity : nearbyEntities) {
+                                            if (entity instanceof LivingEntity) {
+                                                LivingEntity livingEntity = (LivingEntity) entity;
 
-                                Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
-                                if (!nearbyEntities.isEmpty()) {
-                                    for (Entity entity : nearbyEntities) {
-                                        if (entity instanceof LivingEntity) {
-                                            LivingEntity livingEntity = (LivingEntity) entity;
-
-                                            if (livingEntity != player) {
-                                                livingEntity.damage(2, player);
-                                                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                                if (livingEntity != player) {
+                                                    livingEntity.damage(2, player);
+                                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                                }
                                             }
                                         }
                                     }
+
+                                    spikeBlock.setType(Material.POINTED_DRIPSTONE);
+                                    spikeBlockLocation.add(0, 1, 0);
+                                } else {
+                                    this.cancel();
                                 }
 
-                                spikeBlock.setType(Material.POINTED_DRIPSTONE);
-                                spikeBlockLocation.add(0, 1, 0);
-                            } else {
-                                this.cancel();
-                            }
+                                if (i >= maxHeight) {
+                                    this.cancel();
+                                }
 
-                            if (i >= maxHeight) {
-                                this.cancel();
+                                i++;
                             }
-
-                            i++;
-                        }
-                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    }
                 }
 
                 rowIndex++;
@@ -479,8 +481,9 @@ public class EarthbendingStone extends EarthStone {
     }
 
     // MOVE 6
-    // Earth Prison
-    // Creates an hard to escape prison at the targeted block
+    // Rock Throw
+    // Select a set of blocks by doing this move on them
+    // Shoot the selected blocks in your looking direction by crouching and executing this move
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -489,6 +492,10 @@ public class EarthbendingStone extends EarthStone {
             // Select blocks to shoot
             if (!player.isSneaking()) {
                 Block block = player.getTargetBlockExact(80, FluidCollisionMode.NEVER);
+
+                if (block != null && !block.getType().isSolid() && !block.getType().isAir()) {
+                    block = world.getBlockAt(block.getLocation().add(0, -1, 0));
+                }
 
                 if (block != null && block.getType().isSolid()) {
                     FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation(), block.getBlockData());
@@ -504,9 +511,22 @@ public class EarthbendingStone extends EarthStone {
 
             // Shoot selected blocks in looking direction
             else {
+                Vector direction = player.getLocation().getDirection();
                 for (FallingBlock fallingBlock : activePlayer.getMove6FallingBlocks()) {
-                    fallingBlock.setVelocity(player.getLocation().getDirection().multiply(3));
+                    fallingBlock.setVelocity(direction.clone().multiply(3));
                     activePlayer.getMove6LaunchedFallingBlocks().add(fallingBlock);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            if (!fallingBlock.isDead()) {
+                                NearbyEntityTools.damageNearbyEntities(player, fallingBlock.getLocation(), 4, 1.5, 1.5, 1.5, direction);
+                            } else {
+                                System.out.println("fallingblock removed");
+                                this.cancel();
+                            }
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
                 }
 
                 activePlayer.getMove6FallingBlocks().clear();
@@ -525,22 +545,18 @@ public class EarthbendingStone extends EarthStone {
             if (yaw > -25 && yaw < 25) {
                 earthWavePerpendicularNew(location, false, true, true, activePlayer);
             } else if (yaw >= 25 && yaw < 65) {
-                System.out.println("1");
                 earthWavePerpendicularNew(location, false, false, false, activePlayer);
             } else if (yaw >= 65 && yaw < 115) {
                 earthWavePerpendicularNew(location, true, false, true, activePlayer);
             } else if (yaw >= 115 && yaw < 155) {
-                System.out.println("2");
                 earthWavePerpendicularNew(location, true, false, false, activePlayer);
             } else if (yaw < -155 || yaw > 155) {
                 earthWavePerpendicularNew(location, false, false, true, activePlayer);
             } else if (yaw <= -25 && yaw > -65) {
-                System.out.println("3");
                 earthWavePerpendicularNew(location, true, true, false, activePlayer);
             } else if (yaw <= -65 && yaw > -115) {
                 earthWavePerpendicularNew(location, true, true, true, activePlayer);
             } else {
-                System.out.println("4");
                 earthWavePerpendicularNew(location, false, true, false, activePlayer);
             }
         };
@@ -555,7 +571,94 @@ public class EarthbendingStone extends EarthStone {
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
 
+            if (!player.isInWater() || world.getBlockAt(player.getLocation()).getType() == Material.LAVA) {
+                Location location = player.getLocation().add(0, -1, 0);
+                player.setAllowFlight(true);
+                activePlayer.setMove8active(true);
+
+                List<FallingBlock> platform = new ArrayList<>();
+
+                List<Location> launchLocations = new ArrayList<>();
+                for (int i = 0; i < 46; i++) {
+                    Location locationInCircle = new Location(world,
+                            location.getBlockX() + StaticVariables.random.nextInt(40) - 20,
+                            location.getBlockY(),
+                            location.getBlockZ() + StaticVariables.random.nextInt(40) - 20
+                    );
+                    Location closestLocation = CheckLocationTools.getClosestAirBlockLocation(locationInCircle);
+                    if (closestLocation == null) {
+                        closestLocation = locationInCircle;
+                    }
+
+                    launchLocations.add(closestLocation.add(0, -1, 0));
+                }
+
+                Vector startVelocity = new Vector(0, 1, 0);
+                for (Location launchLocation : launchLocations) {
+                    Block block = world.getBlockAt(launchLocation);
+                    Material material = block.getType();
+
+                    activePlayer.addLocationMaterialMapping(launchLocation, material);
+
+                    if (!material.isSolid()) {
+                        material = Material.STONE;
+                    }
+
+                    FallingBlock fallingBlock = world.spawnFallingBlock(launchLocation.clone().add(0.5, 0, 0.5), material.createBlockData());
+                    fallingBlock.setDropItem(false);
+                    fallingBlock.setVelocity(startVelocity);
+                    block.setType(Material.AIR);
+                    platform.add(fallingBlock);
+                }
+                player.setVelocity(startVelocity.multiply(2));
+
+                activePlayer.setMove8FallingBlocks(platform);
+
+                // Make player fly
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.setFlying(true);
+                    }
+                }.runTaskLater(StaticVariables.plugin, 20L);
+
+
+                // Platform of earth beneath the player
+                new FlyingPlatform(true, 60, 0.1, player, platform).runTaskTimer(StaticVariables.plugin, 20L, 1L);
+                new FlyingPlatform(player, platform).runTaskTimer(StaticVariables.plugin, 80L, 1L);
+            }
         };
     }
+
+    public static void move8ending(ActivePlayer activePlayer) {
+        Location location = activePlayer.getPlayer().getLocation();
+        earthWavePerpendicularNew(location, true, true, true, activePlayer);
+        earthWavePerpendicularNew(location, true, false, true, activePlayer);
+        earthWavePerpendicularNew(location, false, true, true, activePlayer);
+        earthWavePerpendicularNew(location, false, false, true, activePlayer);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                earthWavePerpendicularNew(location, true, true, false, activePlayer);
+                earthWavePerpendicularNew(location, true, false, false, activePlayer);
+                earthWavePerpendicularNew(location, false, true, false, activePlayer);
+                earthWavePerpendicularNew(location, false, false, false, activePlayer);
+            }
+        }.runTaskLater(StaticVariables.plugin, 13L);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                activePlayer.setMove8active(false);
+            }
+        }.runTaskLater(StaticVariables.plugin, 40L);
+    }
 }
+
+// TODO - on hitting ground with ult, stop ult and flying
+// TODO - on reactivating ult while doing ult, cancelling runnable and ending ult
+// TODO - make move 4 setup longer lasting on ult
+// TODO - position move 4 fallingblocks in center of block
