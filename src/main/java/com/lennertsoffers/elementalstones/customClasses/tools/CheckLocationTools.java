@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.customClasses.tools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -59,13 +60,13 @@ public class CheckLocationTools {
                 Location negativeLoopLocation = startLocation.clone().add(0, -difference, 0);
 
                 if (
-                        world.getBlockAt(positiveLoopLocation).getType() == Material.AIR &&
+                        (world.getBlockAt(positiveLoopLocation).getType() == Material.AIR || isFoliage(positiveLoopLocation)) &&
                         world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
                         world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
                 ) {
                     return positiveLoopLocation;
                 } else if (
-                        world.getBlockAt(negativeLoopLocation).getType() == Material.AIR &&
+                        (world.getBlockAt(negativeLoopLocation).getType() == Material.AIR || isFoliage(negativeLoopLocation)) &&
                         world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
                         world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
                 ) {
@@ -77,5 +78,32 @@ public class CheckLocationTools {
         }
 
         return null;
+    }
+
+    public static boolean isFoliage(Location location) {
+        Block block = location.getBlock();
+
+        return block.getType() == Material.DANDELION ||
+                block.getType() == Material.POPPY ||
+                block.getType() == Material.BLUE_ORCHID ||
+                block.getType() == Material.ALLIUM ||
+                block.getType() == Material.AZURE_BLUET ||
+                block.getType() == Material.ORANGE_TULIP ||
+                block.getType() == Material.PINK_TULIP ||
+                block.getType() == Material.RED_TULIP ||
+                block.getType() == Material.WHITE_TULIP ||
+                block.getType() == Material.OXEYE_DAISY ||
+                block.getType() == Material.CORNFLOWER ||
+                block.getType() == Material.LILY_OF_THE_VALLEY ||
+                block.getType() == Material.WITHER_ROSE ||
+                block.getType() == Material.SUNFLOWER ||
+                block.getType() == Material.LILAC ||
+                block.getType() == Material.ROSE_BUSH ||
+                block.getType() == Material.PEONY ||
+                block.getType() == Material.DEAD_BUSH ||
+                block.getType() == Material.SWEET_BERRY_BUSH ||
+                block.getType() == Material.GRASS ||
+                block.getType() == Material.TALL_GRASS ||
+                block.getType() == Material.FERN;
     }
 }
