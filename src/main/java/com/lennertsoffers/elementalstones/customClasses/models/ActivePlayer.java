@@ -40,13 +40,13 @@ public class ActivePlayer {
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
     private final MoveController moveController = new MoveController();
+    private boolean movesEnabled = true;
 
     // Earth Stone
     private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
-    private final List<FallingBlock> move7FallingBlocks = new ArrayList<>();
     private boolean move8active = false;
-    private List<FallingBlock> move8FallingBlocks;
+    private List<FallingBlock> move8FallingBlocks = new ArrayList<>();
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
@@ -539,6 +539,15 @@ public class ActivePlayer {
 
     public void resetWorld() {
         this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
+    }
+
+
+    public void setMovesEnabled(boolean movesEnabled) {
+        this.movesEnabled = movesEnabled;
+    }
+
+    public boolean areMovesEnabled() {
+        return this.movesEnabled;
     }
 
 

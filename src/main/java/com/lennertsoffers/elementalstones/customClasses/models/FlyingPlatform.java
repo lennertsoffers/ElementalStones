@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import org.bukkit.Location;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -14,57 +15,66 @@ public class FlyingPlatform extends BukkitRunnable {
     private boolean creation = false;
     private int maxAmountOfTicks = 1200;
     private int amountOfTicks = 0;
-    private double velocityMultiplier = 1;
+    private double velocityMultiplier = 0.5;
+    private final ActivePlayer activePlayer;
     private final Player player;
     private final List<FallingBlock> platform;
-    private final Vector platformFallVelocity = new Vector(0, -1, 0);
 
-    public FlyingPlatform(Player player, List<FallingBlock> platform) {
+    public FlyingPlatform(ActivePlayer activePlayer, Player player, List<FallingBlock> platform) {
+        this.activePlayer = activePlayer;
         this.player = player;
         this.platform = platform;
     }
 
-    public FlyingPlatform(boolean creation, int maxAmountOfTicks, double velocityMultiplier, Player player, List<FallingBlock> platform) {
+    public FlyingPlatform(boolean creation, int maxAmountOfTicks, double velocityMultiplier, ActivePlayer activePlayer, Player player, List<FallingBlock> platform) {
         this.creation = creation;
         this.maxAmountOfTicks = maxAmountOfTicks;
         this.velocityMultiplier = velocityMultiplier;
+        this.activePlayer = activePlayer;
         this.player = player;
         this.platform = platform;
     }
 
     @Override
     public void run() {
-        List<Location> toLocations = getPlatformLocations(player);
 
-        int fallingBlockIndex = 0;
-        for (Location toLocation : toLocations) {
-            FallingBlock fallingBlock = platform.get(fallingBlockIndex);
+        if (platform.size() > 0) {
+            List<Location> toLocations = getPlatformLocations(player);
 
-            Location blockLocation = fallingBlock.getLocation();
-            double differenceX = toLocation.getX() - blockLocation.getX();
-            double differenceY = toLocation.getY() - blockLocation.getY();
-            double differenceZ = toLocation.getZ() - blockLocation.getZ();
-            Vector velocity = new Vector(differenceX, differenceY, differenceZ);
+            int fallingBlockIndex = 0;
+            for (Location toLocation : toLocations) {
+                FallingBlock fallingBlock = platform.get(fallingBlockIndex);
 
-            fallingBlock.setVelocity(velocity.multiply(velocityMultiplier));
-            fallingBlock.setTicksLived(1);
+                Location blockLocation = fallingBlock.getLocation();
+                double differenceX = toLocation.getX() - blockLocation.getX();
+                double differenceY = toLocation.getY() - blockLocation.getY();
+                double differenceZ = toLocation.getZ() - blockLocation.getZ();
+                Vector velocity = new Vector(differenceX, differenceY, differenceZ);
 
-            fallingBlockIndex++;
-        }
+                fallingBlock.setVelocity(velocity.multiply(velocityMultiplier));
+                fallingBlock.setTicksLived(1);
 
-        if (amountOfTicks >= maxAmountOfTicks) {
-            this.cancel();
-            if (!creation) {
-                for (FallingBlock fallingBlock : platform) {
-                    fallingBlock.setVelocity(platformFallVelocity);
-                    player.setFlying(false);
-                    player.setAllowFlight(false);
-                    player.setVelocity(platformFallVelocity);
+                fallingBlockIndex++;
+
+                if (creation) {
+                    player.setVelocity(new Vector(0, 0, 0));
                 }
             }
-        }
 
-        amountOfTicks++;
+            if (amountOfTicks >= maxAmountOfTicks) {
+                this.cancel();
+                if (!creation) {
+                    EarthbendingStone.move8launch(activePlayer);
+                } else {
+                    activePlayer.setMove8active(true);
+                    activePlayer.setMovesEnabled(true);
+                }
+            }
+
+            amountOfTicks++;
+        } else {
+            this.cancel();
+        }
     }
 
     private static List<Location> getPlatformLocations(Player player) {
