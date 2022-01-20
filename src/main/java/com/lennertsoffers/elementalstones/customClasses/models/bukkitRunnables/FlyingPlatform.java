@@ -1,5 +1,6 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import org.bukkit.Location;
 import org.bukkit.entity.FallingBlock;
@@ -15,7 +16,7 @@ public class FlyingPlatform extends BukkitRunnable {
     private boolean creation = false;
     private int maxAmountOfTicks = 1200;
     private int amountOfTicks = 0;
-    private double velocityMultiplier = 0.5;
+    private double velocityMultiplier = 1;
     private final ActivePlayer activePlayer;
     private final Player player;
     private final List<FallingBlock> platform;
@@ -49,9 +50,10 @@ public class FlyingPlatform extends BukkitRunnable {
                 double differenceX = toLocation.getX() - blockLocation.getX();
                 double differenceY = toLocation.getY() - blockLocation.getY();
                 double differenceZ = toLocation.getZ() - blockLocation.getZ();
-                Vector velocity = new Vector(differenceX, differenceY, differenceZ);
 
+                Vector velocity = new Vector(differenceX, differenceY, differenceZ);
                 fallingBlock.setVelocity(velocity.multiply(velocityMultiplier));
+
                 fallingBlock.setTicksLived(1);
 
                 fallingBlockIndex++;
@@ -64,7 +66,7 @@ public class FlyingPlatform extends BukkitRunnable {
             if (amountOfTicks >= maxAmountOfTicks) {
                 this.cancel();
                 if (!creation) {
-                    EarthbendingStone.move8launch(activePlayer);
+                    EarthbendingStone.move8End(activePlayer);
                 } else {
                     activePlayer.setMove8active(true);
                     activePlayer.setMovesEnabled(true);

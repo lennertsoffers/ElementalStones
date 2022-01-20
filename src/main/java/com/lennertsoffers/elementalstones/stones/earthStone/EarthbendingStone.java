@@ -2,14 +2,12 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.FlyingPlatform;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FlyingPlatform;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -20,7 +18,7 @@ import java.util.*;
 
 public class EarthbendingStone extends EarthStone {
 
-    private static void earthWavePerpendicularNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {
+    private static void earthWaveNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {
 
         Player player = activePlayer.getPlayer();
 
@@ -174,7 +172,7 @@ public class EarthbendingStone extends EarthStone {
         NearbyEntityTools.damageNearbyEntities(player, location, 0, 1.5, 1.5, 1.5, direction ,potionEffects);
     }
 
-    private static void spikeWavePerpendicular(Location location, boolean var0, boolean var1, boolean perpendicular, Player player) {
+    private static void spikeWave(Location location, boolean var0, boolean var1, boolean perpendicular, Player player) {
 
         World world = location.getWorld();
         if (world == null) {
@@ -299,19 +297,9 @@ public class EarthbendingStone extends EarthStone {
                                 Block spikeBlock = world.getBlockAt(spikeBlockLocation);
                                 if (spikeBlock.getType() == Material.AIR) {
 
-                                    Collection<Entity> nearbyEntities = world.getNearbyEntities(spikeBlockLocation, 1, 1, 1);
-                                    if (!nearbyEntities.isEmpty()) {
-                                        for (Entity entity : nearbyEntities) {
-                                            if (entity instanceof LivingEntity) {
-                                                LivingEntity livingEntity = (LivingEntity) entity;
-
-                                                if (livingEntity != player) {
-                                                    livingEntity.damage(2, player);
-                                                    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
-                                                }
-                                            }
-                                        }
-                                    }
+                                    List<PotionEffect> potionEffects = new ArrayList<>();
+                                    potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
+                                    NearbyEntityTools.damageNearbyEntities(player, spikeBlockLocation, 5, 1, 1, 1, potionEffects);
 
                                     spikeBlock.setType(Material.POINTED_DRIPSTONE);
                                     spikeBlockLocation.add(0, 1, 0);
@@ -407,21 +395,21 @@ public class EarthbendingStone extends EarthStone {
 
             float yaw = location.getYaw();
             if (yaw > -25 && yaw < 25) {
-                spikeWavePerpendicular(location, false, true, true, player);
+                spikeWave(location, false, true, true, player);
             } else if (yaw >= 25 && yaw < 65) {
-                spikeWavePerpendicular(location, false, true, false, player);
+                spikeWave(location, false, true, false, player);
             } else if (yaw >= 65 && yaw < 115) {
-                spikeWavePerpendicular(location, true, false, true, player);
+                spikeWave(location, true, false, true, player);
             } else if (yaw >= 115 && yaw < 155) {
-                spikeWavePerpendicular(location, false, false, false, player);
+                spikeWave(location, false, false, false, player);
             } else if (yaw < -155 || yaw > 155) {
-                spikeWavePerpendicular(location, false, false, true, player);
+                spikeWave(location, false, false, true, player);
             } else if (yaw <= -25 && yaw > -65) {
-                spikeWavePerpendicular(location, true, true, false, player);
+                spikeWave(location, true, true, false, player);
             } else if (yaw <= -65 && yaw > -115) {
-                spikeWavePerpendicular(location, true, true, true, player);
+                spikeWave(location, true, true, true, player);
             } else {
-                spikeWavePerpendicular(location, true, false, false, player);
+                spikeWave(location, true, false, false, player);
             }
         };
     }
@@ -454,14 +442,9 @@ public class EarthbendingStone extends EarthStone {
                         amountAdded--;
                     }
                     world.spawnParticle(Particle.SMOKE_LARGE, location, 0, 0, -0.5, 0);
-                    for (Entity entity : world.getNearbyEntities(location, 1.0, 1.0, 1.0)) {
-                        if (entity instanceof LivingEntity) {
-                            if (entity != player) {
-                                entity.setVelocity(new Vector(0, 0.5, 0));
-                                ((LivingEntity) entity).damage(10);
-                            }
-                        }
-                    }
+
+                    NearbyEntityTools.damageNearbyEntities(player, location, 7, 1, 1, 1, new Vector(0, 0.5, 0));
+
                     location.add(0, -amountAdded, 0);
                     counter++;
                     if (counter >= 50) {
@@ -490,7 +473,6 @@ public class EarthbendingStone extends EarthStone {
 
                     Vector velocity = new Vector(0, 0.8, 0);
                     if (activePlayer.isMove8active()) {
-                        System.out.println("active");
                         velocity.multiply(2);
                     }
                     fallingBlock.setVelocity(velocity);
@@ -536,21 +518,21 @@ public class EarthbendingStone extends EarthStone {
             Location location = player.getLocation();
             float yaw = location.getYaw();
             if (yaw > -25 && yaw < 25) {
-                earthWavePerpendicularNew(location, false, true, true, activePlayer);
+                earthWaveNew(location, false, true, true, activePlayer);
             } else if (yaw >= 25 && yaw < 65) {
-                earthWavePerpendicularNew(location, false, false, false, activePlayer);
+                earthWaveNew(location, false, false, false, activePlayer);
             } else if (yaw >= 65 && yaw < 115) {
-                earthWavePerpendicularNew(location, true, false, true, activePlayer);
+                earthWaveNew(location, true, false, true, activePlayer);
             } else if (yaw >= 115 && yaw < 155) {
-                earthWavePerpendicularNew(location, true, false, false, activePlayer);
+                earthWaveNew(location, true, false, false, activePlayer);
             } else if (yaw < -155 || yaw > 155) {
-                earthWavePerpendicularNew(location, false, false, true, activePlayer);
+                earthWaveNew(location, false, false, true, activePlayer);
             } else if (yaw <= -25 && yaw > -65) {
-                earthWavePerpendicularNew(location, true, true, false, activePlayer);
+                earthWaveNew(location, true, true, false, activePlayer);
             } else if (yaw <= -65 && yaw > -115) {
-                earthWavePerpendicularNew(location, true, true, true, activePlayer);
+                earthWaveNew(location, true, true, true, activePlayer);
             } else {
-                earthWavePerpendicularNew(location, false, true, false, activePlayer);
+                earthWaveNew(location, false, true, false, activePlayer);
             }
         };
     }
@@ -653,18 +635,18 @@ public class EarthbendingStone extends EarthStone {
 
 
         Location location = activePlayer.getPlayer().getLocation();
-        earthWavePerpendicularNew(location, true, true, true, activePlayer);
-        earthWavePerpendicularNew(location, true, false, true, activePlayer);
-        earthWavePerpendicularNew(location, false, true, true, activePlayer);
-        earthWavePerpendicularNew(location, false, false, true, activePlayer);
+        earthWaveNew(location, true, true, true, activePlayer);
+        earthWaveNew(location, true, false, true, activePlayer);
+        earthWaveNew(location, false, true, true, activePlayer);
+        earthWaveNew(location, false, false, true, activePlayer);
 
         new BukkitRunnable() {
             @Override
             public void run() {
-                earthWavePerpendicularNew(location, true, true, false, activePlayer);
-                earthWavePerpendicularNew(location, true, false, false, activePlayer);
-                earthWavePerpendicularNew(location, false, true, false, activePlayer);
-                earthWavePerpendicularNew(location, false, false, false, activePlayer);
+                earthWaveNew(location, true, true, false, activePlayer);
+                earthWaveNew(location, true, false, false, activePlayer);
+                earthWaveNew(location, false, true, false, activePlayer);
+                earthWaveNew(location, false, false, false, activePlayer);
             }
         }.runTaskLater(StaticVariables.plugin, 13L);
 
@@ -681,8 +663,9 @@ public class EarthbendingStone extends EarthStone {
         player.setFlying(false);
         player.setAllowFlight(false);
         activePlayer.setMovesEnabled(true);
+        activePlayer.setMove8active(false);
     }
 }
 
-// TODO - on hitting ground with ult, stop ult and flying
-// TODO - on reactivating ult while doing ult, cancelling runnable and ending ult
+// TODO - Change descriptions
+// TODO - Fix passive

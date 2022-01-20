@@ -21,7 +21,7 @@ public class FallingBlockToBlockEvent implements Listener {
                     activePlayer.getMove6LaunchedFallingBlocks().remove(fallingBlock);
                 }
 
-                if (!activePlayer.isMove8active()) {
+                if (activePlayer.isMove8active()) {
                     if (!activePlayer.getMove8FallingBlocks().isEmpty()) {
                         if (activePlayer.getMove8FallingBlocks().contains(fallingBlock)) {
                             e.setCancelled(true);

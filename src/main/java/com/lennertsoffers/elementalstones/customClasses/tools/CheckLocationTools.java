@@ -106,4 +106,13 @@ public class CheckLocationTools {
                 block.getType() == Material.TALL_GRASS ||
                 block.getType() == Material.FERN;
     }
+
+    public static boolean isSolidBlock(Block block) {
+        Material material = block.getType();
+        return material.isSolid() && material.isBlock() && material.isOccluding();
+    }
+
+    public static boolean isSolidBlock(Material material) {
+        return material.isSolid() && material.isBlock() && material.isOccluding();
+    }
 }
