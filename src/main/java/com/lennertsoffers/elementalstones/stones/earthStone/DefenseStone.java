@@ -2,6 +2,8 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -15,6 +17,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class DefenseStone extends EarthStone {
@@ -96,21 +99,70 @@ public class DefenseStone extends EarthStone {
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-
             World world = player.getWorld();
-            Location location = player.getLocation();
+            Location startLocation = player.getLocation();
+            Vector direction = startLocation.getDirection().setY(0);
+            Vector startVelocity = player.getVelocity();
+            if (startVelocity.getY() < 0) {
+                startVelocity.setY(0);
+            }
+
+            startLocation.add(direction).add(0, 1, 0).add(direction.clone().rotateAroundY(-90).multiply(2));
+
             new BukkitRunnable() {
-                int counter = 0;
+                double i = 0;
 
                 @Override
                 public void run() {
-                    world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, location, 800, counter / 2.0, counter / 2.0, counter / 2.0, 0.1);
-                    counter++;
-                    if (counter >= 20) {
+                    HashMap<String, Double> result = MathTools.calculatePointOnThrowFunction(15, 1, startLocation.getYaw(), -startLocation.getPitch(), i, startVelocity);
+
+                    int offset = 15;
+                    double x = startLocation.getX() + result.get("x");
+                    double y = startLocation.getY() + result.get("y");
+                    double z = startLocation.getZ() + result.get("z");
+
+                    for (int i = 0; i < 5; i++) {
+                        double randomX = x + (StaticVariables.random.nextGaussian() / offset);
+                        double randomY = y + (StaticVariables.random.nextGaussian() / offset);
+                        double randomZ = z + (StaticVariables.random.nextGaussian() / offset);
+                        world.spawnParticle(Particle.REDSTONE, randomX, randomY, randomZ, 0, new Particle.DustOptions(Color.GRAY, 2));
+                    }
+
+                    i += 0.05;
+                    if (i > 4) {
+                        this.cancel();
+                    }
+
+                    Location particleLocation = new Location(world, x, y, z);
+                    if (CheckLocationTools.isSolidBlock(world.getBlockAt(particleLocation))) {
+                        new BukkitRunnable() {
+                            int loops = 0;
+
+                            @Override
+                            public void run() {
+                                for (int i = 1; i < 400; i++) {
+                                    double offsetBomb = 8;
+                                    if (loops == 3) {
+                                        offsetBomb = 1;
+                                    } else if (loops == 5) {
+                                        offsetBomb = 0.5;
+                                    }
+                                    double offsetX = particleLocation.getX() + StaticVariables.random.nextGaussian() / offsetBomb;
+                                    double offsetY = particleLocation.getY() + Math.abs(StaticVariables.random.nextGaussian()) / offsetBomb + 0.3;
+                                    double offsetZ = particleLocation.getZ() + StaticVariables.random.nextGaussian() / offsetBomb;
+                                    world.spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, offsetX, offsetY, offsetZ, 0, StaticVariables.random.nextGaussian() / 40, Math.abs(StaticVariables.random.nextGaussian() / 40), StaticVariables.random.nextGaussian() / 40);
+                                }
+
+                                loops++;
+                                if (loops > 20) {
+                                    this.cancel();
+                                }
+                            }
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
                         this.cancel();
                     }
                 }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 
@@ -157,23 +209,23 @@ public class DefenseStone extends EarthStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location location = player.getLocation();
-            float yaw = Math.abs(location.getYaw());
-            if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
-                buildPerpendicularWallZ(location, player.getWorld());
+            float yaw = location.getYaw();
+            if (yaw > -25 && yaw < 25) {
+                System.out.println("1");
             } else if (yaw >= 25 && yaw < 65) {
-                buildDiagonalWallX(location, player.getWorld());
+                System.out.println("2");
             } else if (yaw >= 65 && yaw < 115) {
-                buildPerpendicularWallX(location, player.getWorld());
+                System.out.println("3");
             } else if (yaw >= 115 && yaw < 155) {
-                buildDiagonalWallZ(location, player.getWorld());
-            } else if (yaw >= 155 && yaw < 205) {
-                buildPerpendicularWallZ(location, player.getWorld());
-            } else if (yaw >= 205 && yaw < 245) {
-                buildDiagonalWallX(location, player.getWorld());
-            } else if (yaw >= 245 && yaw < 295) {
-                buildPerpendicularWallX(location, player.getWorld());
+                System.out.println("4");
+            } else if (yaw < -155 || yaw > 155) {
+                System.out.println("5");
+            } else if (yaw <= -25 && yaw > -65) {
+                System.out.println("6");
+            } else if (yaw <= -65 && yaw > -115) {
+                System.out.println("7");
             } else {
-                buildDiagonalWallZ(location, player.getWorld());
+                System.out.println("8");
             }
         };
     }
