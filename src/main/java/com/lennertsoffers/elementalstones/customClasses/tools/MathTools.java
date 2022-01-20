@@ -7,6 +7,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class MathTools {
     public static double lengthOfVector(double x1, double x2, double y1, double y2) {
@@ -53,6 +54,23 @@ public class MathTools {
         double particleX = location.getX() + radius * Math.cos(angle);
         double particleZ = location.getZ() + radius * Math.sin(angle);
         return new Location(world, particleX, location.getY() , particleZ);
+    }
+
+    public static HashMap<String, Double> calculatePointOnThrowFunction(double beginVelocity, double y, double yaw, double throwAngle, double t, Vector velocity) {
+        double theta = throwAngle * Math.PI / 180;
+        double phi = -(yaw * Math.PI / 180);
+        double g = -9.81;
+
+        double resultX = (beginVelocity * Math.cos(theta) + (Math.abs(velocity.getX()) * 20)) * t * Math.sin(phi);
+        double resultZ = (beginVelocity * Math.cos(theta) + (Math.abs(velocity.getZ()) * 20)) * t * Math.cos(phi);
+        double resultY = (g / 2 * Math.pow(t, 2) +  (beginVelocity * Math.sin(theta) + velocity.getY() * 20) * t + y);
+
+        HashMap<String, Double> result = new HashMap<>();
+        result.put("x", resultX);
+        result.put("z", resultZ);
+        result.put("y", resultY);
+
+        return result;
     }
 }
 
