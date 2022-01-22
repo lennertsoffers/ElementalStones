@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          release_name: Version 1.0 (unfinished product)
       - uses: csexton/release-asset-action@v2
         name: Upload the jar to the release
         with:
