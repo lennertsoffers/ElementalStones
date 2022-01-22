@@ -28,8 +28,10 @@ public class Pillar extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
-            entity.setVelocity(velocity);
+        if (nextBlockY == 1) {
+            for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
+                entity.setVelocity(velocity);
+            }
         }
 
         List<Block> newMoveBlocks = new ArrayList<>();

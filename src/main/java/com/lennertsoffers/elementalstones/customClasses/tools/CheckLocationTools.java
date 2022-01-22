@@ -61,14 +61,12 @@ public class CheckLocationTools {
 
                 if (
                         (world.getBlockAt(positiveLoopLocation).getType() == Material.AIR || isFoliage(positiveLoopLocation)) &&
-                        world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
-                        world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
+                        isSolidBlock(world.getBlockAt(positiveLoopLocation.clone().add(0, -1, 0)).getType())
                 ) {
                     return positiveLoopLocation;
                 } else if (
                         (world.getBlockAt(negativeLoopLocation).getType() == Material.AIR || isFoliage(negativeLoopLocation)) &&
-                        world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType() != Material.AIR &&
-                        world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType().isSolid()
+                        isSolidBlock(world.getBlockAt(negativeLoopLocation.clone().add(0, -1, 0)).getType())
                 ) {
                     return negativeLoopLocation;
                 }

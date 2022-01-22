@@ -4,15 +4,18 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FlyingPlatform;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import sun.awt.windows.ThemeReader;
 
 import java.util.*;
 
@@ -356,29 +359,48 @@ public class EarthbendingStone extends EarthStone {
 
     // PASSIVE
     // Joinker
-    public static Runnable passive(ActivePlayer activePlayer) {
-        return () -> {
-            Player player = activePlayer.getPlayer();
-            Location location = player.getLocation();
-            Location locationAround = location.clone().add(1, -1, 0);
-            World world = player.getWorld();
-            Material material = world.getBlockAt(location.add(0, -1, 0)).getType();
+    public static void passive(ActivePlayer activePlayer, EntityDamageEvent event) {
+        Player player = activePlayer.getPlayer();
+        World world = player.getWorld();
+        float fallDistance = player.getFallDistance();
+        Vector velocity = new Vector(0, 0.2, 0);
+        System.out.println(player.getFallDistance());
 
-            if (material == Material.STONE || material == Material.COBBLESTONE || material == Material.DIRT || material == Material.SAND || material == Material.SANDSTONE || material == Material.ANDESITE || material == Material.DIORITE || material == Material.GRANITE) {
-                if (CheckLocationTools.locationAroundClear(locationAround, world)) {
-                    Block block = world.getBlockAt(location);
-                    FallingBlock fallingBlock = world.spawnFallingBlock(location, block.getBlockData());
-                    world.getBlockAt(location).setType(Material.AIR);
-                    fallingBlock.setVelocity(new Vector(0, 0.3, 0));
-                    player.setVelocity(player.getVelocity().add(new Vector(0, 0.1, 0)));
-                    fallingBlock.setDropItem(false);
-                    StaticVariables.scheduler.scheduleSyncDelayedTask(StaticVariables.plugin, () -> {
-                        fallingBlock.remove();
-                        world.getBlockAt(location).setType(block.getType());
-                    }, 20L);
+        event.setCancelled(true);
+
+        new BukkitRunnable() {
+            int range = 2;
+
+            @Override
+            public void run() {
+
+                List<Block> ring = new ArrayList<>();
+                for (int i = 0; i < 360; i+= 1) {
+                    Location locationOnCircle = CheckLocationTools.getClosestAirBlockLocation(MathTools.locationOnCircle(player.getLocation(), range, i, world));
+
+                    if (locationOnCircle != null) {
+                        locationOnCircle.add(0, -1, 0);
+
+                        Block block = world.getBlockAt(locationOnCircle);
+
+                        if (ring.stream().noneMatch(b -> b.getLocation().getBlockX() == block.getLocation().getBlockX() && b.getLocation().getBlockZ() == block.getLocation().getBlockZ())) {
+                            ring.add(block);
+
+                            FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation().add(0.5, 0, 0.5), block.getBlockData());
+                            fallingBlock.setDropItem(true);
+                            block.setType(Material.AIR);
+
+                            fallingBlock.setVelocity(velocity);
+                        }
+                    }
+                }
+
+                range++;
+                if (range > fallDistance) {
+                    this.cancel();
                 }
             }
-        };
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
 
@@ -663,9 +685,7 @@ public class EarthbendingStone extends EarthStone {
         player.setFlying(false);
         player.setAllowFlight(false);
         activePlayer.setMovesEnabled(true);
-        activePlayer.setMove8active(false);
     }
 }
 
-// TODO - Change descriptions
 // TODO - Fix passive

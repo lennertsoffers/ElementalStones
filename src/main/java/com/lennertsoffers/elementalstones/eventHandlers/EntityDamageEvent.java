@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,6 +22,8 @@ public class EntityDamageEvent implements Listener {
             if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) {
                 if (activePlayer.isMove8active()) {
                     event.setCancelled(true);
+                } else {
+                    EarthbendingStone.passive(activePlayer, event);
                 }
             }
 

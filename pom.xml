@@ -75,17 +75,5 @@
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.papermc</groupId>
-            <artifactId>minecraft-server</artifactId>
-            <version>1.16.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>xyz.xenondevs</groupId>
-            <artifactId>particle</artifactId>
-            <scope>system</scope>
-            <version>1.6.4</version>
-            <systemPath>C:/Users/lenne/Documents/Personal/Programming/Plugins/API's/ParticleLib-1.6.4.jar</systemPath>
-        </dependency>
     </dependencies>
 </project>
