@@ -29,6 +29,7 @@ public class EarthStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Block targetBlock = player.getTargetBlockExact(40);
+            Vector velocity = new Vector(0, 1, 0);
 
             if (targetBlock != null) {
                 World world = player.getWorld();
@@ -57,6 +58,9 @@ public class EarthStone {
 
                 if (moveBlocks.size() > 0) {
                     Pillar pillar = new Pillar(targetLocation, moveBlocks, true);
+                    for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
+                        entity.setVelocity(velocity);
+                    }
                     pillar.runTaskTimer(StaticVariables.plugin, 3L, 1L);
 
                     new BukkitRunnable() {
