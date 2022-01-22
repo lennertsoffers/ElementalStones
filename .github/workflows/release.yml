@@ -14,8 +14,17 @@ jobs:
           java-version: 8
       - name: Build and package project
         run: mvn -f pom.xml clean package
-      - name: Upload Maven build artifact
-        uses: actions/upload-artifact@v1
+      - uses: actions/create-release@v1
+        name: Create a release on GitHub
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
-          name: artifact
-          path: ./target/ElementalStones-1.0-SNAPSHOT.jar
+          tag_name: ${{ github.ref }}
+          release_name: ${{ github.ref }}
+      - uses: csexton/release-asset-action@v2
+        name: Upload the jar to the release
+        with:
+          github-token: ${{ secrets.TOKEN }}
+          pattern: target/ElementalStones-1.0-SNAPSHOT.jar
+          release-url: ${{ steps.create_release.outputs.upload_url }}
