@@ -1,13 +1,13 @@
-package com.lennertsoffers.elementalstones.stones.earthStone;
+package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,7 +20,7 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.List;
 
-public class DefenseStone extends EarthStone {
+public class ExplosionStone extends FireStone {
 
     private static ItemStack addEnchantments(ItemStack item) {
         ItemMeta itemMeta = item.getItemMeta();
@@ -183,10 +183,10 @@ public class DefenseStone extends EarthStone {
             leggings = player.getInventory().getLeggings();
             boots = player.getInventory().getBoots();
 
-            ItemStack betterHelmet = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_HELMET));
-            ItemStack betterChestplate = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_CHESTPLATE));
-            ItemStack betterLeggings = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_LEGGINGS));
-            ItemStack betterBoots = DefenseStone.addEnchantments(new ItemStack(Material.NETHERITE_BOOTS));
+            ItemStack betterHelmet = ExplosionStone.addEnchantments(new ItemStack(Material.NETHERITE_HELMET));
+            ItemStack betterChestplate = ExplosionStone.addEnchantments(new ItemStack(Material.NETHERITE_CHESTPLATE));
+            ItemStack betterLeggings = ExplosionStone.addEnchantments(new ItemStack(Material.NETHERITE_LEGGINGS));
+            ItemStack betterBoots = ExplosionStone.addEnchantments(new ItemStack(Material.NETHERITE_BOOTS));
 
             player.getInventory().setHelmet(betterHelmet);
             player.getInventory().setChestplate(betterChestplate);

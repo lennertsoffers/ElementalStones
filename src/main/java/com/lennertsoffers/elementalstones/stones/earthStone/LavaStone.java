@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.stones.fireStone;
+package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class LavaStone {
+public class LavaStone extends EarthStone {
 
     // PASSIVE
     // Passive1: Lava Walker

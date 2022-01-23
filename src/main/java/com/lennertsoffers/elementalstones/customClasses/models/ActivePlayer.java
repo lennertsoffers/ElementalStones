@@ -3,12 +3,12 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import com.lennertsoffers.elementalstones.stones.earthStone.DefenseStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import com.lennertsoffers.elementalstones.stones.fireStone.FireStone;
 import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
-import com.lennertsoffers.elementalstones.stones.fireStone.LavaStone;
+import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
@@ -490,37 +490,37 @@ public class ActivePlayer {
             moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
-            moveController.getMove4().setMove(DefenseStone.move4(this));
+            moveController.getMove4().setMove(ExplosionStone.move4(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense1)) {
             moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
-            moveController.getMove4().setMove(DefenseStone.move4(this));
-            moveController.getMove5().setMove(DefenseStone.move5(this));
+            moveController.getMove4().setMove(ExplosionStone.move4(this));
+            moveController.getMove5().setMove(ExplosionStone.move5(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense2)) {
             moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
-            moveController.getMove4().setMove(DefenseStone.move4(this));
-            moveController.getMove5().setMove(DefenseStone.move5(this));
-            moveController.getMove6().setMove(DefenseStone.move6(this));
+            moveController.getMove4().setMove(ExplosionStone.move4(this));
+            moveController.getMove5().setMove(ExplosionStone.move5(this));
+            moveController.getMove6().setMove(ExplosionStone.move6(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense3)) {
             moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
-            moveController.getMove4().setMove(DefenseStone.move4(this));
-            moveController.getMove5().setMove(DefenseStone.move5(this));
-            moveController.getMove6().setMove(DefenseStone.move6(this));
-            moveController.getMove7().setMove(DefenseStone.move7(this));
+            moveController.getMove4().setMove(ExplosionStone.move4(this));
+            moveController.getMove5().setMove(ExplosionStone.move5(this));
+            moveController.getMove6().setMove(ExplosionStone.move6(this));
+            moveController.getMove7().setMove(ExplosionStone.move7(this));
         } else if (activeStone.isSimilar(ItemStones.earthStoneDefense4)) {
             moveController.getMove1().setMove(EarthStone.move1(this));
             moveController.getMove2().setMove(EarthStone.move2(this));
             moveController.getMove3().setMove(EarthStone.move3(this));
-            moveController.getMove4().setMove(DefenseStone.move4(this));
-            moveController.getMove5().setMove(DefenseStone.move5(this));
-            moveController.getMove6().setMove(DefenseStone.move6(this));
-            moveController.getMove7().setMove(DefenseStone.move7(this));
-            moveController.getMove8().setMove(DefenseStone.move8(this));
+            moveController.getMove4().setMove(ExplosionStone.move4(this));
+            moveController.getMove5().setMove(ExplosionStone.move5(this));
+            moveController.getMove6().setMove(ExplosionStone.move6(this));
+            moveController.getMove7().setMove(ExplosionStone.move7(this));
+            moveController.getMove8().setMove(ExplosionStone.move8(this));
         }
     }
 
