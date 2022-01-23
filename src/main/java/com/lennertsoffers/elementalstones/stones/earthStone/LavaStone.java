@@ -3,20 +3,20 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class LavaStone extends EarthStone {
 
@@ -67,8 +67,11 @@ public class LavaStone extends EarthStone {
 
     // Passive 2: Magma Master
     public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
-        if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
-            event.setCancelled(true);
+
+        if (!Collections.disjoint(Arrays.asList(activePlayer.getPlayer().getInventory().getContents()), ItemStones.lavaStones)) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+                event.setCancelled(true);
+            }
         }
     }
 
@@ -121,12 +124,7 @@ public class LavaStone extends EarthStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location playerLocation = player.getLocation();
-            float yaw = Math.abs(playerLocation.getYaw());
-            Map<Character, Material> characterMaterialMap = new HashMap<>();
-            characterMaterialMap.put('A', Material.AIR);
-            characterMaterialMap.put('L', Material.LAVA);
-            ArrayList<Material> overrideBlocks = new ArrayList<>();
-            overrideBlocks.add(Material.LAVA);
+            float yaw = playerLocation.getYaw();
             String[] clearAllLavaString = {
                     "AAAAAAAAAAAAA",
                     "AAAAAAAAAAAAA",
@@ -145,11 +143,12 @@ public class LavaStone extends EarthStone {
             BukkitRunnable clearLava = new BukkitRunnable() {
                 @Override
                 public void run() {
-                    SetBlockTools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                    SetBlockTools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                    SetBlockTools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                    SetBlockTools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
                 }
             };
-            if ((yaw >= 0 && yaw < 25) || (yaw >= 335 && yaw <= 360)) {
+
+            if (yaw > -25 && yaw < 25) {
                 playerLocation.add(0, 0, 7);
                 String[] stringListBottom = {
                         "AAAAAA",
@@ -172,8 +171,9 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(0, 0, 1);
                         }
@@ -206,8 +206,9 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(-1, 0, 1);
                         }
@@ -241,8 +242,9 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(-1, 0, 0);
                         }
@@ -275,8 +277,10 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
+
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(-1, 0, -1);
                         }
@@ -287,7 +291,7 @@ public class LavaStone extends EarthStone {
                         lengthOfWave++;
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            } else if (yaw >= 155 && yaw < 205) {
+            } else if (yaw < -155 || yaw > 155) {
                 playerLocation.add(0, 0, -1);
                 String[] stringListBottom = {
                         "AAAAAA",
@@ -310,8 +314,10 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
+
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(0, 0, -1);
                         }
@@ -322,75 +328,7 @@ public class LavaStone extends EarthStone {
                         lengthOfWave++;
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            } else if (yaw >= 205 && yaw < 245) {
-                playerLocation.add(2, 0, -2);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "ALLL*A",
-                        "AALLLA",
-                        "AAALLA",
-                        "AAAALA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "ALA*A",
-                        "AALAA",
-                        "AAALA",
-                        "AAAAA"
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(1, 0, -1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            } else if (yaw >= 245 && yaw < 295) {
-                playerLocation.add(7, 0, 0);
-                String[] stringListBottom = {
-                        "AAAAAAA",
-                        "AALLLAA",
-                        "ALLLLLA",
-                        "AALLLAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                String[] stringListTop = {
-                        "AAAAAAA",
-                        "AALLLAA",
-                        "AAALAAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(1, 0, 0);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            } else {
+            } else if (yaw <= -25 && yaw > -65) {
                 playerLocation.add(2, 0, 2);
                 String[] stringListBottom = {
                         "AAAAAA",
@@ -412,10 +350,81 @@ public class LavaStone extends EarthStone {
 
                     @Override
                     public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR);
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
                         if (lengthOfWave % 2 == 0) {
                             playerLocation.add(1, 0, 1);
+                        }
+                        if (lengthOfWave > 31) {
+                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                            this.cancel();
+                        }
+                        lengthOfWave++;
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            } else if (yaw <= -65 && yaw > -115) {
+                playerLocation.add(7, 0, 0);
+                String[] stringListBottom = {
+                        "AAAAAAA",
+                        "AALLLAA",
+                        "ALLLLLA",
+                        "AALLLAA",
+                        "AAAAAAA",
+                        "AAA*AAA",
+                };
+                String[] stringListTop = {
+                        "AAAAAAA",
+                        "AALLLAA",
+                        "AAALAAA",
+                        "AAAAAAA",
+                        "AAA*AAA",
+                };
+                new BukkitRunnable() {
+                    int lengthOfWave = 1;
+
+                    @Override
+                    public void run() {
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
+                        if (lengthOfWave % 2 == 0) {
+                            playerLocation.add(1, 0, 0);
+                        }
+                        if (lengthOfWave > 31) {
+                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
+                            this.cancel();
+                        }
+                        lengthOfWave++;
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            } else {
+                playerLocation.add(2, 0, -2);
+                String[] stringListBottom = {
+                        "AAAAAA",
+                        "ALLL*A",
+                        "AALLLA",
+                        "AAALLA",
+                        "AAAALA",
+                        "AAAAAA"
+                };
+                String[] stringListTop = {
+                        "AAAAA",
+                        "ALA*A",
+                        "AALAA",
+                        "AAALA",
+                        "AAAAA"
+                };
+                new BukkitRunnable() {
+                    int lengthOfWave = 1;
+
+                    @Override
+                    public void run() {
+                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
+                        if (lengthOfWave % 2 == 0) {
+                            playerLocation.add(1, 0, -1);
                         }
                         if (lengthOfWave > 31) {
                             clearLava.runTaskLater(StaticVariables.plugin, 1L);
