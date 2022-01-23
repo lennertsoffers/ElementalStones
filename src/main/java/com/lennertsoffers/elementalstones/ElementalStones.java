@@ -48,6 +48,6 @@ public final class ElementalStones extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }

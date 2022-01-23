@@ -8,6 +8,7 @@ import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -15,14 +16,33 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
-import sun.awt.windows.ThemeReader;
 
 import java.util.*;
 
 public class EarthbendingStone extends EarthStone {
 
-    private static void earthWaveNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {
 
+    // HELPERS
+
+
+    /**
+     * <b>Spawns in an wave of fallingblocks into the world</b>
+     * <p>
+     *     The fallingblocks are spawned and then their corresponding block is set to air again<br>
+     *     The earth wave knocks up living entities and gives them the slowness effect<br>
+     * </p>
+     * <p>
+     *     This method depends on the spawnFallingBlock method<br>
+     * </p>
+     *
+     * @param location the start location of the player
+     * @param var0 tweaks the direction of the wave
+     * @param var1 tweaks the direction of the wave
+     * @param perpendicular if the wave should be perpendicular to the axes
+     * @param activePlayer the activeplayer executing this move
+     * @see EarthbendingStone#spawnFallingBlock(Location, Vector, Player)
+     */
+    private static void earthWaveNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
 
         World world = location.getWorld();
@@ -75,7 +95,7 @@ public class EarthbendingStone extends EarthStone {
 
                         if (launchBlockLocation != null) {
                             launchBlockLocation.add(0, -1, 0);
-                            spawnFallingBlock(launchBlockLocation, world, velocity, player);
+                            spawnFallingBlock(launchBlockLocation, velocity, player);
                         }
 
                         blockOnRowLocation.add(additionRowBlock);
@@ -136,7 +156,7 @@ public class EarthbendingStone extends EarthStone {
 
                         if (launchBlockLocation != null) {
                             launchBlockLocation.add(0, -1, 0);
-                            spawnFallingBlock(launchBlockLocation, world, velocity, player);
+                            spawnFallingBlock(launchBlockLocation, velocity, player);
                         }
 
                         blockOnRowLocation.add(additionRowBlock);
@@ -160,23 +180,50 @@ public class EarthbendingStone extends EarthStone {
         }
     }
 
-    private static void spawnFallingBlock(Location l, World world, Vector velocity, Player player) {
-        Location location = new Location(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
-        Block launchBlock = world.getBlockAt(location);
-        FallingBlock fallingBlock = world.spawnFallingBlock(location.clone().add(0.5, 0, 0.5), launchBlock.getBlockData());
-        fallingBlock.setDropItem(false);
-        fallingBlock.setVelocity(velocity);
-        launchBlock.setType(Material.AIR);
+    /**
+     * <b>Spawns a falling block in the world</b>
+     * <p>
+     *     On the provided location, a fallingblock gets spawned<br>
+     *     The fallingblock is of the same material as the block on that position<br>
+     *     The real block is set to air and the fallingblock is launched up<br>
+     * </p>
+     *
+     * @param location the location of the block
+     * @param velocity speed at which the block should be launched up
+     * @param player the player executing this move
+     */
+    private static void spawnFallingBlock(Location location, Vector velocity, Player player) {
+        Location l = new Location(location.getWorld(), location.getBlockX(), location.getBlockY(), location.getBlockZ());
+        World world = location.getWorld();
 
-        Vector direction = new Vector(0, 1, 0);
-        List<PotionEffect> potionEffects = new ArrayList<>();
-        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 100, 1, true, true, true));
+        if (world != null) {
+            Block launchBlock = world.getBlockAt(l);
+            FallingBlock fallingBlock = world.spawnFallingBlock(l.clone().add(0.5, 0, 0.5), launchBlock.getBlockData());
+            fallingBlock.setDropItem(false);
+            fallingBlock.setVelocity(velocity);
+            launchBlock.setType(Material.AIR);
 
-        NearbyEntityTools.damageNearbyEntities(player, location, 0, 1.5, 1.5, 1.5, direction ,potionEffects);
+            Vector direction = new Vector(0, 1, 0);
+            List<PotionEffect> potionEffects = new ArrayList<>();
+            potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 100, 1, true, true, true));
+
+            NearbyEntityTools.damageNearbyEntities(player, l, 0, 1.5, 1.5, 1.5, direction, potionEffects);
+        }
     }
 
+    /**
+     * <b>Spawns in an array of dripstone spikes</b>
+     * <p>
+     *     If a spike collides with an entity, it gets 5 damage and the slow digging effect for 5 seconds<br>
+     * </p>
+     *
+     * @param location the start location of the player
+     * @param var0 tweaks the direction of the spikes
+     * @param var1 tweaks the direction of the spikes
+     * @param perpendicular if the spikes should be perpendicular to the axes
+     * @param player the player executing this move
+     */
     private static void spikeWave(Location location, boolean var0, boolean var1, boolean perpendicular, Player player) {
-
         World world = location.getWorld();
         if (world == null) {
             return;
@@ -278,6 +325,10 @@ public class EarthbendingStone extends EarthStone {
             }
         }
 
+        // List of potion effects to add to the entity that gets hurt
+        List<PotionEffect> potionEffects = new ArrayList<>();
+        potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, 2, false, false, true));
+
         // Placement of spikes
         new BukkitRunnable() {
             int rowIndex = 0;
@@ -299,9 +350,6 @@ public class EarthbendingStone extends EarthStone {
                             public void run() {
                                 Block spikeBlock = world.getBlockAt(spikeBlockLocation);
                                 if (spikeBlock.getType() == Material.AIR) {
-
-                                    List<PotionEffect> potionEffects = new ArrayList<>();
-                                    potionEffects.add(new PotionEffect(PotionEffectType.SLOW_DIGGING, 70, 2, false, false, true));
                                     NearbyEntityTools.damageNearbyEntities(player, spikeBlockLocation, 5, 1, 1, 1, potionEffects);
 
                                     spikeBlock.setType(Material.POINTED_DRIPSTONE);
@@ -356,25 +404,113 @@ public class EarthbendingStone extends EarthStone {
         }.runTaskTimer(StaticVariables.plugin, 60L, 3L);
     }
 
+    /**
+     * <b>Launches the platform of the ultimate down</b>
+     * <p>
+     *     It stops all BukkitRunnables keeping the platform up<br>
+     *     The player will stop flying but take no fall damage<br>
+     *     Earth Wave move is executed<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see EarthbendingStone#move7(ActivePlayer)
+     * @see FlyingPlatform
+     */
+    public static void move8launch(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
 
-    // PASSIVE
-    // Joinker
+        Vector platformFallVelocity = new Vector(0, -1, 0);
+        for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
+            fallingBlock.setVelocity(platformFallVelocity);
+            player.setVelocity(platformFallVelocity);
+        }
+        move8End(activePlayer);
+
+
+        Location location = activePlayer.getPlayer().getLocation();
+        earthWaveNew(location, true, true, true, activePlayer);
+        earthWaveNew(location, true, false, true, activePlayer);
+        earthWaveNew(location, false, true, true, activePlayer);
+        earthWaveNew(location, false, false, true, activePlayer);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                earthWaveNew(location, true, true, false, activePlayer);
+                earthWaveNew(location, true, false, false, activePlayer);
+                earthWaveNew(location, false, true, false, activePlayer);
+                earthWaveNew(location, false, false, false, activePlayer);
+            }
+        }.runTaskLater(StaticVariables.plugin, 13L);
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                activePlayer.setMove8active(false);
+            }
+        }.runTaskLater(StaticVariables.plugin, 40L);
+    }
+
+    /**
+     * <b>Ends the ultimate move</b>
+     * <p>
+     *     This is the gentle alternative for stopping the ultimate<br>
+     *     It just stops the BukkitRunnables keeping the platform up<br>
+     *     This is triggered when the time runs out or the platform touches the ground<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see FlyingPlatform
+     */
+    public static void move8End(ActivePlayer activePlayer) {
+        Player player = activePlayer.getPlayer();
+        player.setFlying(false);
+        player.setAllowFlight(false);
+        activePlayer.setMovesEnabled(true);
+    }
+
+
+    // MOVES //
+
+
+    /**
+     * <b>PASSIVE: Shockwave</b>
+     * <p>
+     *     Creates a shockwave around the player when he falls<br>
+     *     Activates when the player should normally get fall damage (no fall damage is taken)<br>
+     *     This wave knocks up entities<br>
+     *     The size and the knockup height depends on the fall distance of the player<br>
+     *     <ul>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 2s, amplifier: 1)</li>
+     *     </ul>
+     * </p>
+     *
+     *
+     * @param activePlayer the activeplayer for whom this move is executed
+     * @param event the EntityDamageEvent from the event listener
+     */
     public static void passive(ActivePlayer activePlayer, EntityDamageEvent event) {
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        float fallDistance = player.getFallDistance();
+        float fallDistance;
+        if (player.getFallDistance() < 20) {
+            fallDistance = player.getFallDistance();
+        } else {
+            fallDistance = 20;
+        }
+        List<PotionEffect> potionEffects = new ArrayList<>();
+        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 40, 1, false, false, false));
         Vector velocity = new Vector(0, 0.2, 0);
         System.out.println(player.getFallDistance());
 
         event.setCancelled(true);
 
+        List<Block> rings = new ArrayList<>();
         new BukkitRunnable() {
             int range = 2;
 
             @Override
             public void run() {
-
-                List<Block> ring = new ArrayList<>();
                 for (int i = 0; i < 360; i+= 1) {
                     Location locationOnCircle = CheckLocationTools.getClosestAirBlockLocation(MathTools.locationOnCircle(player.getLocation(), range, i, world));
 
@@ -383,31 +519,48 @@ public class EarthbendingStone extends EarthStone {
 
                         Block block = world.getBlockAt(locationOnCircle);
 
-                        if (ring.stream().noneMatch(b -> b.getLocation().getBlockX() == block.getLocation().getBlockX() && b.getLocation().getBlockZ() == block.getLocation().getBlockZ())) {
-                            ring.add(block);
+                        if (rings.stream().noneMatch(b -> b.getX() == block.getX() && b.getZ() == block.getZ())) {
+                            rings.add(block);
 
-                            FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation().add(0.5, 0, 0.5), block.getBlockData());
-                            fallingBlock.setDropItem(true);
+                            BlockData blockData = block.getBlockData();
                             block.setType(Material.AIR);
 
+                            FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation().add(0.5, 0, 0.5), blockData);
+                            fallingBlock.setDropItem(true);
                             fallingBlock.setVelocity(velocity);
+
+                            double amountY = (fallDistance - range - 2) / 10;
+                            if (amountY < 0.4) {
+                                amountY = 0.4;
+                            }
+                            NearbyEntityTools.damageNearbyEntities(player, block.getLocation(), 0, 1, 2, 1, new Vector(0, amountY, 0), potionEffects);
                         }
                     }
                 }
 
                 range++;
-                if (range > fallDistance) {
+                if (range > fallDistance - 2) {
                     this.cancel();
                 }
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
-
-    // MOVE 4
-    // Earth Spikes
-    // Summons an array of spikes out of the ground in the players looking direction
-    // Entities hurt get mining fatigue for a brief moment
+    /**
+     * <b>MOVE 4: Earth Spikes</b>
+     * <p>
+     *     Summons an array of spikes out of the ground in the players looking direction.
+     *     Entities hurt get mining fatigue for a brief moment.
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>Range:</b> 6</li>
+     *         <li><b>PotionEffect:</b> Mining fatigue (duration: 5s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -436,9 +589,20 @@ public class EarthbendingStone extends EarthStone {
         };
     }
 
-    // MOVE 5
-    // Stomp:
-    // -> Create an underground shockwave that damages entities along its way
+    /**
+     * <b>MOVE 5: Stomp</b>
+     * <p>
+     *     Create an underground shockwave that damages entities along its way
+     *     <ul>
+     *         <li><b>Damage:</b> 7</li>
+     *         <li><b>Range:</b> 50</li>
+     *         <li><b>Knockup:</b> 0.5</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -454,20 +618,16 @@ public class EarthbendingStone extends EarthStone {
                 @Override
                 public void run() {
                     location.add(direction);
-                    int amountAdded = 0;
-                    while (world.getBlockAt(location).getType() != Material.AIR && amountAdded < 50) {
-                        location.add(0, 1, 0);
-                        amountAdded++;
-                    }
-                    while (world.getBlockAt(location.getBlockX(), location.getBlockY() - 1, location.getBlockZ()).getType() == Material.AIR) {
-                        location.add(0, -1, 0);
-                        amountAdded--;
-                    }
-                    world.spawnParticle(Particle.SMOKE_LARGE, location, 0, 0, -0.5, 0);
+                    Location blockLocation = CheckLocationTools.getClosestAirBlockLocation(location);
 
-                    NearbyEntityTools.damageNearbyEntities(player, location, 7, 1, 1, 1, new Vector(0, 0.5, 0));
+                    if (blockLocation != null) {
+                        blockLocation.add(0, -1, 0);
 
-                    location.add(0, -amountAdded, 0);
+                        world.spawnParticle(Particle.SMOKE_LARGE, blockLocation, 0, 0, -0.5, 0);
+
+                        NearbyEntityTools.damageNearbyEntities(player, blockLocation, 7, 1, 1, 1, new Vector(0, 0.5, 0));
+                    }
+
                     counter++;
                     if (counter >= 50) {
                         this.cancel();
@@ -477,10 +637,25 @@ public class EarthbendingStone extends EarthStone {
         };
     }
 
-    // MOVE 6
-    // Rock Throw
-    // Select a set of blocks by doing this move on them
-    // Shoot the selected blocks in your looking direction by crouching and executing this move
+    /**
+     * <b>MOVE 6: Rock Throw</b>
+     * <p>
+     *     Select a block by executing this move and aiming at a block<br>
+     *     Multiple blocks can be selected by doing this move multiple times<br>
+     *     The selected blocks will fly up<br>
+     * </p>
+     * <p>
+     *     By crouching and executing this move, the blocks will be launched in your looking direction<br>
+     *     An entity hurt by this attack will get a bit of knockback<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Range:</b> 80</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -531,9 +706,21 @@ public class EarthbendingStone extends EarthStone {
         };
     }
 
-    // MOVE 7
-    // Earth Wave
-    // -> Creates an earth wave in the looking direction of the player
+    /**
+     * <b>MOVE 7: Earth Wave</b>
+     * <p>
+     *     Creates an earth wave in the looking direction of the player<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 0</li>
+     *         <li><b>Range:</b> 50</li>
+     *         <li><b>Knockup: </b> 1</li>
+     *         <li><b>PotionEffect: </b> Slowness (duration: 5s, amplifier: 1)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -559,12 +746,25 @@ public class EarthbendingStone extends EarthStone {
         };
     }
 
-
-    // MOVE 8
-    // Reverse Turret
-    // -> Selects 8 blocks around player and shoots them up
-    // -> Second time you activate this ability the stones fly in the looking direction of the player
-    // -> (On third activation you let the stones come back to the player)
+    /**
+     * <b>ULTIMATE: Flying Rock</b>
+     * <p>
+     *     The player flies up and a set of random blocks in the close range fly up to<br>
+     *     These blocks will form into a flying island<br>
+     * </p>
+     * <p>
+     *     When the move is activated again, the rock will be launched at the ground<br>
+     *     This wil create an Earth Wave in all 8 directions<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 1min</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see EarthbendingStone#move7(ActivePlayer)
+     * @see FlyingPlatform
+     */
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -644,48 +844,4 @@ public class EarthbendingStone extends EarthStone {
             }
         };
     }
-
-    public static void move8launch(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-
-        Vector platformFallVelocity = new Vector(0, -1, 0);
-        for (FallingBlock fallingBlock : activePlayer.getMove8FallingBlocks()) {
-            fallingBlock.setVelocity(platformFallVelocity);
-            player.setVelocity(platformFallVelocity);
-        }
-        move8End(activePlayer);
-
-
-        Location location = activePlayer.getPlayer().getLocation();
-        earthWaveNew(location, true, true, true, activePlayer);
-        earthWaveNew(location, true, false, true, activePlayer);
-        earthWaveNew(location, false, true, true, activePlayer);
-        earthWaveNew(location, false, false, true, activePlayer);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                earthWaveNew(location, true, true, false, activePlayer);
-                earthWaveNew(location, true, false, false, activePlayer);
-                earthWaveNew(location, false, true, false, activePlayer);
-                earthWaveNew(location, false, false, false, activePlayer);
-            }
-        }.runTaskLater(StaticVariables.plugin, 13L);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                activePlayer.setMove8active(false);
-            }
-        }.runTaskLater(StaticVariables.plugin, 40L);
-    }
-
-    public static void move8End(ActivePlayer activePlayer) {
-        Player player = activePlayer.getPlayer();
-        player.setFlying(false);
-        player.setAllowFlight(false);
-        activePlayer.setMovesEnabled(true);
-    }
 }
-
-// TODO - Fix passive

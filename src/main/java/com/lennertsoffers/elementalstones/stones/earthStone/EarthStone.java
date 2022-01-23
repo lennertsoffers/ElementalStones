@@ -21,14 +21,28 @@ import java.util.List;
 
 public class EarthStone {
 
-    // MOVE 1
-    // Stone Pillar
-    // -> Creates a pillar on the targeted location
-    // -> If an entity collides with the pillar it flies up
+    /**
+     * <b>MOVE 1: Stone Pillar</b>
+     * <p>
+     *     Creates a pillar on the targeted location<br>
+     *     Colliding entities are launched up<br>
+     *     The pillar will be removed after a certain amount of time<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 3s</li>
+     *         <li><b>Range: </b> 40</li>
+     *         <li><b>Knockup:</b> 1</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see Pillar
+     */
     public static Runnable move1(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             Block targetBlock = player.getTargetBlockExact(40);
+            Vector velocity = new Vector(0, 1, 0);
 
             if (targetBlock != null) {
                 World world = player.getWorld();
@@ -57,6 +71,9 @@ public class EarthStone {
 
                 if (moveBlocks.size() > 0) {
                     Pillar pillar = new Pillar(targetLocation, moveBlocks, true);
+                    for (Entity entity : world.getNearbyEntities(targetLocation, 1, 3, 1)) {
+                        entity.setVelocity(velocity);
+                    }
                     pillar.runTaskTimer(StaticVariables.plugin, 3L, 1L);
 
                     new BukkitRunnable() {
@@ -73,14 +90,34 @@ public class EarthStone {
         };
     }
 
-    // MOVE 2
-    // Earthquake
-    // -> Creates a circular earthquake damaging, slowing and confusing living entities
+    /**
+     * <b>MOVE 2: Earthquake</b>
+     * <p>
+     *     Makes a circular earthquake damaging, slowing and confusing living entities
+     *     <ul>
+     *         <li><b>Duration:</b> 4s</li>
+     *         <li><b>Damage:</b> 1</li>
+     *         <li><b>Range:</b> 10</li>
+     *         <li><b>PotionEffects: </b>
+     *             <ul>
+     *                 <li>Slowness (duration: 10, amplifier: 1)</li>
+     *                 <li>Confusion (duration: 20, amplifier: 1)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move2(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location middlePoint = player.getLocation();
             World world = player.getWorld();
+            List<PotionEffect> potionEffects = new ArrayList<>();
+            potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 200, 1, false, false, false));
+            potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, 400, 1, false, false, true));
 
             ArrayList<Location> earthquakeLocations = new ArrayList<>();
 
@@ -104,9 +141,6 @@ public class EarthStone {
                         Block block = world.getBlockAt(location.clone().add(0, -1, 0));
                         BlockData blockData = block.getBlockData();
 
-                        List<PotionEffect> potionEffects = new ArrayList<>();
-                        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 10, 1, false, false, false));
-                        potionEffects.add(new PotionEffect(PotionEffectType.CONFUSION, 400, 1, false, false, true));
                         NearbyEntityTools.damageNearbyEntities(player, location.clone().add(0, 1, 0), 1, 1, 1, 1, potionEffects);
 
                         for (int i = 0; i < 10; i++) {
@@ -130,9 +164,20 @@ public class EarthStone {
         };
     }
 
-    // MOVE 3
-    // PushBack
-    // -> Launches a wall pushing away entities
+    /**
+     * <b>MOVE 3: Pushback</b>
+     * <p>
+     *     Launches a wall that pushes away entities
+     *     <ul>
+     *         <li><b>Range:</b> 40</li>
+     *         <li><b>Knockback:</b> 1.5</li>
+     *         <li><b>Knockup:</b> 0.2</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move3(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
