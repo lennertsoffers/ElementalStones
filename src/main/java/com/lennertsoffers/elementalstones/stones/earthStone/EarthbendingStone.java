@@ -21,7 +21,9 @@ import java.util.*;
 
 public class EarthbendingStone extends EarthStone {
 
+
     // HELPERS
+
 
     /**
      * <b>Spawns in an wave of fallingblocks into the world</b>
@@ -468,7 +470,8 @@ public class EarthbendingStone extends EarthStone {
     }
 
 
-    // MOVES
+    // MOVES //
+
 
     /**
      * <b>PASSIVE: Shockwave</b>
@@ -550,6 +553,7 @@ public class EarthbendingStone extends EarthStone {
      *     Entities hurt get mining fatigue for a brief moment.
      *     <ul>
      *         <li><b>Damage:</b> 5</li>
+     *         <li><b>Range:</b> 6</li>
      *         <li><b>PotionEffect:</b> Mining fatigue (duration: 5s, amplifier: 2)</li>
      *     </ul>
      * </p>
@@ -591,6 +595,7 @@ public class EarthbendingStone extends EarthStone {
      *     Create an underground shockwave that damages entities along its way
      *     <ul>
      *         <li><b>Damage:</b> 7</li>
+     *         <li><b>Range:</b> 50</li>
      *         <li><b>Knockup:</b> 0.5</li>
      *     </ul>
      * </p>
@@ -644,6 +649,7 @@ public class EarthbendingStone extends EarthStone {
      *     An entity hurt by this attack will get a bit of knockback<br>
      *     <ul>
      *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Range:</b> 80</li>
      *     </ul>
      * </p>
      *
@@ -706,8 +712,9 @@ public class EarthbendingStone extends EarthStone {
      *     Creates an earth wave in the looking direction of the player<br>
      *     <ul>
      *         <li><b>Damage:</b> 0</li>
-     *         <li><b>PotionEffect: </b> Slowness (duration: 5s, amplifier: 1)</li>
+     *         <li><b>Range:</b> 50</li>
      *         <li><b>Knockup: </b> 1</li>
+     *         <li><b>PotionEffect: </b> Slowness (duration: 5s, amplifier: 1)</li>
      *     </ul>
      * </p>
      *
