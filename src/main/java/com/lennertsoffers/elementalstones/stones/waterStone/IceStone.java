@@ -349,68 +349,68 @@ public class IceStone extends WaterStone {
 
     // freeze effect
     private static void freezeEffect(LivingEntity target, ActivePlayer activePlayer) {
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 100, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 100, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 10, false, false, false));
-        Location startLocation = target.getLocation();
-        String[] form1Layer0 = {
-                "?PBP?",
-                "BIIIB",
-                "BI*IP",
-                "PPPPI",
-                "?IBB?"
-        };
-        String[] form1Layer1 = {
-                "??P??",
-                "?PPI?",
-                "BP*PB",
-                "?PPP?",
-                "??B??"
-        };
-        String[] form1Layer2 = {
-                "?B?",
-                "I*B",
-                "?P?"
-        };
-        String[] form2Layer0 = {
-                "??I??",
-                "?PBI?",
-                "PP*PB",
-                "?BIP?",
-                "??P??"
-        };
-        String[] form2Layer1 = {
-                "?P?",
-                "I*B",
-                "?P?"
-        };
-        String[] form2Layer2 = {
-                "*"
-        };
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('I', Material.ICE);
-        characterMaterialMap.put('P', Material.PACKED_ICE);
-        characterMaterialMap.put('B', Material.BLUE_ICE);
-
-        SetBlockTools.setBlocks(startLocation, form1Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
-        SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form1Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-        SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form1Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-        target.setFreezeTicks(600);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                activePlayer.resetWorld();
-                SetBlockTools.setBlocks(startLocation, form2Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
-                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form2Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-                SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form2Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-            }
-        }.runTaskLater(StaticVariables.plugin, 300L);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                activePlayer.resetWorld();
-            }
-        }.runTaskLater(StaticVariables.plugin, 600L);
+//        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 100, false, false, false));
+//        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 100, false, false, false));
+//        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 10, false, false, false));
+//        Location startLocation = target.getLocation();
+//        String[] form1Layer0 = {
+//                "?PBP?",
+//                "BIIIB",
+//                "BI*IP",
+//                "PPPPI",
+//                "?IBB?"
+//        };
+//        String[] form1Layer1 = {
+//                "??P??",
+//                "?PPI?",
+//                "BP*PB",
+//                "?PPP?",
+//                "??B??"
+//        };
+//        String[] form1Layer2 = {
+//                "?B?",
+//                "I*B",
+//                "?P?"
+//        };
+//        String[] form2Layer0 = {
+//                "??I??",
+//                "?PBI?",
+//                "PP*PB",
+//                "?BIP?",
+//                "??P??"
+//        };
+//        String[] form2Layer1 = {
+//                "?P?",
+//                "I*B",
+//                "?P?"
+//        };
+//        String[] form2Layer2 = {
+//                "*"
+//        };
+//        Map<Character, Material> characterMaterialMap = new HashMap<>();
+//        characterMaterialMap.put('I', Material.ICE);
+//        characterMaterialMap.put('P', Material.PACKED_ICE);
+//        characterMaterialMap.put('B', Material.BLUE_ICE);
+//
+//        SetBlockTools.setBlocks(startLocation, form1Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
+//        SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form1Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+//        SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form1Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+//        target.setFreezeTicks(600);
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                activePlayer.resetWorld();
+//                SetBlockTools.setBlocks(startLocation, form2Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
+//                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form2Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+//                SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form2Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
+//            }
+//        }.runTaskLater(StaticVariables.plugin, 300L);
+//        new BukkitRunnable() {
+//            @Override
+//            public void run() {
+//                activePlayer.resetWorld();
+//            }
+//        }.runTaskLater(StaticVariables.plugin, 600L);
     }
 
 

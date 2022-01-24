@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
@@ -124,601 +125,41 @@ public class LavaStone extends EarthStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location playerLocation = player.getLocation();
+
+
             float yaw = playerLocation.getYaw();
-            String[] clearAllLavaString = {
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAA*AAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA",
-                    "AAAAAAAAAAAAA"
-            };
-            BukkitRunnable clearLava = new BukkitRunnable() {
-                @Override
-                public void run() {
-                    SetBlockTools.setBlocks(playerLocation, clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                    SetBlockTools.setBlocks(playerLocation.add(0, 1, 0), clearAllLavaString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                }
-            };
-
             if (yaw > -25 && yaw < 25) {
-                playerLocation.add(0, 0, 7);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "AALAAA",
-                        "ALLLAA",
-                        "ALLLA*",
-                        "ALLLAA",
-                        "AALAAA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "ALAAA",
-                        "ALLA*",
-                        "ALAAA",
-                        "AAAAA",
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(0, 0, 1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 1");
+                new LavaWave(activePlayer, true, true, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw >= 25 && yaw < 65) {
-                playerLocation.add(-2, 0, 2);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "ALAAAA",
-                        "ALLAAA",
-                        "ALLLAA",
-                        "A*LLLA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "ALAAA",
-                        "AALAA",
-                        "A*ALA",
-                        "AAAAA"
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(-1, 0, 1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 2");
             } else if (yaw >= 65 && yaw < 115) {
-                playerLocation.add(-1, 0, 0);
-                String[] stringListBottom = {
-                        "AAAAAAA",
-                        "AALLLAA",
-                        "ALLLLLA",
-                        "AALLLAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                String[] stringListTop = {
-                        "AAAAAAA",
-                        "AAALAAA",
-                        "AALLLAA",
-                        "AAAAAAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(-1, 0, 0);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 3");
+                // done
+                new LavaWave(activePlayer, true, false, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw >= 115 && yaw < 155) {
-                playerLocation.add(-2, 0, -2);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "AAAALA",
-                        "AAALLA",
-                        "AALLLA",
-                        "ALLL*A",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "AAALA",
-                        "AALAA",
-                        "ALA*A",
-                        "AAAAA"
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(-1, 0, -1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 4");
             } else if (yaw < -155 || yaw > 155) {
-                playerLocation.add(0, 0, -1);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "AALAAA",
-                        "ALLLAA",
-                        "ALLLA*",
-                        "ALLLAA",
-                        "AALAAA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAAA",
-                        "AALAAA",
-                        "ALLAA*",
-                        "AALAAA",
-                        "AAAAAA",
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(0, 0, -1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 5");
+                // done
+                new LavaWave(activePlayer, true, false, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw <= -25 && yaw > -65) {
-                playerLocation.add(2, 0, 2);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "A*LLLA",
-                        "ALLLAA",
-                        "ALLAAA",
-                        "ALAAAA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "A*ALA",
-                        "AALAA",
-                        "ALAAA",
-                        "AAAAA"
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(1, 0, 1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 6");
             } else if (yaw <= -65 && yaw > -115) {
-                playerLocation.add(7, 0, 0);
-                String[] stringListBottom = {
-                        "AAAAAAA",
-                        "AALLLAA",
-                        "ALLLLLA",
-                        "AALLLAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                String[] stringListTop = {
-                        "AAAAAAA",
-                        "AALLLAA",
-                        "AAALAAA",
-                        "AAAAAAA",
-                        "AAA*AAA",
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(1, 0, 0);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 7");
+                new LavaWave(activePlayer, true, true, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else {
-                playerLocation.add(2, 0, -2);
-                String[] stringListBottom = {
-                        "AAAAAA",
-                        "ALLL*A",
-                        "AALLLA",
-                        "AAALLA",
-                        "AAAALA",
-                        "AAAAAA"
-                };
-                String[] stringListTop = {
-                        "AAAAA",
-                        "ALA*A",
-                        "AALAA",
-                        "AAALA",
-                        "AAAAA"
-                };
-                new BukkitRunnable() {
-                    int lengthOfWave = 1;
-
-                    @Override
-                    public void run() {
-                        SetBlockTools.setBlocks(playerLocation, stringListBottom, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        SetBlockTools.setBlocks(playerLocation.clone().add(0, 1, 0), stringListTop, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        NearbyEntityTools.damageNearbyEntities(player, playerLocation, 4, 2, 2, 2);
-                        if (lengthOfWave % 2 == 0) {
-                            playerLocation.add(1, 0, -1);
-                        }
-                        if (lengthOfWave > 31) {
-                            clearLava.runTaskLater(StaticVariables.plugin, 1L);
-                            this.cancel();
-                        }
-                        lengthOfWave++;
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                System.out.println("Section 8");
             }
         };
     }
 
-    private static void placeRiftInWorld(Location location, boolean positiveX, boolean positiveZ, boolean negativeZ, ActivePlayer activePlayer) {
-        Map<String, String[]> layerMapping= new HashMap<>();
-        // Stage 0
-        layerMapping.put("riftStage0Layer0", new String[] {
-                "???",
-                "???",
-                "MBM",
-                "MLM",
-                "BLB",
-                "BMM",
-                "MLB",
-                "MBM",
-                "BLM",
-                "BBB",
-                "MLB",
-                "MMB",
-                "B*M"
-        });
-        layerMapping.put("riftStage0Layer1", new String[] {
-                "?B?",
-                "?M?",
-                "MAM",
-                "AAA",
-                "AAB",
-                "BAA",
-                "AAA",
-                "AAA",
-                "BAM",
-                "AAA",
-                "MAA",
-                "AAB",
-                "B*M"
-        });
-        layerMapping.put("riftStage0LayerAir", new String[] {
-                "?A?",
-                "?A?",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "AAA",
-                "A*A"
-        });
-
-        // Stage 1
-        layerMapping.put("riftStage1Layer0", new String[] {
-                "?????",
-                "?????",
-                "??M??",
-                "?MLB?",
-                "?MLM?",
-                "BLMMB",
-                "BMMLB",
-                "BMLMM",
-                "BMMLB",
-                "MMLMB",
-                "BMLMM",
-                "BBMBB",
-                "BLMBB",
-                "MMMLB",
-                "BM*MM"
-        });
-        layerMapping.put("riftStage1Layer1", new String[] {
-                "??B??",
-                "??B??",
-                "?MAB?",
-                "?BAB?",
-                "MAAAM",
-                "BAAAA",
-                "BAAAB",
-                "BAAAA",
-                "AAAAB",
-                "AAAAA",
-                "AAAAM",
-                "AAAAB",
-                "MAAAB",
-                "AAAAB",
-                "BA*AM",
-        });
-        layerMapping.put("riftStage1Layer2", new String[] {
-                "??A??",
-                "??B??",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "BAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAB",
-                "AAAAA",
-                "AA*AA"
-        });
-        layerMapping.put("riftStage1LayerAir", new String[] {
-                "??A??",
-                "??A??",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AAAAA",
-                "AA*AA"
-        });
-
-        // Stage 2
-        layerMapping.put("riftStage2Layer0", new String[] {
-                "???????",
-                "???B???",
-                "??BLB??",
-                "??MMB??",
-                "?MLLLM?",
-                "?MLMLB?",
-                "?BLLMMB",
-                "BBLLLBB",
-                "BMMLLBB",
-                "BMMLLMB",
-                "BBLLLBB",
-                "MMLLMBB",
-                "BMLLMMM",
-                "MBLLLBM",
-                "MBLMLMB",
-                "MMMLLMB",
-                "BML*LBM",
-        });
-        layerMapping.put("riftStage2Layer1", new String[] {
-                "???B???",
-                "???B???",
-                "??BAM??",
-                "??MAB??",
-                "?MAAAM?",
-                "?MAAAB?",
-                "MBAAAAB",
-                "BAAAAAM",
-                "BMAAABB",
-                "BAAAAAA",
-                "BAAAAAB",
-                "MAAAAAA",
-                "BAAAAAM",
-                "MBAAABM",
-                "MAAAAAB",
-                "MAAAAAB",
-                "BBA*AAM"
-        });
-        layerMapping.put("riftStage2Layer2", new String[] {
-                "???B???",
-                "???B???",
-                "??AAA??",
-                "??AAA??",
-                "?AAAAA?",
-                "?AAAAA?",
-                "AAAAAAA",
-                "AAAAAAA",
-                "BAAAABB",
-                "BAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "MBAAAAM",
-                "AAAAAAB",
-                "AAAAAAA",
-                "AAA*AAA",
-        });
-        layerMapping.put("riftStage2LayerAir", new String[] {
-                "???A???",
-                "???A???",
-                "??AAA??",
-                "??AAA??",
-                "?AAAAA?",
-                "?AAAAA?",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAAAAAA",
-                "AAA*AAA",
-        });
-
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('B', Material.BASALT);
-        characterMaterialMap.put('A', Material.AIR);
-        characterMaterialMap.put('M', Material.MAGMA_BLOCK);
-        characterMaterialMap.put('L', Material.LAVA);
-
-        if (positiveZ) {
-            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
-                entry.setValue(StringListTools.mirrorY(StringListTools.rotate(entry.getValue())));
-            }
-        } else if (negativeZ) {
-            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
-                entry.setValue(StringListTools.rotate(entry.getValue()));
-            }
-        } else if (positiveX) {
-            for (Map.Entry<String, String[]> entry : layerMapping.entrySet()) {
-                entry.setValue(StringListTools.mirrorX(entry.getValue()));
-            }
-        }
-
-
-        new BukkitRunnable() {
-            int steps = 0;
-            @Override
-            public void run() {
-                if (steps == 0) {
-                    for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage0LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    }
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage0Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage0Layer0"), characterMaterialMap, false, Material.MAGMA_BLOCK, activePlayer);
-                } else if (steps == 1) {
-                    for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage1LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    }
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage1Layer0"), characterMaterialMap, false, Material.LAVA, activePlayer);
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage1Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage1Layer2"), characterMaterialMap, false, Material.AIR, activePlayer);
-                } else if (steps == 2) {
-                    for (int i = 5; i > 1; i--) {
-                        SetBlockTools.setBlocks(location.clone().add(0, i, 0), layerMapping.get("riftStage2LayerAir"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    }
-                    SetBlockTools.setBlocks(location, layerMapping.get("riftStage2Layer0"), characterMaterialMap, false, Material.LAVA, activePlayer);
-                    SetBlockTools.setBlocks(location.clone().add(0, 1, 0), layerMapping.get("riftStage2Layer1"), characterMaterialMap, false, Material.AIR, activePlayer);
-                    SetBlockTools.setBlocks(location.clone().add(0, 2, 0), layerMapping.get("riftStage2Layer2"), characterMaterialMap, false, Material.AIR, activePlayer);
-                } else {
-                    this.cancel();
-                }
-                steps++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
-    }
 
     // MOVE 6
     // Rift
     // -> Creates a gap in the earth in the direction of the player filled with lava
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
-            Player player = activePlayer.getPlayer();
-            Location location = player.getLocation();
-            float yaw;
-            if (player.getLocation().getYaw() < 0) {
-                yaw = 360 + player.getLocation().getYaw();
-            } else {
-                yaw = player.getLocation().getYaw();
-            }
-
-            if ((yaw >= 0 && yaw < 45) || (yaw >= 315 && yaw <= 360)) {
-                location.add(0, -5, 3);
-                System.out.println("towards positive z");
-                placeRiftInWorld(location, false, true, false, activePlayer);
-            } else if (yaw >= 45 && yaw < 135) {
-                System.out.println("towards negative x");
-                location.add(-3, -5, 0);
-                placeRiftInWorld(location, false, false, false, activePlayer);
-
-            } else if (yaw >= 135 && yaw < 225) {
-                System.out.println("towards negative z");
-                location.add(0, -5, -3);
-                placeRiftInWorld(location, false, false, true, activePlayer);
-            } else {
-                System.out.println("towards positive x");
-                location.add(3, -5, 0);
-                placeRiftInWorld(location, true, false, false, activePlayer);
-            }
         };
     }
 
@@ -728,134 +169,134 @@ public class LavaStone extends EarthStone {
     // -> The blocks where the player is looking at burst open creating an intense flow of lava
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
-            Player player = activePlayer.getPlayer();
-            World world = player.getWorld();
-            Location midpoint = Objects.requireNonNull(player.getTargetBlockExact(25)).getLocation();
-
-            Material materialCenter = world.getBlockAt(midpoint).getType();
-            Material materialUp = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
-            Material materialDown = world.getBlockAt(midpoint.clone().add(-1, 0, 0)).getType();
-            Material materialLeft = world.getBlockAt(midpoint.clone().add(0, 0, -1)).getType();
-            Material materialRight = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
-
-            world.getBlockAt(midpoint).setType(Material.AIR);
-            world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(Material.AIR);
-            world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(Material.AIR);
-            world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(Material.AIR);
-            world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(Material.AIR);
-
-            ArrayList<Location> lavaLocations = new ArrayList<>();
-            String[] lavaBeamCrossSection = {
-                    "AAAAA",
-                    "AALAA",
-                    "AL*LA",
-                    "AALAA",
-                    "AAAAA",
-            };
-            String[] lavaRemoveCrossSection = {
-                    "AAAAAAA",
-                    "AAAAAAA",
-                    "AAAAAAA",
-                    "AAA*AAA",
-                    "AAAAAAA",
-                    "AAAAAAA",
-                    "AAAAAAA"
-            };
-            Map<Character, Material> characterMaterialMap = new HashMap<>();
-            characterMaterialMap.put('A', Material.AIR);
-            characterMaterialMap.put('L', Material.LAVA);
-            new BukkitRunnable() {
-                int amountOfTicks = 0;
-
-                @Override
-                public void run() {
-                    for (Location location : lavaLocations) {
-                        for (Entity entity : world.getNearbyEntities(location, 0, 0, 0)) {
-                            if (entity instanceof LivingEntity) {
-                                LivingEntity livingEntity = (LivingEntity) entity;
-                                if (!(livingEntity == player)) {
-                                    livingEntity.setVelocity(new Vector(0, 2, 0));
-                                    livingEntity.setFireTicks(100);
-                                }
-                            }
-                        }
-                    }
-                    if (amountOfTicks > 70) {
-                        this.cancel();
-                    }
-                    amountOfTicks++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            new BukkitRunnable() {
-                int height = 0;
-
-                @Override
-                public void run() {
-                    Location variableMidpoint = midpoint.clone();
-                    for (int i = 0; i < height; i++) {
-                        for (Location location : SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, Material.LAVA, activePlayer)) {
-                            if (!lavaLocations.contains(location)) {
-                                lavaLocations.add(location);
-                            }
-                        }
-                        variableMidpoint.add(0, 1, 0);
-                    }
-                    if (height > 20) {
-                        new BukkitRunnable() {
-                            int amountOfTicks = 0;
-
-                            @Override
-                            public void run() {
-                                final ArrayList<Material> overrideBlocks = new ArrayList<>();
-                                overrideBlocks.add(Material.LAVA);
-                                Location variableMidpoint = midpoint.clone();
-                                for (int i = 0; i < 22; i++) {
-                                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                                    variableMidpoint.add(0, 1, 0);
-                                }
-                                if (amountOfTicks > 50) {
-                                    new BukkitRunnable() {
-                                        int height = 21;
-
-                                        @Override
-                                        public void run() {
-                                            final ArrayList<Material> overrideBlocks = new ArrayList<>();
-                                            overrideBlocks.add(Material.LAVA);
-                                            Location variableMidpoint = midpoint.clone();
-                                            for (int i = 0; i < height; i++) {
-                                                SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                                                variableMidpoint.add(0, 1, 0);
-                                            }
-                                            for (int i = height; i <= 21; i++) {
-                                                SetBlockTools.setBlocks(variableMidpoint, lavaRemoveCrossSection, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                                                variableMidpoint.add(0, 1, 0);
-                                            }
-                                            if (height <= 0) {
-                                                new BukkitRunnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        world.getBlockAt(midpoint).setType(materialCenter);
-                                                        world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(materialUp);
-                                                        world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(materialDown);
-                                                        world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(materialLeft);
-                                                        world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(materialRight);
-                                                    }
-                                                }.runTaskLater(StaticVariables.plugin, 10L);
-                                                this.cancel();
-                                            }
-                                            height--;
-                                        }
-                                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                                    this.cancel();
-                                }
-                                amountOfTicks++;
-                            }
-                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                        this.cancel();
-                    }
-                    height++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//            Player player = activePlayer.getPlayer();
+//            World world = player.getWorld();
+//            Location midpoint = Objects.requireNonNull(player.getTargetBlockExact(25)).getLocation();
+//
+//            Material materialCenter = world.getBlockAt(midpoint).getType();
+//            Material materialUp = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
+//            Material materialDown = world.getBlockAt(midpoint.clone().add(-1, 0, 0)).getType();
+//            Material materialLeft = world.getBlockAt(midpoint.clone().add(0, 0, -1)).getType();
+//            Material materialRight = world.getBlockAt(midpoint.clone().add(1, 0, 0)).getType();
+//
+//            world.getBlockAt(midpoint).setType(Material.AIR);
+//            world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(Material.AIR);
+//            world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(Material.AIR);
+//            world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(Material.AIR);
+//            world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(Material.AIR);
+//
+//            ArrayList<Location> lavaLocations = new ArrayList<>();
+//            String[] lavaBeamCrossSection = {
+//                    "AAAAA",
+//                    "AALAA",
+//                    "AL*LA",
+//                    "AALAA",
+//                    "AAAAA",
+//            };
+//            String[] lavaRemoveCrossSection = {
+//                    "AAAAAAA",
+//                    "AAAAAAA",
+//                    "AAAAAAA",
+//                    "AAA*AAA",
+//                    "AAAAAAA",
+//                    "AAAAAAA",
+//                    "AAAAAAA"
+//            };
+//            Map<Character, Material> characterMaterialMap = new HashMap<>();
+//            characterMaterialMap.put('A', Material.AIR);
+//            characterMaterialMap.put('L', Material.LAVA);
+//            new BukkitRunnable() {
+//                int amountOfTicks = 0;
+//
+//                @Override
+//                public void run() {
+//                    for (Location location : lavaLocations) {
+//                        for (Entity entity : world.getNearbyEntities(location, 0, 0, 0)) {
+//                            if (entity instanceof LivingEntity) {
+//                                LivingEntity livingEntity = (LivingEntity) entity;
+//                                if (!(livingEntity == player)) {
+//                                    livingEntity.setVelocity(new Vector(0, 2, 0));
+//                                    livingEntity.setFireTicks(100);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    if (amountOfTicks > 70) {
+//                        this.cancel();
+//                    }
+//                    amountOfTicks++;
+//                }
+//            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//            new BukkitRunnable() {
+//                int height = 0;
+//
+//                @Override
+//                public void run() {
+//                    Location variableMidpoint = midpoint.clone();
+//                    for (int i = 0; i < height; i++) {
+//                        for (Location location : SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, Material.LAVA, activePlayer)) {
+//                            if (!lavaLocations.contains(location)) {
+//                                lavaLocations.add(location);
+//                            }
+//                        }
+//                        variableMidpoint.add(0, 1, 0);
+//                    }
+//                    if (height > 20) {
+//                        new BukkitRunnable() {
+//                            int amountOfTicks = 0;
+//
+//                            @Override
+//                            public void run() {
+//                                final ArrayList<Material> overrideBlocks = new ArrayList<>();
+//                                overrideBlocks.add(Material.LAVA);
+//                                Location variableMidpoint = midpoint.clone();
+//                                for (int i = 0; i < 22; i++) {
+//                                    SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+//                                    variableMidpoint.add(0, 1, 0);
+//                                }
+//                                if (amountOfTicks > 50) {
+//                                    new BukkitRunnable() {
+//                                        int height = 21;
+//
+//                                        @Override
+//                                        public void run() {
+//                                            final ArrayList<Material> overrideBlocks = new ArrayList<>();
+//                                            overrideBlocks.add(Material.LAVA);
+//                                            Location variableMidpoint = midpoint.clone();
+//                                            for (int i = 0; i < height; i++) {
+//                                                SetBlockTools.setBlocks(variableMidpoint, lavaBeamCrossSection, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+//                                                variableMidpoint.add(0, 1, 0);
+//                                            }
+//                                            for (int i = height; i <= 21; i++) {
+//                                                SetBlockTools.setBlocks(variableMidpoint, lavaRemoveCrossSection, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+//                                                variableMidpoint.add(0, 1, 0);
+//                                            }
+//                                            if (height <= 0) {
+//                                                new BukkitRunnable() {
+//                                                    @Override
+//                                                    public void run() {
+//                                                        world.getBlockAt(midpoint).setType(materialCenter);
+//                                                        world.getBlockAt(midpoint.clone().add(1, 0, 0)).setType(materialUp);
+//                                                        world.getBlockAt(midpoint.clone().add(-1, 0, 0)).setType(materialDown);
+//                                                        world.getBlockAt(midpoint.clone().add(0, 0, -1)).setType(materialLeft);
+//                                                        world.getBlockAt(midpoint.clone().add(0, 0, 1)).setType(materialRight);
+//                                                    }
+//                                                }.runTaskLater(StaticVariables.plugin, 10L);
+//                                                this.cancel();
+//                                            }
+//                                            height--;
+//                                        }
+//                                    }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//                                    this.cancel();
+//                                }
+//                                amountOfTicks++;
+//                            }
+//                        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//                        this.cancel();
+//                    }
+//                    height++;
+//                }
+//            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 
@@ -866,106 +307,106 @@ public class LavaStone extends EarthStone {
     // -> Damages entities if they get caught by the lava
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
-            Player player = activePlayer.getPlayer();
-            World world = player.getWorld();
-            activePlayer.setLavaStoneMove8Active(true);
-            player.setAllowFlight(true);
-            player.setFlying(true);
-            player.setFlySpeed(0.075f);
-            player.teleport(player.getLocation().add(0, 2, 0));
-            String[] lavaLevel0 = {
-                    "AAAAAAAAA",
-                    "AAALLLAAA",
-                    "AALLLLLAA",
-                    "ALLLLLLLA",
-                    "ALLL*LLLA",
-                    "ALLLLLLLA",
-                    "AALLLLLAA",
-                    "AAALLLAAA",
-                    "AAAAAAAAA"
-            };
-            String[] lavaLevel1 = {
-                    "AAAAAAA",
-                    "AALLLAA",
-                    "ALLLLLA",
-                    "ALL*LLA",
-                    "ALLLLLA",
-                    "AALLLAA",
-                    "AAAAAAA"
-            };
-            String[] lavaLevel2 = {
-                    "AAAAA",
-                    "AALAA",
-                    "AL*LA",
-                    "AALAA",
-                    "AAAAA",
-            };
-            String[] lavaRemoveString = {
-                    "AAAAAAAAA",
-                    "AAAAAAAAA",
-                    "AAAAAAAAA",
-                    "AAAAAAAAA",
-                    "AAAA*AAAA",
-                    "AAAAAAAAA",
-                    "AAAAAAAAA",
-                    "AAAAAAAAA",
-                    "AAAAAAAAA"
-            };
-            ArrayList<Material> overrideBlocks = new ArrayList<>();
-            overrideBlocks.add(Material.LAVA);
-            Map<Character, Material> characterMaterialMap = new HashMap<>();
-            characterMaterialMap.put('A', Material.AIR);
-            characterMaterialMap.put('L', Material.LAVA);
-
-            new BukkitRunnable() {
-                int amountOfTicks = 0;
-                Location previousLocation = player.getLocation();
-
-                @Override
-                public void run() {
-                    boolean placeTopLevel = true;
-                    if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 != player.getLocation().getY()) {
-                        if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 < player.getLocation().getY()) {
-                            placeTopLevel = false;
-                        }
-                        Location teleportLocation = player.getLocation();
-                        teleportLocation.setY(world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3);
-                        player.teleport(teleportLocation);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                Vector direction = player.getLocation().getDirection();
-                                direction.setX(direction.getX() / 3);
-                                direction.setY(0);
-                                direction.setZ(direction.getZ() / 3);
-                                player.setVelocity(direction);
-                            }
-                        }.runTaskLater(StaticVariables.plugin, 1L);
-                    }
-                    for (int i = 1; i >= -3; i--) {
-                        SetBlockTools.setBlocks(previousLocation.clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                    }
-                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -3, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -2, 0), lavaLevel0, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -1, 0), lavaLevel1, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                    if (placeTopLevel) {
-                        SetBlockTools.setBlocks(player.getLocation(), lavaLevel2, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-                    }
-                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, 1, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                    previousLocation = player.getLocation().clone();
-                    if (amountOfTicks > 400) {
-                        player.setAllowFlight(false);
-                        player.setFlying(false);
-                        player.setFireTicks(0);
-                        activePlayer.setLavaStoneMove8Active(false);
-                        this.cancel();
-                        for (int i = 0; i >= -2; i--) {
-                            SetBlockTools.setBlocks(player.getLocation().clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-                        }
-                    }
-                    amountOfTicks++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+//            Player player = activePlayer.getPlayer();
+//            World world = player.getWorld();
+//            activePlayer.setLavaStoneMove8Active(true);
+//            player.setAllowFlight(true);
+//            player.setFlying(true);
+//            player.setFlySpeed(0.075f);
+//            player.teleport(player.getLocation().add(0, 2, 0));
+//            String[] lavaLevel0 = {
+//                    "AAAAAAAAA",
+//                    "AAALLLAAA",
+//                    "AALLLLLAA",
+//                    "ALLLLLLLA",
+//                    "ALLL*LLLA",
+//                    "ALLLLLLLA",
+//                    "AALLLLLAA",
+//                    "AAALLLAAA",
+//                    "AAAAAAAAA"
+//            };
+//            String[] lavaLevel1 = {
+//                    "AAAAAAA",
+//                    "AALLLAA",
+//                    "ALLLLLA",
+//                    "ALL*LLA",
+//                    "ALLLLLA",
+//                    "AALLLAA",
+//                    "AAAAAAA"
+//            };
+//            String[] lavaLevel2 = {
+//                    "AAAAA",
+//                    "AALAA",
+//                    "AL*LA",
+//                    "AALAA",
+//                    "AAAAA",
+//            };
+//            String[] lavaRemoveString = {
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA",
+//                    "AAAA*AAAA",
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA",
+//                    "AAAAAAAAA"
+//            };
+//            ArrayList<Material> overrideBlocks = new ArrayList<>();
+//            overrideBlocks.add(Material.LAVA);
+//            Map<Character, Material> characterMaterialMap = new HashMap<>();
+//            characterMaterialMap.put('A', Material.AIR);
+//            characterMaterialMap.put('L', Material.LAVA);
+//
+//            new BukkitRunnable() {
+//                int amountOfTicks = 0;
+//                Location previousLocation = player.getLocation();
+//
+//                @Override
+//                public void run() {
+//                    boolean placeTopLevel = true;
+//                    if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 != player.getLocation().getY()) {
+//                        if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 < player.getLocation().getY()) {
+//                            placeTopLevel = false;
+//                        }
+//                        Location teleportLocation = player.getLocation();
+//                        teleportLocation.setY(world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3);
+//                        player.teleport(teleportLocation);
+//                        new BukkitRunnable() {
+//                            @Override
+//                            public void run() {
+//                                Vector direction = player.getLocation().getDirection();
+//                                direction.setX(direction.getX() / 3);
+//                                direction.setY(0);
+//                                direction.setZ(direction.getZ() / 3);
+//                                player.setVelocity(direction);
+//                            }
+//                        }.runTaskLater(StaticVariables.plugin, 1L);
+//                    }
+//                    for (int i = 1; i >= -3; i--) {
+//                        SetBlockTools.setBlocks(previousLocation.clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+//                    }
+//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -3, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -2, 0), lavaLevel0, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -1, 0), lavaLevel1, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+//                    if (placeTopLevel) {
+//                        SetBlockTools.setBlocks(player.getLocation(), lavaLevel2, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
+//                    }
+//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, 1, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+//                    previousLocation = player.getLocation().clone();
+//                    if (amountOfTicks > 400) {
+//                        player.setAllowFlight(false);
+//                        player.setFlying(false);
+//                        player.setFireTicks(0);
+//                        activePlayer.setLavaStoneMove8Active(false);
+//                        this.cancel();
+//                        for (int i = 0; i >= -2; i--) {
+//                            SetBlockTools.setBlocks(player.getLocation().clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
+//                        }
+//                    }
+//                    amountOfTicks++;
+//                }
+//            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 
