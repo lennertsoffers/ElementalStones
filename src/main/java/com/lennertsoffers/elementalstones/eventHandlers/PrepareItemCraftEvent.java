@@ -79,31 +79,31 @@ public class PrepareItemCraftEvent implements Listener {
         CS5.setAmount(5);
         ItemStack[] waterStoneBending0 = {CS5, CraftItemManager.WATERBENDING_SPELL, CS5, CS5, ItemStones.waterStone2, CS5, CS5, CS5, CS5};
         ItemStack[] waterStoneIce0 = {CS5, CraftItemManager.ICE_SPELL, CS5, CS5, ItemStones.waterStone2, CS5, CS5, CS5, CS5};
-        ItemStack[] fireStoneLava0 = {CS5, CraftItemManager.LAVA_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
+        ItemStack[] fireStoneExplosion0 = {CS5, CraftItemManager.LAVA_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
         ItemStack[] fireStoneHellFire0 = {CS5, CraftItemManager.HELLFIRE_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
         ItemStack[] airStoneAgility0 = {CS5, CraftItemManager.AGILITY_SPELL, CS5, CS5, ItemStones.airStone2, CS5, CS5, CS5, CS5};
         ItemStack[] airStoneBending0 = {CS5, CraftItemManager.AIRBENDING_SPELL, CS5, CS5, ItemStones.airStone2, CS5, CS5, CS5, CS5};
-        ItemStack[] earthStoneDefense0 = {CS5, CraftItemManager.DEFENSE_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
+        ItemStack[] earthStoneLava0 = {CS5, CraftItemManager.DEFENSE_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
         ItemStack[] earthStoneBending0 = {CS5, CraftItemManager.EARTHBENDING_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
 
         // -> LV 5
         ItemStack[] waterStoneBending1 = {CS, US, CS, US, ItemStones.waterStoneBending0, US, CS, RS, CS};
         ItemStack[] waterStoneIce1 = {CS, US, CS, US, ItemStones.waterStoneIce0, US, CS, RS, CS};
-        ItemStack[] fireStoneLava1 = {CS, US, CS, US, ItemStones.fireStoneLava0, US, CS, RS, CS};
+        ItemStack[] fireStoneExplosion1 = {CS, US, CS, US, ItemStones.fireStoneExplosion0, US, CS, RS, CS};
         ItemStack[] fireStoneHellFire1 = {CS, US, CS, US, ItemStones.fireStoneHellFire0, US, CS, RS, CS};
         ItemStack[] airStoneAgility1 = {CS, US, CS, US, ItemStones.airStoneAgility0, US, CS, RS, CS};
         ItemStack[] airStoneBending1 = {CS, US, CS, US, ItemStones.airStoneBending0, US, CS, RS, CS};
-        ItemStack[] earthStoneDefense1 = {CS, US, CS, US, ItemStones.earthStoneDefense0, US, CS, RS, CS};
+        ItemStack[] earthStoneLava1 = {CS, US, CS, US, ItemStones.earthStoneLava0, US, CS, RS, CS};
         ItemStack[] earthStoneBending1 = {CS, US, CS, US, ItemStones.earthStoneBending0, US, CS, RS, CS};
 
         // -> LV 6
         ItemStack[] waterStoneBending2 = {US, RS, US, RS, ItemStones.waterStoneBending1, RS, US, URS, US};
         ItemStack[] waterStoneIce2 = {US, RS, US, RS, ItemStones.waterStoneIce1, RS, US, URS, US};
-        ItemStack[] fireStoneLava2 = {US, RS, US, RS, ItemStones.fireStoneLava1, RS, US, URS, US};
+        ItemStack[] fireStoneExplosion2 = {US, RS, US, RS, ItemStones.fireStoneExplosion1, RS, US, URS, US};
         ItemStack[] fireStoneHellFire2 = {US, RS, US, RS, ItemStones.fireStoneHellFire1, RS, US, URS, US};
         ItemStack[] airStoneAgility2 = {US, RS, US, RS, ItemStones.airStoneAgility1, RS, US, URS, US};
         ItemStack[] airStoneBending2 = {US, RS, US, RS, ItemStones.airStoneBending1, RS, US, URS, US};
-        ItemStack[] earthStoneDefense2 = {US, RS, US, RS, ItemStones.earthStoneDefense1, RS, US, URS, US};
+        ItemStack[] earthStoneLava2 = {US, RS, US, RS, ItemStones.earthStoneLava1, RS, US, URS, US};
         ItemStack[] earthStoneBending2 = {US, RS, US, RS, ItemStones.earthStoneBending1, RS, US, URS, US};
 
         // -> LV 7
@@ -111,11 +111,11 @@ public class PrepareItemCraftEvent implements Listener {
         US5.setAmount(5);
         ItemStack[] waterStoneBending3 = {US5, URS, US5, URS, ItemStones.waterStoneBending2, URS, US5, URS, US5};
         ItemStack[] waterStoneIce3 = {US5, URS, US5, URS, ItemStones.waterStoneIce2, URS, US5, URS, US5};
-        ItemStack[] fireStoneLava3 = {US5, URS, US5, URS, ItemStones.fireStoneLava2, URS, US5, URS, US5};
+        ItemStack[] fireStoneExplosion3 = {US5, URS, US5, URS, ItemStones.fireStoneExplosion2, URS, US5, URS, US5};
         ItemStack[] fireStoneHellFire3 = {US5, URS, US5, URS, ItemStones.fireStoneHellFire2, URS, US5, URS, US5};
         ItemStack[] airStoneAgility3 = {US5, URS, US5, URS, ItemStones.airStoneAgility2, URS, US5, URS, US5};
         ItemStack[] airStoneBending3 = {US5, URS, US5, URS, ItemStones.airStoneBending2, URS, US5, URS, US5};
-        ItemStack[] earthStoneDefense3 = {US5, URS, US5, URS, ItemStones.earthStoneDefense2, URS, US5, URS, US5};
+        ItemStack[] earthStoneLava3 = {US5, URS, US5, URS, ItemStones.earthStoneLava2, URS, US5, URS, US5};
         ItemStack[] earthStoneBending3 = {US5, URS, US5, URS, ItemStones.earthStoneBending2, URS, US5, URS, US5};
 
         // -> LV 8
@@ -129,11 +129,11 @@ public class PrepareItemCraftEvent implements Listener {
         URS5.setAmount(5);
         ItemStack[] waterStoneBending4 = {CS25, URS5, CS25, RS7, ItemStones.waterStoneBending3, RS7, US15, LS, US15};
         ItemStack[] waterStoneIce4 = {CS25, URS5, CS25, RS7, ItemStones.waterStoneIce3, RS7, US15, LS, US15};
-        ItemStack[] fireStoneLava4 = {CS25, URS5, CS25, RS7, ItemStones.fireStoneLava3, RS7, US15, LS, US15};
+        ItemStack[] fireStoneExplosion4 = {CS25, URS5, CS25, RS7, ItemStones.fireStoneExplosion3, RS7, US15, LS, US15};
         ItemStack[] fireStoneHellFire4 = {CS25, URS5, CS25, RS7, ItemStones.fireStoneHellFire3, RS7, US15, LS, US15};
         ItemStack[] airStoneAgility4 = {CS25, URS5, CS25, RS7, ItemStones.airStoneAgility3, RS7, US15, LS, US15};
         ItemStack[] airStoneBending4 = {CS25, URS5, CS25, RS7, ItemStones.airStoneBending3, RS7, US15, LS, US15};
-        ItemStack[] earthStoneDefense4 = {CS25, URS5, CS25, RS7, ItemStones.earthStoneDefense3, RS7, US15, LS, US15};
+        ItemStack[] earthStoneLava4 = {CS25, URS5, CS25, RS7, ItemStones.earthStoneLava3, RS7, US15, LS, US15};
         ItemStack[] earthStoneBending4 = {CS25, URS5, CS25, RS7, ItemStones.earthStoneBending3, RS7, US15, LS, US15};
 
 
@@ -205,16 +205,16 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.fireStone1);
         } else if (Arrays.equals(fireStone2, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.fireStone2);
-        } else if (Arrays.equals(fireStoneLava0, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.fireStoneLava0);
-        } else if (Arrays.equals(fireStoneLava1, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.fireStoneLava1);
-        } else if (Arrays.equals(fireStoneLava2, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.fireStoneLava2);
-        } else if (Arrays.equals(fireStoneLava3, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.fireStoneLava3);
-        } else if (Arrays.equals(fireStoneLava4, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.fireStoneLava4);
+        } else if (Arrays.equals(fireStoneExplosion0, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion0);
+        } else if (Arrays.equals(fireStoneExplosion1, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion1);
+        } else if (Arrays.equals(fireStoneExplosion2, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion2);
+        } else if (Arrays.equals(fireStoneExplosion3, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion3);
+        } else if (Arrays.equals(fireStoneExplosion4, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.fireStoneExplosion4);
         } else if (Arrays.equals(fireStoneHellFire0, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.fireStoneHellFire0);
         } else if (Arrays.equals(fireStoneHellFire1, craftingMatrix)) {
@@ -257,16 +257,16 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.earthStone1);
         } else if (Arrays.equals(earthStone2, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStone2);
-        } else if (Arrays.equals(earthStoneDefense0, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.earthStoneDefense0);
-        } else if (Arrays.equals(earthStoneDefense1, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.earthStoneDefense1);
-        } else if (Arrays.equals(earthStoneDefense2, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.earthStoneDefense2);
-        } else if (Arrays.equals(earthStoneDefense3, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.earthStoneDefense3);
-        } else if (Arrays.equals(earthStoneDefense4, craftingMatrix)) {
-            event.getInventory().setResult(ItemStones.earthStoneDefense4);
+        } else if (Arrays.equals(earthStoneLava0, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneLava0);
+        } else if (Arrays.equals(earthStoneLava1, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneLava1);
+        } else if (Arrays.equals(earthStoneLava2, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneLava2);
+        } else if (Arrays.equals(earthStoneLava3, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneLava3);
+        } else if (Arrays.equals(earthStoneLava4, craftingMatrix)) {
+            event.getInventory().setResult(ItemStones.earthStoneLava4);
         } else if (Arrays.equals(earthStoneBending0, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStoneBending0);
         } else if (Arrays.equals(earthStoneBending1, craftingMatrix)) {

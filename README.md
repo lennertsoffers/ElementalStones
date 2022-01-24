@@ -13,16 +13,16 @@ You can obtain these stones in survival by doing various tasks and then beating 
 
 ## Current Stones
 * Water Stone
-    * Waterbending Stone (alpha)
-    * Ice Stone (alpha)
+    * Waterbending Stone (in dev)
+    * Ice Stone (in dev)
 * Fire Stone
     * Explosion Stone
-    * Hellfire Stone (alpha)
+    * Hellfire Stone (in dev)
 * Wind Stone
     * Agility Stone 👍
     * Airbending Stone 👍
 * Earth Stone
-    * Lava Stone (alpha)  
+    * Lava Stone (in dev)  
     * Earthbending Stone 👍
 
 

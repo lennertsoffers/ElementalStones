@@ -1,14 +1,9 @@
 package com.lennertsoffers.elementalstones.items;
 
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -46,12 +41,12 @@ public class ItemStones {
     public static ItemStack fireStone1;
     public static ItemStack fireStone2;
 
-    // FireStones: Lava path
-    public static ItemStack fireStoneLava0;
-    public static ItemStack fireStoneLava1;
-    public static ItemStack fireStoneLava2;
-    public static ItemStack fireStoneLava3;
-    public static ItemStack fireStoneLava4;
+    // FireStones: Explosion path
+    public static ItemStack fireStoneExplosion0;
+    public static ItemStack fireStoneExplosion1;
+    public static ItemStack fireStoneExplosion2;
+    public static ItemStack fireStoneExplosion3;
+    public static ItemStack fireStoneExplosion4;
 
     // FireStones: Hellfire path
     public static ItemStack fireStoneHellFire0;
@@ -90,12 +85,12 @@ public class ItemStones {
     public static ItemStack earthStone1;
     public static ItemStack earthStone2;
 
-    // EarthStones: Defense path
-    public static ItemStack earthStoneDefense0;
-    public static ItemStack earthStoneDefense1;
-    public static ItemStack earthStoneDefense2;
-    public static ItemStack earthStoneDefense3;
-    public static ItemStack earthStoneDefense4;
+    // EarthStones: Lava path
+    public static ItemStack earthStoneLava0;
+    public static ItemStack earthStoneLava1;
+    public static ItemStack earthStoneLava2;
+    public static ItemStack earthStoneLava3;
+    public static ItemStack earthStoneLava4;
 
     // EarthStones: Earthbending path
     public static ItemStack earthStoneBending0;
@@ -108,11 +103,24 @@ public class ItemStones {
 
     // Lists of stones
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
+    
     public static ArrayList<ItemStack> waterStones = new ArrayList<>();
+    public static ArrayList<ItemStack> waterBendingStones = new ArrayList<>();
+    public static ArrayList<ItemStack> iceStones = new ArrayList<>();
+    
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
+    public static ArrayList<ItemStack> hellfireStones = new ArrayList<>();
+    public static ArrayList<ItemStack> explosionStones = new ArrayList<>();
+    
     public static ArrayList<ItemStack> airStones = new ArrayList<>();
+    public static ArrayList<ItemStack> airbendingStones = new ArrayList<>();
+    public static ArrayList<ItemStack> agilityStones = new ArrayList<>();
+    
     public static ArrayList<ItemStack> earthStones = new ArrayList<>();
-
+    public static ArrayList<ItemStack> earthBendingStones = new ArrayList<>();
+    public static ArrayList<ItemStack> lavaStones = new ArrayList<>();
+    
+    
     // Move declarations
     private static final String[][][] moveDeclaration =
             {
@@ -407,7 +415,8 @@ public class ItemStones {
         // FIRE STONES
         String fireStoneTypeLore = "An old relic used to utilize the power of fire.";
         String moveHellfireTypeLore = "This path is an expansion on the fire related moves and aims on high damage";
-        String moveLavaTypeLore = "The powers of this relic are specialized to influence the flow of lava in your vicinity";
+        String moveExplosionTypeLore = "With the power of this stone you can create explosions everywhere";
+        
         // FireStones: Default
         fireStone0 = createStone(
                 ChatColor.RED + "Fire Stone",
@@ -437,47 +446,47 @@ public class ItemStones {
                 3
         );
 
-        // FireStones: Lava path
-        fireStoneLava0 = createStone(
-                ChatColor.RED + "Lava Stone",
+        // FireStones: Explosion path
+        fireStoneExplosion0 = createStone(
+                ChatColor.RED + "Explosion Stone",
                 fireStoneTypeLore,
-                moveLavaTypeLore,
+                moveExplosionTypeLore,
                 1,
                 1,
                 1,
                 4
         );
-        fireStoneLava1 = createStone(
-                ChatColor.RED + "Lava Stone Lv2",
+        fireStoneExplosion1 = createStone(
+                ChatColor.RED + "Explosion Stone Lv2",
                 fireStoneTypeLore,
-                moveLavaTypeLore,
+                moveExplosionTypeLore,
                 1,
                 1,
                 2,
                 4
         );
-        fireStoneLava2 = createStone(
-                ChatColor.RED + "Lava Stone Lv3",
+        fireStoneExplosion2 = createStone(
+                ChatColor.RED + "Explosion Stone Lv3",
                 fireStoneTypeLore,
-                moveLavaTypeLore,
+                moveExplosionTypeLore,
                 1,
                 1,
                 3,
                 4
         );
-        fireStoneLava3 = createStone(
-                ChatColor.RED + "Lava Stone Lv4",
+        fireStoneExplosion3 = createStone(
+                ChatColor.RED + "Explosion Stone Lv4",
                 fireStoneTypeLore,
-                moveLavaTypeLore,
+                moveExplosionTypeLore,
                 1,
                 1,
                 4,
                 4
         );
-        fireStoneLava4 = createStone(
-                ChatColor.RED + "Completed Lava Stone",
+        fireStoneExplosion4 = createStone(
+                ChatColor.RED + "Completed Explosion Stone",
                 fireStoneTypeLore,
-                moveLavaTypeLore,
+                moveExplosionTypeLore,
                 1,
                 1,
                 5,
@@ -537,6 +546,7 @@ public class ItemStones {
         String airStoneTypeLore = "An old relic that befriends you with the air around you";
         String moveAgilityTypeLore = "You use the powers of the agility stone to make you more agile";
         String moveAirbendingTypeLore = "The airbending stone makes it possible to move the air around you and use it as an offense";
+        
         // AirStones: Default
         airStone0 = createStone(
                 ChatColor.WHITE + "Air Stone",
@@ -665,7 +675,8 @@ public class ItemStones {
         // EARTH STONES
         String earthStoneTypeLore = "An old relic that makes it possible to alter with the earth around you";
         String moveEarthbendingTypeLore = "With this stone you can terraform the terrain or even use the terrain offensive against your enemies";
-        String moveDefenseTypeLore = "Holding this stone makes you harder than rock and gives you defensive abilities";
+        String moveLavaTypeLore = "The powers of this relic are specialized to influence the flow of lava in your vicinity";
+        
         // EarthStones: Default
         earthStone0 = createStone(
                 ChatColor.DARK_GREEN + "Earth Stone",
@@ -695,47 +706,47 @@ public class ItemStones {
                 9
         );
 
-        // EarthStones: Defense path
-        earthStoneDefense0 = createStone(
-                ChatColor.DARK_GREEN + "Defense Stone",
+        // EarthStones: Lava path
+        earthStoneLava0 = createStone(
+                ChatColor.DARK_GREEN + "Lava Stone",
                 earthStoneTypeLore,
-                moveDefenseTypeLore,
+                moveLavaTypeLore,
                 3,
                 1,
                 1,
                 10
         );
-        earthStoneDefense1 = createStone(
-                ChatColor.DARK_GREEN + "Defense Stone Lv2",
+        earthStoneLava1 = createStone(
+                ChatColor.DARK_GREEN + "Lava Stone Lv2",
                 earthStoneTypeLore,
-                moveDefenseTypeLore,
+                moveLavaTypeLore,
                 3,
                 1,
                 2,
                 10
         );
-        earthStoneDefense2 = createStone(
-                ChatColor.DARK_GREEN + "Defense Stone Lv3",
+        earthStoneLava2 = createStone(
+                ChatColor.DARK_GREEN + "Lava Stone Lv3",
                 earthStoneTypeLore,
-                moveDefenseTypeLore,
+                moveLavaTypeLore,
                 3,
                 1,
                 3,
                 10
         );
-        earthStoneDefense3 = createStone(
-                ChatColor.DARK_GREEN + "Defense Stone Lv4",
+        earthStoneLava3 = createStone(
+                ChatColor.DARK_GREEN + "Lava Stone Lv4",
                 earthStoneTypeLore,
-                moveDefenseTypeLore,
+                moveLavaTypeLore,
                 3,
                 1,
                 4,
                 10
         );
-        earthStoneDefense4 = createStone(
-                ChatColor.DARK_GREEN + "Completed Defense Stone",
+        earthStoneLava4 = createStone(
+                ChatColor.DARK_GREEN + "Completed Lava Stone",
                 earthStoneTypeLore,
-                moveDefenseTypeLore,
+                moveLavaTypeLore,
                 3,
                 1,
                 5,
@@ -806,11 +817,11 @@ public class ItemStones {
                 fireStone0,
                 fireStone1,
                 fireStone2,
-                fireStoneLava0,
-                fireStoneLava1,
-                fireStoneLava2,
-                fireStoneLava3,
-                fireStoneLava4,
+                fireStoneExplosion0,
+                fireStoneExplosion1,
+                fireStoneExplosion2,
+                fireStoneExplosion3,
+                fireStoneExplosion4,
                 fireStoneHellFire0,
                 fireStoneHellFire1,
                 fireStoneHellFire2,
@@ -832,11 +843,11 @@ public class ItemStones {
                 earthStone0,
                 earthStone1,
                 earthStone2,
-                earthStoneDefense0,
-                earthStoneDefense1,
-                earthStoneDefense2,
-                earthStoneDefense3,
-                earthStoneDefense4,
+                earthStoneLava0,
+                earthStoneLava1,
+                earthStoneLava2,
+                earthStoneLava3,
+                earthStoneLava4,
                 earthStoneBending0,
                 earthStoneBending1,
                 earthStoneBending2,
@@ -859,21 +870,51 @@ public class ItemStones {
                 waterStoneIce3,
                 waterStoneIce4
         ));
+        waterBendingStones.addAll(Arrays.asList(
+                waterStoneBending0,
+                waterStoneBending1,
+                waterStoneBending2,
+                waterStoneBending3,
+                waterStoneBending4
+        ));
+        iceStones.addAll(Arrays.asList(
+                waterStoneIce0,
+                waterStoneIce1,
+                waterStoneIce2,
+                waterStoneIce3,
+                waterStoneIce4
+        ));
+        
         fireStones.addAll(Arrays.asList(
                 fireStone0,
                 fireStone1,
                 fireStone2,
-                fireStoneLava0,
-                fireStoneLava1,
-                fireStoneLava2,
-                fireStoneLava3,
-                fireStoneLava4,
+                fireStoneExplosion0,
+                fireStoneExplosion1,
+                fireStoneExplosion2,
+                fireStoneExplosion3,
+                fireStoneExplosion4,
                 fireStoneHellFire0,
                 fireStoneHellFire1,
                 fireStoneHellFire2,
                 fireStoneHellFire3,
                 fireStoneHellFire4
         ));
+        hellfireStones.addAll(Arrays.asList(
+                fireStoneHellFire0,
+                fireStoneHellFire1,
+                fireStoneHellFire2,
+                fireStoneHellFire3,
+                fireStoneHellFire4
+        ));
+        explosionStones.addAll(Arrays.asList(
+                fireStoneExplosion0,
+                fireStoneExplosion1,
+                fireStoneExplosion2,
+                fireStoneExplosion3,
+                fireStoneExplosion4
+        ));
+
         airStones.addAll(Arrays.asList(
                 airStone0,
                 airStone1,
@@ -889,20 +930,49 @@ public class ItemStones {
                 airStoneBending3,
                 airStoneBending4
         ));
+        airbendingStones.addAll(Arrays.asList(
+                airStoneBending0,
+                airStoneBending1,
+                airStoneBending2,
+                airStoneBending3,
+                airStoneBending4
+        ));
+        agilityStones.addAll(Arrays.asList(
+                airStoneAgility0,
+                airStoneAgility1,
+                airStoneAgility2,
+                airStoneAgility3,
+                airStoneAgility4
+        ));
+
         earthStones.addAll(Arrays.asList(
                 earthStone0,
                 earthStone1,
                 earthStone2,
-                earthStoneDefense0,
-                earthStoneDefense1,
-                earthStoneDefense2,
-                earthStoneDefense3,
-                earthStoneDefense4,
+                earthStoneLava0,
+                earthStoneLava1,
+                earthStoneLava2,
+                earthStoneLava3,
+                earthStoneLava4,
                 earthStoneBending0,
                 earthStoneBending1,
                 earthStoneBending2,
                 earthStoneBending3,
                 earthStoneBending4
+        ));
+        earthBendingStones.addAll(Arrays.asList(
+                earthStoneBending0,
+                earthStoneBending1,
+                earthStoneBending2,
+                earthStoneBending3,
+                earthStoneBending4
+        ));
+        lavaStones.addAll(Arrays.asList(
+                earthStoneLava0,
+                earthStoneLava1,
+                earthStoneLava2,
+                earthStoneLava3,
+                earthStoneLava4
         ));
     }
 }

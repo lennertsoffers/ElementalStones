@@ -51,6 +51,30 @@ public class StringListTools {
         return outputString;
     }
 
+    public static String[][] rotate(String[][] inputString) {
+        for (int i = 0; i < inputString.length; i++) {
+            inputString[i] = rotate(inputString[i]);
+        }
+
+        return inputString;
+    }
+
+    public static String[][] mirrorX(String[][] inputString) {
+        for (int i = 0; i < inputString.length; i++) {
+            inputString[i] = mirrorX(inputString[i]);
+        }
+
+        return inputString;
+    }
+
+    public static String[][] mirrorY(String[][] inputString) {
+        for (int i = 0; i < inputString.length; i++) {
+            inputString[i] = mirrorY(inputString[i]);
+        }
+
+        return inputString;
+    }
+
     public static ArrayList<String> formatLore(String lore, ChatColor chatColor) {
         ArrayList<String> formatLore = new ArrayList<>();
         String[] stoneTypeLoreList = lore.split(" ");
