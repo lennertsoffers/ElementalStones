@@ -4,18 +4,11 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -76,7 +69,6 @@ public class LavaStone extends EarthStone {
         }
     }
 
-
     // MOVE 4
     // Reverse Logic
     // -> The player heals over time while standing on magma blocks
@@ -117,39 +109,42 @@ public class LavaStone extends EarthStone {
         };
     }
 
-
-    // MOVE 5
-    // Lava Wave
-    // -> Creates a wave of lava in the looking direction
+    /**
+     * <b>MOVE 5: Lava Wave</b>
+     * <p>
+     *     Creates a wave of lava in the looking direction
+     *     <ul>
+     *         <li><b>Damage:</b> 40</li>
+     *         <li><b>Range: </b> 50</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see LavaWave
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location playerLocation = player.getLocation();
 
-
             float yaw = playerLocation.getYaw();
             if (yaw > -25 && yaw < 25) {
-                System.out.println("Section 1");
                 new LavaWave(activePlayer, true, true, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw >= 25 && yaw < 65) {
-                System.out.println("Section 2");
+                new LavaWave(activePlayer, false, true, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw >= 65 && yaw < 115) {
-                System.out.println("Section 3");
-                // done
                 new LavaWave(activePlayer, true, false, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw >= 115 && yaw < 155) {
-                System.out.println("Section 4");
+                new LavaWave(activePlayer, false, false, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw < -155 || yaw > 155) {
-                System.out.println("Section 5");
-                // done
                 new LavaWave(activePlayer, true, false, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw <= -25 && yaw > -65) {
-                System.out.println("Section 6");
+                new LavaWave(activePlayer, false, true, true).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else if (yaw <= -65 && yaw > -115) {
-                System.out.println("Section 7");
                 new LavaWave(activePlayer, true, true, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else {
-                System.out.println("Section 8");
+                new LavaWave(activePlayer, false, false, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
         };
     }

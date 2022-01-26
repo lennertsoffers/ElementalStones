@@ -79,11 +79,11 @@ public class PrepareItemCraftEvent implements Listener {
         CS5.setAmount(5);
         ItemStack[] waterStoneBending0 = {CS5, CraftItemManager.WATERBENDING_SPELL, CS5, CS5, ItemStones.waterStone2, CS5, CS5, CS5, CS5};
         ItemStack[] waterStoneIce0 = {CS5, CraftItemManager.ICE_SPELL, CS5, CS5, ItemStones.waterStone2, CS5, CS5, CS5, CS5};
-        ItemStack[] fireStoneExplosion0 = {CS5, CraftItemManager.LAVA_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
+        ItemStack[] fireStoneExplosion0 = {CS5, CraftItemManager.EXPLOSION_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
         ItemStack[] fireStoneHellFire0 = {CS5, CraftItemManager.HELLFIRE_SPELL, CS5, CS5, ItemStones.fireStone2, CS5, CS5, CS5, CS5};
         ItemStack[] airStoneAgility0 = {CS5, CraftItemManager.AGILITY_SPELL, CS5, CS5, ItemStones.airStone2, CS5, CS5, CS5, CS5};
         ItemStack[] airStoneBending0 = {CS5, CraftItemManager.AIRBENDING_SPELL, CS5, CS5, ItemStones.airStone2, CS5, CS5, CS5, CS5};
-        ItemStack[] earthStoneLava0 = {CS5, CraftItemManager.DEFENSE_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
+        ItemStack[] earthStoneLava0 = {CS5, CraftItemManager.LAVA_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
         ItemStack[] earthStoneBending0 = {CS5, CraftItemManager.EARTHBENDING_SPELL, CS5, CS5, ItemStones.earthStone2, CS5, CS5, CS5, CS5};
 
         // -> LV 5

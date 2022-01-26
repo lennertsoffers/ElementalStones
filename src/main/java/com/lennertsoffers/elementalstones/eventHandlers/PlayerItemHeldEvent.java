@@ -36,7 +36,6 @@ public class PlayerItemHeldEvent implements Listener {
 
                 } else if (event.getNewSlot() == 7) {
                     activePlayer.getMoveController().getMove8().activateMove();
-
                 }
             }
 
