@@ -10,6 +10,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LavaWave extends BukkitRunnable {
@@ -19,7 +20,7 @@ public class LavaWave extends BukkitRunnable {
     private final ActivePlayer activePlayer;
     private final Map<Character, Material> characterMaterialMap = new HashMap<>();
     private final ArrayList<Material> overrideMaterials = new ArrayList<>();
-    private final String[][] stringList;
+    private String[][] stringList;
     private final Vector direction;
 
     public LavaWave(ActivePlayer activePlayer, boolean perpendicular, boolean var0, boolean var1) {
@@ -57,6 +58,23 @@ public class LavaWave extends BukkitRunnable {
                         "AAA*AAA",
                     }
             };
+
+            if (var0) {
+                if (var1) {
+                    this.direction = new Vector(0, 0, 1);
+                    StringListTools.mirrorY(StringListTools.rotate(stringList));
+                } else {
+                    this.direction = new Vector(1, 0, 0);
+                    StringListTools.mirrorX(stringList);
+                }
+            } else {
+                if (var1) {
+                    this.direction = new Vector(-1, 0, 0);
+                } else {
+                    this.direction = new Vector(0, 0, -1);
+                    StringListTools.rotate(stringList);
+                }
+            }
         } else {
             stringList = new String[][]{
                     {
@@ -76,29 +94,34 @@ public class LavaWave extends BukkitRunnable {
                         "AAAAAA"
                     },
                     {
-                        "AAAAA",
-                        "ALAAA",
-                        "AALAA",
-                        "A*ALA",
-                        "AAAAA"
+                        "AAAAAA",
+                        "AAAAAA",
+                        "ALAAAA",
+                        "AALAAA",
+                        "A*ALAA",
+                        "AAAAAA"
                     }
             };
-        }
 
-        if (var0) {
-            if (var1) {
-                this.direction = new Vector(0, 0, 1);
-                StringListTools.mirrorY(StringListTools.rotate(stringList));
+            if (var0) {
+                if (var1) {
+                    this.location.add(1, 0, 1);
+                    this.direction = new Vector(1, 0, 1);
+                    StringListTools.mirrorY(StringListTools.rotate(stringList));
+                } else {
+                    this.location.add(-1, 0, 1);
+                    this.direction = new Vector(-1, 0, 1);
+                }
             } else {
-                this.direction = new Vector(1, 0, 0);
-                StringListTools.mirrorX(stringList);
-            }
-        } else {
-            if (var1) {
-                this.direction = new Vector(-1, 0, 0);
-            } else {
-                this.direction = new Vector(0, 0, -1);
-                StringListTools.rotate(stringList);
+                if (var1) {
+                    this.location.add(-1, 0, -1);
+                    this.direction = new Vector(-1, 0, -1);
+                    StringListTools.mirrorX(StringListTools.rotate(stringList));
+                } else {
+                    this.location.add(1, 0, -1);
+                    this.direction = new Vector(1, 0, -1);
+                    StringListTools.rotate(stringList);
+                }
             }
         }
     }
@@ -111,7 +134,50 @@ public class LavaWave extends BukkitRunnable {
             location.add(direction);
         }
         if (lengthOfWave > 100) {
-            // Clear the lava
+            this.stringList = new String[][] {
+                {
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAA*AAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA"
+                },
+                {
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAA*AAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA"
+                },
+                {
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAA*AAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA",
+                    "AAAAAAAAAAA"
+                }
+            };
+
+            SetBlockTools.setBlocksInWorld(activePlayer, location, stringList, characterMaterialMap, true, overrideMaterials, new ArrayList<>(), Material.AIR, -1, null, new ArrayList<>());
+
             this.cancel();
         }
         lengthOfWave++;

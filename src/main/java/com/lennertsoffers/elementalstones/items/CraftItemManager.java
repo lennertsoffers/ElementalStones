@@ -60,11 +60,11 @@ public class CraftItemManager {
     // Path keys
     public static ItemStack WATERBENDING_SPELL;
     public static ItemStack ICE_SPELL;
-    public static ItemStack LAVA_SPELL;
+    public static ItemStack EXPLOSION_SPELL;
     public static ItemStack HELLFIRE_SPELL;
     public static ItemStack AGILITY_SPELL;
     public static ItemStack AIRBENDING_SPELL;
-    public static ItemStack DEFENSE_SPELL;
+    public static ItemStack LAVA_SPELL;
     public static ItemStack EARTHBENDING_SPELL;
 
     public static ArrayList<ItemStack> spells = new ArrayList<>();
@@ -140,11 +140,11 @@ public class CraftItemManager {
 
         WATERBENDING_SPELL = createAlterMaterialItem("Waterbending Spell", "", Material.DIAMOND);
         ICE_SPELL = createAlterMaterialItem("Ice Spell", "", Material.DIAMOND);
-        LAVA_SPELL = createAlterMaterialItem("Lava Spell", "", Material.DIAMOND);
+        EXPLOSION_SPELL = createAlterMaterialItem("Lava Spell", "", Material.DIAMOND);
         HELLFIRE_SPELL = createAlterMaterialItem("Hellfire Spell", "", Material.DIAMOND);
         AGILITY_SPELL = createAlterMaterialItem("Agility Spell", "", Material.DIAMOND);
         AIRBENDING_SPELL = createAlterMaterialItem("Airbending Spell", "", Material.DIAMOND);
-        DEFENSE_SPELL = createAlterMaterialItem("Defense Spell", "", Material.DIAMOND);
+        LAVA_SPELL = createAlterMaterialItem("Defense Spell", "", Material.DIAMOND);
         EARTHBENDING_SPELL = createAlterMaterialItem("Earthbending Spell", "", Material.DIAMOND);
 
 
@@ -152,11 +152,11 @@ public class CraftItemManager {
         spells.addAll(Arrays.asList(
                 WATERBENDING_SPELL,
                 ICE_SPELL,
-                LAVA_SPELL,
+                EXPLOSION_SPELL,
                 HELLFIRE_SPELL,
                 AGILITY_SPELL,
                 AIRBENDING_SPELL,
-                DEFENSE_SPELL,
+                LAVA_SPELL,
                 EARTHBENDING_SPELL
         ));
 
