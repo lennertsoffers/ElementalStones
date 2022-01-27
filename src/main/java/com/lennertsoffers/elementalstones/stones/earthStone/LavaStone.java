@@ -2,13 +2,17 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 
@@ -61,7 +65,6 @@ public class LavaStone extends EarthStone {
 
     // Passive 2: Magma Master
     public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
-
         if (!Collections.disjoint(Arrays.asList(activePlayer.getPlayer().getInventory().getContents()), ItemStones.lavaStones)) {
             if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
                 event.setCancelled(true);
@@ -155,9 +158,79 @@ public class LavaStone extends EarthStone {
     // -> Creates a gap in the earth in the direction of the player filled with lava
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
+            Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+            Block targetBlock = player.getTargetBlockExact(30);
+            if (targetBlock != null) {
+                Location targetBlockLocation = targetBlock.getLocation();
+
+                new BukkitRunnable() {
+                    int amountOfTicks = 0;
+                    
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 360; i++) {
+                            Location particleLocation = CheckLocationTools.getClosestAirBlockLocation(MathTools.locationOnCircle(targetBlockLocation, 3, i, world));
+
+                            if (particleLocation != null) {
+                                world.spawnParticle(Particle.FLAME, particleLocation, 0);
+                            }
+                        }
+
+                        spawnTriangle(targetBlockLocation, Arrays.asList(0, 90, 180));
+                        spawnTriangle(targetBlockLocation, Arrays.asList(45, 135, 225));
+
+                        if (amountOfTicks > 50) {
+                            this.cancel();
+                        }
+
+                        System.out.println(amountOfTicks);
+                        amountOfTicks += 5;
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        Comet comet = new Comet(activePlayer, targetBlockLocation.clone().add(0.5, 100, 40.5), targetBlockLocation.clone().add(0.5, 0, 0.5));
+                        comet.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                    }
+                }.runTaskLater(StaticVariables.plugin, 40L);
+            }
         };
     }
 
+    private static void spawnTriangle(Location center, List<Integer> angles) {
+        World world = center.getWorld();
+
+        if (world != null) {
+            Location loc1 = MathTools.locationOnCircle(center, 3, angles.get(0), world);
+            Location loc2 = MathTools.locationOnCircle(center, 3, angles.get(1), world);
+            Location loc3 = MathTools.locationOnCircle(center, 3, angles.get(2), world);
+
+            Vector loc1loc2 = new Vector(loc2.getX() - loc1.getX(), 0, loc2.getZ() - loc1.getZ()).multiply(0.05);
+            Vector loc1loc3 = new Vector(loc3.getX() - loc1.getX(), 0, loc3.getZ() - loc1.getZ()).multiply(0.05);
+            Vector loc2loc3 = new Vector(loc3.getX() - loc2.getX(), 0, loc3.getZ() - loc2.getZ()).multiply(0.05);
+
+            for (double i = 0; i < 20; i += 0.1) {
+                Location particleLocation1 = CheckLocationTools.getClosestAirBlockLocation(loc1.clone().add(loc1loc2.clone().multiply(i)));
+                Location particleLocation2 = CheckLocationTools.getClosestAirBlockLocation(loc1.clone().add(loc1loc3.clone().multiply(i)));
+                Location particleLocation3 = CheckLocationTools.getClosestAirBlockLocation(loc2.clone().add(loc2loc3.clone().multiply(i)));
+
+                if (particleLocation1 != null) {
+                    world.spawnParticle(Particle.FLAME, particleLocation1, 0);
+                }
+
+                if (particleLocation2 != null) {
+                    world.spawnParticle(Particle.FLAME, particleLocation2, 0);
+                }
+
+                if (particleLocation3 != null) {
+                    world.spawnParticle(Particle.FLAME, particleLocation3, 0);
+                }
+            }
+        }
+    }
 
     // MOVE 7
     // Lava Burst
@@ -418,7 +491,7 @@ public class LavaStone extends EarthStone {
 
 
 
-
+// TODO - Fix runnable that places smoke
 
 
 

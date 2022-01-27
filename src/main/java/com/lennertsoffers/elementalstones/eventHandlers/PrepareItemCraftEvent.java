@@ -43,7 +43,7 @@ public class PrepareItemCraftEvent implements Listener {
 
         // RECIPES
         // Recipes: CraftItems
-        ItemStack[] voodoo_doll_recipe = {null, CraftItemManager.SOUL_OF_EVOKER, null, null, TOTEM_OF_UNDYING, null, null, CraftItemManager.BABY_ZOMBIE_HIDE, null};
+        ItemStack[] voodoo_doll_recipe = {null, CraftItemManager.SOUL_OF_EVOKER, null, CraftItemManager.STINGER, TOTEM_OF_UNDYING, null, null, CraftItemManager.BABY_ZOMBIE_HIDE, null};
         ItemStack[] ship_in_bottle = {GLASS_BOTTLE, GLASS_BOTTLE, GLASS_BOTTLE, GLASS_BOTTLE, CraftItemManager.TWIG, CraftItemManager.BABY_ZOMBIE_HIDE, GLASS_BOTTLE, GLASS_BOTTLE, GLASS_BOTTLE};
         ItemStack[] palantir = {CRYING_OBSIDIAN, CRYING_OBSIDIAN, CRYING_OBSIDIAN, CRYING_OBSIDIAN, CraftItemManager.SOUL_OF_EVOKER, CRYING_OBSIDIAN, CRYING_OBSIDIAN, CRYING_OBSIDIAN, CRYING_OBSIDIAN};
         ItemStack[] blood_and_quil = {null, CraftItemManager.GOLDEN_FEATHER, null, null, CraftItemManager.BLOOD_OF_WANDERING_TRADER, null, null, null, null};
