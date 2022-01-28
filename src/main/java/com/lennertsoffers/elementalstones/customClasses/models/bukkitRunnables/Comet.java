@@ -28,7 +28,7 @@ public class Comet extends BukkitRunnable {
     public Comet(ActivePlayer activePlayer, Location startLocation, Location endLocation) {
         this.activePlayer = activePlayer;
         this.startLocation = startLocation;
-        this.endLocation = endLocation.add(0, 0, -3);
+        this.endLocation = endLocation;
         this.world = startLocation.getWorld();
 
         spawnComet();

@@ -152,10 +152,20 @@ public class LavaStone extends EarthStone {
         };
     }
 
-
-    // MOVE 6
-    // Rift
-    // -> Creates a gap in the earth in the direction of the player filled with lava
+    /**
+     * <b>MOVE 6: Comet</b>
+     * <p>
+     *     Marks a spot where a comet wil land after a few seconds
+     *     <ul>
+     *         <li><b>Range: </b> 30</li>
+     *         <li><b>Explosion Power: </b>5</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see Comet
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -192,7 +202,26 @@ public class LavaStone extends EarthStone {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        Comet comet = new Comet(activePlayer, targetBlockLocation.clone().add(0.5, 100, 40.5), targetBlockLocation.clone().add(0.5, 0, 0.5));
+                        Location startLocation;
+                        Location endLocation;
+
+                        int randomInt = StaticVariables.random.nextInt(4);
+
+                        if (randomInt == 0) {
+                            startLocation = targetBlockLocation.clone().add(0.5, 100, 40.5);
+                            endLocation = targetBlockLocation.clone().add(0.5, 0, -2.5);
+                        } else if (randomInt == 1) {
+                            startLocation = targetBlockLocation.clone().add(0.5, 100, -40.5);
+                            endLocation = targetBlockLocation.clone().add(0.5, 0, 0.5);
+                        } else if (randomInt == 2) {
+                            startLocation = targetBlockLocation.clone().add(40.5, 100, 0.5);
+                            endLocation = targetBlockLocation.clone().add(-1.5, 0, -1.5);
+                        } else {
+                            startLocation = targetBlockLocation.clone().add(-40.5, 100, 0.5);
+                            endLocation = targetBlockLocation.clone().add(0.5, 0, -1.5);
+                        }
+
+                        Comet comet = new Comet(activePlayer, startLocation, endLocation);
                         comet.runTaskTimer(StaticVariables.plugin, 0L, 1L);
                     }
                 }.runTaskLater(StaticVariables.plugin, 40L);
@@ -200,6 +229,11 @@ public class LavaStone extends EarthStone {
         };
     }
 
+    /**
+     * <b>Spawns a line of particles connecting 2 points on a circle with a certain angle</b>
+     * @param center the center of the circle
+     * @param angles the angle at which the line must spawn
+     */
     private static void spawnTriangle(Location center, List<Integer> angles) {
         World world = center.getWorld();
 
@@ -487,25 +521,3 @@ public class LavaStone extends EarthStone {
         }
     }
 }
-
-
-
-
-// TODO - Fix runnable that places smoke
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
