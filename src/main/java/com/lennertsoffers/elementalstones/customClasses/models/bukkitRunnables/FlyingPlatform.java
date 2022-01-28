@@ -40,7 +40,7 @@ public class FlyingPlatform extends BukkitRunnable {
     public void run() {
 
         if (platform.size() > 0) {
-            List<Location> toLocations = getPlatformLocations(player);
+            List<Location> toLocations = this.getPlatformLocations();
 
             int fallingBlockIndex = 0;
             for (Location toLocation : toLocations) {
@@ -79,8 +79,8 @@ public class FlyingPlatform extends BukkitRunnable {
         }
     }
 
-    private static List<Location> getPlatformLocations(Player player) {
-        Location playerLocation = player.getLocation().add(0, -1, 0);
+    private List<Location> getPlatformLocations() {
+        Location playerLocation = this.player.getLocation().add(0, -1, 0);
         List<Location> toLocations = new ArrayList<>();
 
         // Layer 1

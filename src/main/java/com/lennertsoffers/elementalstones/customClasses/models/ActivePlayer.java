@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
@@ -45,6 +46,8 @@ public class ActivePlayer {
     // Earth Stone
     private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
+    private final List<FallingBlock> cometFallingBlocks = new ArrayList<>();
+    private Comet comet;
     private boolean move8active = false;
     private List<FallingBlock> move8FallingBlocks = new ArrayList<>();
 
@@ -565,6 +568,17 @@ public class ActivePlayer {
         return this.move6LaunchedFallingBlocks;
     }
 
+    public List<FallingBlock> getCometFallingBlocks() {
+        return this.move6FallingBlocks;
+    }
+
+    public Comet getComet() {
+        return this.comet;
+    }
+
+    public void setComet(Comet comet) {
+        this.comet = comet;
+    }
 
     public void setMove8active(boolean move8active) {
         this.move8active = move8active;
