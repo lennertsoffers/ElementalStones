@@ -79,43 +79,50 @@ public class LavaStone extends EarthStone {
         }
     }
 
-    // MOVE 4
-    // Reverse Logic
-    // -> The player heals over time while standing on magma blocks
+
+    /**
+     * <b>MOVE 4: Reverse Logic</b>
+     * <p>
+     *     The player heals over time while standing on magma blocks<br>
+     *     <ul>
+     *         <li><b>Heal:</b> 3 health/s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
+
             new BukkitRunnable() {
                 int amountOfTicks = 0;
 
                 @Override
                 public void run() {
                     Location location = player.getLocation().add(0, 1, 0);
+
                     for (int i = 0; i < 2; i++) {
                         player.getWorld().spawnParticle(Particle.REDSTONE, location.getX() + StaticVariables.random.nextGaussian() / 3, location.getY() + StaticVariables.random.nextGaussian() / 3, location.getZ() + StaticVariables.random.nextGaussian() / 3, 0, 0, 0, 0, new Particle.DustOptions(Color.RED, 1));
                     }
-                    if (amountOfTicks >= 199) {
+
+                    if (amountOfTicks % 20 == 0) {
+                        if (world.getBlockAt(location.clone().add(0, -2, 0)).getType() == Material.MAGMA_BLOCK) {
+                            double health = player.getHealth() + 3;
+                            health = health <= 20 ? health : 20;
+
+                            player.setHealth(health);
+                        }
+                    }
+
+                    if (amountOfTicks >= 200) {
                         this.cancel();
                     }
                     amountOfTicks++;
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            new BukkitRunnable() {
-                int amountOfSecs = 0;
-
-                @Override
-                public void run() {
-                    Location location = player.getLocation();
-                    if (world.getBlockAt(location.add(0, -1, 0)).getType() == Material.MAGMA_BLOCK) {
-                        player.setHealth(player.getHealth() + 3);
-                    }
-                    if (amountOfSecs >= 9) {
-                        this.cancel();
-                    }
-                    amountOfSecs++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
         };
     }
 
