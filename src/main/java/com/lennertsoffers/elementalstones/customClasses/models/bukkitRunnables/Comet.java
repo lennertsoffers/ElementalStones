@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -36,8 +37,8 @@ public class Comet extends BukkitRunnable {
 
     @Override
     public void run() {
-        List<Location> startLocationList = this.getCometLocations(this.startLocation);
-        List<Location> endLocationList = this.getCometLocations(this.endLocation);
+        List<Location> startLocationList = CheckLocationTools.getSphere5Locations(this.startLocation);
+        List<Location> endLocationList = CheckLocationTools.getSphere5Locations(this.endLocation);
 
         for (int i = 0; i < startLocationList.size(); i++) {
             Location blockStartLocation = startLocationList.get(i);
@@ -57,61 +58,9 @@ public class Comet extends BukkitRunnable {
         }
     }
 
-    private List<Location> getCometLocations(Location middleLocation) {
-        List<Location> locationList = new ArrayList<>();
-
-        locationList.add(middleLocation.clone().add(0, 0, 2));
-        locationList.add(middleLocation.clone().add(0, 1, 2));
-        locationList.add(middleLocation.clone().add(0, -1, 2));
-        locationList.add(middleLocation.clone().add(1, 0, 2));
-        locationList.add(middleLocation.clone().add(-1, 0, 2));
-
-        locationList.add(middleLocation.clone().add(0, 0, -2));
-        locationList.add(middleLocation.clone().add(0, 1, -2));
-        locationList.add(middleLocation.clone().add(0, -1, -2));
-        locationList.add(middleLocation.clone().add(1, 0, -2));
-        locationList.add(middleLocation.clone().add(-1, 0, -2));
-
-        locationList.add(middleLocation.clone().add(2, 0, 0));
-        locationList.add(middleLocation.clone().add(2, 1, 0));
-        locationList.add(middleLocation.clone().add(2, -1, 0));
-        locationList.add(middleLocation.clone().add(2, 0, 1));
-        locationList.add(middleLocation.clone().add(2, 0, -1));
-
-        locationList.add(middleLocation.clone().add(-2, 0, 0));
-        locationList.add(middleLocation.clone().add(-2, 1, 0));
-        locationList.add(middleLocation.clone().add(-2, -1, 0));
-        locationList.add(middleLocation.clone().add(-2, 0, 1));
-        locationList.add(middleLocation.clone().add(-2, 0, -1));
-
-        locationList.add(middleLocation.clone().add(0, 2, 0));
-        locationList.add(middleLocation.clone().add(0, 2, 1));
-        locationList.add(middleLocation.clone().add(0, 2, -1));
-        locationList.add(middleLocation.clone().add(1, 2, 0));
-        locationList.add(middleLocation.clone().add(-1, 2, 0));
-
-        locationList.add(middleLocation.clone().add(0, -2, 0));
-        locationList.add(middleLocation.clone().add(0, -2, 1));
-        locationList.add(middleLocation.clone().add(0, -2, -1));
-        locationList.add(middleLocation.clone().add(1, -2, 0));
-        locationList.add(middleLocation.clone().add(-1, -2, 0));
-
-        locationList.add(middleLocation.clone().add(1, 1, 1));
-        locationList.add(middleLocation.clone().add(-1, 1, 1));
-        locationList.add(middleLocation.clone().add(1, 1, -1));
-        locationList.add(middleLocation.clone().add(-1, 1, -1));
-
-        locationList.add(middleLocation.clone().add(1, -1, 1));
-        locationList.add(middleLocation.clone().add(-1, -1, 1));
-        locationList.add(middleLocation.clone().add(1, -1, -1));
-        locationList.add(middleLocation.clone().add(-1, -1, -1));
-
-        return locationList;
-    }
-
     private void spawnComet() {
         BlockData blockData = Material.MAGMA_BLOCK.createBlockData();
-        List<Location> startLocationList = this.getCometLocations(this.startLocation);
+        List<Location> startLocationList = CheckLocationTools.getSphere5Locations(this.startLocation);
 
         startLocationList.forEach(blockStartLocation -> {
             FallingBlock fallingBlock = this.world.spawnFallingBlock(blockStartLocation, blockData);

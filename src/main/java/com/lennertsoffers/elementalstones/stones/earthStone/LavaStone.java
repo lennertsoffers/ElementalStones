@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSphere;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSpout;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
@@ -67,7 +68,12 @@ public class LavaStone extends EarthStone {
     // Passive 2: Magma Master
     public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
         if (!Collections.disjoint(Arrays.asList(activePlayer.getPlayer().getInventory().getContents()), ItemStones.lavaStones)) {
-            if (event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR) {
+            if (
+                    event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.LAVA ||
+                            event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE_TICK ||
+                            event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE ||
+                            event.getCause() == EntityDamageEvent.DamageCause.HOT_FLOOR
+            ) {
                 event.setCancelled(true);
             }
         }
@@ -301,122 +307,30 @@ public class LavaStone extends EarthStone {
         };
     }
 
-    // MOVE 8
-    // Lava Rider
-    // -> The player rides on a sphere of lava
-    // -> Increased movement speed
-    // -> Damages entities if they get caught by the lava
+    /**
+     * <b>ULTIMATE: Lava Sphere</b>
+     * <p>
+     *     The player begins to fly on a large ball of lava<br>
+     *     This lava does damage to entities you fly over<br>
+     *     After the move the player shoots up and can try to land safely on the lowering lava<br>
+     *     <ul>
+     *         <li><b>Duration: </b> 1min</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see LavaSphere
+     */
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
-//            Player player = activePlayer.getPlayer();
-//            World world = player.getWorld();
-//            activePlayer.setLavaStoneMove8Active(true);
-//            player.setAllowFlight(true);
-//            player.setFlying(true);
-//            player.setFlySpeed(0.075f);
-//            player.teleport(player.getLocation().add(0, 2, 0));
-//            String[] lavaLevel0 = {
-//                    "AAAAAAAAA",
-//                    "AAALLLAAA",
-//                    "AALLLLLAA",
-//                    "ALLLLLLLA",
-//                    "ALLL*LLLA",
-//                    "ALLLLLLLA",
-//                    "AALLLLLAA",
-//                    "AAALLLAAA",
-//                    "AAAAAAAAA"
-//            };
-//            String[] lavaLevel1 = {
-//                    "AAAAAAA",
-//                    "AALLLAA",
-//                    "ALLLLLA",
-//                    "ALL*LLA",
-//                    "ALLLLLA",
-//                    "AALLLAA",
-//                    "AAAAAAA"
-//            };
-//            String[] lavaLevel2 = {
-//                    "AAAAA",
-//                    "AALAA",
-//                    "AL*LA",
-//                    "AALAA",
-//                    "AAAAA",
-//            };
-//            String[] lavaRemoveString = {
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA",
-//                    "AAAA*AAAA",
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA",
-//                    "AAAAAAAAA"
-//            };
-//            ArrayList<Material> overrideBlocks = new ArrayList<>();
-//            overrideBlocks.add(Material.LAVA);
-//            Map<Character, Material> characterMaterialMap = new HashMap<>();
-//            characterMaterialMap.put('A', Material.AIR);
-//            characterMaterialMap.put('L', Material.LAVA);
-//
-//            new BukkitRunnable() {
-//                int amountOfTicks = 0;
-//                Location previousLocation = player.getLocation();
-//
-//                @Override
-//                public void run() {
-//                    boolean placeTopLevel = true;
-//                    if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 != player.getLocation().getY()) {
-//                        if (world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3 < player.getLocation().getY()) {
-//                            placeTopLevel = false;
-//                        }
-//                        Location teleportLocation = player.getLocation();
-//                        teleportLocation.setY(world.getHighestBlockYAt(player.getLocation(), HeightMap.OCEAN_FLOOR) + 3);
-//                        player.teleport(teleportLocation);
-//                        new BukkitRunnable() {
-//                            @Override
-//                            public void run() {
-//                                Vector direction = player.getLocation().getDirection();
-//                                direction.setX(direction.getX() / 3);
-//                                direction.setY(0);
-//                                direction.setZ(direction.getZ() / 3);
-//                                player.setVelocity(direction);
-//                            }
-//                        }.runTaskLater(StaticVariables.plugin, 1L);
-//                    }
-//                    for (int i = 1; i >= -3; i--) {
-//                        SetBlockTools.setBlocks(previousLocation.clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-//                    }
-//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -3, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -2, 0), lavaLevel0, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, -1, 0), lavaLevel1, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-//                    if (placeTopLevel) {
-//                        SetBlockTools.setBlocks(player.getLocation(), lavaLevel2, characterMaterialMap, true, overrideBlocks, Material.LAVA, activePlayer);
-//                    }
-//                    SetBlockTools.setBlocks(player.getLocation().clone().add(0, 1, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-//                    previousLocation = player.getLocation().clone();
-//                    if (amountOfTicks > 400) {
-//                        player.setAllowFlight(false);
-//                        player.setFlying(false);
-//                        player.setFireTicks(0);
-//                        activePlayer.setLavaStoneMove8Active(false);
-//                        this.cancel();
-//                        for (int i = 0; i >= -2; i--) {
-//                            SetBlockTools.setBlocks(player.getLocation().clone().add(0, i, 0), lavaRemoveString, characterMaterialMap, true, overrideBlocks, Material.AIR, activePlayer);
-//                        }
-//                    }
-//                    amountOfTicks++;
-//                }
-//            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-        };
-    }
+            Player player = activePlayer.getPlayer();
+            activePlayer.setLavaStoneMove8Active(true);
+            player.setAllowFlight(true);
+            player.setFlying(true);
 
-    // MOVE 8: Prevent player from getting fire damage
-    public static void move8(ActivePlayer activePlayer, EntityDamageEvent event) {
-        if (activePlayer.isLavaStoneMove8Active()) {
-            if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.LAVA || event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FIRE) {
-                event.setCancelled(true);
-            }
-        }
+            LavaSphere lavaSphere = new LavaSphere(player);
+            lavaSphere.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
     }
 }

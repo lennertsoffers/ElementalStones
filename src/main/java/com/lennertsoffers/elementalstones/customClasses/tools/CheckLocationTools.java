@@ -7,6 +7,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CheckLocationTools {
@@ -112,5 +114,57 @@ public class CheckLocationTools {
 
     public static boolean isSolidBlock(Material material) {
         return material.isSolid() && material.isBlock() && material.isOccluding();
+    }
+
+    public static List<Location> getSphere5Locations(Location middleLocation) {
+        List<Location> locationList = new ArrayList<>();
+
+        locationList.add(middleLocation.clone().add(0, 0, 2));
+        locationList.add(middleLocation.clone().add(0, 1, 2));
+        locationList.add(middleLocation.clone().add(0, -1, 2));
+        locationList.add(middleLocation.clone().add(1, 0, 2));
+        locationList.add(middleLocation.clone().add(-1, 0, 2));
+
+        locationList.add(middleLocation.clone().add(0, 0, -2));
+        locationList.add(middleLocation.clone().add(0, 1, -2));
+        locationList.add(middleLocation.clone().add(0, -1, -2));
+        locationList.add(middleLocation.clone().add(1, 0, -2));
+        locationList.add(middleLocation.clone().add(-1, 0, -2));
+
+        locationList.add(middleLocation.clone().add(2, 0, 0));
+        locationList.add(middleLocation.clone().add(2, 1, 0));
+        locationList.add(middleLocation.clone().add(2, -1, 0));
+        locationList.add(middleLocation.clone().add(2, 0, 1));
+        locationList.add(middleLocation.clone().add(2, 0, -1));
+
+        locationList.add(middleLocation.clone().add(-2, 0, 0));
+        locationList.add(middleLocation.clone().add(-2, 1, 0));
+        locationList.add(middleLocation.clone().add(-2, -1, 0));
+        locationList.add(middleLocation.clone().add(-2, 0, 1));
+        locationList.add(middleLocation.clone().add(-2, 0, -1));
+
+        locationList.add(middleLocation.clone().add(0, 2, 0));
+        locationList.add(middleLocation.clone().add(0, 2, 1));
+        locationList.add(middleLocation.clone().add(0, 2, -1));
+        locationList.add(middleLocation.clone().add(1, 2, 0));
+        locationList.add(middleLocation.clone().add(-1, 2, 0));
+
+        locationList.add(middleLocation.clone().add(0, -2, 0));
+        locationList.add(middleLocation.clone().add(0, -2, 1));
+        locationList.add(middleLocation.clone().add(0, -2, -1));
+        locationList.add(middleLocation.clone().add(1, -2, 0));
+        locationList.add(middleLocation.clone().add(-1, -2, 0));
+
+        locationList.add(middleLocation.clone().add(1, 1, 1));
+        locationList.add(middleLocation.clone().add(-1, 1, 1));
+        locationList.add(middleLocation.clone().add(1, 1, -1));
+        locationList.add(middleLocation.clone().add(-1, 1, -1));
+
+        locationList.add(middleLocation.clone().add(1, -1, 1));
+        locationList.add(middleLocation.clone().add(-1, -1, 1));
+        locationList.add(middleLocation.clone().add(1, -1, -1));
+        locationList.add(middleLocation.clone().add(-1, -1, -1));
+
+        return locationList;
     }
 }
