@@ -1,12 +1,15 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +19,6 @@ public class LavaSpout extends BukkitRunnable {
     private int amountOfTicks = 0;
     private int height = 0;
     private int heightAddition;
-    private Material material;
     private final Location middlePoint;
     private final Player player;
     private final World world;
@@ -28,7 +30,6 @@ public class LavaSpout extends BukkitRunnable {
         this.middlePoint = getLowestHeight(middlePoint);
 
         this.heightAddition = 1;
-        this.material = Material.LAVA;
     }
 
     @Override
@@ -36,9 +37,12 @@ public class LavaSpout extends BukkitRunnable {
         Location center = this.middlePoint.clone();
 
         for (int i = 0; i < height + 1; i++) {
-            placeLayer(center, this.material);
+            placeLayer(Material.LAVA, true, getLocations(center));
+            placeLayer(Material.LAVA, false, getLocationsAround(center));
             center.add(0, 1, 0);
         }
+        placeLayer(Material.AIR, true, getLocations(center));
+
 
         amountOfTicks++;
         height += heightAddition;
@@ -46,28 +50,33 @@ public class LavaSpout extends BukkitRunnable {
             heightAddition = 0;
         } else if (this.amountOfTicks == 60) {
             this.heightAddition = -1;
-            this.material = Material.AIR;
-        } else if (this.amountOfTicks == 80) {
+        } else if (this.amountOfTicks == 82) {
             this.cancel();
             placedLavaLocations.clear();
         }
     }
 
-    private void placeLayer(Location center, Material material) {
-        getLocations(center).forEach(location -> {
+    private void placeLayer(Material material, boolean innerLayer, List<Location> locations) {
+        Vector velocity = new Vector(StaticVariables.random.nextGaussian() / 5, 1, StaticVariables.random.nextGaussian() / 5);
+
+        locations.forEach(location -> {
             Block block = world.getBlockAt(location);
 
             Material blockMaterial = block.getType();
             if (blockMaterial == Material.AIR || placedLavaLocations.contains(location)) {
                 block.setType(Material.AIR);
-                block.setType(material);
                 placedLavaLocations.add(location);
+
+                if (innerLayer) {
+                    block.setType(material);
+                    NearbyEntityTools.damageNearbyEntities(this.player, location, 0, 1, 1, 1, velocity);
+                }
             }
         });
     }
 
     private Location getLowestHeight(Location center) {
-        int lowestHeight = middlePoint.getBlockY() + 1;
+        int lowestHeight = center.getBlockY() + 1;
 
         for (Location loc : getLocations(center)) {
             Location location = CheckLocationTools.getClosestAirBlockLocation(loc);
@@ -81,8 +90,8 @@ public class LavaSpout extends BukkitRunnable {
             }
         }
 
-        middlePoint.setY(lowestHeight);
-        return middlePoint;
+        center.setY(lowestHeight);
+        return center;
     }
 
     private List<Location> getLocations(Location center) {
@@ -92,6 +101,19 @@ public class LavaSpout extends BukkitRunnable {
                 center.clone().add(0, 0, -1),
                 center.clone().add(1, 0, 0),
                 center.clone().add(-1, 0, 0)
+        );
+    }
+
+    private List<Location> getLocationsAround(Location center) {
+        return Arrays.asList(
+                center.clone().add(2, 0, 0),
+                center.clone().add(-2, 0, 0),
+                center.clone().add(0, 0, 2),
+                center.clone().add(0, 0, -2),
+                center.clone().add(1, 0, 1),
+                center.clone().add(-1, 0, 1),
+                center.clone().add(1, 0, -1),
+                center.clone().add(-1, 0, -1)
         );
     }
 }

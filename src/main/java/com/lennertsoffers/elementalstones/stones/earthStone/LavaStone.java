@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.earthStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSpout;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
@@ -266,14 +267,37 @@ public class LavaStone extends EarthStone {
         }
     }
 
-    // MOVE 7
-    // Lava Burst
-    // -> The blocks where the player is looking at burst open creating an intense flow of lava
+    /**
+     * <b>MOVE 7: Lava Spout</b>
+     * <p>
+     *     The targeted block bursts open creating an intense flow of lava<br>
+     *     This lava spout will launch entities up<br>
+     *     <ul>
+     *         <li><b>Range: </b> 15</li>
+     *         <li><b>Knockup: </b>1</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see LavaSpout
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            Location middlePoint = player.getLocation();
 
+            Block targetBlock = player.getTargetBlockExact(15);
+
+            if (targetBlock != null) {
+                Location location = CheckLocationTools.getClosestAirBlockLocation(targetBlock.getLocation());
+
+                if (location != null) {
+                    location.add(0, -1, 0);
+
+                    LavaSpout lavaSpout = new LavaSpout(player, location);
+                    lavaSpout.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                }
+            }
         };
     }
 
