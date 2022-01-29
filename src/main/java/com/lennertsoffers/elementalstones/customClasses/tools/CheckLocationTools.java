@@ -38,14 +38,17 @@ public class CheckLocationTools {
 
     public static boolean lavaAroundPlayer(Location location) {
         World world = location.getWorld();
-        location.add(1, 0, 1);
-        for (int i = 1; i <= 9; i++) {
-            if (Objects.requireNonNull(world).getBlockAt(location).getType() == Material.LAVA) {
-                return true;
-            }
-            location.add(-1, 0, 0);
-            if (i % 3 == 0) {
-                location.add(3, 0, -1);
+
+        if (world != null) {
+            location.add(1, 0, 1);
+            for (int i = 1; i <= 9; i++) {
+                if (world.getBlockAt(location).getType() == Material.LAVA) {
+                    return true;
+                }
+                location.add(-1, 0, 0);
+                if (i % 3 == 0) {
+                    location.add(3, 0, -1);
+                }
             }
         }
         return false;

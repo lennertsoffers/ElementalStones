@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,6 +36,6 @@ public class PlayerMoveEvent implements Listener {
 
 
 //        HellfireStone.move4(Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId())), event);
-//        LavaStone.passive(activePlayer);
+        LavaStone.passive1(activePlayer);
     }
 }

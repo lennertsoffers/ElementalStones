@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -16,11 +17,13 @@ import java.util.List;
 public class LavaSphere extends BukkitRunnable {
     private int amountOfTicks = 0;
     private final Player player;
+    private final ActivePlayer activePlayer;
     private final World world;
     private final List<Block> lavaBlocks = new ArrayList<>();
 
-    public LavaSphere(Player player) {
-        this.player = player;
+    public LavaSphere(ActivePlayer activePlayer) {
+        this.activePlayer = activePlayer;
+        this.player = activePlayer.getPlayer();
         this.world = player.getWorld();
     }
 
@@ -36,6 +39,7 @@ public class LavaSphere extends BukkitRunnable {
             if (block.getType() == Material.AIR) {
                 block.setType(Material.LAVA);
                 this.lavaBlocks.add(block);
+                this.activePlayer.getLavaLocations().add(block.getLocation());
             }
         });
 

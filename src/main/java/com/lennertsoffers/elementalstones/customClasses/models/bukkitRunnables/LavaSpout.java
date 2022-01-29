@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.Location;
@@ -20,12 +21,14 @@ public class LavaSpout extends BukkitRunnable {
     private int height = 0;
     private int heightAddition;
     private final Location middlePoint;
+    private final ActivePlayer activePlayer;
     private final Player player;
     private final World world;
     private final List<Location> placedLavaLocations = new ArrayList<>();
 
-    public LavaSpout(Player player, Location middlePoint) {
-        this.player = player;
+    public LavaSpout(ActivePlayer activePlayer, Location middlePoint) {
+        this.activePlayer = activePlayer;
+        this.player = activePlayer.getPlayer();
         this.world = player.getWorld();
         this.middlePoint = getLowestHeight(middlePoint);
 

@@ -20,52 +20,84 @@ import java.util.*;
 
 public class LavaStone extends EarthStone {
 
-    // PASSIVE
-    // Passive1: Lava Walker
+
+    // PASSIVES //
+
+
+    /**
+     * <b>PASSIVE 1: Lava Walker</b>
+     * <p>
+     *     Frost walker for lava<br>
+     *     It generates basalt beneath the player and it gets removed after a short period of time<br>
+     *     The platform under the player won't be removed unlike the real frost walker so the player can stand still on lava<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public static void passive1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
-        Location location = player.getLocation().add(0, -1, 0);
-        ArrayList<Location> locationGroup = new ArrayList<>();
-        if (CheckLocationTools.lavaAroundPlayer(location)) {
-            location.add(2, 0, 2);
-            Location startLocation = location.clone();
-            for (int i = 1; i <= 25; i++) {
-                if (!activePlayer.isInLavaBlockLocations(location)) {
-                    locationGroup.add(location.clone());
-                    if (
-                            !(startLocation.getX() == location.getX() && startLocation.getZ() == location.getZ()) &&
-                                    !(startLocation.getX() == location.getX() && startLocation.getZ() - 4 == location.getZ()) &&
-                                    !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() == location.getZ()) &&
-                                    !(startLocation.getX() - 4 == location.getX() && startLocation.getZ() - 4 == location.getZ())
-                    ) {
-                        world.getBlockAt(location).setType(Material.BASALT);
+
+        if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.lavaStones)) {
+            World world = player.getWorld();
+            Location center = player.getLocation().getBlock().getLocation().add(0, -1, 0);
+
+            if (CheckLocationTools.lavaAroundPlayer(center)) {
+                activePlayer.getCurrentPlatform().clear();
+
+                getLocationsAround(center).forEach(location -> {
+                    if (!activePlayer.getLavaLocations().contains(location)) {
+                        Block block = world.getBlockAt(location);
+
+                        if (block.getType() == Material.LAVA || block.getType() == Material.BASALT) {
+                            block.setType(Material.BASALT);
+                            activePlayer.getAllPlatformBlocks().add(block);
+                            activePlayer.getCurrentPlatform().add(block);
+                        }
                     }
+                });
+
+                if (activePlayer.getAllPlatformBlocks().size() > 21) {
+                    List<Block> blocksToRemove = new ArrayList<>(activePlayer.getAllPlatformBlocks());
+                    activePlayer.getAllPlatformBlocks().clear();
+                    System.out.println(blocksToRemove);
+
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+
+                            int bound = blocksToRemove.size();
+                            int index = StaticVariables.random.nextInt(bound);
+
+                            Block blockToRemove = blocksToRemove.get(index);
+                            if (activePlayer.getCurrentPlatform().contains(blockToRemove)) {
+                                activePlayer.getAllPlatformBlocks().add(blockToRemove);
+                            } else {
+                                blockToRemove.setType(Material.LAVA);
+                            }
+                            blocksToRemove.remove(index);
+
+                            if (blocksToRemove.size() <= 0) {
+                                this.cancel();
+                            }
+                        }
+                    }.runTaskTimer(StaticVariables.plugin, 0L, 4L);
                 }
-                location.add(-1, 0, 0);
-                if (i % 5 == 0) {
-                    location.add(5, 0, -1);
-                }
+            } else if (world.getBlockAt(center).getType() != Material.LAVA && world.getBlockAt(center).getType() != Material.BASALT) {
+                activePlayer.getAllPlatformBlocks().forEach(block -> block.setType(Material.LAVA));
             }
         }
-        activePlayer.setRemoveBasald(new BukkitRunnable() {
-            int blocksRemoved = 1;
-            @Override
-            public void run() {
-                if (locationGroup.size() >= 1) {
-                    int index = StaticVariables.random.nextInt(Math.abs(locationGroup.size()));
-                    world.getBlockAt(locationGroup.get(index)).setType(Material.LAVA);
-                    locationGroup.remove(index);
-                }
-                if (blocksRemoved >= 25) {
-                    this.cancel();
-                }
-                blocksRemoved++;
-            }
-        });
     }
 
-    // Passive 2: Magma Master
+    /**
+     * <b>PASSIVE 2: Magma Master</b>
+     * <p>
+     *     Players holding the lava stone are invincible for lava, fire and hot floor damage<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @param event the EntityDamageEvent that is triggered
+     * @see com.lennertsoffers.elementalstones.eventHandlers.EntityDamageEvent
+     */
     public static void passive2(ActivePlayer activePlayer, EntityDamageEvent event) {
         if (!Collections.disjoint(Arrays.asList(activePlayer.getPlayer().getInventory().getContents()), ItemStones.lavaStones)) {
             if (
@@ -78,6 +110,9 @@ public class LavaStone extends EarthStone {
             }
         }
     }
+
+
+    // MOVES //
 
 
     /**
@@ -244,6 +279,102 @@ public class LavaStone extends EarthStone {
     }
 
     /**
+     * <b>MOVE 7: Lava Spout</b>
+     * <p>
+     *     The targeted block bursts open creating an intense flow of lava<br>
+     *     This lava spout will launch entities up<br>
+     *     <ul>
+     *         <li><b>Range: </b> 15</li>
+     *         <li><b>Knockup: </b>1</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see LavaSpout
+     */
+    public static Runnable move7(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+
+            Block targetBlock = player.getTargetBlockExact(15);
+
+            if (targetBlock != null) {
+                Location location = CheckLocationTools.getClosestAirBlockLocation(targetBlock.getLocation());
+
+                if (location != null) {
+                    location.add(0, -1, 0);
+
+                    LavaSpout lavaSpout = new LavaSpout(activePlayer, location);
+                    lavaSpout.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                }
+            }
+        };
+    }
+
+    /**
+     * <b>ULTIMATE: Lava Sphere</b>
+     * <p>
+     *     The player begins to fly on a large ball of lava<br>
+     *     This lava does damage to entities you fly over<br>
+     *     After the move the player shoots up and can try to land safely on the lowering lava<br>
+     *     <ul>
+     *         <li><b>Duration: </b> 1min</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see LavaSphere
+     */
+    public static Runnable move8(ActivePlayer activePlayer) {
+        return () -> {
+            Player player = activePlayer.getPlayer();
+            player.setAllowFlight(true);
+            player.setFlying(true);
+
+            LavaSphere lavaSphere = new LavaSphere(activePlayer);
+            lavaSphere.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        };
+    }
+
+
+    // HELPERS
+
+
+    /**
+     * <b>Generates a list of locations in a circle beneath the player</b>
+     * @param center the center location of the circle
+     * @return a list of locations in a circle around the player
+     */
+    public static List<Location> getLocationsAround(Location center) {
+        return Arrays.asList(
+                center.clone(),
+                center.clone().add(1, 0, 0),
+                center.clone().add(-1, 0, 0),
+                center.clone().add(0, 0, 1),
+                center.clone().add(0, 0, -1),
+                center.clone().add(1, 0, 1),
+                center.clone().add(-1, 0, 1),
+                center.clone().add(1, 0, -1),
+                center.clone().add(-1, 0, -1),
+
+                center.clone().add(2, 0, 0),
+                center.clone().add(2, 0, 1),
+                center.clone().add(2, 0, -1),
+                center.clone().add(-2, 0, 0),
+                center.clone().add(-2, 0, 1),
+                center.clone().add(-2, 0, -1),
+                center.clone().add(0, 0, 2),
+                center.clone().add(1, 0, 2),
+                center.clone().add(-1, 0, 2),
+                center.clone().add(0, 0, -2),
+                center.clone().add(1, 0, -2),
+                center.clone().add(-1, 0, -2)
+        );
+    }
+
+    /**
      * <b>Spawns a line of particles connecting 2 points on a circle with a certain angle</b>
      * @param center the center of the circle
      * @param angles the angle at which the line must spawn
@@ -278,66 +409,5 @@ public class LavaStone extends EarthStone {
                 }
             }
         }
-    }
-
-    /**
-     * <b>MOVE 7: Lava Spout</b>
-     * <p>
-     *     The targeted block bursts open creating an intense flow of lava<br>
-     *     This lava spout will launch entities up<br>
-     *     <ul>
-     *         <li><b>Range: </b> 15</li>
-     *         <li><b>Knockup: </b>1</li>
-     *     </ul>
-     * </p>
-     *
-     * @param activePlayer the activeplayer executing the move
-     * @return a BukkitRunnable that can be executed as move
-     * @see LavaSpout
-     */
-    public static Runnable move7(ActivePlayer activePlayer) {
-        return () -> {
-            Player player = activePlayer.getPlayer();
-
-            Block targetBlock = player.getTargetBlockExact(15);
-
-            if (targetBlock != null) {
-                Location location = CheckLocationTools.getClosestAirBlockLocation(targetBlock.getLocation());
-
-                if (location != null) {
-                    location.add(0, -1, 0);
-
-                    LavaSpout lavaSpout = new LavaSpout(player, location);
-                    lavaSpout.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                }
-            }
-        };
-    }
-
-    /**
-     * <b>ULTIMATE: Lava Sphere</b>
-     * <p>
-     *     The player begins to fly on a large ball of lava<br>
-     *     This lava does damage to entities you fly over<br>
-     *     After the move the player shoots up and can try to land safely on the lowering lava<br>
-     *     <ul>
-     *         <li><b>Duration: </b> 1min</li>
-     *     </ul>
-     * </p>
-     *
-     * @param activePlayer the activeplayer executing the move
-     * @return a BukkitRunnable that can be executed as move
-     * @see LavaSphere
-     */
-    public static Runnable move8(ActivePlayer activePlayer) {
-        return () -> {
-            Player player = activePlayer.getPlayer();
-            activePlayer.setLavaStoneMove8Active(true);
-            player.setAllowFlight(true);
-            player.setFlying(true);
-
-            LavaSphere lavaSphere = new LavaSphere(player);
-            lavaSphere.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-        };
     }
 }

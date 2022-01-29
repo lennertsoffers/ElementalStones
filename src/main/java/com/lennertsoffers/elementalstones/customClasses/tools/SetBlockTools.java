@@ -96,7 +96,13 @@ public class SetBlockTools {
                             // Get the material from the mapping
                             } else if (row.charAt(columnZ) != '?') {
                                 activePlayer.addLocationMaterialMapping(blockLocation, material);
-                                world.getBlockAt(blockLocation).setType(characterMaterialMap.get(row.charAt(columnZ)));
+
+                                Material blockMaterial = characterMaterialMap.get(row.charAt(columnZ));
+                                world.getBlockAt(blockLocation).setType(blockMaterial);
+
+                                if (blockMaterial == Material.LAVA) {
+                                    activePlayer.getLavaLocations().add(blockLocation);
+                                }
                             }
 
                             // If damage must be done this is handled here
