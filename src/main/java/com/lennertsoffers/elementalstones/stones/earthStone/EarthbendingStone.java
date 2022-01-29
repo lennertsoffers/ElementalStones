@@ -53,7 +53,6 @@ public class EarthbendingStone extends EarthStone {
         List<PotionEffect> potionEffects = new ArrayList<>();
         potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 40, 1, false, false, false));
         Vector velocity = new Vector(0, 0.2, 0);
-        System.out.println(player.getFallDistance());
 
         event.setCancelled(true);
 
@@ -177,8 +176,6 @@ public class EarthbendingStone extends EarthStone {
                     Location blockLocation = CheckLocationTools.getClosestAirBlockLocation(location);
 
                     if (blockLocation != null) {
-                        blockLocation.add(0, -1, 0);
-
                         world.spawnParticle(Particle.SMOKE_LARGE, blockLocation, 0, 0, -0.5, 0);
 
                         NearbyEntityTools.damageNearbyEntities(player, blockLocation, 7, 1, 1, 1, new Vector(0, 0.5, 0));

@@ -59,7 +59,6 @@ public class LavaStone extends EarthStone {
                 if (activePlayer.getAllPlatformBlocks().size() > 21) {
                     List<Block> blocksToRemove = new ArrayList<>(activePlayer.getAllPlatformBlocks());
                     activePlayer.getAllPlatformBlocks().clear();
-                    System.out.println(blocksToRemove);
 
                     new BukkitRunnable() {
                         @Override
@@ -243,7 +242,6 @@ public class LavaStone extends EarthStone {
                             this.cancel();
                         }
 
-                        System.out.println(amountOfTicks);
                         amountOfTicks += 5;
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 5L);

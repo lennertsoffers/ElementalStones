@@ -22,7 +22,7 @@ You can obtain these stones in survival by doing various tasks and then beating 
     * Agility Stone 👍
     * Airbending Stone 👍
 * Earth Stone
-    * Lava Stone (in dev)  
+    * Lava Stone 👍
     * Earthbending Stone 👍
 
 
