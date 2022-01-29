@@ -19,6 +19,7 @@ import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -50,13 +51,16 @@ public class ActivePlayer {
     private Comet comet;
     private boolean move8active = false;
     private List<FallingBlock> move8FallingBlocks = new ArrayList<>();
+    private final ArrayList<Location> lavaLocations = new ArrayList<>();
+    private final List<Block> currentPlatform = new ArrayList<>();
+    private final List<Block> allPlatformBlocks = new ArrayList<>();
+
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
     private BukkitRunnable floatingFire;
     private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
-    private final ArrayList<Location> lavaBlockLocations = new ArrayList<>();
     private boolean lavaStoneMove8Active = false;
 
     // Water Stone
@@ -648,34 +652,18 @@ public class ActivePlayer {
         this.removeBasald = removeBasaldRunnable;
     }
 
-    public void addLavaBlockLocation(Location lavaBlockLocation) {
-        this.lavaBlockLocations.add(lavaBlockLocation);
+    public List<Location> getLavaLocations() {
+        return this.lavaLocations;
     }
 
-    public void removeLavaBlockLocation(Location lavaBlockLocation) {
-        this.lavaBlockLocations.remove(lavaBlockLocation);
+    public List<Block> getCurrentPlatform() {
+        return this.currentPlatform;
     }
 
-    public boolean isInLavaBlockLocations(Location location) {
-        for (Location lavaBlockLocation : this.lavaBlockLocations) {
-            if (
-                    (lavaBlockLocation.getBlockX() == location.getBlockX()) &&
-                            (lavaBlockLocation.getBlockY() == location.getBlockY()) &&
-                            (lavaBlockLocation.getBlockZ() == location.getBlockZ())
-            ) {
-                return true;
-            }
-        }
-        return false;
+    public List<Block> getAllPlatformBlocks() {
+        return this.allPlatformBlocks;
     }
 
-    public boolean isLavaStoneMove8Active() {
-        return this.lavaStoneMove8Active;
-    }
-
-    public void setLavaStoneMove8Active(boolean lavaStoneMove8Active) {
-        this.lavaStoneMove8Active = lavaStoneMove8Active;
-    }
 
     public void addLocationMaterialMapping(Location location, Material material) {
         if (!(this.resetMapping.containsKey(location))) {
