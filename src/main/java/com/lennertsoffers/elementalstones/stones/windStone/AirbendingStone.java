@@ -16,40 +16,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class AirbendingStone extends AirStone {
+import java.util.Arrays;
+import java.util.Collections;
 
-    // PASSIVE
-    // Passive 1: Feather Falling
-    public static void passive1(ActivePlayer activePlayer, EntityDamageEvent event) {
-        Player player = activePlayer.getPlayer();
-        if (
-                player.getInventory().contains(ItemStones.airStoneBending0) ||
-                player.getInventory().contains(ItemStones.airStoneBending1) ||
-                player.getInventory().contains(ItemStones.airStoneBending2) ||
-                player.getInventory().contains(ItemStones.airStoneBending3) ||
-                player.getInventory().contains(ItemStones.airStoneBending4)
-        ) {
-            if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
-                event.setCancelled(true);
-            }
-        }
-    }
-
-    // Passive 2: Speed Boost
-    public static void passive2(ActivePlayer activePlayer, EntityToggleGlideEvent event) {
-        Player player = activePlayer.getPlayer();
-        if (
-                player.getInventory().contains(ItemStones.airStoneBending0) ||
-                        player.getInventory().contains(ItemStones.airStoneBending1) ||
-                        player.getInventory().contains(ItemStones.airStoneBending2) ||
-                        player.getInventory().contains(ItemStones.airStoneBending3) ||
-                        player.getInventory().contains(ItemStones.airStoneBending4)
-        ) {
-            if (!event.isGliding()) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 2, true, true, true));
-            }
-        }
-    }
+public class AirbendingStone extends AirStoneSharedPassive {
 
     // MOVE 4
     // Air Slash
