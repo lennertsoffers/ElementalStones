@@ -47,7 +47,6 @@ public class ActivePlayer {
     // Earth Stone
     private final List<FallingBlock> move6FallingBlocks = new ArrayList<>();
     private final List<FallingBlock> move6LaunchedFallingBlocks = new ArrayList<>();
-    private final List<FallingBlock> cometFallingBlocks = new ArrayList<>();
     private Comet comet;
     private boolean move8active = false;
     private List<FallingBlock> move8FallingBlocks = new ArrayList<>();
@@ -61,15 +60,15 @@ public class ActivePlayer {
     private BukkitRunnable floatingFire;
     private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
-    private boolean lavaStoneMove8Active = false;
 
     // Water Stone
     private int remainingIceShards = 10;
     private boolean doublePassive1 = false;
     private BukkitTask iceSpear;
 
-    // Wind Stone
+    // Air Stone
     private boolean canDoubleJump = true;
+    private boolean criticalOnGround = false;
     private long chargingStart = -1;
     private int move7LaunchState = 0;
     private boolean inAirBoost = false;
@@ -727,6 +726,14 @@ public class ActivePlayer {
 
     public boolean canDoubleJump() {
         return this.canDoubleJump;
+    }
+
+    public boolean doCriticalOnGround() {
+        return this.criticalOnGround;
+    }
+
+    public void setCriticalOnGround(boolean criticalOnGround) {
+        this.criticalOnGround = criticalOnGround;
     }
 
     public Vector getMovingDirection() {
