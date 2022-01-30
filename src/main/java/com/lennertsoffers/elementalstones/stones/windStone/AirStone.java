@@ -48,8 +48,6 @@ public class AirStone {
                     if (NearbyEntityTools.damageNearbyEntities(player, location, 5, 0.6, 0.8, 0.6, direction.clone().multiply(2))) {
                         collision = true;
                     } else {
-                        System.out.println(location.getBlock().getType());
-
                         if (location.getBlock().getType() != Material.AIR) {
                             collision = true;
                         }

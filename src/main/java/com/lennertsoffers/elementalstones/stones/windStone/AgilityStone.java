@@ -2,99 +2,162 @@ package com.lennertsoffers.elementalstones.stones.windStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
+import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class AgilityStone extends AirStoneSharedPassive {
 
-    private static void damageOnDash(ActivePlayer activePlayer) {
-        ArrayList<LivingEntity> damagedEntities = new ArrayList<>();
-        Player player = activePlayer.getPlayer();
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-            @Override
-            public void run() {
-                if (!player.getWorld().getNearbyEntities(player.getLocation(), 0.5, 0.5, 0.5).isEmpty()) {
-                    for (Entity entity : player.getWorld().getNearbyEntities(player.getLocation(), 0.5, 0.5, 0.5)) {
-                        if (entity != null) {
-                            if (entity instanceof LivingEntity) {
-                                LivingEntity livingEntity = (LivingEntity) entity;
-                                if (livingEntity != player) {
-                                    if (!damagedEntities.contains(livingEntity)) {
-                                        damagedEntities.add(livingEntity);
-                                        if (activePlayer.isInAirBoost()) {
-                                            livingEntity.damage(6);
-                                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT, 1, 1);
-                                        } else {
-                                            livingEntity.damage(2);
-                                            player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT, 1, 1);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                if (amountOfTicks > 10) {
-                    this.cancel();
-                }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-    }
+
+    // MOVES //
 
 
-
-    // MOVE 4
-    // Forward Dash
-    // -> Player dashes forwards and damages entities along the way
+    /**
+     * <b>MOVE 4: Forwards Dash</b>
+     * <p>
+     *     Player dashes in its looking direction<br>
+     *     It damages entities along its way<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            damageOnDash(activePlayer);
+
+            new BukkitRunnable() {
+                int amountOfTicks = 0;
+                @Override
+                public void run() {
+                    World world = player.getWorld();
+
+                    if (NearbyEntityTools.damageNearbyEntities(player, player.getLocation(), activePlayer.isInAirBoost() ? 7 : 3, 0.7, 0.7, 0.7)) {
+                        world.playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT, 1, 1);
+                    }
+
+                    world.spawnParticle(Particle.CLOUD, player.getLocation().add(0, 1, 0), 0);
+
+                    if (amountOfTicks > 10) {
+                        this.cancel();
+                    }
+                    amountOfTicks++;
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
             int multiplier = 2;
             if (activePlayer.isInAirBoost()) {
                 multiplier = 4;
             }
-            player.setVelocity(player.getLocation().getDirection().multiply(multiplier).setY(0.1));
+
+            Vector velocity = player.getLocation().getDirection().multiply(multiplier);
+            if (velocity.getY() < 0.2 && velocity.getY() > -0.2) {
+                velocity.setY(0.2);
+            }
+
+            player.setVelocity(velocity);
         };
     }
 
-    // MOVE 5
-    // Backward Dash
-    // -> Player dashes backwards and damages entities along the way
+    /**
+     * <b>MOVE 5: Flying Knifes</b>
+     * <p>
+     *     Hovers 5 arrows around the player on activation<br>
+     *     Each time the move gets activated again an arrow is shot<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 2 minutes</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see AgilityStone#getArrowLocations(Player)
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            damageOnDash(activePlayer);
-            int multiplier = 2;
-            if (activePlayer.isInAirBoost()) {
-                multiplier = 4;
+
+            if (activePlayer.getMove5Arrows().isEmpty()) {
+                World world = player.getWorld();
+
+                getArrowLocations(player).forEach(arrowLocation -> {
+                    Arrow arrow = (Arrow) world.spawnEntity(arrowLocation, EntityType.ARROW);
+                    arrow.setGlowing(true);
+                    activePlayer.getMove5Arrows().add(arrow);
+                    arrow.setBounce(true);
+                });
+
+                new BukkitRunnable() {
+                    int amountOfTicks = 0;
+
+                    @Override
+                    public void run() {
+                        List<Location> toLocations = getArrowLocations(player);
+
+                        for (int i = 0; i < activePlayer.getMove5Arrows().size(); i++) {
+                            Arrow arrow = activePlayer.getMove5Arrows().get(i);
+
+                            if (arrow.isDead()) {
+                                activePlayer.getMove5Arrows().remove(arrow);
+                            } else {
+                                Location toLocation = toLocations.get(i);
+                                Location fromLocation = arrow.getLocation();
+
+                                double differenceX = toLocation.getX() - fromLocation.getX();
+                                double differenceY = toLocation.getY() - fromLocation.getY();
+                                double differenceZ = toLocation.getZ() - fromLocation.getZ();
+
+                                Vector velocity = new Vector(differenceX, differenceY, differenceZ);
+
+                                arrow.setVelocity(velocity.multiply(0.5));
+                            }
+
+                            if (amountOfTicks > 2400 || activePlayer.getMove5Arrows().size() == 0) {
+                                this.cancel();
+                                activePlayer.getMove5Arrows().clear();
+                            }
+                            amountOfTicks++;
+                        }
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            } else {
+                Arrow arrow = activePlayer.getMove5Arrows().removeLast();
+                Location location = player.getLocation();
+                arrow.setVelocity(location.getDirection().multiply(3));
             }
-            player.setVelocity(player.getLocation().getDirection().multiply(-multiplier).setY(0.1));
         };
     }
 
-    // MOVE 6
-    // Smoke Ball
-    // -> Throw a smoke ball in the looking direction
-    // -> While the ball is being threw, control it by changing your looking direction
-    // -> Activate ability again to create the smoke screen or wait till the ball collides with a block or entity
+    /**
+     * <b>MOVE 6: Smoke Ball</b>
+     * <p>
+     *     Throw a smoke ball in the looking direction<br>
+     *     While the ball is moving, you can control it by changing your looking direction<br>
+     *     If the ball collides with a living entity or block it will create a smoke screen<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 20</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 5, amplifier 3)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            Location startingLocation = player.getLocation().add(player.getLocation().getDirection()).add(0, 1, 0);
-            final Location[] impactLocation = {player.getLocation()};
+            World world = player.getWorld();
+            Location startingLocation = player.getLocation().add(player.getLocation().getDirection().clone().multiply(2)).add(0, 1, 0);
+            final Location impactLocation = player.getLocation();
+            PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 100, 3, true, true, true);
+
             BukkitRunnable smoke = new BukkitRunnable() {
                 int amountOfTicks = 0;
 
@@ -106,11 +169,14 @@ public class AgilityStone extends AirStoneSharedPassive {
                         for (double a = 0; a < Math.PI * 2; a += Math.PI / 10) {
                             double x = Math.cos(a) * radius;
                             double z = Math.sin(a) * radius;
-                            Location particleLocation = impactLocation[0].clone().add(0, 2, 0).add(x, y, z);
-                            player.getWorld().spawnParticle(Particle.REDSTONE, particleLocation.add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, 0, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 1000));
+                            Location particleLocation = impactLocation.clone().add(0, 2, 0).add(x, y, z);
+                            player.getWorld().spawnParticle(Particle.REDSTONE, particleLocation.add(StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4, StaticVariables.random.nextGaussian() / 4), 0, 0, 0, 0, 0, new Particle.DustOptions(Color.WHITE, 100));
                         }
                     }
-                    if (amountOfTicks > 100) {
+
+                    world.getNearbyEntities(impactLocation, 3, 3, 3, entity -> entity instanceof LivingEntity && entity != player).forEach(entity -> ((LivingEntity) entity).addPotionEffect(potionEffect));
+
+                    if (amountOfTicks > 80) {
                         this.cancel();
                     }
                     amountOfTicks += 1;
@@ -120,28 +186,25 @@ public class AgilityStone extends AirStoneSharedPassive {
             new BukkitRunnable() {
                 int amountOfTicks = 0;
                 final Location currentLocation = startingLocation;
+                boolean endThrow = false;
 
                 @Override
                 public void run() {
                     Vector playerDirection = player.getLocation().getDirection();
-                    Objects.requireNonNull(currentLocation.getWorld()).spawnParticle(Particle.CLOUD, startingLocation, 0, playerDirection.getX(), playerDirection.getY(), playerDirection.getZ());
+                    world.spawnParticle(Particle.CLOUD, startingLocation, 0, playerDirection.getX(), playerDirection.getY(), playerDirection.getZ());
 
                     if (currentLocation.getBlock().getType().isSolid()) {
-                        impactLocation[0] = currentLocation;
+                        endThrow = true;
+                    } else if (!world.getNearbyEntities(currentLocation, 0.5, 0.5, 0.5, entity -> entity instanceof LivingEntity).isEmpty()) {
+                        endThrow = true;
+                    }
+
+                    if (amountOfTicks > 20 || endThrow) {
+                        impactLocation.setX(currentLocation.getX());
+                        impactLocation.setY(currentLocation.getY());
+                        impactLocation.setZ(currentLocation.getZ());
                         this.cancel();
-                        smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
-                    } else if (!player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5).isEmpty()) {
-                        for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 0.5, 0.5, 0.5)) {
-                            if (entity != null) {
-                                impactLocation[0] = currentLocation;
-                                this.cancel();
-                                smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
-                            }
-                        }
-                    } else if (amountOfTicks > 30) {
-                        impactLocation[0] = currentLocation;
-                        this.cancel();
-                        smoke.runTaskTimer(StaticVariables.plugin, 0, 3L);
+                        smoke.runTaskTimer(StaticVariables.plugin, 0, 5L);
                     }
 
                     amountOfTicks++;
@@ -151,55 +214,124 @@ public class AgilityStone extends AirStoneSharedPassive {
         };
     }
 
-    // MOVE 7
-    // Charge Jump
-    // -> Charges until next activation
-    // -> The longer you charge, the higher you jump
-    // -> Adds slowness when charging
+    /**
+     * <b>MOVE 7: Charge Jump</b>
+     * <p>
+     *     Charges until next activation (max 10 seconds)<br>
+     *     The longer you charge, the higher you will jump<br>
+     *     The player gets slowness when charging<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+
             if ((int) activePlayer.getCharge() == -1) {
+                activePlayer.setMove7LaunchState(1);
                 activePlayer.setChargingStart();
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 1000, 3, true, false, false));
-                activePlayer.setMove7LaunchState(1);
+                int nominator = 10;
+
                 new BukkitRunnable() {
+                    int amountOfTicks = 0;
+
                     @Override
                     public void run() {
-                        if (activePlayer.getMove7LaunchState() == 1) {
-                            activePlayer.setMove7LaunchState(0);
-                            move7(activePlayer);
+                        Location location = player.getLocation().add(0, 1, 0);
+                        Location particleLocation = MathTools.locationOnCircle(location.clone().add(0, StaticVariables.random.nextGaussian() / 2, 0), 2, StaticVariables.random.nextInt(180), world);
+                        world.spawnParticle(Particle.CLOUD, particleLocation, 0, (location.getX() - particleLocation.getX()) / nominator, (location.getY() - particleLocation.getY()) / nominator, (location.getZ() - particleLocation.getZ()) / nominator);
+
+                        if (amountOfTicks >= 200 || activePlayer.getMove7LaunchState() == 2) {
+                            this.cancel();
+                            if (activePlayer.getMove7LaunchState() != 2) {
+                                move7(activePlayer).run();
+                            }
                         }
+                        amountOfTicks++;
                     }
-                }.runTaskLater(StaticVariables.plugin, 90);
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else {
                 int nominator = 2000;
                 if (activePlayer.isInAirBoost()) {
                     nominator = 1000;
                 }
+                activePlayer.setMove7LaunchState(2);
                 double velocityY = activePlayer.getCharge() / nominator;
                 activePlayer.resetCharge();
                 player.removePotionEffect(PotionEffectType.SLOW);
-                activePlayer.setMove7LaunchState(2);
                 player.setVelocity(new Vector(0, velocityY, 0));
+
+                new BukkitRunnable() {
+                    int amountOfTicks = 0;
+
+                    @Override
+                    public void run() {
+                        world.spawnParticle(Particle.CLOUD, player.getLocation(), 0);
+
+                        amountOfTicks++;
+                        if (amountOfTicks > velocityY * 10) {
+                            this.cancel();
+                        }
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
         };
     }
 
-    // MOVE 8
-    // Hyperspeed
-    // -> Makes the player run faster
-    // -> Makes the player jump higher
-    // -> Dashes do more damage
-    // -> Charge jump charges faster
-    // -> Cooldowns shorter
+    /**
+     * <b>ULTIMATE: Hyperspeed</b>
+     * <p>
+     *     Makes the player run faster<br>
+     *     Makes the player jump higher<br>
+     *     Dashes do more damage<br>
+     *     Charge jump is stronger<br>
+     *     <ul>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Speed (duration: 1min, amplifier: 3</li>
+     *                 <li>Jump (duration: 1min, amplifier: 2</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             activePlayer.activateAirBoost();
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 3, false, false, false));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 1, false, false, false));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 2, false, false, false));
         };
+    }
+
+
+    // HELPERS //
+
+
+    /**
+     * <b>Gets the locations around the player for the arrows position</b>
+     *
+     * @param player the player around which the locations are
+     * @return a list of locations around the player
+     */
+    private static List<Location> getArrowLocations(Player player) {
+        Location location = player.getLocation();
+        Vector direction = location.getDirection();
+
+        return Arrays.asList(
+                location.clone().add(0, 1, 0).add(direction.clone().rotateAroundY(90)).add(direction.clone().multiply(1.3)),
+                location.clone().add(0, 1, 0).add(direction.clone().rotateAroundY(-90)).add(direction.clone().multiply(1.3)),
+                location.clone().add(0, 2, 0).add(direction.clone().rotateAroundY(90)).add(direction.clone().multiply(1.3)),
+                location.clone().add(0, 2, 0).add(direction.clone().rotateAroundY(-90)).add(direction.clone().multiply(1.3)),
+                location.clone().add(0, 2.5, 0).add(direction.clone().multiply(1.3))
+        );
     }
 }
 
