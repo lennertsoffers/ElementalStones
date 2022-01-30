@@ -67,12 +67,15 @@ public class AirStoneSharedPassive extends AirStone {
                 if (activePlayer.canDoubleJump()) {
                     Vector launchDirection;
                     launchDirection = activePlayer.getMovingDirection();
-
                     launchDirection.setY(1);
+
                     if (airbendingDoubleJump) {
                         launchDirection.multiply(0.6);
                     }
 
+                    if (player.getVelocity().getY() < 0) {
+                        player.setVelocity(player.getVelocity().setY(0));
+                    }
                     player.setVelocity(player.getVelocity().add(launchDirection));
                     activePlayer.disableDoubleJump();
 

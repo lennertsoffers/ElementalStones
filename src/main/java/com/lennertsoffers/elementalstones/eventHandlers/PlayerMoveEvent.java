@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class PlayerMoveEvent implements Listener {
                 !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.airbendingStones) ||
                 !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.agilityStones)
         ) {
-            if (player.isOnGround()) {
+            if (((Entity) player).isOnGround()) {
                 activePlayer.enableDoubleJump();
                 if (activePlayer.doCriticalOnGround()) {
                     activePlayer.setCriticalOnGround(false);

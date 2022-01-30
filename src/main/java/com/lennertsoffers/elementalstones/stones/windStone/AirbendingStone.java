@@ -45,7 +45,7 @@ public class AirbendingStone extends AirStoneSharedPassive {
         return () -> {
             Player player = activePlayer.getPlayer();
 
-            boolean critical = !player.isOnGround();
+            boolean critical = !((Entity) player).isOnGround();
             if (critical) {
                 player.setVelocity(player.getVelocity().add(new Vector(0, -1, 0)));
                 activePlayer.setCriticalOnGround(true);

@@ -20,6 +20,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -68,6 +69,7 @@ public class ActivePlayer {
 
     // Air Stone
     private boolean canDoubleJump = true;
+    private LinkedList<Arrow> move5Arrows = new LinkedList<>();
     private boolean criticalOnGround = false;
     private long chargingStart = -1;
     private int move7LaunchState = 0;
@@ -726,6 +728,10 @@ public class ActivePlayer {
 
     public boolean canDoubleJump() {
         return this.canDoubleJump;
+    }
+
+    public LinkedList<Arrow> getMove5Arrows() {
+        return this.move5Arrows;
     }
 
     public boolean doCriticalOnGround() {
