@@ -14,33 +14,47 @@ import java.util.stream.Collectors;
 
 public class NearbyEntityTools {
 
-    public static void damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z) {
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z) {
+        boolean collision = false;
         World world = location.getWorld();
+
         if (world != null) {
             Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
             if (!nearbyEntities.isEmpty()) {
                 for (LivingEntity livingEntity : nearbyEntities.stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList())) {
                     livingEntity.damage(amount, player);
+
+                    collision = true;
                 }
             }
         }
+
+        return collision;
     }
 
-    public static void damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction) {
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction) {
+        boolean collision = false;
         World world = location.getWorld();
+
         if (world != null) {
             Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
             if (!nearbyEntities.isEmpty()) {
                 for (LivingEntity livingEntity : nearbyEntities.stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList())) {
                     livingEntity.damage(amount, player);
                     livingEntity.setVelocity(direction);
+
+                    collision = true;
                 }
             }
         }
+
+        return collision;
     }
 
-    public static void damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, List<PotionEffect> potionEffects) {
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, List<PotionEffect> potionEffects) {
+        boolean collision = false;
         World world = location.getWorld();
+
         if (world != null) {
             Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
             if (!nearbyEntities.isEmpty()) {
@@ -49,12 +63,17 @@ public class NearbyEntityTools {
                     for (PotionEffect potionEffect : potionEffects) {
                         livingEntity.addPotionEffect(potionEffect);
                     }
+
+                    collision = true;
                 }
             }
         }
+
+        return collision;
     }
 
-    public static void damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction, List<PotionEffect> potionEffects) {
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction, List<PotionEffect> potionEffects) {
+        boolean collision = false;
         World world = location.getWorld();
         if (world != null) {
             Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
@@ -65,8 +84,12 @@ public class NearbyEntityTools {
                     for (PotionEffect potionEffect : potionEffects) {
                         livingEntity.addPotionEffect(potionEffect);
                     }
+
+                    collision = true;
                 }
             }
         }
+
+        return collision;
     }
 }

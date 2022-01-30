@@ -9,6 +9,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 
 public class PlayerMoveEvent implements Listener {
@@ -20,15 +22,15 @@ public class PlayerMoveEvent implements Listener {
         if (activePlayer == null) {
             return;
         }
-        if (player.getInventory().contains(ItemStones.airStoneAgility0) ||
-                player.getInventory().contains(ItemStones.airStoneAgility1) ||
-                player.getInventory().contains(ItemStones.airStoneAgility2) ||
-                player.getInventory().contains(ItemStones.airStoneAgility3) ||
-                player.getInventory().contains(ItemStones.airStoneAgility4)) {
+        if (
+                !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.airbendingStones) ||
+                !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.agilityStones)
+        ) {
             if (player.isOnGround()) {
                 activePlayer.enableDoubleJump();
             }
         }
+
         Vector movingDirection = Objects.requireNonNull(Objects.requireNonNull(event.getTo()).clone()).add(event.getFrom().clone().multiply(-1)).toVector();
         activePlayer.setMovingDirection(movingDirection.multiply(3));
 

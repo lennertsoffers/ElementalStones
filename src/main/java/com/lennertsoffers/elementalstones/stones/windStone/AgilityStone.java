@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class AgilityStone extends AirStone {
+public class AgilityStone extends AirStoneSharedPassive {
 
     private static void damageOnDash(ActivePlayer activePlayer) {
         ArrayList<LivingEntity> damagedEntities = new ArrayList<>();
@@ -53,24 +53,7 @@ public class AgilityStone extends AirStone {
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
-    // PASSIVE
-    // Double Jump
-    // -> The player can jump a second time after jumping in the air with space bar
-    public static void passive(PlayerToggleFlightEvent event) {
-        Player player = event.getPlayer();
-        ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
-        if (Objects.requireNonNull(activePlayer).canDoubleJump()) {
-            Vector launchDirection;
-            if (Math.abs(activePlayer.getMovingDirection().getX()) < 0.1 && Math.abs(activePlayer.getMovingDirection().getZ()) < 0.1) {
-                System.out.println(activePlayer.getMovingDirection());
-                launchDirection = player.getLocation().getDirection();
-            } else {
-                launchDirection = activePlayer.getMovingDirection();
-            }
-            player.setVelocity(player.getVelocity().add(launchDirection.setY(1)));
-            activePlayer.disableDoubleJump();
-        }
-    }
+
 
     // MOVE 4
     // Forward Dash
