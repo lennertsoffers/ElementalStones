@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -105,48 +106,71 @@ public class FireStone {
         };
     }
 
-    // MOVE 3
-    // Fire-fly
-    // -> You get trusted in the looking direction of the player
+    /**
+     * <b>MOVE 3: Fire Fly</b>
+     * <p>
+     *     The player get trusted in the looking direction of the player<br>
+     *     Any entities colliding with the player get some damage and are set on fire<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Duration:</b> 30s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move3(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
             Random random = new Random();
+            Vector noVelocity = new Vector(0, 0, 0);
             player.setGliding(true);
+
             new BukkitRunnable() {
                 int amountOfTicks = 0;
 
                 @Override
                 public void run() {
+                    if (amountOfTicks > 600 || (amountOfTicks > 20 && ((Entity) player).isOnGround())) {
+                        player.setGliding(false);
+                        this.cancel();
+
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                Location location = player.getLocation();
+                                if (player.getFallDistance() > 3) {
+                                    player.setVelocity(noVelocity);
+                                    player.setFallDistance(0);
+
+                                    for (int i = 0; i < 50; i++) {
+                                        world.spawnParticle(Particle.FLAME, location, 0, random.nextGaussian() / 8, random.nextDouble() / -8, random.nextGaussian() / 8);
+                                    }
+
+                                    this.cancel();
+                                } else if (((Entity) player).isOnGround()) {
+                                    this.cancel();
+                                }
+                            }
+                        }.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+                    }
+
                     Location location = player.getLocation();
                     Vector direction = location.getDirection();
                     player.setVelocity(new Vector(direction.getX(), direction.getY(), direction.getZ()));
                     player.setGliding(true);
+
                     for (int i = 0; i < 20; i++) {
                         world.spawnParticle(Particle.FLAME, location, 0, random.nextDouble() / 10, random.nextDouble() / 10, random.nextDouble() / 10);
                     }
+
+                    NearbyEntityTools.damageNearbyEntities(player, location, 4, 1, 1, 1, direction, p -> p.setFireTicks(100));
+
                     amountOfTicks++;
-                    if (amountOfTicks > 80) {
-                        player.setGliding(false);
-                        this.cancel();
-                    }
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    Location location = player.getLocation();
-                    if (!(player.getLocation().getY() > world.getHighestBlockYAt(location) + 4)) {
-                        player.setVelocity(new Vector(0, 0, 0));
-                        player.setFallDistance(0);
-                        for (int i = 0; i < 50; i++) {
-                            world.spawnParticle(Particle.FLAME, location, 0, random.nextDouble() / 8, random.nextDouble() / 8, random.nextDouble() / 8);
-                        }
-                        this.cancel();
-                    }
-                }
-            }.runTaskTimer(StaticVariables.plugin, 80, 1L);
         };
     }
 }
