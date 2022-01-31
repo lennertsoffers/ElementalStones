@@ -94,7 +94,26 @@ public class NearbyEntityTools {
         return collision;
     }
 
-    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction, Consumer<Player> consumer) {
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Consumer<LivingEntity> consumer) {
+        boolean collision = false;
+        World world = location.getWorld();
+        if (world != null) {
+            Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
+            if (!nearbyEntities.isEmpty()) {
+                for (LivingEntity livingEntity : nearbyEntities.stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList())) {
+                    livingEntity.damage(amount, player);
+
+                    consumer.accept(livingEntity);
+
+                    collision = true;
+                }
+            }
+        }
+
+        return collision;
+    }
+
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, Vector direction, Consumer<LivingEntity> consumer) {
         boolean collision = false;
         World world = location.getWorld();
         if (world != null) {
@@ -104,7 +123,7 @@ public class NearbyEntityTools {
                     livingEntity.damage(amount, player);
                     livingEntity.setVelocity(direction);
 
-                    consumer.accept(player);
+                    consumer.accept(livingEntity);
 
                     collision = true;
                 }
