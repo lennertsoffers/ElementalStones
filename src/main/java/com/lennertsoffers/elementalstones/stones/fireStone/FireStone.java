@@ -2,21 +2,15 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LightningStrike;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class FireStone {
@@ -58,28 +52,37 @@ public class FireStone {
         };
     }
 
-    // MOVE 2
-    // Floating Fire
-    // -> You can summon a fireball and hold it right in front of you which damages entities
+    /**
+     * <b>MOVE 2: Fire Pokes</b>
+     * <p>
+     *     Creates a ball of fire that is a source for 6 little fire projectiles<br>
+     *     Shoot one of the projectiles by reactivating the move<br>
+     *     The fire ball will progressively get smaller if the pokes decrease in amount<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2</li>
+     *         <li><b>FireTicks:</b> 20</li>
+     *         <li><b>Duration: </b> 20s</li>
+     *         <li><b>Ammo:</b> 6</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see FireBall
+     */
     public static Runnable move2(ActivePlayer activePlayer) {
         return () -> {
+            FireBall fireBall = activePlayer.getFireBall();
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
-            Location startLocation = player.getLocation();
 
-            world.setTime(18000);
-            world.setThundering(true);
-
-
-            Block block = player.getTargetBlockExact(30);
-            if (block != null) {
-                Location location = block.getLocation();
-
-                for (int i = 0; i < 50; i++) {
-                    world.strikeLightning(location);
-                }
+            if (fireBall == null) {
+                FireBall newFireBall = new FireBall(player, world);
+                newFireBall.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                activePlayer.setFireBall(newFireBall);
+            } else {
+                fireBall.poke(activePlayer);
             }
-
         };
     }
 

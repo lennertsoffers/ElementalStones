@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
@@ -59,6 +60,7 @@ public class ActivePlayer {
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
     private BukkitRunnable floatingFire;
+    private FireBall fireBall;
     private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
 
@@ -606,28 +608,14 @@ public class ActivePlayer {
     }
 
 
-
-    public BukkitRunnable getFloatingFire() {
-        return this.floatingFire;
+    public FireBall getFireBall() {
+        return this.fireBall;
     }
 
-    public void setFloatingFire(BukkitRunnable bukkitRunnable) {
-        this.floatingFire = bukkitRunnable;
-        this.floatingFire.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+    public void setFireBall(FireBall fireBall) {
+        this.fireBall = fireBall;
     }
 
-    public void cancelFloatingFire() {
-        this.floatingFire.cancel();
-        this.floatingFire = null;
-    }
-
-    public Location getFloatingFireLocation() {
-        return this.floatingFireLocation;
-    }
-
-    public void setFloatingFireLocation(Location location) {
-        this.floatingFireLocation = location.add(0, 1, 0);
-    }
 
     public boolean hasHellfireStoneMove4TimeRemaining() {
         if (this.hellfireStoneMove4TimeRemaining != -1) {
