@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBlast;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
@@ -106,25 +107,11 @@ public class HellfireStone extends FireStone {
     // -> Shoots fire ball in the looking direction
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
-//            if (activePlayer.getFloatingFire() != null) {
-//                activePlayer.cancelFloatingFire();
-//                Player player = activePlayer.getPlayer();
-//                new BukkitRunnable() {
-//                    int counter = 0;
-//
-//                    @Override
-//                    public void run() {
-//                        Location location = player.getLocation();
-//                        Vector direction = location.getDirection();
-//                        Location fireBallLocation = location.add(direction.getX() * 2.5, direction.getY() * 2.5 + 0.85, direction.getZ() * 2.5).add(0, 1.5, 0);
-//                        player.getWorld().spawnEntity(fireBallLocation, EntityType.FIREBALL).setVelocity(direction);
-//                        if (counter >= 10) {
-//                            this.cancel();
-//                        }
-//                        counter++;
-//                    }
-//                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-//            }
+            Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+
+            FireBlast fireBlast = new FireBlast(player, world);
+            fireBlast.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 
@@ -135,6 +122,11 @@ public class HellfireStone extends FireStone {
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
+
+            // Mark teleportation location in dimension
+            if (player.isSneaking()) {
+
+            }
         };
     }
 

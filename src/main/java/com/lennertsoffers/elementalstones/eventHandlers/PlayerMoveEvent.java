@@ -42,7 +42,6 @@ public class PlayerMoveEvent implements Listener {
         activePlayer.setMovingDirection(movingDirection.multiply(3));
 
         WaterbendingStone.passive2(activePlayer);
-        HellfireStone.move4(activePlayer, event);
         LavaStone.passive1(activePlayer);
     }
 }
