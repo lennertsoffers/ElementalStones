@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Entity;
@@ -41,9 +42,7 @@ public class PlayerMoveEvent implements Listener {
         activePlayer.setMovingDirection(movingDirection.multiply(3));
 
         WaterbendingStone.passive2(activePlayer);
-
-
-//        HellfireStone.move4(Objects.requireNonNull(ActivePlayer.getActivePlayer(event.getPlayer().getUniqueId())), event);
+        HellfireStone.move4(activePlayer, event);
         LavaStone.passive1(activePlayer);
     }
 }
