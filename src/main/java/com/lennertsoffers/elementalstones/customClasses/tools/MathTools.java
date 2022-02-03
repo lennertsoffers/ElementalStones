@@ -56,6 +56,12 @@ public class MathTools {
         return new Location(world, particleX, location.getY() , particleZ);
     }
 
+    public static Location locationOnCircle(Location location, double radius, double angle) {
+        double locationX = location.getX() + radius * Math.sin(angle);
+        double locationZ = location.getZ() + radius * Math.cos(angle);
+        return new Location(location.getWorld(), locationX, location.getY(), locationZ);
+    }
+
     public static HashMap<String, Double> calculatePointOnThrowFunction(double beginVelocity, double y, double yaw, double throwAngle, double t, Vector velocity) {
         double theta = throwAngle * Math.PI / 180;
         double phi = -(yaw * Math.PI / 180);

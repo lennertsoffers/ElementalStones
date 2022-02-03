@@ -46,7 +46,7 @@ public class HellfireStone extends FireStone {
     }
 
     /**
-     * <b>MOVE 4: Fire Pokes</b>
+     * <b>MOVE 4: Fire Track</b>
      * <p>
      *     The player leaves a track of fire behind him/her<br>
      *     The speed of the player is drastically improved<br>
@@ -62,7 +62,7 @@ public class HellfireStone extends FireStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 3, true, true, true));
-            HashMap<Block, Material> fireBlocksTypes = new HashMap<>();
+            LinkedList<HashMap<String, Object>> fireBlockInfo = new LinkedList<>();
 
             new BukkitRunnable() {
                 int amountOfTicks = 0;
@@ -71,24 +71,32 @@ public class HellfireStone extends FireStone {
                 public void run() {
                     Location location = player.getLocation();
                     Block block = location.getBlock();
-                    Material material = block.getType();
+                    Material blockMaterial = block.getType();
+
+                    location.add(0, -1, 0);
+                    Block walkingBlock = location.getBlock();
+                    Material walkingMaterial = walkingBlock.getType();
 
                     if (
-                            material != Material.AIR &&
-                            material != Material.LAVA &&
-                            material != Material.WATER &&
-                            !CheckLocationTools.isFoliage(location)
+                            walkingMaterial != Material.AIR &&
+                            walkingMaterial != Material.LAVA &&
+                            walkingMaterial != Material.WATER &&
+                            walkingMaterial.isSolid() &&
+                            (blockMaterial == Material.AIR || CheckLocationTools.isFoliage(blockMaterial))
                     ) {
-                        fireBlocksTypes.put(block, material);
+                        HashMap<String, Object> fireBlockInfoMap = new HashMap<>();
+                        fireBlockInfoMap.put("block", block);
+                        fireBlockInfoMap.put("material", blockMaterial);
+                        fireBlockInfo.add(fireBlockInfoMap);
+
                         block.setType(Material.FIRE);
 
-                        List<Object> fireBlocks = Arrays.asList(fireBlocksTypes.keySet().toArray());
-                        if (fireBlocks.size() > 20) {
-                            Block fireBlock = (Block) fireBlocks.get(0);
-                            Material fireBlockMaterial = fireBlocksTypes.get(fireBlock);
+                        if (fireBlockInfo.size() > 20) {
+                            HashMap<String, Object> removeFireBlockInfoMap = fireBlockInfo.pop();
+                            Block fireBlock = (Block) removeFireBlockInfoMap.get("block");
+                            Material fireBlockMaterial = (Material) removeFireBlockInfoMap.get("material");
 
                             fireBlock.setType(fireBlockMaterial);
-                            fireBlocksTypes.remove(fireBlock);
                         }
                     }
 
@@ -101,10 +109,22 @@ public class HellfireStone extends FireStone {
         };
     }
 
-    // MOVE 5
-    // Fire Blast
-    // -> Follow up to floating fire
-    // -> Shoots fire ball in the looking direction
+    /**
+     * <b>MOVE 5: Ring Of Fire</b>
+     * <p>
+     *     A wave of fire is created around the player<br>
+     *     It damages entities and pushes them back<br>
+     *     Sets entities on fire for a moment<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 3</li>
+     *         <li><b>Range:</b> 10</li>
+     *         <li><b>Knockback:</b> 3</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();

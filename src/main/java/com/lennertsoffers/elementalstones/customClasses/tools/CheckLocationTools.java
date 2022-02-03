@@ -85,29 +85,32 @@ public class CheckLocationTools {
 
     public static boolean isFoliage(Location location) {
         Block block = location.getBlock();
+        return isFoliage(block.getType());
+    }
 
-        return block.getType() == Material.DANDELION ||
-                block.getType() == Material.POPPY ||
-                block.getType() == Material.BLUE_ORCHID ||
-                block.getType() == Material.ALLIUM ||
-                block.getType() == Material.AZURE_BLUET ||
-                block.getType() == Material.ORANGE_TULIP ||
-                block.getType() == Material.PINK_TULIP ||
-                block.getType() == Material.RED_TULIP ||
-                block.getType() == Material.WHITE_TULIP ||
-                block.getType() == Material.OXEYE_DAISY ||
-                block.getType() == Material.CORNFLOWER ||
-                block.getType() == Material.LILY_OF_THE_VALLEY ||
-                block.getType() == Material.WITHER_ROSE ||
-                block.getType() == Material.SUNFLOWER ||
-                block.getType() == Material.LILAC ||
-                block.getType() == Material.ROSE_BUSH ||
-                block.getType() == Material.PEONY ||
-                block.getType() == Material.DEAD_BUSH ||
-                block.getType() == Material.SWEET_BERRY_BUSH ||
-                block.getType() == Material.GRASS ||
-                block.getType() == Material.TALL_GRASS ||
-                block.getType() == Material.FERN;
+    public static boolean isFoliage(Material material) {
+        return material == Material.DANDELION ||
+                material == Material.POPPY ||
+                material == Material.BLUE_ORCHID ||
+                material == Material.ALLIUM ||
+                material == Material.AZURE_BLUET ||
+                material == Material.ORANGE_TULIP ||
+                material == Material.PINK_TULIP ||
+                material == Material.RED_TULIP ||
+                material == Material.WHITE_TULIP ||
+                material == Material.OXEYE_DAISY ||
+                material == Material.CORNFLOWER ||
+                material == Material.LILY_OF_THE_VALLEY ||
+                material == Material.WITHER_ROSE ||
+                material == Material.SUNFLOWER ||
+                material == Material.LILAC ||
+                material == Material.ROSE_BUSH ||
+                material == Material.PEONY ||
+                material == Material.DEAD_BUSH ||
+                material == Material.SWEET_BERRY_BUSH ||
+                material == Material.GRASS ||
+                material == Material.TALL_GRASS ||
+                material == Material.FERN;
     }
 
     public static boolean isSolidBlock(Block block) {
