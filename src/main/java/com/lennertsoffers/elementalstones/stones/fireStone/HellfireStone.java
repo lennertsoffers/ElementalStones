@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBlast;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireWall;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
@@ -16,6 +17,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -142,11 +145,16 @@ public class HellfireStone extends FireStone {
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
+            World world = player.getWorld();
+            Location feetLocation = player.getLocation();
+            Vector direction = feetLocation.getDirection().setY(0);
 
-            // Mark teleportation location in dimension
-            if (player.isSneaking()) {
+            Location wallBottomLeft = feetLocation.clone().add(direction.clone().multiply(4));
+            direction.rotateAroundY(Math.PI / 2);
+            wallBottomLeft.add(direction.clone().multiply(-1));
 
-            }
+            FireWall fireWall = new FireWall(player, wallBottomLeft, direction);
+            fireWall.runTaskTimer(StaticVariables.plugin, 0L, 10L);
         };
     }
 
