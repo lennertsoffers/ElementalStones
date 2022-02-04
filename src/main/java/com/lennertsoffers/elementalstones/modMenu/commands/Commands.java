@@ -6,6 +6,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.Boss;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -110,6 +111,18 @@ public class Commands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (args.length == 0) {
                         StaticVariables.plugin.saveDefaultConfig();
+                    }
+                }
+            }
+        } else if (label.equalsIgnoreCase("spawnCows")) {
+            if (sender instanceof Player) {
+                if (sender.isOp()) {
+                    Player player = (Player) sender;
+                    World world = player.getWorld();
+                    Location location = player.getLocation().add(0, 1, 0);
+
+                    for (int i = 0; i < 100; i++) {
+                        world.spawnEntity(location, EntityType.COW);
                     }
                 }
             }

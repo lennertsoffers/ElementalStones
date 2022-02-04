@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBlast;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFlamethrower;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireWall;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
@@ -138,23 +139,31 @@ public class HellfireStone extends FireStone {
         };
     }
 
-    // MOVE 6
-    // Into the Underworld
-    // -> Follow up to floating fire
-    // -> Instant nether teleportation
+    /**
+     * <b>MOVE 6: Fire Shields</b>
+     * <p>
+     *     The player can place 5 walls of fire<br>
+     *     These walls will protect the player from entities or other moves<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see FireWall
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
-            Player player = activePlayer.getPlayer();
-            World world = player.getWorld();
-            Location feetLocation = player.getLocation();
-            Vector direction = feetLocation.getDirection().setY(0);
+            if (activePlayer.canPlaceWall()) {
+                Player player = activePlayer.getPlayer();
+                Location feetLocation = player.getLocation();
+                Vector direction = feetLocation.getDirection().setY(0);
 
-            Location wallBottomLeft = feetLocation.clone().add(direction.clone().multiply(4));
-            direction.rotateAroundY(Math.PI / 2);
-            wallBottomLeft.add(direction.clone().multiply(-1));
+                Location wallBottomLeft = feetLocation.clone().add(direction.clone().multiply(4));
+                direction.rotateAroundY(Math.PI / 2);
+                wallBottomLeft.add(direction.clone().multiply(-1));
 
-            FireWall fireWall = new FireWall(player, wallBottomLeft, direction);
-            fireWall.runTaskTimer(StaticVariables.plugin, 0L, 10L);
+                FireWall fireWall = new FireWall(activePlayer, wallBottomLeft, direction);
+                fireWall.runTaskTimer(StaticVariables.plugin, 0L, 10L);
+            }
         };
     }
 
@@ -165,44 +174,9 @@ public class HellfireStone extends FireStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
-            new BukkitRunnable() {
-                double stageOfBeam = 0.1;
-                final Random random = new Random();
 
-                @Override
-                public void run() {
-                    final Location location = player.getEyeLocation().add(0, -0.6, 0);
-                    final Vector direction = location.getDirection();
-                    Location variableLocation = location.clone();
-                    for (double i = 0.1; i <= stageOfBeam; i += 0.1) {
-                        NearbyEntityTools.damageNearbyEntities(player, location, 1, 0.5, 0.5, 0.5, livingEntity -> livingEntity.setFireTicks(livingEntity.getFireTicks() + 40));                        spawnSmallFlameOrb(variableLocation, direction, random, world);
-                        variableLocation.add(direction.getX() / 40 * i, direction.getY() / 40 * i, direction.getZ() / 40 * i);
-                    }
-                    if (stageOfBeam >= 7) {
-                        this.cancel();
-                    }
-                    stageOfBeam += 0.35;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-            new BukkitRunnable() {
-                int tickCount = 0;
-                final Random random = new Random();
-
-                @Override
-                public void run() {
-                    final Location location = player.getEyeLocation();
-                    final Vector direction = location.getDirection();
-                    location.add(0, -0.6, 0);
-                    for (double i = 0.1; i < 7; i += 0.1) {
-                        NearbyEntityTools.damageNearbyEntities(player, location, 1, 0.5, 0.5, 0.5, livingEntity -> livingEntity.setFireTicks(livingEntity.getFireTicks() + 40));                        spawnSmallFlameOrb(location, direction, random, world);
-                        location.add(direction.getX() / 40 * i, direction.getY() / 40 * i, direction.getZ() / 40 * i);
-                    }
-                    if (tickCount > 100) {
-                        this.cancel();
-                    }
-                    tickCount++;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 20L, 1L);
+            FireFlamethrower fireFlamethrower = new FireFlamethrower(player, world);
+            fireFlamethrower.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 

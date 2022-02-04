@@ -59,10 +59,12 @@ public class ActivePlayer {
 
     // Fire Stone
     private long hellfireStoneMove4TimeRemaining = -1;
-    private BukkitRunnable floatingFire;
     private FireBall fireBall;
-    private Location floatingFireLocation;
     private BukkitRunnable removeBasald;
+    private long fireWallsEndTime = -1;
+    private int fireWallsAmount = 0;
+    private BukkitTask slowTask = null;
+    private final ArrayList<Location> wallLocations = new ArrayList<>();
 
     // Water Stone
     private int remainingIceShards = 10;
@@ -616,30 +618,41 @@ public class ActivePlayer {
         this.fireBall = fireBall;
     }
 
+    public ArrayList<Location> getWallLocations() {
+        return this.wallLocations;
+    }
 
-    public boolean hasHellfireStoneMove4TimeRemaining() {
-        if (this.hellfireStoneMove4TimeRemaining != -1) {
-            if (this.hellfireStoneMove4TimeRemaining > System.currentTimeMillis()) {
-                return true;
-            } else {
-                this.hellfireStoneMove4TimeRemaining = -1;
-                return false;
-            }
+    public long getFireWallsEndTime() {
+        return this.fireWallsEndTime;
+    }
+
+    public void placeWall() {
+        if (this.fireWallsEndTime == -1) {
+            this.fireWallsEndTime = System.currentTimeMillis() + 15000;
+
+            this.slowTask = new BukkitRunnable() {
+                @Override
+                public void run() {
+                    wallLocations.forEach(location -> player.getWorld().getNearbyEntities(location, 0.1, 1, 0.1).forEach(entity -> entity.setVelocity(new Vector(0, 0, 0))));
+                }
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         }
-        return false;
+
+        this.fireWallsAmount++;
     }
 
-    public void setHellfireStoneMove4TimeRemaining() {
-        this.hellfireStoneMove4TimeRemaining = System.currentTimeMillis() + (10 * 1000);
-        this.player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 140, 2, false, false, false));
+    public boolean canPlaceWall() {
+        return this.fireWallsAmount < 5;
     }
 
-    public void setRemoveBasald(BukkitRunnable removeBasaldRunnable) {
-        if (this.removeBasald != null) {
-            this.removeBasald.runTaskTimer(StaticVariables.plugin, 60L, 5L);
-        }
-        this.removeBasald = removeBasaldRunnable;
+    public void endFireWalls() {
+        this.slowTask.cancel();
+        this.slowTask = null;
+        this.fireWallsAmount = 0;
+        this.fireWallsEndTime = -1;
+        this.wallLocations.clear();
     }
+
 
     public List<Location> getLavaLocations() {
         return this.lavaLocations;
