@@ -108,9 +108,9 @@ public class ExplosionStone extends FireStone {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
             Location location = player.getLocation();
+            Vector direction = location.getDirection().setY(0);
 
             if (player.isSneaking()) {
-                Vector direction = location.getDirection().setY(0);
                 Vector perpendicularDirection = direction.clone().rotateAroundY(Math.PI / 2);
 
                 location.add(direction.clone().multiply(20));
@@ -162,7 +162,26 @@ public class ExplosionStone extends FireStone {
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 50L);
             } else {
+                location.add(0, 1, 0).add(direction.clone().multiply(2));
+                Firework firework = (Firework) world.spawnEntity(location, EntityType.FIREWORK);
+                firework.setShotAtAngle(true);
+                FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withFade(Color.GRAY).flicker(false).trail(true).build());
+                fireworkMeta.setUnbreakable(true);
+                fireworkMeta.setPower(127);
+                firework.setFireworkMeta(fireworkMeta);
 
+
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        firework.setTicksLived(1);
+                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
+                        fireworkMeta.setPower(127);
+                        firework.setFireworkMeta(fireworkMeta);
+                        firework.teleport(player.getLocation().add(player.getLocation().getDirection().multiply(2)).add(0, 1, 0));
+                    }
+                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
         };
     }
@@ -199,3 +218,5 @@ public class ExplosionStone extends FireStone {
         };
     }
 }
+
+// TODO - 3 rockets instead of 1
