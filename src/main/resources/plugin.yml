@@ -20,3 +20,5 @@ commands:
     description: Spawns in a shaman major
   saveDefaultConfig:
     description: Saves the default config file
+  spawnCows:
+    description: Spawns 100 cows
