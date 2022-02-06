@@ -5,26 +5,33 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Grenade;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.GrenadeSmoke;
-import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class ExplosionStone extends FireStone {
 
-    // MOVE 4
-    // Smoke Screen
-    // -> Following up to flying rock
-    // -> Explodes the flying block into a big smoke which makes it impossible to see through
+    /**
+     * <b>MOVE 4: Smoke Bomb</b>
+     * <p>
+     *     The player throws a bomb in its looking direction<br>
+     *     The falling path of this bomb will act with natural physics<br>
+     *     <ul>
+     *         <li><b>Duration: </b> 20s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see Grenade
+     * @see GrenadeSmoke
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -33,7 +40,19 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // MOVE 5
+    /**
+     * <b>MOVE 5: Triple Threat</b>
+     * <p>
+     *     The player takes 3 rockets flowing its movements<br>
+     *     These rockets will be launched automatically after 20s<br>
+     *     Reactivating this move will launch the fireworks<br>
+     *     When crouching a firework show will appear<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see FireFireworks
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -78,7 +97,23 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // Combustion beam
+    /**
+     * <b>MOVE 6: Combustion Beam</b>
+     * <p>
+     *     Shoots lighting beam in the looking direction triggering an explosion on impact<br>
+     *     The beam can lock on entities or a targeted block<br>
+     *     In case the beam selects an entity or block, it can be shorter and explode quicker<br>
+     *     This move has recoil for the user<br>
+     *     <ul>
+     *         <li><b>Explosion Power:</b> 3</li>
+     *         <li><b>Range:</b> 30</li>
+     *         <li><b>Recoil:</b> 8</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -111,7 +146,7 @@ public class ExplosionStone extends FireStone {
                 Block block = player.getTargetBlockExact(20, FluidCollisionMode.NEVER);
 
                 if (block != null) {
-                    endLocation = block.getLocation();
+                    endLocation = block.getLocation().add(0.5, 2, 0.5);
                 } else {
                     endLocation = startLocation.clone().add(direction.clone().multiply(20));
                 }
@@ -153,7 +188,9 @@ public class ExplosionStone extends FireStone {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    world.createExplosion(finalEndLocation, 2, true, true, player);
+                    double damage = player.getHealth() <= 8 ? player.getHealth() - 0.5 : 8;
+                    player.damage(damage);
+                    world.createExplosion(finalEndLocation, 3, true, true, player);
                 }
             }.runTaskLater(StaticVariables.plugin, 6L);
         };
