@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
@@ -65,6 +66,7 @@ public class ActivePlayer {
     private int fireWallsAmount = 0;
     private BukkitTask slowTask = null;
     private final ArrayList<Location> wallLocations = new ArrayList<>();
+    private FireFireworks fireFireworks = null;
 
     // Water Stone
     private int remainingIceShards = 10;
@@ -651,6 +653,14 @@ public class ActivePlayer {
         this.fireWallsAmount = 0;
         this.fireWallsEndTime = -1;
         this.wallLocations.clear();
+    }
+
+    public FireFireworks getFireFireworks() {
+        return this.fireFireworks;
+    }
+
+    public void setFireFireworks(FireFireworks fireFireworks) {
+        this.fireFireworks = fireFireworks;
     }
 
 

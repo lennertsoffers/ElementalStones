@@ -2,26 +2,18 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
-import com.lennertsoffers.elementalstones.customClasses.tools.RandomiserTools;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
+import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class ExplosionStone extends FireStone {
 
@@ -125,70 +117,29 @@ public class ExplosionStone extends FireStone {
                         for (int i = 1; i < 20; i++) {
                             Location fireworkLocation = location.clone().add(perpendicularDirection.clone().multiply(i)).add(direction.clone().multiply(rows));
                             fireworkLocation.setY(world.getHighestBlockYAt(location) + 1);
-
-                            Firework firework = (Firework) world.spawnEntity(fireworkLocation, EntityType.FIREWORK);
-
-                            FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                            fireworkMeta.setPower(1);
-
-                            ArrayList<Color> colors = new ArrayList<>();
-                            ArrayList<Color> fadeColors = new ArrayList<>();
-                            for (int k = 0; k < StaticVariables.random.nextInt(3) + 1; k++) {
-                                colors.add(RandomiserTools.randomColor());
-                            }
-                            for (int k = 0; k < StaticVariables.random.nextInt(3) + 1; k++) {
-                                fadeColors.add(RandomiserTools.randomColor());
-                            }
-
-                            if (player.isSneaking()) {
-                                fireworkMeta.addEffect(FireworkEffect.builder().with(RandomiserTools.randomEnum(FireworkEffect.Type.class)).withColor(colors).withFade(fadeColors).flicker(StaticVariables.random.nextBoolean()).trail(StaticVariables.random.nextBoolean()).build());
-                            } else {
-                                fireworkMeta.addEffect(FireworkEffect.builder().withColor(colors).withFade(fadeColors).flicker(StaticVariables.random.nextBoolean()).trail(StaticVariables.random.nextBoolean()).build());
-                            }
-
-                            firework.setFireworkMeta(fireworkMeta);
+                            FireworkTools.setRandomMeta(((Firework) world.spawnEntity(fireworkLocation, EntityType.FIREWORK)), 1, null, 3, 3, -1, -1);
                         }
 
                         rows++;
                         if (rows > 10) {
                             this.cancel();
                             finalCenterLocation.setY(world.getHighestBlockYAt(finalCenterLocation) + 1);
-                            Firework firework = (Firework) world.spawnEntity(finalCenterLocation, EntityType.FIREWORK);
-                            FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                            fireworkMeta.setPower(1);
-                            fireworkMeta.addEffect(FireworkEffect.builder().with(FireworkEffect.Type.BALL_LARGE).withColor(Color.RED, Color.BLUE).withFade(Color.BLACK).flicker(false).trail(true).build());
-                            firework.setFireworkMeta(fireworkMeta);
+                            FireworkTools.setRandomMeta(((Firework) world.spawnEntity(finalCenterLocation, EntityType.FIREWORK)), 1, FireworkEffect.Type.BALL_LARGE, 2, 2, 0, 1);
                         }
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 50L);
+            } else if (activePlayer.getFireFireworks() == null) {
+                FireFireworks fireFireworks = new FireFireworks(player);
+                activePlayer.setFireFireworks(fireFireworks);
+                fireFireworks.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else {
-                location.add(0, 1, 0).add(direction.clone().multiply(2));
-                Firework firework = (Firework) world.spawnEntity(location, EntityType.FIREWORK);
-                firework.setShotAtAngle(true);
-                FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                fireworkMeta.addEffect(FireworkEffect.builder().withColor(Color.BLACK).withFade(Color.GRAY).flicker(false).trail(true).build());
-                fireworkMeta.setUnbreakable(true);
-                fireworkMeta.setPower(127);
-                firework.setFireworkMeta(fireworkMeta);
-
-
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        firework.setTicksLived(1);
-                        FireworkMeta fireworkMeta = firework.getFireworkMeta();
-                        fireworkMeta.setPower(127);
-                        firework.setFireworkMeta(fireworkMeta);
-                        firework.teleport(player.getLocation().add(player.getLocation().getDirection().multiply(2)).add(0, 1, 0));
-                    }
-                }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                activePlayer.getFireFireworks().shootFireworks();
+                activePlayer.setFireFireworks(null);
             }
         };
     }
 
-    // MOVE 6
-    // Wall
-    // -> Place a stone wall a few blocks before the player to block attacks
+    // Combustion beam
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -196,9 +147,7 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // MOVE 7
-    // Shockwave
-    // -> Creates a shockwave around the player knocking up all entities and giving them the slowness effect
+    // Random explosion
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -206,10 +155,7 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // MOVE 8
-    // Last Chance
-    // -> When something should have killed the player, he gets a last chance by not getting the damage
-    // -> All entities in close range are knocked back and the player is protected by a stone bunker
+    // War machine
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -218,5 +164,3 @@ public class ExplosionStone extends FireStone {
         };
     }
 }
-
-// TODO - 3 rockets instead of 1
