@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.*;
+import com.lennertsoffers.elementalstones.customClasses.models.Effect;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import org.bukkit.*;
@@ -11,9 +12,13 @@ import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class ExplosionStone extends FireStone {
+
+    public static HashSet<Firework> move7Fireworks = new HashSet<>();
 
     /**
      * <b>MOVE 4: Smoke Bomb</b>
@@ -207,12 +212,56 @@ public class ExplosionStone extends FireStone {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
             Location location = player.getLocation();
-            // TODO - mobs spawn (skeleton trap), tree, ancient debris, day night, weather, wither, random teleport, angry bees, exp, charged creeper, fish, shulker bullets, disc 11, end music, ender splash
-            Bee bee = (Bee) world.spawnEntity(location, EntityType.BEE);
+            Vector direction = location.getDirection();
+            location.add(direction).add(0, 1.4, 0);
 
+            Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location, EntityType.FIREWORK), 127, FireworkEffect.Type.BALL, 3, 3, 0, 1);
+            firework.setShotAtAngle(true);
+            firework.setVelocity(direction);
+            move7Fireworks.add(firework);
 
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    firework.detonate();
+                }
+            }.runTaskLater(StaticVariables.plugin, 20L);
+
+            // TODO - mobs spawn (skeleton trap), tree, ancient debris, day night, weather, wither, random teleport, angry bees, exp, charged creeper, fish, shulker bullets, disc 11, end music
         };
     }
+
+    public static void move7Effect(Location location) {
+        World world = location.getWorld();
+
+        if (world != null) {
+            int totalChance = Arrays.stream(Effect.values()).mapToInt(Effect::getChance).sum();
+            int random = StaticVariables.random.nextInt(totalChance);
+
+            int bottomBoundary = 0;
+
+            for (int i = 0; i < Effect.values().length; i++) {
+                int topBoundary = bottomBoundary + Effect.values()[i].getChance();
+
+                if (random >= bottomBoundary && random < topBoundary) {
+                    Effect.values()[i].playEffect(location);
+                }
+
+                bottomBoundary = topBoundary;
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * <b>ULTIMATE: War Machine</b>
@@ -267,6 +316,4 @@ public class ExplosionStone extends FireStone {
             }
         };
     }
-
-    // TODO - Smoke bomb (blindness, slowness)
 }
