@@ -9,7 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class GrenadeSmoke extends Grenade {
 
     public GrenadeSmoke(Player player, Particle particle, Particle.DustOptions dustOptions) {
-        super(player, particle, dustOptions);
+        super(player, 15, particle, dustOptions);
     }
 
     @Override
