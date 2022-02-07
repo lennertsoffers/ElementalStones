@@ -67,6 +67,7 @@ public class ActivePlayer {
     private BukkitTask slowTask = null;
     private final ArrayList<Location> wallLocations = new ArrayList<>();
     private FireFireworks fireFireworks = null;
+    private int warMachineGrenades = 0;
 
     // Water Stone
     private int remainingIceShards = 10;
@@ -661,6 +662,22 @@ public class ActivePlayer {
 
     public void setFireFireworks(FireFireworks fireFireworks) {
         this.fireFireworks = fireFireworks;
+    }
+
+    public boolean hasWarMachineGrenades() {
+        return this.warMachineGrenades > 0;
+    }
+
+    public void fillWarMachineGrenades() {
+        this.warMachineGrenades = 3;
+    }
+
+    public void useWarMachineGrenade() {
+        this.warMachineGrenades--;
+    }
+
+    public void setWarMachineGrenades(int amount) {
+        this.warMachineGrenades = amount;
     }
 
 

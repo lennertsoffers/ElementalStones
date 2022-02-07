@@ -21,10 +21,12 @@ public abstract class Grenade extends BukkitRunnable {
     private final Particle particle;
     private final Particle.DustOptions dustOptions;
     private final int power;
+    private final int size;
+    private final int offset;
 
     private double amountOfTicks = 0;
 
-    public Grenade(Player player, Particle particle, Particle.DustOptions dustOptions) {
+    public Grenade(Player player, int power, Particle particle, Particle.DustOptions dustOptions) {
         this.player = player;
         this.world = player.getWorld();
 
@@ -39,10 +41,12 @@ public abstract class Grenade extends BukkitRunnable {
 
         this.particle = particle;
         this.dustOptions = dustOptions;
-        this.power = 15;
+        this.power = power;
+        this.size = 20;
+        this.offset = 7;
     }
 
-    public Grenade(Player player, Particle particle, Particle.DustOptions dustOptions, int power, Location startLocation, Vector startVelocity) {
+    public Grenade(Player player, Particle particle, Particle.DustOptions dustOptions, int power, Location startLocation, Vector startVelocity, int size, int offset) {
         this.player = player;
         this.world = player.getWorld();
         this.startLocation = startLocation;
@@ -50,22 +54,27 @@ public abstract class Grenade extends BukkitRunnable {
         this.particle = particle;
         this.dustOptions = dustOptions;
         this.power = power;
+        this.size = size;
+        this.offset = offset;
     }
 
     @Override
     public void run() {
         HashMap<String, Double> result = MathTools.calculatePointOnThrowFunction(this.power, 1, this.startLocation.getYaw(), -this.startLocation.getPitch(), this.amountOfTicks, this.startVelocity);
 
-        int offset = 7;
         double x = this.startLocation.getX() + result.get("x");
         double y = this.startLocation.getY() + result.get("y");
         double z = this.startLocation.getZ() + result.get("z");
 
-        for (int i = 0; i < 20; i++) {
-            double randomX = x + (StaticVariables.random.nextGaussian() / offset);
-            double randomY = y + (StaticVariables.random.nextGaussian() / offset);
-            double randomZ = z + (StaticVariables.random.nextGaussian() / offset);
-            this.world.spawnParticle(this.particle, randomX, randomY, randomZ, 0, this.dustOptions);
+        for (int i = 0; i < size; i++) {
+            double randomX = x + (StaticVariables.random.nextGaussian() / this.offset);
+            double randomY = y + (StaticVariables.random.nextGaussian() / this.offset);
+            double randomZ = z + (StaticVariables.random.nextGaussian() / this.offset);
+            if (this.dustOptions != null) {
+                this.world.spawnParticle(this.particle, randomX, randomY, randomZ, 0, this.dustOptions);
+            } else {
+                this.world.spawnParticle(this.particle, randomX, randomY, randomZ, 0);
+            }
         }
 
         Location particleLocation = new Location(this.world, x, y, z);
