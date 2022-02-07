@@ -2,9 +2,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Grenade;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.GrenadeSmoke;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.*;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import org.bukkit.*;
@@ -201,6 +199,7 @@ public class ExplosionStone extends FireStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             Location location = player.getLocation();
+
         };
     }
 
@@ -208,8 +207,12 @@ public class ExplosionStone extends FireStone {
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            Location location = player.getLocation();
-            World world = player.getWorld();
+
+            GrenadeWarMachineBig grenadeWarMachineBig = new GrenadeWarMachineBig(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 2));
+            grenadeWarMachineBig.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+//            GrenadeWarMachineSmall grenadeWarMachineSmall = new GrenadeWarMachineSmall(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 2), player.getLocation());
+//            grenadeWarMachineSmall.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
     }
 }

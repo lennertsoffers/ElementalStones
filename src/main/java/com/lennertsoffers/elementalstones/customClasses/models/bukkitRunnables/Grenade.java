@@ -20,6 +20,7 @@ public abstract class Grenade extends BukkitRunnable {
     private final Vector startVelocity;
     private final Particle particle;
     private final Particle.DustOptions dustOptions;
+    private final int power;
 
     private double amountOfTicks = 0;
 
@@ -38,18 +39,29 @@ public abstract class Grenade extends BukkitRunnable {
 
         this.particle = particle;
         this.dustOptions = dustOptions;
+        this.power = 15;
+    }
+
+    public Grenade(Player player, Particle particle, Particle.DustOptions dustOptions, int power, Location startLocation, Vector startVelocity) {
+        this.player = player;
+        this.world = player.getWorld();
+        this.startLocation = startLocation;
+        this.startVelocity = startVelocity;
+        this.particle = particle;
+        this.dustOptions = dustOptions;
+        this.power = power;
     }
 
     @Override
     public void run() {
-        HashMap<String, Double> result = MathTools.calculatePointOnThrowFunction(15, 1, this.startLocation.getYaw(), -this.startLocation.getPitch(), this.amountOfTicks, this.startVelocity);
+        HashMap<String, Double> result = MathTools.calculatePointOnThrowFunction(this.power, 1, this.startLocation.getYaw(), -this.startLocation.getPitch(), this.amountOfTicks, this.startVelocity);
 
-        int offset = 15;
+        int offset = 7;
         double x = this.startLocation.getX() + result.get("x");
         double y = this.startLocation.getY() + result.get("y");
         double z = this.startLocation.getZ() + result.get("z");
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 20; i++) {
             double randomX = x + (StaticVariables.random.nextGaussian() / offset);
             double randomY = y + (StaticVariables.random.nextGaussian() / offset);
             double randomZ = z + (StaticVariables.random.nextGaussian() / offset);
