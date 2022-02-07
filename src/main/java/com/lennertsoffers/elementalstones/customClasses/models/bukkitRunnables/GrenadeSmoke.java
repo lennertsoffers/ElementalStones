@@ -3,7 +3,10 @@ package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GrenadeSmoke extends Grenade {
@@ -16,6 +19,8 @@ public class GrenadeSmoke extends Grenade {
     public void explode(Location impactLocation) {
         new BukkitRunnable() {
             int loops = 0;
+            final PotionEffect blindness = new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, true, true, true);
+            final PotionEffect slowness = new PotionEffect(PotionEffectType.SLOW, 200, 2, true, true, true);
 
             @Override
             public void run() {
@@ -31,6 +36,12 @@ public class GrenadeSmoke extends Grenade {
                     double offsetZ = impactLocation.getZ() + StaticVariables.random.nextGaussian() / offsetBomb;
                     GrenadeSmoke.super.getWorld().spawnParticle(Particle.CAMPFIRE_SIGNAL_SMOKE, offsetX, offsetY, offsetZ, 0, StaticVariables.random.nextGaussian() / 40, Math.abs(StaticVariables.random.nextGaussian() / 40), StaticVariables.random.nextGaussian() / 40);
                 }
+
+                getWorld().getNearbyEntities(impactLocation, 4, 4, 4, entity -> entity instanceof LivingEntity).forEach(entity -> {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    livingEntity.addPotionEffect(blindness);
+                    livingEntity.addPotionEffect(slowness);
+                });
 
                 loops++;
                 if (loops > 20) {

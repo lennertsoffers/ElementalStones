@@ -20,8 +20,15 @@ public class ExplosionStone extends FireStone {
      * <p>
      *     The player throws a bomb in its looking direction<br>
      *     The falling path of this bomb will act with natural physics<br>
+     *     Any entities caught in the smoke will get blindness and slowness<br>
      *     <ul>
      *         <li><b>Duration: </b> 20s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Blindness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Slowness (duration: 10s, amplifier: 2)</li>
+     *             </ul>
+     *         </li>
      *     </ul>
      * </p>
      *
