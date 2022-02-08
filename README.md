@@ -16,7 +16,7 @@ You can obtain these stones in survival by doing various tasks and then beating 
     * Waterbending Stone (in dev)
     * Ice Stone (in dev)
 * Fire Stone
-    * Explosion Stone
+    * Explosion Stone 👍
     * Hellfire Stone (in dev)
 * Wind Stone
     * Agility Stone 👍

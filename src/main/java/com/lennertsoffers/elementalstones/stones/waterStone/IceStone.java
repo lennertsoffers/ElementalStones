@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.apache.commons.lang.WordUtils;
@@ -21,10 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class IceStone extends WaterStone {
 
@@ -90,26 +88,49 @@ public class IceStone extends WaterStone {
         }
     }
 
-
-    // MOVE 4
-    // Ice Shards
-    // -> You can throw ice shards damaging entities on impact
-    // -> A player can have up to 10 shards
-
-    // Move
+    /**
+     * <b>MOVE 4: Ice Shards</b>
+     * <p>
+     *     You can throw ice shards damaging entities on impact<br>
+     *     It stops when colliding with a block<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2</li>
+     *         <li><b>Ammo:</b> 10</li>
+     *         <li><b>Freeze:</b> +2s</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 2s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see IceStone#move4Impact(Location)
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
+
             if (activePlayer.useIceShard()) {
                 Location location = player.getLocation().add(0, 1.5, 0);
                 Vector direction = location.getDirection();
+                List<PotionEffect> potionEffects = new ArrayList<>();
+                potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 40, 2, true, true, true));
+
                 new BukkitRunnable() {
                     int amountOfTicks = 1;
-                    Location midpoint = location.add(direction);
+                    final Location midpoint = location.add(direction);
 
                     @Override
                     public void run() {
+                        if (
+                                world.getBlockAt(midpoint).getType().isSolid() ||
+                                NearbyEntityTools.damageNearbyEntities(player, midpoint, 2, 0.3, 0.3, 0.3, direction.clone().setY(0.3), potionEffects, livingEntity -> {
+                                    livingEntity.setFreezeTicks(livingEntity.getFreezeTicks() + 40);
+                                })
+                        ) {
+                            this.cancel();
+                            move4Impact(midpoint);
+                        }
+
                         for (int i = 0; i < 60; i++) {
                             Particle.DustOptions dustOptions;
                             if (StaticVariables.random.nextBoolean()) {
@@ -117,23 +138,7 @@ public class IceStone extends WaterStone {
                             } else {
                                 dustOptions = new Particle.DustOptions(Color.WHITE, 0.3f);
                             }
-                            if (world.getBlockAt(midpoint).getType().isSolid()) {
-                                this.cancel();
-                                move4Impact(midpoint);
-                            }
-                            for (Entity entity : world.getNearbyEntities(midpoint, 0.3, 0.3, 0.3)) {
-                                if (entity != null) {
-                                    if (entity instanceof LivingEntity) {
-                                        LivingEntity livingEntity = (LivingEntity) entity;
-                                        if (livingEntity != player) {
-                                            livingEntity.damage(1);
-                                            livingEntity.setVelocity(direction.setY(0.3));
-                                            this.cancel();
-                                            move4Impact(midpoint);
-                                        }
-                                    }
-                                }
-                            }
+
                             world.spawnParticle(Particle.REDSTONE, midpoint.clone().add(StaticVariables.random.nextGaussian() / 20, StaticVariables.random.nextGaussian() / 20, StaticVariables.random.nextGaussian() / 20), 0, direction.getX(), direction.getY(), direction.getZ(), dustOptions);
                             if (i % 2 == 0) {
                                 midpoint.add(direction.getX() / 30, direction.getY() / 30, direction.getZ() / 30);
@@ -149,7 +154,14 @@ public class IceStone extends WaterStone {
         };
     }
 
-    // particles on impact
+    /**
+     * <b>Plays the particle effect for ice shards</b>
+     * <p>
+     *     This is played when an ice shard collides with and entity or block<br>
+     * </p>
+     *
+     * @param impactLocation the location where the particle effect must play
+     */
     private static void move4Impact(Location impactLocation) {
         for (int i = 0; i < 5; i++) {
             ItemStack stack;
