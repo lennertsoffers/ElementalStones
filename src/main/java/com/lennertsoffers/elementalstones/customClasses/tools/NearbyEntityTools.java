@@ -11,6 +11,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class NearbyEntityTools {
@@ -131,5 +132,30 @@ public class NearbyEntityTools {
         }
 
         return collision;
+    }
+
+    public static LivingEntity getClosestEntity(Location location, int offsetX, int offsetY, int offsetZ, Predicate<Entity> predicate) {
+        World world = location.getWorld();
+
+        if (world != null) {
+            LivingEntity target = null;
+            List<LivingEntity> nearbyEntities = world.getNearbyEntities(location, offsetX, offsetY, offsetZ, predicate).stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList());
+
+            if (!nearbyEntities.isEmpty()) {
+                for (LivingEntity livingEntity : nearbyEntities){
+                    if (target != null) {
+                        if (MathTools.calculate3dDistance(location, livingEntity.getLocation()) < MathTools.calculate3dDistance(location, target.getLocation())) {
+                            target = livingEntity;
+                        }
+                    } else {
+                        target = livingEntity;
+                    }
+                }
+
+                return target;
+            }
+        }
+
+        return null;
     }
 }

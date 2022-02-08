@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.*;
+import com.lennertsoffers.elementalstones.customClasses.models.Effect;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import org.bukkit.*;
@@ -11,17 +12,36 @@ import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 public class ExplosionStone extends FireStone {
+
+
+    // STATIC VARIABLES
+
+
+    public static HashSet<Firework> move7Fireworks = new HashSet<>();
+
+
+    // MOVES
+
 
     /**
      * <b>MOVE 4: Smoke Bomb</b>
      * <p>
      *     The player throws a bomb in its looking direction<br>
      *     The falling path of this bomb will act with natural physics<br>
+     *     Any entities caught in the smoke will get blindness and slowness<br>
      *     <ul>
      *         <li><b>Duration: </b> 20s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Blindness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Slowness (duration: 10s, amplifier: 2)</li>
+     *             </ul>
+     *         </li>
      *     </ul>
      * </p>
      *
@@ -194,16 +214,37 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // Random explosion
+    /**
+     * <b>MOVE 7: Random Rocket</b>
+     * <p>
+     *     The player shoots a rocket in the looking direction<br>
+     *     This rocket has a random effect chosen from the Effect enum<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see Effect
+     * @see ExplosionStone#move7Effect(Location)
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
             Location location = player.getLocation();
-            // TODO - mobs spawn (skeleton trap), tree, ancient debris, day night, weather, wither, random teleport, angry bees, exp, charged creeper, fish, shulker bullets, disc 11, end music, ender splash
-            Bee bee = (Bee) world.spawnEntity(location, EntityType.BEE);
+            Vector direction = location.getDirection();
+            location.add(direction).add(0, 1.4, 0);
 
+            Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location, EntityType.FIREWORK), 127, FireworkEffect.Type.BALL, 3, 3, 0, 1);
+            firework.setShotAtAngle(true);
+            firework.setVelocity(direction);
+            move7Fireworks.add(firework);
 
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    firework.detonate();
+                }
+            }.runTaskLater(StaticVariables.plugin, 20L);
         };
     }
 
@@ -261,5 +302,37 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // TODO - Smoke bomb (blindness, slowness)
+
+    // HELPERS
+
+
+    /**
+     * <b>Chooses and plays a random effect from the Effect enum</b>
+     * <p>
+     *     The location of the effect is determined by the location parameter<br>
+     * </p>
+     *
+     * @param location the location where the effect will play
+     * @see Effect
+     */
+    public static void move7Effect(Location location) {
+        World world = location.getWorld();
+
+        if (world != null) {
+            int totalChance = Arrays.stream(Effect.values()).mapToInt(Effect::getChance).sum();
+            int random = StaticVariables.random.nextInt(totalChance);
+
+            int bottomBoundary = 0;
+
+            for (int i = 0; i < Effect.values().length; i++) {
+                int topBoundary = bottomBoundary + Effect.values()[i].getChance();
+
+                if (random >= bottomBoundary && random < topBoundary) {
+                    Effect.values()[i].playEffect(location);
+                }
+
+                bottomBoundary = topBoundary;
+            }
+        }
+    }
 }
