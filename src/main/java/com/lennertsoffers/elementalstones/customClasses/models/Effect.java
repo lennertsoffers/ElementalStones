@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EntityEquipment;
@@ -9,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.function.Consumer;
@@ -21,8 +23,8 @@ public enum Effect {
             ItemStack helmet = new ItemStack(Material.NETHERITE_HELMET, 1);
 
             for (int i = 0; i < 10; i++) {
-                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
-                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
+                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 5;
+                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 5;
 
                 Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
                 if (spawnLocation != null) {
@@ -41,14 +43,21 @@ public enum Effect {
         World world = location.getWorld();
 
         if (world != null) {
-            for (int i = 0; i < 20; i++) {
-                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
-                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
+
+            LivingEntity target = NearbyEntityTools.getClosestEntity(location, 20, 20, 20, entity -> entity instanceof LivingEntity);
+
+            for (int i = 0; i < 30; i++) {
+                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 3;
+                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 3;
 
                 Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
                 if (spawnLocation != null) {
                     Bee bee = (Bee) world.spawnEntity(spawnLocation, EntityType.BEE);
                     bee.setAnger(12000);
+
+                    if (target != null) {
+                        bee.setTarget(target);
+                    }
                 }
             }
         }
@@ -58,18 +67,18 @@ public enum Effect {
 
         if (world != null) {
 
-            Object[] entities = world.getNearbyEntities(location, 30, 30, 30, entity -> entity instanceof LivingEntity).toArray();
-            if (entities.length > 0) {
-                LivingEntity livingEntity = (LivingEntity) entities[0];
+            LivingEntity target = NearbyEntityTools.getClosestEntity(location, 20, 20, 20, entity -> entity instanceof LivingEntity);
 
-                for (int i = 0; i < 20; i++) {
-                    double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
-                    double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
+            for (int i = 0; i < 20; i++) {
+                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
+                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
 
-                    Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
-                    if (spawnLocation != null) {
-                        ShulkerBullet shulkerBullet = (ShulkerBullet) world.spawnEntity(spawnLocation, EntityType.SHULKER_BULLET);
-                        shulkerBullet.setTarget(livingEntity);
+                Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
+                if (spawnLocation != null) {
+                    ShulkerBullet shulkerBullet = (ShulkerBullet) world.spawnEntity(spawnLocation, EntityType.SHULKER_BULLET);
+
+                    if (target != null) {
+                        shulkerBullet.setTarget(target);
                     }
                 }
             }
@@ -79,7 +88,7 @@ public enum Effect {
         World world = location.getWorld();
 
         if (world != null) {
-            world.generateTree(location, StaticVariables.random, TreeType.COCOA_TREE);
+            world.generateTree(world.getHighestBlockAt(location).getLocation().add(0, 1, 0), StaticVariables.random, TreeType.AZALEA);
         }
     }),
     ANCIENT_DEBRIS(100, location -> {
@@ -93,8 +102,7 @@ public enum Effect {
         World world = location.getWorld();
 
         if (world != null) {
-            long time = world.getTime();
-            time += 12000;
+            long time = StaticVariables.random.nextInt(18000) + 6000 + world.getTime();
 
             if (time > 24000) {
                 time -= 24000;
@@ -124,7 +132,7 @@ public enum Effect {
 
                 int newX = location.getBlockX() + StaticVariables.random.nextInt(4000) - 2000;
                 int newZ = location.getBlockZ() + StaticVariables.random.nextInt(4000) - 2000;
-                livingEntity.teleport(world.getHighestBlockAt(newX, newZ).getLocation());
+                livingEntity.teleport(world.getHighestBlockAt(newX, newZ).getLocation().add(0, 1, 0));
             });
         }
     }),
@@ -134,7 +142,7 @@ public enum Effect {
         if (world != null) {
             for (int i = 0; i < 20; i++) {
                 ThrownExpBottle thrownExpBottle = (ThrownExpBottle) world.spawnEntity(location, EntityType.THROWN_EXP_BOTTLE);
-                thrownExpBottle.setVelocity(new Vector(StaticVariables.random.nextGaussian(), StaticVariables.random.nextDouble() + 0.5, StaticVariables.random.nextGaussian()));
+                thrownExpBottle.setVelocity(new Vector(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextDouble() + 0.5, StaticVariables.random.nextGaussian() / 10));
             }
         }
     }),
@@ -153,23 +161,29 @@ public enum Effect {
         World world = location.getWorld();
 
         if (world != null) {
-            for (int i = 0; i < 10; i++) {
-                double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
-                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
 
-                Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
-                if (spawnLocation != null) {
-                    int random = StaticVariables.random.nextInt(3);
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    for (int i = 0; i < 100; i++) {
+                        double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
+                        double locationZ = location.getZ() + StaticVariables.random.nextGaussian() * 10;
 
-                    if (random == 0) {
-                        world.spawnEntity(location, EntityType.COD);
-                    } else if (random == 1) {
-                        world.spawnEntity(location, EntityType.SALMON);
-                    } else {
-                        world.spawnEntity(location, EntityType.TROPICAL_FISH);
+                        Location spawnLocation = CheckLocationTools.getClosestAirBlockLocation(new Location(world, locationX, location.getY(), locationZ));
+                        if (spawnLocation != null) {
+                            int random = StaticVariables.random.nextInt(3);
+
+                            if (random == 0) {
+                                world.spawnEntity(spawnLocation, EntityType.COD);
+                            } else if (random == 1) {
+                                world.spawnEntity(spawnLocation, EntityType.SALMON);
+                            } else {
+                                world.spawnEntity(spawnLocation, EntityType.TROPICAL_FISH);
+                            }
+                        }
                     }
                 }
-            }
+            }.runTaskLater(StaticVariables.plugin, 20L);
         }
     }),
     POTION(100, location -> {
@@ -250,10 +264,11 @@ public enum Effect {
                 }
 
                 potionMeta.addCustomEffect(potionEffect, true);
+                itemStack.setItemMeta(potionMeta);
 
                 ThrownPotion thrownPotion = (ThrownPotion) world.spawnEntity(location.add(0, 1, 0), EntityType.SPLASH_POTION);
                 thrownPotion.setItem(itemStack);
-                thrownPotion.setVelocity(new Vector(0, 0.4, 0));
+                thrownPotion.setVelocity(new Vector(0, 1, 0));
             }
         }
     }),
@@ -286,7 +301,7 @@ public enum Effect {
         this.chance = chance;
         this.effect = effect;
     }
-    
+
     public int getChance() {
         return this.chance;
     }

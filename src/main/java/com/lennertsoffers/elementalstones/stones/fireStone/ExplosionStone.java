@@ -18,7 +18,15 @@ import java.util.HashSet;
 
 public class ExplosionStone extends FireStone {
 
+
+    // STATIC VARIABLES
+
+
     public static HashSet<Firework> move7Fireworks = new HashSet<>();
+
+
+    // MOVES
+
 
     /**
      * <b>MOVE 4: Smoke Bomb</b>
@@ -206,7 +214,18 @@ public class ExplosionStone extends FireStone {
         };
     }
 
-    // Random explosion
+    /**
+     * <b>MOVE 7: Random Rocket</b>
+     * <p>
+     *     The player shoots a rocket in the looking direction<br>
+     *     This rocket has a random effect chosen from the Effect enum<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see Effect
+     * @see ExplosionStone#move7Effect(Location)
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -226,42 +245,8 @@ public class ExplosionStone extends FireStone {
                     firework.detonate();
                 }
             }.runTaskLater(StaticVariables.plugin, 20L);
-
-            // TODO - mobs spawn (skeleton trap), tree, ancient debris, day night, weather, wither, random teleport, angry bees, exp, charged creeper, fish, shulker bullets, disc 11, end music
         };
     }
-
-    public static void move7Effect(Location location) {
-        World world = location.getWorld();
-
-        if (world != null) {
-            int totalChance = Arrays.stream(Effect.values()).mapToInt(Effect::getChance).sum();
-            int random = StaticVariables.random.nextInt(totalChance);
-
-            int bottomBoundary = 0;
-
-            for (int i = 0; i < Effect.values().length; i++) {
-                int topBoundary = bottomBoundary + Effect.values()[i].getChance();
-
-                if (random >= bottomBoundary && random < topBoundary) {
-                    Effect.values()[i].playEffect(location);
-                }
-
-                bottomBoundary = topBoundary;
-            }
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * <b>ULTIMATE: War Machine</b>
@@ -315,5 +300,39 @@ public class ExplosionStone extends FireStone {
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
         };
+    }
+
+
+    // HELPERS
+
+
+    /**
+     * <b>Chooses and plays a random effect from the Effect enum</b>
+     * <p>
+     *     The location of the effect is determined by the location parameter<br>
+     * </p>
+     *
+     * @param location the location where the effect will play
+     * @see Effect
+     */
+    public static void move7Effect(Location location) {
+        World world = location.getWorld();
+
+        if (world != null) {
+            int totalChance = Arrays.stream(Effect.values()).mapToInt(Effect::getChance).sum();
+            int random = StaticVariables.random.nextInt(totalChance);
+
+            int bottomBoundary = 0;
+
+            for (int i = 0; i < Effect.values().length; i++) {
+                int topBoundary = bottomBoundary + Effect.values()[i].getChance();
+
+                if (random >= bottomBoundary && random < topBoundary) {
+                    Effect.values()[i].playEffect(location);
+                }
+
+                bottomBoundary = topBoundary;
+            }
+        }
     }
 }
