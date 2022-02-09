@@ -3,12 +3,16 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
+import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
 import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
@@ -24,6 +28,8 @@ public class PlayerMoveEvent implements Listener {
         if (activePlayer == null) {
             return;
         }
+
+        // AirStones
         if (
                 !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.airbendingStones) ||
                 !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.agilityStones)
@@ -41,6 +47,7 @@ public class PlayerMoveEvent implements Listener {
         activePlayer.setMovingDirection(movingDirection.multiply(3));
 
         WaterbendingStone.passive2(activePlayer);
+        IceStone.passive2(player);
         LavaStone.passive1(activePlayer);
     }
 }

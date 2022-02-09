@@ -26,7 +26,16 @@ import java.util.*;
 
 public class IceStone extends WaterStone {
 
-    // PASSIVE
+    /**
+     * <b>PASSIVE: Ice Boots</b>
+     * <p>
+     *     The player gets ice boots with the frost walker effect<br>
+     *     If the player already has boots, they get upgraded with frost walker<br>
+     *     When the player leaves move mode, the boots will disappear or the enchantment will be removed<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer going in move mode
+     */
     public static void passive1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         if (
@@ -84,6 +93,26 @@ public class IceStone extends WaterStone {
             } else {
                 // Player doesn't have boots
                 player.getInventory().setBoots(leatherBoots);
+            }
+        }
+    }
+
+    /**
+     * <b>PASSIVE: Slippery</b>
+     * <p>
+     *     If the player walks on ice, he gets the speed potion effect<br>
+     *     <ul>
+     *         <li><b>PotionEffect:</b> Speed (duration: 5, amplifier: 3)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param player the player who walking on ice
+     */
+    public static void passive2(Player player) {
+        if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.iceStones)) {
+            Material material = player.getLocation().add(0, -1, 0).getBlock().getType();
+            if (material == Material.ICE || material == Material.PACKED_ICE || material == Material.BLUE_ICE) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, true, true, true));
             }
         }
     }
@@ -172,11 +201,22 @@ public class IceStone extends WaterStone {
         }
     }
 
-    // MOVE 5
-    // Ice Spear
-    // -> Throw a spear of ice at your enemy
-
-    // move
+    /**
+     * <b>MOVE 5: Ice Spear</b>
+     * <p>
+     *     Throw a spear of ice at your enemy<br>
+     *     This spear will give the enemy the freeze effect and slow him down for a brief moment<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>Freeze:</b> 5s</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 3s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see IceStone#move5Animation(Location, Vector)
+     * @see IceStone#move4Impact(Location)
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -186,7 +226,7 @@ public class IceStone extends WaterStone {
                     @Override
                     public void run() {
                         Location spearLocation = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection().rotateAroundY(90).multiply(1.5)).add(player.getLocation().getDirection().multiply(-0.7));
-                        move5spearAnimation(spearLocation, player.getLocation().getDirection());
+                        move5Animation(spearLocation, player.getLocation().getDirection());
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
             } else {
@@ -201,7 +241,7 @@ public class IceStone extends WaterStone {
 
                     @Override
                     public void run() {
-                        move5spearAnimation(spearLocation, direction);
+                        move5Animation(spearLocation, direction);
                         Location checkLocation = spearLocation.clone().add(player.getLocation().getDirection().multiply(3));
                         if (
                                 world.getBlockAt(checkLocation).getType().isSolid() ||
@@ -220,7 +260,35 @@ public class IceStone extends WaterStone {
         };
     }
 
-    // impact animation
+    /**
+     * <b>Spear animation</b>
+     * <p>
+     *     Spawns a combination of white and blue redstone particles in a spear shape<br>
+     * </p>
+     *
+     * @param spearLocation the start point of the spear
+     * @param direction the facing direction of the spear
+     */
+    public static void move5Animation(Location spearLocation, Vector direction) {
+        for (int i = 0; i < 30; i++) {
+            Particle.DustOptions dustOptions;
+            if (StaticVariables.random.nextBoolean()) {
+                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1f);
+            } else {
+                dustOptions = new Particle.DustOptions(Color.WHITE, 1f);
+            }
+            Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
+        }
+    }
+
+    /**
+     * <b>Impact animation</b>
+     * <p>
+     *     Spawns in a combination of white and blue item crack particles in a ball shape<br>
+     * </p>
+     *
+     * @param location the center of the spawning sphere for the particles
+     */
     private static void move5Impact(Location location) {
         World world = location.getWorld();
         for (int i = 0; i < 400; i++) {
@@ -235,22 +303,16 @@ public class IceStone extends WaterStone {
         }
     }
 
-    // spear animation
-    public static void move5spearAnimation(Location spearLocation, Vector direction) {
-        for (int i = 0; i < 30; i++) {
-            Particle.DustOptions dustOptions;
-            if (StaticVariables.random.nextBoolean()) {
-                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1f);
-            } else {
-                dustOptions = new Particle.DustOptions(Color.WHITE, 1f);
-            }
-            Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
-        }
-    }
-
-    // MOVE 6
-    // Snow Stomp
-    // -> Turns a pad of ground into powder snow trapping entities standing on it
+    /**
+     * <b>MOVE 6: Snow Stomp</b>
+     * <p>
+     *     Turns a circle of ground into powder snow<br>
+     *     The height of the transformed blocks is 4<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -303,12 +365,30 @@ public class IceStone extends WaterStone {
         };
     }
 
-    // MOVE 7
-    // Deep Freeze
-    // -> Throws an ice bal that penetrates trough walls
-    // -> If an entity is hit by this ball, it will be unable to move and see
-
-    // move
+    /**
+     * <b>MOVE 7: Deep Freeze</b>
+     * <p>
+     *     Spawns an ice ball that penetrates trough walls<br>
+     *     This ice ball is controllable by the player's looking direction<br>
+     *     If an entity is hit by this ball, it will be unable to move and see and will be trapped in an iceberg<br>
+     *     This iceberg will melt after half a minute<br>
+     *     The trapped entity will regen because of suffocation<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 30s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Slowness (duration: 30s, amplifier: 3)</li>
+     *                 <li>Mining Fatigue (duration: 30s, amplifier 3)</li>
+     *                 <li>Regeneration (duration: 30s, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see IceStone#move7FreezeEffect(LivingEntity, ActivePlayer)
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -335,7 +415,7 @@ public class IceStone extends WaterStone {
                                     if (entity instanceof LivingEntity) {
                                         LivingEntity livingEntity = (LivingEntity) entity;
                                         if (livingEntity != player) {
-                                            freezeEffect(livingEntity, activePlayer);
+                                            move7FreezeEffect(livingEntity, activePlayer);
                                             this.cancel();
                                         }
                                     }
@@ -354,11 +434,21 @@ public class IceStone extends WaterStone {
         };
     }
 
-    // freeze effect
-    private static void freezeEffect(LivingEntity target, ActivePlayer activePlayer) {
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 100, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 100, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 10, false, false, false));
+    /**
+     * <b>Freeze effects that traps an entity</b>
+     * <p>
+     *     A berg of ice is spawned around the entity<br>
+     *     This berg of ice is unbreakable<br>
+     *     The trapped entity will be get regeneration because of suffocation damage<br>
+     * </p>
+     *
+     * @param target the living entity trapped in the iceberg
+     * @param activePlayer the activeplayer creating the iceberg
+     */
+    private static void move7FreezeEffect(LivingEntity target, ActivePlayer activePlayer) {
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 3, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 3, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 3, false, false, false));
 
         Map<Character, Material> characterMaterialMap = new HashMap<>();
         characterMaterialMap.put('I', Material.ICE);
@@ -438,10 +528,28 @@ public class IceStone extends WaterStone {
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
-
-    // MOVE 8
-    // Ice Beam
-    // -> Shoots a beam of ice freezing your targets
+    /**
+     * <b>ULTIMATE: Ice Beam</b>
+     * <p>
+     *     Shoots a beam of ice that freezes targets<br>
+     *     Targets will be unable to see and move<br>
+     *     Frozen enemies will see random snowballs flying towards them<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Blindness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Nausea (duration: 10s, amplifier: 3)</li>
+     *                 <li>Slowness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Mining Fatigue (duration: 10s, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -482,10 +590,10 @@ public class IceStone extends WaterStone {
                                 if (entity instanceof LivingEntity) {
                                     LivingEntity livingEntity = (LivingEntity) entity;
                                     if (livingEntity != player) {
-                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 10, false, true, false));
-                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 10, false, true, false));
-                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 100, false, true, false));
-                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 100, false, true, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 3, false, true, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 3, false, true, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 3, false, true, false));
+                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 3, false, true, false));
                                         livingEntity.setFreezeTicks(livingEntity.getMaxFreezeTicks());
                                         livingEntity.damage(5);
                                         this.cancel();
