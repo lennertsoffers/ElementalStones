@@ -158,6 +158,29 @@ public class NearbyEntityTools {
         return collision;
     }
 
+    public static boolean damageNearbyEntities(Player player, Location location, double amount, double x, double y, double z, List<PotionEffect> potionEffects, Consumer<LivingEntity> consumer) {
+        boolean collision = false;
+        World world = location.getWorld();
+
+        if (world != null) {
+            Collection<Entity> nearbyEntities = world.getNearbyEntities(location, x, y, z, entity -> entity != player && entity instanceof LivingEntity);
+            if (!nearbyEntities.isEmpty()) {
+                for (LivingEntity livingEntity : nearbyEntities.stream().map(entity -> (LivingEntity) entity).collect(Collectors.toList())) {
+                    livingEntity.damage(amount, player);
+                    for (PotionEffect potionEffect : potionEffects) {
+                        livingEntity.addPotionEffect(potionEffect);
+                    }
+
+                    consumer.accept(livingEntity);
+
+                    collision = true;
+                }
+            }
+        }
+
+        return collision;
+    }
+
     public static LivingEntity getClosestEntity(Location location, int offsetX, int offsetY, int offsetZ, Predicate<Entity> predicate) {
         World world = location.getWorld();
 

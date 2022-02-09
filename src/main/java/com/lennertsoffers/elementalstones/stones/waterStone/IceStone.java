@@ -123,9 +123,7 @@ public class IceStone extends WaterStone {
                     public void run() {
                         if (
                                 world.getBlockAt(midpoint).getType().isSolid() ||
-                                NearbyEntityTools.damageNearbyEntities(player, midpoint, 2, 0.3, 0.3, 0.3, direction.clone().setY(0.3), potionEffects, livingEntity -> {
-                                    livingEntity.setFreezeTicks(livingEntity.getFreezeTicks() + 40);
-                                })
+                                NearbyEntityTools.damageNearbyEntities(player, midpoint, 2, 0.3, 0.3, 0.3, direction.clone().setY(0.3), potionEffects, livingEntity -> livingEntity.setFreezeTicks(Math.min(livingEntity.getFreezeTicks() + 40, livingEntity.getMaxFreezeTicks())))
                         ) {
                             this.cancel();
                             move4Impact(midpoint);
@@ -195,6 +193,9 @@ public class IceStone extends WaterStone {
                 Vector direction = player.getLocation().getDirection();
                 activePlayer.clearIceSpear();
                 Location spearLocation = player.getLocation().add(0, 1.5, 0).add(player.getLocation().getDirection().rotateAroundY(90).multiply(1.5)).add(player.getLocation().getDirection().multiply(-0.7));
+                List<PotionEffect> potionEffects = new ArrayList<>();
+                potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 60, 2, false, true, true));
+
                 new BukkitRunnable() {
                     int amountOfTicks = 0;
 
@@ -202,27 +203,16 @@ public class IceStone extends WaterStone {
                     public void run() {
                         move5spearAnimation(spearLocation, direction);
                         Location checkLocation = spearLocation.clone().add(player.getLocation().getDirection().multiply(3));
-                        if (world.getBlockAt(checkLocation).getType().isSolid()) {
+                        if (
+                                world.getBlockAt(checkLocation).getType().isSolid() ||
+                                NearbyEntityTools.damageNearbyEntities(player, checkLocation, 5, 0.5, 0.5, 0.5, direction, potionEffects, livingEntity -> livingEntity.setFreezeTicks(Math.min(100, livingEntity.getMaxFreezeTicks()))) ||
+                                amountOfTicks > 200
+                        ) {
                             this.cancel();
                             move5Impact(checkLocation);
                         }
-                        for (Entity entity : world.getNearbyEntities(checkLocation, direction.getX() * 1.5, direction.getY() * 1.5, direction.getZ() * 1.5)) {
-                            if (entity != null) {
-                                if (entity instanceof LivingEntity) {
-                                    LivingEntity livingEntity = (LivingEntity) entity;
-                                    if (livingEntity != player) {
-                                        livingEntity.setFreezeTicks(100);
-                                        livingEntity.damage(5);
-                                        livingEntity.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 60, 2, false, true, true));
-                                        move5Impact(checkLocation);
-                                    }
-                                }
-                            }
-                        }
+
                         spearLocation.add(direction);
-                        if (amountOfTicks > 200) {
-                            this.cancel();
-                        }
                         amountOfTicks++;
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
@@ -266,44 +256,49 @@ public class IceStone extends WaterStone {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
             Block targetBlock = player.getTargetBlockExact(20);
-            if (targetBlock == null) {
-                return;
-            }
-            Location playerLocation = targetBlock.getLocation();
-            ArrayList<Location> snowBlockLocations = new ArrayList<>();
-            snowBlockLocations.add(playerLocation.clone().add(-1, 0, 2));
-            snowBlockLocations.add(playerLocation.clone().add(0, 0, 2));
-            snowBlockLocations.add(playerLocation.clone().add(1, 0, 2));
-            snowBlockLocations.add(playerLocation.clone().add(-1, 0, -2));
-            snowBlockLocations.add(playerLocation.clone().add(0, 0, -2));
-            snowBlockLocations.add(playerLocation.clone().add(1, 0, -2));
-            snowBlockLocations.add(playerLocation.clone().add(2, 0, -1));
-            snowBlockLocations.add(playerLocation.clone().add(2, 0, 0));
-            snowBlockLocations.add(playerLocation.clone().add(2, 0, 1));
-            snowBlockLocations.add(playerLocation.clone().add(-2, 0, -1));
-            snowBlockLocations.add(playerLocation.clone().add(-2, 0, 0));
-            snowBlockLocations.add(playerLocation.clone().add(-2, 0, 1));
-            playerLocation.add(-1, 0, -1);
-            for (int i = 1; i <= 9; i++) {
-                snowBlockLocations.add(playerLocation.clone());
-                if (i % 3 == 0) {
-                    playerLocation.add(-3, 0, 1);
+
+            if (targetBlock != null) {
+                Location playerLocation = targetBlock.getLocation();
+
+                ArrayList<Location> snowBlockLocations = new ArrayList<>();
+                snowBlockLocations.add(playerLocation.clone().add(-1, 0, 2));
+                snowBlockLocations.add(playerLocation.clone().add(0, 0, 2));
+                snowBlockLocations.add(playerLocation.clone().add(1, 0, 2));
+                snowBlockLocations.add(playerLocation.clone().add(-1, 0, -2));
+                snowBlockLocations.add(playerLocation.clone().add(0, 0, -2));
+                snowBlockLocations.add(playerLocation.clone().add(1, 0, -2));
+                snowBlockLocations.add(playerLocation.clone().add(2, 0, -1));
+                snowBlockLocations.add(playerLocation.clone().add(2, 0, 0));
+                snowBlockLocations.add(playerLocation.clone().add(2, 0, 1));
+                snowBlockLocations.add(playerLocation.clone().add(-2, 0, -1));
+                snowBlockLocations.add(playerLocation.clone().add(-2, 0, 0));
+                snowBlockLocations.add(playerLocation.clone().add(-2, 0, 1));
+
+                playerLocation.add(-1, 0, -1);
+
+                for (int i = 1; i <= 9; i++) {
+                    snowBlockLocations.add(playerLocation.clone());
+                    if (i % 3 == 0) {
+                        playerLocation.add(-3, 0, 1);
+                    }
+                    playerLocation.add(1, 0, 0);
                 }
-                playerLocation.add(1, 0, 0);
-            }
-            for (Location location : snowBlockLocations) {
-                Block block = world.getHighestBlockAt(location);
-                Block block1 = world.getBlockAt(block.getLocation().add(0, -1, 0));
-                Block block2 = world.getBlockAt(block.getLocation().add(0, -2, 0));
-                Block block3 = world.getBlockAt(block.getLocation().add(0, -3, 0));
-                activePlayer.addLocationMaterialMapping(block.getLocation(), block.getType());
-                activePlayer.addLocationMaterialMapping(block1.getLocation(), block1.getType());
-                activePlayer.addLocationMaterialMapping(block2.getLocation(), block1.getType());
-                activePlayer.addLocationMaterialMapping(block3.getLocation(), block1.getType());
-                block.setType(Material.POWDER_SNOW);
-                block1.setType(Material.POWDER_SNOW);
-                block2.setType(Material.POWDER_SNOW);
-                block3.setType(Material.POWDER_SNOW);
+                for (Location location : snowBlockLocations) {
+                    Location startLocation = world.getHighestBlockAt(location).getLocation();
+                    Location particleLocation = startLocation.clone().add(0, 1, 0);
+                    for (int i = 0; i < 5; i++) {
+                        double x = particleLocation.getX() + StaticVariables.random.nextGaussian() / 10;
+                        double y = particleLocation.getY() + StaticVariables.random.nextDouble() / 10;
+                        double z = particleLocation.getZ() + StaticVariables.random.nextGaussian() / 10;
+                        world.spawnParticle(Particle.BLOCK_CRACK, x, y, z, 0, Material.POWDER_SNOW.createBlockData());
+                    }
+
+                    for (int i = 0; i > -4; i--) {
+                        Block block = world.getBlockAt(startLocation.clone().add(0, i, 0));
+                        activePlayer.addLocationMaterialMapping(block.getLocation(), block.getType());
+                        block.setType(Material.POWDER_SNOW);
+                    }
+                }
             }
         };
     }
@@ -361,68 +356,86 @@ public class IceStone extends WaterStone {
 
     // freeze effect
     private static void freezeEffect(LivingEntity target, ActivePlayer activePlayer) {
-//        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 100, false, false, false));
-//        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 100, false, false, false));
-//        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 10, false, false, false));
-//        Location startLocation = target.getLocation();
-//        String[] form1Layer0 = {
-//                "?PBP?",
-//                "BIIIB",
-//                "BI*IP",
-//                "PPPPI",
-//                "?IBB?"
-//        };
-//        String[] form1Layer1 = {
-//                "??P??",
-//                "?PPI?",
-//                "BP*PB",
-//                "?PPP?",
-//                "??B??"
-//        };
-//        String[] form1Layer2 = {
-//                "?B?",
-//                "I*B",
-//                "?P?"
-//        };
-//        String[] form2Layer0 = {
-//                "??I??",
-//                "?PBI?",
-//                "PP*PB",
-//                "?BIP?",
-//                "??P??"
-//        };
-//        String[] form2Layer1 = {
-//                "?P?",
-//                "I*B",
-//                "?P?"
-//        };
-//        String[] form2Layer2 = {
-//                "*"
-//        };
-//        Map<Character, Material> characterMaterialMap = new HashMap<>();
-//        characterMaterialMap.put('I', Material.ICE);
-//        characterMaterialMap.put('P', Material.PACKED_ICE);
-//        characterMaterialMap.put('B', Material.BLUE_ICE);
-//
-//        SetBlockTools.setBlocks(startLocation, form1Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
-//        SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form1Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-//        SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form1Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-//        target.setFreezeTicks(600);
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                activePlayer.resetWorld();
-//                SetBlockTools.setBlocks(startLocation, form2Layer0, characterMaterialMap, true, Material.POWDER_SNOW, activePlayer);
-//                SetBlockTools.setBlocks(startLocation.clone().add(0, 1, 0), form2Layer1, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-//                SetBlockTools.setBlocks(startLocation.clone().add(0, 2, 0), form2Layer2, characterMaterialMap, true, Material.PACKED_ICE, activePlayer);
-//            }
-//        }.runTaskLater(StaticVariables.plugin, 300L);
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                activePlayer.resetWorld();
-//            }
-//        }.runTaskLater(StaticVariables.plugin, 600L);
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 100, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 100, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 10, false, false, false));
+
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('I', Material.ICE);
+        characterMaterialMap.put('P', Material.PACKED_ICE);
+        characterMaterialMap.put('B', Material.BLUE_ICE);
+        characterMaterialMap.put('S', Material.POWDER_SNOW);
+
+        Location startLocation = target.getLocation();
+        String[][] form1 = {
+                {
+                        "?PBP?",
+                        "BIIIB",
+                        "BI*IP",
+                        "PPPPI",
+                        "?IBB?"
+                },
+                {
+                        "??P??",
+                        "?PPI?",
+                        "BPSPB",
+                        "?PPP?",
+                        "??B??"
+                },
+                {
+                        "?????",
+                        "??B??",
+                        "?ISB?",
+                        "??P??",
+                        "?????"
+                }
+        };
+
+        String[][] form2 = {
+                {
+                        "??I??",
+                        "?PBI?",
+                        "PP*PB",
+                        "?BIP?",
+                        "??P??"
+                },
+                {
+                        "?????",
+                        "??P??",
+                        "?ISB?",
+                        "??P??",
+                        "?????"
+                },
+                {
+                        "?????",
+                        "?????",
+                        "??I??",
+                        "?????",
+                        "?????"
+                }
+        };
+
+        target.setFreezeTicks(target.getMaxFreezeTicks());
+
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+
+            @Override
+            public void run() {
+                if (amountOfTicks < 300) {
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form1, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else if (amountOfTicks == 300) {
+                    activePlayer.resetWorld();
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else if (amountOfTicks < 600) {
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else {
+                    this.cancel();
+                    activePlayer.resetWorld();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 
 
@@ -436,6 +449,7 @@ public class IceStone extends WaterStone {
             World world = player.getWorld();
             Vector direction = playerLocation.getDirection();
             Vector perpendicularDirection = direction.clone().rotateAroundY(90);
+
             new BukkitRunnable() {
                 double angle = 1;
                 double angle2 = 180;
@@ -461,6 +475,7 @@ public class IceStone extends WaterStone {
                         world.spawnParticle(Particle.REDSTONE, x1, y1, z1, 0, new Particle.DustOptions(Color.fromRGB(0, 165, 255), 2f));
                         world.spawnParticle(Particle.REDSTONE, x2, y2, z2, 0, new Particle.DustOptions(Color.WHITE, 2f));
                     }
+
                     if (!world.getNearbyEntities(particleLocation0, 0.5, 0.5, 0.5).isEmpty()) {
                         for (Entity entity : world.getNearbyEntities(particleLocation0, 0.5, 0.5, 0.5)) {
                             if (entity != null) {
@@ -498,7 +513,7 @@ public class IceStone extends WaterStone {
                                                     }
                                                     world.spawnParticle(Particle.ITEM_CRACK, targetLocation.clone().add(StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3), 0, 0, 0, 0, 0, stack);
                                                 }
-                                                if (amountOfTicks > 200) {
+                                                if (amountOfTicks > 200 || livingEntity.isDead()) {
                                                     this.cancel();
                                                 }
                                                 amountOfTicks++;
