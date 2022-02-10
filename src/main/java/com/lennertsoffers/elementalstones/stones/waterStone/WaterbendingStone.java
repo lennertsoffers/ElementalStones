@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -16,37 +17,47 @@ import java.util.*;
 
 public class WaterbendingStone extends WaterStone {
 
-    // PASSIVE
-    // Passive 1: Deep breath
-    // -> When the player is in the water, he gets the water breathing effect
+
+    // PASSIVES
+
+
+    /**
+     * <b>PASSIVE 1: Deep Breath</b>
+     * <p>
+     *     When the player is in water, he gets the water breathing effect<br>
+     *     <ul>
+     *         <li><b>PotionEffect:</b> Water Breathing (duration: 10s, amplifier: 1)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activePlayer going into the water
+     */
     public static void passive1(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (player.getInventory().contains(ItemStones.waterStoneBending0) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending1) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending2) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending3) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending4)
-                ) {
+                if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.waterBendingStones)) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 210, 1, false, false, false));
                 }
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 200L);
     }
 
-    // Passive 2: Water Walker
-    // -> Move normal in water
+    /**
+     * <b>PASSIVE 2: Water Walker</b>
+     * <p>
+     *     The player always moves forward in water at a normal speed<br>
+     *     You can cancel the movement by crouching<br>
+     *     Your speed can be doubled when executing move2<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer moving through the water
+     */
     public static void passive2(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         if (player.getLocation().getBlock().getType() == Material.WATER) {
-            if (player.getInventory().contains(ItemStones.waterStoneBending0) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending1) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending2) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending3) ||
-                    player.getInventory().contains(ItemStones.waterStoneBending4)
-            ) {
+            if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.waterBendingStones)) {
                 if (player.getPose() != Pose.SNEAKING) {
                     if (!activePlayer.isDoublePassive1()) {
                         player.setVelocity(player.getLocation().getDirection().multiply(0.3));
@@ -59,13 +70,26 @@ public class WaterbendingStone extends WaterStone {
     }
 
 
-    // MOVE 4
-    // Bubblebeam
-    // -> Shoots beam of bubbles in the looking direction of the player
+    // MOVES
+
+
+    /**
+     * <b>MOVE 4: Bubblebeam</b>
+     * <p>
+     *     Shoots a beam of bubbles in the looking direction of the player<br>
+     *     This beam damages entities over time<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 1</li>
+     *         <li><b>Duration:</b> 4.5s</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see WaterbendingStone#move4SpawnParticles(Location)
+     */
     public static Runnable move4(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            World world = player.getWorld();
 
             // Creation of beam
             new BukkitRunnable() {
@@ -77,8 +101,8 @@ public class WaterbendingStone extends WaterStone {
                     Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
 
                     for (int i = 0; i < amountOfTicks; i++) {
-                        spawnParticles(location);
-                        move4damageEntities(location, player);
+                        move4SpawnParticles(location);
+                        NearbyEntityTools.damageNearbyEntities(player, location, 1, 0.5, 0.5, 0.5);
                         location.add(player.getLocation().getDirection().multiply(0.4));
                     }
 
@@ -99,8 +123,8 @@ public class WaterbendingStone extends WaterStone {
                     Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
 
                     for (int i = 0; i < 30; i++) {
-                        spawnParticles(location);
-                        move4damageEntities(location, player);
+                        move4SpawnParticles(location);
+                        NearbyEntityTools.damageNearbyEntities(player, location, 1, 0.5, 0.5, 0.5);
                         location.add(player.getLocation().getDirection().multiply(0.4));
                     }
 
@@ -121,8 +145,8 @@ public class WaterbendingStone extends WaterStone {
                     Location location = player.getLocation().add(0, 1, 0).add(player.getLocation().getDirection());
                     location.add(player.getLocation().getDirection().multiply(0.4 * 30));
                     for (int i = amountOfTicks; i < 30; i++) {
-                        spawnParticles(location);
-                        move4damageEntities(location, player);
+                        move4SpawnParticles(location);
+                        NearbyEntityTools.damageNearbyEntities(player, location, 1, 0.5, 0.5, 0.5);
                         location.add(player.getLocation().getDirection().multiply(-0.4));
                     }
 
@@ -135,39 +159,25 @@ public class WaterbendingStone extends WaterStone {
         };
     }
 
-    // play particle beam
-    private static void spawnParticles(Location location) {
-        for (int j = 0; j < 10; j++) {
-            double locationX = location.getX() + StaticVariables.random.nextGaussian() / 10;
-            double locationY = location.getY() + StaticVariables.random.nextGaussian() / 10;
-            double locationZ = location.getZ() + StaticVariables.random.nextGaussian() / 10;
-            Objects.requireNonNull(location.getWorld()).spawnParticle(Particle.WATER_BUBBLE, locationX, locationY, locationZ, 0);
-        }
-    }
-
-    // damage entities in bubble beam
-    private static void move4damageEntities(Location location, Player player) {
-        World world = location.getWorld();
-        if (world != null) {
-            if (!world.getNearbyEntities(location, 0.5, 0.5, 0.5).isEmpty()) {
-                for (Entity entity : world.getNearbyEntities(location, 0.5, 0.5, 0.5)) {
-                    if (entity != null) {
-                        if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            if (livingEntity != player) {
-                                livingEntity.damage(1);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
-    // MOVE 5
-    // Healing water
-    // -> The player heals himself if he/she stands in water using this move
+    /**
+     * <b>MOVE 5: Healing Waters</b>
+     * <p>
+     *     Heals the player over time if he/she stand in water<br>
+     *     The player will be slower but gets the absorption effect<br>
+     *     <ul>
+     *         <li><b>Heal:</b> 3health/s</li>
+     *         <li><b>Duration:</b> 10s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Absorption (duration: 10s, amplifier: 1)</li>
+     *                 <li>Slowness (duration: 2s, amplifier: 2)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move5(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -182,7 +192,8 @@ public class WaterbendingStone extends WaterStone {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 200, 1, true, true, true));
                             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 2, true, true, true));
                         }
-                        player.setHealth(player.getHealth() + 1);
+
+                        player.setHealth(player.getHealth() + 3);
 
                     }
                     location.add(0, 1, 0);
@@ -195,10 +206,15 @@ public class WaterbendingStone extends WaterStone {
         };
     }
 
-
-    // MOVE 6
-    // Puffer Beam
-    // -> Rapidly shoots 100 puffer fish in the looking direction
+    /**
+     * <b>MOVE 6: Puffer Beam</b>
+     * <p>
+     *     Rapidly shoots 100 puffer fish in the looking direction
+     * </p>
+     *
+     * @param activePlayer the activePlayer executing this move
+     * @return a BukkitRunnable that can be run as move
+     */
     public static Runnable move6(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -222,10 +238,19 @@ public class WaterbendingStone extends WaterStone {
         };
     }
 
-
-    // MOVE 7
-    // Wave
-    // -> Creates a huge wave knocking back entities
+    /**
+     * <b>MOVE 7: Aqua Ring</b>
+     * <p>
+     *     Creates a huge wave around the player knocking back all entities<br>
+     *     <ul>
+     *         <li><b>Knockback 4:</b> 4</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see WaterbendingStone#move7ReplaceWater(ArrayList)
+     * @see WaterbendingStone#move7KnockBackEntities(Location, Player)
+     */
     public static Runnable move7(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -241,7 +266,7 @@ public class WaterbendingStone extends WaterStone {
                 @Override
                 public void run() {
 
-                    replaceWater(waterBlockLocations);
+                    move7ReplaceWater(waterBlockLocations);
                     waterBlockLocations.clear();
                     for (int i = 0; i < 360; i++) {
                         System.out.println(i);
@@ -251,74 +276,40 @@ public class WaterbendingStone extends WaterStone {
 
                         if (waterBlockLocationB.getBlock().getType() != Material.AIR && waterBlockLocationB.getBlock().getType() != Material.WATER) {
                             ignoreAnglesB.add(i);
-                            System.out.println("test");
                         }
                         if (waterBlockLocationM.getBlock().getType() != Material.AIR && waterBlockLocationM.getBlock().getType() != Material.WATER) {
                             ignoreAnglesM.add(i);
-                            System.out.println("test");
                         }
                         if (waterBlockLocationT.getBlock().getType() != Material.AIR && waterBlockLocationT.getBlock().getType() != Material.WATER) {
                             ignoreAnglesT.add(i);
-                            System.out.println("test");
                         }
 
                         if (!ignoreAnglesB.contains(i)) {
                             waterBlockLocations.add(waterBlockLocationB);
                             waterBlockLocationB.getBlock().setType(Material.WATER);
-                            knockBackEntities(waterBlockLocationB, player);
+                            move7KnockBackEntities(waterBlockLocationB, player);
                         }
                         if (!ignoreAnglesM.contains(i)) {
                             waterBlockLocations.add(waterBlockLocationM);
                             waterBlockLocationM.getBlock().setType(Material.WATER);
-                            knockBackEntities(waterBlockLocationM, player);
+                            move7KnockBackEntities(waterBlockLocationM, player);
                         }
                         if (!ignoreAnglesT.contains(i)) {
                             waterBlockLocations.add(waterBlockLocationT);
                             waterBlockLocationT.getBlock().setType(Material.WATER);
-                            knockBackEntities(waterBlockLocationT, player);
+                            move7KnockBackEntities(waterBlockLocationT, player);
                         }
                     }
 
                     if (amountOfTicks > 20) {
                         this.cancel();
-                        replaceWater(waterBlockLocations);
+                        move7ReplaceWater(waterBlockLocations);
                         waterBlockLocations.clear();
                     }
                     amountOfTicks++;
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
-    }
-
-    // Check if entity collision
-    private static void knockBackEntities(Location location, Player player) {
-        if (location.getWorld() != null) {
-            if (!location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5).isEmpty()) {
-                for (Entity entity : location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5)) {
-                    if (entity != null) {
-                        if (entity != player) {
-                            System.out.println(MathTools.getDirectionNormVector(player.getLocation(), entity.getLocation()).multiply(0.05));
-                            entity.setVelocity(MathTools.getDirectionNormVector(player.getLocation(), entity.getLocation()).multiply(0.05));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // Replace water with air again
-    private static void replaceWater(ArrayList<Location> waterBlockLocations) {
-        for (Location waterBlockLocation : waterBlockLocations) {
-            if (waterBlockLocation.getBlock().getType() == Material.WATER) {
-                waterBlockLocation.getBlock().setType(Material.AIR);
-            }
-            if (waterBlockLocation.clone().add(0, 1, 0).getBlock().getType() == Material.WATER) {
-                waterBlockLocation.clone().add(0, 1, 0).getBlock().setType(Material.AIR);
-            }
-            if (waterBlockLocation.clone().add(0, 2, 0).getBlock().getType() == Material.WATER) {
-                waterBlockLocation.clone().add(0, 2, 0).getBlock().setType(Material.AIR);
-            }
-        }
     }
 
     // MOVE 8
@@ -364,6 +355,68 @@ public class WaterbendingStone extends WaterStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
+    }
+
+
+    // HELPERS
+
+
+    /**
+     * <b>Creates the particle effect of a bubble beam</b>
+     * <p>
+     *     Spawns a ball of bubble particles in the world on the given location<br>
+     * </p>
+     *
+     * @param location the location where the particles must spawn
+     */
+    private static void move4SpawnParticles(Location location) {
+        World world = location.getWorld();
+
+        if (world != null) {
+            for (int j = 0; j < 10; j++) {
+                double locationX = location.getX() + StaticVariables.random.nextGaussian() / 10;
+                double locationY = location.getY() + StaticVariables.random.nextGaussian() / 10;
+                double locationZ = location.getZ() + StaticVariables.random.nextGaussian() / 10;
+                world.spawnParticle(Particle.WATER_BUBBLE, locationX, locationY, locationZ, 0);
+            }
+        }
+    }
+
+    /**
+     * <b>Knocks back all entities on the location away from the player</b>
+     * @param location the location to check for entities
+     * @param player the player from where the entities must be knocked back
+     */
+    private static void move7KnockBackEntities(Location location, Player player) {
+        if (location.getWorld() != null) {
+            if (!location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5).isEmpty()) {
+                for (Entity entity : location.getWorld().getNearbyEntities(location, 0.5, 0.5, 0.5)) {
+                    if (entity != null) {
+                        if (entity != player) {
+                            entity.setVelocity(MathTools.getDirectionNormVector(player.getLocation(), entity.getLocation()));
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * <b>Replaces water blocks with air again</b>
+     * @param waterBlockLocations a list of locations that must be set to air again
+     */
+    private static void move7ReplaceWater(ArrayList<Location> waterBlockLocations) {
+        for (Location waterBlockLocation : waterBlockLocations) {
+            if (waterBlockLocation.getBlock().getType() == Material.WATER) {
+                waterBlockLocation.getBlock().setType(Material.AIR);
+            }
+            if (waterBlockLocation.clone().add(0, 1, 0).getBlock().getType() == Material.WATER) {
+                waterBlockLocation.clone().add(0, 1, 0).getBlock().setType(Material.AIR);
+            }
+            if (waterBlockLocation.clone().add(0, 2, 0).getBlock().getType() == Material.WATER) {
+                waterBlockLocation.clone().add(0, 2, 0).getBlock().setType(Material.AIR);
+            }
+        }
     }
 }
 
