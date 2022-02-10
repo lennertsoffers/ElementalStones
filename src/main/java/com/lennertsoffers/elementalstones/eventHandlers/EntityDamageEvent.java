@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
+import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +23,7 @@ public class EntityDamageEvent implements Listener {
 
             AirbendingStone.passive1(activePlayer, event);
             LavaStone.passive2(activePlayer, event);
+            HellfireStone.passive(event, player);
 
             if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) {
                 if (activePlayer.isMove8active()) {
@@ -30,12 +32,6 @@ public class EntityDamageEvent implements Listener {
                     EarthbendingStone.passive(activePlayer, event);
                 }
             }
-
-//            if (event.getDamage() >= player.getHealth()) {
-//                event.setCancelled(true);
-//                DefenseStone.move8(player);
-//            }
-//            LavaStone.move8(activePlayer, event);
         }
     }
 }

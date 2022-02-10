@@ -2,13 +2,11 @@ package com.lennertsoffers.elementalstones.stones.fireStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBlast;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFlamethrower;
-import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireWall;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.*;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -27,24 +25,62 @@ import java.util.stream.Stream;
 
 public class HellfireStone extends FireStone {
 
-    private static final Map<LivingEntity, Long> damagedEntityCoolDownMove7 = new HashMap<>();
-    private static final Map<LivingEntity, Long> damagedEntityCoolDownMove8 = new HashMap<>();
-
-    private static void spawnSmallFlameOrb(Location location, Vector direction, Random random, World world) {
-        for (int j = 0; j < 2; j++) {
-            Location flameLocation = location.clone().add(direction);
-            flameLocation.add(random.nextGaussian() / 20, random.nextGaussian() / 20, random.nextGaussian() / 20);
-            world.spawnParticle(Particle.FLAME, flameLocation, 0, 0, 0, 0);
-        }
-    }
 
     // PASSIVE
-    // Friendly Fire
-    public static void passive(EntityDamageEvent event) {
-        if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
-            event.setCancelled(true);
+
+
+    /**
+     * <b>PASSIVE: Friendly Fire</b>
+     * <p>
+     *     The player will not take any fire or lighting damage<br>
+     *     If the player is on fire, he will get the strength effect<br>
+     *     If the player is struck by lightning, he will get a large set of effects<br>
+     *     <ul>
+     *         <li><b>Fire damage:</b>
+     *             <ul>
+     *                 <li>Strength (duration: 1min, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *         <li><b>Lightning:</b>
+     *             <ul>
+     *                 <li>Speed (duration: 1min, amplifier: 3)</li>
+     *                 <li>Strength (duration: 1min, amplifier: 3)</li>
+     *                 <li>Jump Boost (duration: 1min, amplifier: 3)</li>
+     *                 <li>Saturation (duration: 1min, amplifier: 3)</li>
+     *                 <li>Healing (duration: 1min, amplifier: 3)</li>
+     *                 <li>Resistance (duration: 1min, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param event the entityDamageEvent triggering this passive
+     * @param player the player that gets damage
+     */
+    public static void passive(EntityDamageEvent event, Player player) {
+        if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.hellfireStones)) {
+            if (event.getCause().equals(EntityDamageEvent.DamageCause.FIRE) || event.getCause().equals(EntityDamageEvent.DamageCause.FIRE_TICK)) {
+                event.setCancelled(true);
+
+                if (player.getFireTicks() > 0) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 100, 3, true, true, true));
+                }
+            } else if (event.getCause().equals(EntityDamageEvent.DamageCause.LIGHTNING)) {
+                event.setCancelled(true);
+
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 3, true, true, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 1200, 3, true, true, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 3, true, true, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 1200, 3, true, true, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1200, 3, true, true, true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1200, 3, true, true, true));
+            }
         }
     }
+
+
+    // MOVES
+
 
     /**
      * <b>MOVE 4: Fire Track</b>
@@ -189,48 +225,26 @@ public class HellfireStone extends FireStone {
         };
     }
 
-    // MOVE 8
-    // Dragons Breath
-    // -> Creates a ring of fire around the player damaging entities
-    // -> Player shoots continuously fireballs at the location he aims
-    // -> This move has to charge for 3 seconds
+    /**
+     * <b>ULTIMATE: Hellfire</b>
+     * <p>
+     *     Creates a storm of lightning and fireballs around the player<br>
+     *     These fireballs will not break blocks<br>
+     *     <ul>
+     *         <li><b>Range:</b> 30</li>
+     *         <li><b>Duration:</b> 10s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     * @see FireHellfireStorm
+     */
     public static Runnable move8(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            World world = player.getWorld();
-            Location location = player.getLocation().add(0, 3, 0);
-            Vector direction = location.getDirection().setY(0);
-            location.add(direction);
-
-            Fireball fireball = (Fireball) world.spawnEntity(location, EntityType.FIREBALL);
-            int speedAmplifier = 1;
-
-            new BukkitRunnable() {
-                int angle = 0;
-
-                @Override
-                public void run() {
-                    Location fromLocation = fireball.getLocation();
-                    Location toLocation = getFireballLocation();
-
-                    double toX = (toLocation.getX() - fromLocation.getX()) / speedAmplifier;
-                    double toZ = (toLocation.getZ() - fromLocation.getZ()) / speedAmplifier;
-
-                    fireball.setVelocity(new Vector(toX, 0, toZ));
-
-                    angle += 1;
-                    if (angle > 360) {
-                        angle = 0;
-                    }
-                }
-
-                private Location getFireballLocation() {
-                    Location location = player.getLocation().add(0, 3, 0);
-                    Vector direction = location.getDirection().setY(0);
-                    location.add(direction.multiply(3));
-                    return location;
-                }
-            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            FireHellfireStorm fireHellfireStorm = new FireHellfireStorm(player);
+            fireHellfireStorm.runTaskTimer(StaticVariables.plugin, 0L, 5L);
         };
     }
 }
