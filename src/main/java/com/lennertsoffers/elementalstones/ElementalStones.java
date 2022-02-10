@@ -25,6 +25,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
         getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this);
+        getServer().getPluginManager().registerEvents(new EntityExplodeEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this);

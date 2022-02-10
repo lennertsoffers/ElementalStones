@@ -2,27 +2,40 @@ package com.lennertsoffers.elementalstones.stones.waterStone;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
+import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class WaterStone {
 
-    // MOVE 1
-    // Splash
-    // -> Splashes around some water
-    // -> The higher your level, the more damage it does
+
+    // MOVES
+
+
+    /**
+     * <b>MOVE 1: Splash</b>
+     * <p>
+     *     Splashes around some water<br>
+     *     The higher the level of the player, the more damage it does<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2^(level / 30)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move1(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
@@ -35,18 +48,8 @@ public class WaterStone {
                             int i = 0;
                             i < 360; i++) {
                         Location centerLocation = MathTools.locationOnCircle(player.getLocation(), 3, i, world);
-                        if (!world.getNearbyEntities(centerLocation, 1, 1, 1).isEmpty()) {
-                            for (Entity entity : world.getNearbyEntities(centerLocation, 1, 1, 1)) {
-                                if (entity != null) {
-                                    if (entity instanceof LivingEntity) {
-                                        LivingEntity livingEntity = (LivingEntity) entity;
-                                        if (livingEntity != player) {
-                                            livingEntity.damage(Math.pow(2, player.getLevel() / 30f), player);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        NearbyEntityTools.damageNearbyEntities(player, centerLocation, Math.pow(2, player.getLevel() / 30f), 1, 1, 1);
+
                         for (int j = 0; j < 10; j++) {
                             double locationX = centerLocation.getX() + StaticVariables.random.nextGaussian() / 2;
                             double locationY = centerLocation.getY() + StaticVariables.random.nextGaussian() / 10;
@@ -59,9 +62,18 @@ public class WaterStone {
         };
     }
 
-    // MOVE 2
-    // Dolphin Dive
-    // -> Player gets dolphin effect for 1 minute
+    /**
+     * <b>MOVE 2: Dolphin Dive</b>
+     * <p>
+     *     The player gets the dolphins grace effect for 1 minute<br>
+     *     If the player has the waterbending stone, its passive effect gets doubled<br>
+     *     <ul>
+     *         <li><b>PotionEffect:</b> Dolphin Grace (duration: 1min, amplifier 3)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move2(ActivePlayer activePlayer) {
         return () -> {
             activePlayer.setDoublePassive1(true);
@@ -70,101 +82,74 @@ public class WaterStone {
                 public void run() {
                     activePlayer.setDoublePassive1(false);
                 }
-            }.runTaskLater(StaticVariables.plugin, 1800L);
+            }.runTaskLater(StaticVariables.plugin, 1200L);
             Player player = activePlayer.getPlayer();
-            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 1800, 10, true, true, true));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 1200, 3, true, true, true));
         };
     }
 
-
-
-
-    // MOVE 3
-    // Water Spear
-    // -> Throw one of your water arms that damages entities on impact
-    // -> Creates splash damage
+    /**
+     * <b>MOVE 3: Water Bullet</b>
+     * <p>
+     *     Shoots a bullet of water damaging and penetrating entities<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Knockback:</b> 1</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public static Runnable move3(ActivePlayer activePlayer) {
         return () -> {
             Player player = activePlayer.getPlayer();
-            ArrayList<Location> spearLocations = new ArrayList<>();
-            Vector initialDirection = player.getLocation().getDirection();
-            Location startLocation = player.getLocation().add(initialDirection.rotateAroundY(180)).add(0, 2, 0);
-            Vector direction = player.getLocation().getDirection().multiply(0.9);
+            World world = player.getWorld();
+            Location location = player.getLocation().add(0, 1, 0);
+            Vector vector = location.getDirection().multiply(0.5);
+            location.add(vector.clone().multiply(5));
+
+            LinkedList<Block> waterBlocks = new LinkedList<>();
+
             new BukkitRunnable() {
-                final Location location = startLocation.clone();
-                int distance = 0;
+                int amountOfTicks = 1;
 
                 @Override
                 public void run() {
-                    Location currentLocation = location.clone();
-                    for (Entity entity : player.getWorld().getNearbyEntities(currentLocation, 1, 1, 1)) {
-                        if (entity instanceof LivingEntity) {
-                            LivingEntity livingEntity = (LivingEntity) entity;
-                            if (livingEntity != player) {
-                                livingEntity.damage(5);
-                            }
-                        }
+                    if (waterBlocks.size() > 3) {
+                        waterBlocks.pop().setType(Material.AIR);
                     }
-                    spearLocations.add(currentLocation);
-                    for (Location location : spearLocations) {
-                        if (placeWaterBlock(location, false)) {
-                            this.cancel();
-                            new BukkitRunnable() {
-                                final ArrayList<Location> waterLocationsToRemove = spearLocations;
 
-                                @Override
-                                public void run() {
-                                    if (waterLocationsToRemove.size() > 0) {
-                                        placeWaterBlock(waterLocationsToRemove.get(0), true);
-                                        waterLocationsToRemove.remove(0);
-                                    } else {
-                                        this.cancel();
-                                    }
-                                }
-                            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                        }
-                    }
-                    location.add(direction);
-                    if (spearLocations.size() > 6) {
-                        placeWaterBlock(spearLocations.get(0), true);
-                        spearLocations.remove(0);
-                    }
-                    if (distance > 70) {
+                    Location blockLocation = location.clone().add(vector.clone().multiply(amountOfTicks));
+                    Block block = world.getBlockAt(blockLocation);
+                    NearbyEntityTools.damageNearbyEntities(player, blockLocation, 5, 1, 1, 1, vector);
+
+                    Material material = block.getType();
+                    if (material == Material.AIR || material == Material.FIRE || material == Material.WATER || CheckLocationTools.isFoliage(material)) {
+                        block.setType(Material.WATER);
+                        waterBlocks.add(block);
+                    } else {
                         this.cancel();
-                        for (Location location : spearLocations) {
-                            location.getBlock().setType(Material.AIR);
+
+                        for (Block waterBlock : waterBlocks) {
+                            waterBlock.setType(Material.AIR);
                         }
+                        waterBlocks.clear();
                     }
-                    distance++;
+
+                    location.add(vector);
+
+                    amountOfTicks++;
+                    if (amountOfTicks > 100) {
+                        this.cancel();
+
+                        for (Block waterBlock : waterBlocks) {
+                            waterBlock.setType(Material.AIR);
+                        }
+                        waterBlocks.clear();
+                    }
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
-    }
-
-    // place blocks if not already water
-    private static boolean placeWaterBlock(Location location, boolean remove) {
-        Location locationTop = location.clone().add(0, 1, 0);
-        Location locationBottom = location.clone().add(0, -1, 0);
-        if (remove) {
-            if (location.getBlock().getType() == Material.WATER) {
-                location.getBlock().setType(Material.AIR);
-            }
-        } else {
-            if (location.getBlock().getType() == Material.AIR) {
-                location.getBlock().setType(Material.POWDER_SNOW);
-            } else {
-                if (location.getBlock().getType() != Material.WATER || (locationBottom.getBlock().getType() != Material.WATER && locationBottom.getBlock().getType() != Material.AIR)) {
-                    return true;
-                }
-            }
-        }
-        if (locationTop.getBlock().getType() == Material.AIR) {
-            locationTop.getBlock().setType(Material.AIR);
-        }
-        if (locationBottom.getBlock().getType() == Material.AIR || locationBottom.getBlock().getType() == Material.WATER) {
-            locationBottom.getBlock().setType(Material.AIR);
-        }
-        return false;
     }
 }
 
