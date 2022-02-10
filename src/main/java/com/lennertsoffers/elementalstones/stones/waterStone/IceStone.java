@@ -26,6 +26,10 @@ import java.util.*;
 
 public class IceStone extends WaterStone {
 
+
+    // PASSIVES
+
+
     /**
      * <b>PASSIVE: Ice Boots</b>
      * <p>
@@ -117,6 +121,10 @@ public class IceStone extends WaterStone {
         }
     }
 
+
+    // MOVES
+
+
     /**
      * <b>MOVE 4: Ice Shards</b>
      * <p>
@@ -182,26 +190,6 @@ public class IceStone extends WaterStone {
     }
 
     /**
-     * <b>Plays the particle effect for ice shards</b>
-     * <p>
-     *     This is played when an ice shard collides with and entity or block<br>
-     * </p>
-     *
-     * @param impactLocation the location where the particle effect must play
-     */
-    private static void move4Impact(Location impactLocation) {
-        for (int i = 0; i < 5; i++) {
-            ItemStack stack;
-            if (StaticVariables.random.nextBoolean()) {
-                stack = new ItemStack(Material.ICE);
-            } else {
-                stack = new ItemStack(Material.SNOW_BLOCK);
-            }
-            Objects.requireNonNull(impactLocation.getWorld()).spawnParticle(Particle.ITEM_CRACK, impactLocation.clone().add(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10), 0, 0, 0, 0, stack);
-        }
-    }
-
-    /**
      * <b>MOVE 5: Ice Spear</b>
      * <p>
      *     Throw a spear of ice at your enemy<br>
@@ -258,49 +246,6 @@ public class IceStone extends WaterStone {
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
         };
-    }
-
-    /**
-     * <b>Spear animation</b>
-     * <p>
-     *     Spawns a combination of white and blue redstone particles in a spear shape<br>
-     * </p>
-     *
-     * @param spearLocation the start point of the spear
-     * @param direction the facing direction of the spear
-     */
-    public static void move5Animation(Location spearLocation, Vector direction) {
-        for (int i = 0; i < 30; i++) {
-            Particle.DustOptions dustOptions;
-            if (StaticVariables.random.nextBoolean()) {
-                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1f);
-            } else {
-                dustOptions = new Particle.DustOptions(Color.WHITE, 1f);
-            }
-            Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
-        }
-    }
-
-    /**
-     * <b>Impact animation</b>
-     * <p>
-     *     Spawns in a combination of white and blue item crack particles in a ball shape<br>
-     * </p>
-     *
-     * @param location the center of the spawning sphere for the particles
-     */
-    private static void move5Impact(Location location) {
-        World world = location.getWorld();
-        for (int i = 0; i < 400; i++) {
-            ItemStack stack;
-            if (StaticVariables.random.nextBoolean()) {
-                stack = new ItemStack(Material.ICE);
-            } else {
-                stack = new ItemStack(Material.SNOW_BLOCK);
-            }
-            Objects.requireNonNull(world).spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3), 0, 0, 0, 0, stack);
-
-        }
     }
 
     /**
@@ -435,100 +380,6 @@ public class IceStone extends WaterStone {
     }
 
     /**
-     * <b>Freeze effects that traps an entity</b>
-     * <p>
-     *     A berg of ice is spawned around the entity<br>
-     *     This berg of ice is unbreakable<br>
-     *     The trapped entity will be get regeneration because of suffocation damage<br>
-     * </p>
-     *
-     * @param target the living entity trapped in the iceberg
-     * @param activePlayer the activeplayer creating the iceberg
-     */
-    private static void move7FreezeEffect(LivingEntity target, ActivePlayer activePlayer) {
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 3, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 3, false, false, false));
-        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 3, false, false, false));
-
-        Map<Character, Material> characterMaterialMap = new HashMap<>();
-        characterMaterialMap.put('I', Material.ICE);
-        characterMaterialMap.put('P', Material.PACKED_ICE);
-        characterMaterialMap.put('B', Material.BLUE_ICE);
-        characterMaterialMap.put('S', Material.POWDER_SNOW);
-
-        Location startLocation = target.getLocation();
-        String[][] form1 = {
-                {
-                        "?PBP?",
-                        "BIIIB",
-                        "BI*IP",
-                        "PPPPI",
-                        "?IBB?"
-                },
-                {
-                        "??P??",
-                        "?PPI?",
-                        "BPSPB",
-                        "?PPP?",
-                        "??B??"
-                },
-                {
-                        "?????",
-                        "??B??",
-                        "?ISB?",
-                        "??P??",
-                        "?????"
-                }
-        };
-
-        String[][] form2 = {
-                {
-                        "??I??",
-                        "?PBI?",
-                        "PP*PB",
-                        "?BIP?",
-                        "??P??"
-                },
-                {
-                        "?????",
-                        "??P??",
-                        "?ISB?",
-                        "??P??",
-                        "?????"
-                },
-                {
-                        "?????",
-                        "?????",
-                        "??I??",
-                        "?????",
-                        "?????"
-                }
-        };
-
-        target.setFreezeTicks(target.getMaxFreezeTicks());
-
-        new BukkitRunnable() {
-            int amountOfTicks = 0;
-
-            @Override
-            public void run() {
-                if (amountOfTicks < 300) {
-                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form1, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
-                } else if (amountOfTicks == 300) {
-                    activePlayer.resetWorld();
-                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
-                } else if (amountOfTicks < 600) {
-                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
-                } else {
-                    this.cancel();
-                    activePlayer.resetWorld();
-                }
-                amountOfTicks++;
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-    }
-
-    /**
      * <b>ULTIMATE: Ice Beam</b>
      * <p>
      *     Shoots a beam of ice that freezes targets<br>
@@ -639,5 +490,166 @@ public class IceStone extends WaterStone {
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         };
+    }
+
+
+    // HELPERS
+
+
+    /**
+     * <b>Plays the particle effect for ice shards</b>
+     * <p>
+     *     This is played when an ice shard collides with and entity or block<br>
+     * </p>
+     *
+     * @param impactLocation the location where the particle effect must play
+     */
+    private static void move4Impact(Location impactLocation) {
+        for (int i = 0; i < 5; i++) {
+            ItemStack stack;
+            if (StaticVariables.random.nextBoolean()) {
+                stack = new ItemStack(Material.ICE);
+            } else {
+                stack = new ItemStack(Material.SNOW_BLOCK);
+            }
+            Objects.requireNonNull(impactLocation.getWorld()).spawnParticle(Particle.ITEM_CRACK, impactLocation.clone().add(StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10, StaticVariables.random.nextGaussian() / 10), 0, 0, 0, 0, stack);
+        }
+    }
+
+    /**
+     * <b>Spear animation</b>
+     * <p>
+     *     Spawns a combination of white and blue redstone particles in a spear shape<br>
+     * </p>
+     *
+     * @param spearLocation the start point of the spear
+     * @param direction the facing direction of the spear
+     */
+    public static void move5Animation(Location spearLocation, Vector direction) {
+        for (int i = 0; i < 30; i++) {
+            Particle.DustOptions dustOptions;
+            if (StaticVariables.random.nextBoolean()) {
+                dustOptions = new Particle.DustOptions(Color.fromRGB(0, 165, 255), 1f);
+            } else {
+                dustOptions = new Particle.DustOptions(Color.WHITE, 1f);
+            }
+            Objects.requireNonNull(spearLocation.getWorld()).spawnParticle(Particle.REDSTONE, spearLocation.clone().add(direction.clone().multiply(0.1 * i)), 0, dustOptions);
+        }
+    }
+
+    /**
+     * <b>Impact animation</b>
+     * <p>
+     *     Spawns in a combination of white and blue item crack particles in a ball shape<br>
+     * </p>
+     *
+     * @param location the center of the spawning sphere for the particles
+     */
+    private static void move5Impact(Location location) {
+        World world = location.getWorld();
+        for (int i = 0; i < 400; i++) {
+            ItemStack stack;
+            if (StaticVariables.random.nextBoolean()) {
+                stack = new ItemStack(Material.ICE);
+            } else {
+                stack = new ItemStack(Material.SNOW_BLOCK);
+            }
+            Objects.requireNonNull(world).spawnParticle(Particle.ITEM_CRACK, location.clone().add(StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3, StaticVariables.random.nextGaussian() / 3), 0, 0, 0, 0, stack);
+
+        }
+    }
+
+    /**
+     * <b>Freeze effects that traps an entity</b>
+     * <p>
+     *     A berg of ice is spawned around the entity<br>
+     *     This berg of ice is unbreakable<br>
+     *     The trapped entity will be get regeneration because of suffocation damage<br>
+     * </p>
+     *
+     * @param target the living entity trapped in the iceberg
+     * @param activePlayer the activeplayer creating the iceberg
+     */
+    private static void move7FreezeEffect(LivingEntity target, ActivePlayer activePlayer) {
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 600, 3, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 600, 3, false, false, false));
+        target.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 600, 3, false, false, false));
+
+        Map<Character, Material> characterMaterialMap = new HashMap<>();
+        characterMaterialMap.put('I', Material.ICE);
+        characterMaterialMap.put('P', Material.PACKED_ICE);
+        characterMaterialMap.put('B', Material.BLUE_ICE);
+        characterMaterialMap.put('S', Material.POWDER_SNOW);
+
+        Location startLocation = target.getLocation();
+        String[][] form1 = {
+                {
+                        "?PBP?",
+                        "BIIIB",
+                        "BI*IP",
+                        "PPPPI",
+                        "?IBB?"
+                },
+                {
+                        "??P??",
+                        "?PPI?",
+                        "BPSPB",
+                        "?PPP?",
+                        "??B??"
+                },
+                {
+                        "?????",
+                        "??B??",
+                        "?ISB?",
+                        "??P??",
+                        "?????"
+                }
+        };
+
+        String[][] form2 = {
+                {
+                        "??I??",
+                        "?PBI?",
+                        "PP*PB",
+                        "?BIP?",
+                        "??P??"
+                },
+                {
+                        "?????",
+                        "??P??",
+                        "?ISB?",
+                        "??P??",
+                        "?????"
+                },
+                {
+                        "?????",
+                        "?????",
+                        "??I??",
+                        "?????",
+                        "?????"
+                }
+        };
+
+        target.setFreezeTicks(target.getMaxFreezeTicks());
+
+        new BukkitRunnable() {
+            int amountOfTicks = 0;
+
+            @Override
+            public void run() {
+                if (amountOfTicks < 300) {
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form1, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else if (amountOfTicks == 300) {
+                    activePlayer.resetWorld();
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else if (amountOfTicks < 600) {
+                    SetBlockTools.setBlocksInWorld(activePlayer, startLocation, form2, characterMaterialMap, true, new ArrayList<>(), new ArrayList<>(), Material.POWDER_SNOW, -1, null, null);
+                } else {
+                    this.cancel();
+                    activePlayer.resetWorld();
+                }
+                amountOfTicks++;
+            }
+        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
     }
 }
