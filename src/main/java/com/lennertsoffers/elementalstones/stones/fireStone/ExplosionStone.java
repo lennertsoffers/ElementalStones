@@ -6,14 +6,18 @@ import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.*
 import com.lennertsoffers.elementalstones.customClasses.models.Effect;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
+import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class ExplosionStone extends FireStone {
@@ -23,6 +27,56 @@ public class ExplosionStone extends FireStone {
 
 
     public static HashSet<Firework> move7Fireworks = new HashSet<>();
+
+
+    // PASSIVES
+
+
+    /**
+     * <b>PASSIVE 1: Explosion Resistance</b>
+     * <p>
+     *     The player is completely immune for explosions<br>
+     * </p>
+     *
+     * @param event the entityDamageEvent that triggers this passive
+     * @param player the player that is hurt by the explosion
+     */
+    public static void passive1(EntityDamageEvent event, Player player) {
+        if (event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
+            if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones)) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    /**
+     * <b>Cuter Creepers</b>
+     * <p>
+     *     If a creeper explodes close to a player with the explosion stone, this explosion will be cancelled<br>
+     *     A firework explosion will trigger instead<br>
+     * </p>
+     *
+     * @param event the entityExplosionEvent that triggers this passive
+     */
+    public static void passive2(EntityExplodeEvent event) {
+        Location location = event.getLocation();
+        World world = location.getWorld();
+
+        if (world != null) {
+            if (
+                    world.getNearbyEntities(location, 10, 10, 10, entity -> entity instanceof Player).stream().anyMatch(entity -> {
+                        Player player = (Player)  entity;
+                        return !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones);
+                    })
+                ) {
+                event.setCancelled(true);
+
+                Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location.add(0, 1.5, 0), EntityType.FIREWORK), 0, null, 3, 3, -1, -1);
+                firework.detonate();
+            }
+        }
+
+    }
 
 
     // MOVES

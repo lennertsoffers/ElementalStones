@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireHellfireStorm;
+import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.event.EventHandler;
@@ -22,5 +23,7 @@ public class EntityExplodeEvent implements Listener {
                 entity.getWorld().createExplosion(fireball.getLocation(), 3, true, false);
             }
         }
+
+        ExplosionStone.passive2(event);
     }
 }
