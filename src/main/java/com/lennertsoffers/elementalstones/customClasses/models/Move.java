@@ -19,18 +19,13 @@ public class Move {
     }
 
     public boolean activateMove() {
-        System.out.println("isNull: " + (this.isNull() ? "true" : "false"));
-        System.out.println("isOnCooldown: " + (this.isOnCooldown() ? "true" : "false"));
         if (!this.isNull()) {
             if (!this.isOnCooldown()) {
                 this.move.run();
-                this.block();
-                System.out.println("ActivateMove: true");
                 return true;
             }
         }
 
-        System.out.println("ActivateMove: false");
         return false;
     }
 

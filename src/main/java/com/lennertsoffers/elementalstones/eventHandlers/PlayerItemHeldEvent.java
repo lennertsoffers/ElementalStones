@@ -16,6 +16,7 @@ public class PlayerItemHeldEvent implements Listener {
             if (activePlayer.areMovesEnabled()) {
                 if (event.getNewSlot() == 0) {
                     activePlayer.getMoveController().getMove1().activateMove();
+                    activePlayer.getMoveController().getMove1().block();
                 } else if (event.getNewSlot() == 1) {
                     activePlayer.getMoveController().getMove2().activateMove();
 
@@ -30,7 +31,6 @@ public class PlayerItemHeldEvent implements Listener {
 
                 } else if (event.getNewSlot() == 5) {
                     activePlayer.getMoveController().getMove6().activateMove();
-
                 } else if (event.getNewSlot() == 6) {
                     activePlayer.getMoveController().getMove7().activateMove();
 
