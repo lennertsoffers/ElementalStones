@@ -42,6 +42,11 @@ public class EarthbendingStone extends EarthStone {
      * @param event the EntityDamageEvent from the event listener
      */
     public static void passive(ActivePlayer activePlayer, EntityDamageEvent event) {
+
+
+
+
+
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
         float fallDistance;
