@@ -20,9 +20,9 @@ public class Move {
 
     public boolean activateMove() {
         if (this.move != null) {
-            if (this.blockedUntil < System.currentTimeMillis()) {
+            if (!this.isOnCooldown()) {
                 this.move.run();
-//                this.blockedUntil = System.currentTimeMillis() + cooldown;
+                this.block();
                 return true;
             }
         }
@@ -35,5 +35,20 @@ public class Move {
 
     public void clearMove() {
         this.move = null;
+    }
+
+    public boolean isNull() {
+        return this.move != null;
+    }
+
+    public boolean isOnCooldown() {
+        return this.blockedUntil <= System.currentTimeMillis();
+    }
+
+    public long secondsUntilActive() {
+        long miliseconds = this.blockedUntil - System.currentTimeMillis();
+        miliseconds = miliseconds < 0 ? 0 : miliseconds;
+        miliseconds *= 1000;
+        return miliseconds;
     }
 }

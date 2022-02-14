@@ -1,6 +1,17 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
+import com.sun.istack.internal.NotNull;
+import jdk.jfr.internal.StringPool;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
+
 public class MoveController {
+
+    private static long scoreBoardIndex = 0;
 
     // Moves
     private final Move move1;
@@ -12,9 +23,12 @@ public class MoveController {
     private final Move move7;
     private final Move move8;
 
+    private final String name;
+    private final Scoreboard scoreboard;
+
 
     // Constructor
-    public MoveController() {
+    public MoveController(Player player) {
         this.move1 = new Move();
         this.move2 = new Move();
         this.move3 = new Move();
@@ -23,6 +37,17 @@ public class MoveController {
         this.move6 = new Move();
         this.move7 = new Move();
         this.move8 = new Move();
+
+        this.name = player.getName();
+
+        ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
+        this.scoreboard = scoreboardManager != null ? scoreboardManager.getNewScoreboard() : null;
+
+        if (this.scoreboard != null) {
+            Objective objective = this.scoreboard.registerNewObjective(String.valueOf(scoreBoardIndex), "dummy", "Cooldowns");
+            objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+
+        }
     }
 
 
