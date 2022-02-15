@@ -32,6 +32,8 @@ public class AirSlash extends Move {
         } else {
             slashEffect(this.getPlayer(), false);
         }
+
+        this.setCooldown();
     }
 
     public static void slashEffect(Player player, boolean critical) {

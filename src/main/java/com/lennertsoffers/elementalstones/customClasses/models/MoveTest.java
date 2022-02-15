@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
-public class Move {
+public class MoveTest {
 
     private Runnable move;
     private int cooldown;

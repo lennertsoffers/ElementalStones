@@ -68,6 +68,10 @@ public class FlyingKnives extends Move {
             Arrow arrow = this.getActivePlayer().getMove5Arrows().removeLast();
             Location location = this.getPlayer().getLocation();
             arrow.setVelocity(location.getDirection().multiply(3));
+
+            if (this.getActivePlayer().getMove5Arrows().isEmpty()) {
+                this.setCooldown();
+            }
         }
     }
 

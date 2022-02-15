@@ -56,6 +56,7 @@ public class ChargeJump extends Move {
             this.getActivePlayer().resetCharge();
             this.getPlayer().removePotionEffect(PotionEffectType.SLOW);
             this.getPlayer().setVelocity(new Vector(0, velocityY, 0));
+            this.setCooldown();
 
             new BukkitRunnable() {
                 int amountOfTicks = 0;

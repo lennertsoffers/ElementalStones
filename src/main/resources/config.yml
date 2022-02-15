@@ -4,6 +4,11 @@
 disable_cooldowns: false
 
 # Cooldown time per stone in ms
+# Empty stone
+empty_stone:
+  default:
+    move1: 0
+
 # Water stone
 water_stone:
   default:

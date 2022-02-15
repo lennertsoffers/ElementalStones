@@ -16,5 +16,6 @@ public class Hyperspeed extends Move {
         this.getActivePlayer().activateAirBoost();
         this.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 3, false, false, false));
         this.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 1200, 2, false, false, false));
+        this.setCooldown();
     }
 }

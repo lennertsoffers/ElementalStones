@@ -22,7 +22,7 @@ public abstract class Move {
         this.stone = stone;
         this.path = path;
         this.moveIndex = moveIndex;
-        this.maxCooldown = ElementalStones.configuration.getBoolean("disable_cooldowns") ? 0 : ElementalStones.configuration.getInt(stone + "." + path + ".move" + moveIndex);
+        this.maxCooldown = ElementalStones.configuration.getBoolean("disable_cooldowns") ? 0 : ElementalStones.configuration.getInt(this.getFullName());
     }
 
     abstract public void useMove();
@@ -31,8 +31,8 @@ public abstract class Move {
         this.cooldown = System.currentTimeMillis() + this.maxCooldown;
     }
 
-    public long getCooldown() {
-        return this.cooldown;
+    public int getSecondsUntilActive() {
+        return (int) ((this.cooldown - System.currentTimeMillis()) / 1000f);
     }
 
     public boolean isOnCooldown() {
@@ -41,6 +41,10 @@ public abstract class Move {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getFullName() {
+        return stone + "." + path + ".move" + moveIndex;
     }
 
     public String getStone() {

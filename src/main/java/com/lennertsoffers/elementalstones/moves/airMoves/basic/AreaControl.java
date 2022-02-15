@@ -41,5 +41,7 @@ public class AreaControl extends Move {
                 }
             }
         }
+
+        this.setCooldown();
     }
 }

@@ -53,11 +53,13 @@ public class FireBall extends BukkitRunnable {
         return location;
     }
 
-    public void poke(ActivePlayer activePlayer) {
+    public boolean poke(ActivePlayer activePlayer) {
+        boolean hasPokes = true;
         this.amountOfPokes--;
         if (this.amountOfPokes == 0) {
             this.cancel();
             activePlayer.setFireBall(null);
+            hasPokes = false;
         }
 
         Location location = this.getFireBallLocation();
@@ -88,5 +90,7 @@ public class FireBall extends BukkitRunnable {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        return hasPokes;
     }
 }

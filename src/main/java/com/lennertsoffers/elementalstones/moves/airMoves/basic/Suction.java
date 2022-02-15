@@ -37,5 +37,7 @@ public class Suction extends Move {
                 }
             }
         }
+
+        this.setCooldown();
     }
 }

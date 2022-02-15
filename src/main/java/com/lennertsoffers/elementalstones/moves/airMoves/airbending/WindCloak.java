@@ -45,6 +45,8 @@ public class WindCloak extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 
     public static void windCloakKnockback(ActivePlayer activePlayer, EntityDamageByEntityEvent event) {

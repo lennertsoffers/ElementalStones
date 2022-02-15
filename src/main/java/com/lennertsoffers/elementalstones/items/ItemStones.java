@@ -105,18 +105,22 @@ public class ItemStones {
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
     
     public static ArrayList<ItemStack> waterStones = new ArrayList<>();
+    public static ArrayList<ItemStack> waterStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> waterBendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> iceStones = new ArrayList<>();
     
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
+    public static ArrayList<ItemStack> fireStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> hellfireStones = new ArrayList<>();
     public static ArrayList<ItemStack> explosionStones = new ArrayList<>();
     
     public static ArrayList<ItemStack> airStones = new ArrayList<>();
+    public static ArrayList<ItemStack> airStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> airbendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> agilityStones = new ArrayList<>();
     
     public static ArrayList<ItemStack> earthStones = new ArrayList<>();
+    public static ArrayList<ItemStack> earthStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> earthBendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> lavaStones = new ArrayList<>();
     
@@ -870,6 +874,11 @@ public class ItemStones {
                 waterStoneIce3,
                 waterStoneIce4
         ));
+        waterStonesDefault.addAll(Arrays.asList(
+                waterStone0,
+                waterStone1,
+                waterStone2
+        ));
         waterBendingStones.addAll(Arrays.asList(
                 waterStoneBending0,
                 waterStoneBending1,
@@ -899,6 +908,11 @@ public class ItemStones {
                 fireStoneHellFire2,
                 fireStoneHellFire3,
                 fireStoneHellFire4
+        ));
+        fireStonesDefault.addAll(Arrays.asList(
+                fireStone0,
+                fireStone1,
+                fireStone2
         ));
         hellfireStones.addAll(Arrays.asList(
                 fireStoneHellFire0,
@@ -930,6 +944,11 @@ public class ItemStones {
                 airStoneBending3,
                 airStoneBending4
         ));
+        airStonesDefault.addAll(Arrays.asList(
+                airStone0,
+                airStone1,
+                airStone2
+        ));
         airbendingStones.addAll(Arrays.asList(
                 airStoneBending0,
                 airStoneBending1,
@@ -959,6 +978,11 @@ public class ItemStones {
                 earthStoneBending2,
                 earthStoneBending3,
                 earthStoneBending4
+        ));
+        earthStonesDefault.addAll(Arrays.asList(
+                earthStone0,
+                earthStone1,
+                earthStone2
         ));
         earthBendingStones.addAll(Arrays.asList(
                 earthStoneBending0,

@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.moves.fireMoves.hellfire.FireShields;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -30,18 +31,23 @@ public class FireWall extends BukkitRunnable {
     @Override
     public void run() {
         for (double i = 0; i < 2.0; i += 0.1) {
-            activePlayer.getWallLocations().add(bottomLeftLocation.clone().add(wallDirection.clone().multiply(i)).add(0, 1, 0));
+            this.activePlayer.getWallLocations().add(this.bottomLeftLocation.clone().add(this.wallDirection.clone().multiply(i)).add(0, 1, 0));
 
             for (double j = 0; j < 2.0; j += 0.1) {
-                this.world.spawnParticle(Particle.FLAME, bottomLeftLocation.clone().add(wallDirection.clone().multiply(i)).add(0, j, 0), 0);
+                this.world.spawnParticle(Particle.FLAME, this.bottomLeftLocation.clone().add(this.wallDirection.clone().multiply(i)).add(0, j, 0), 0);
             }
         }
 
-        if (System.currentTimeMillis() > activePlayer.getFireWallsEndTime()) {
+        if (System.currentTimeMillis() >this.activePlayer.getFireWallsEndTime()) {
             this.cancel();
 
-            if (activePlayer.getFireWallsEndTime() != -1) {
-                activePlayer.endFireWalls();
+            if (this.activePlayer.getFireWallsEndTime() != -1) {
+                this.activePlayer.endFireWalls();
+                this.activePlayer.getMoveController().getMoves().forEach(move -> {
+                    if (move instanceof FireShields) {
+                        move.setCooldown();
+                    }
+                });
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.moves.airMoves.airbending.WindCloak;
 import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -14,12 +15,11 @@ public class EntityDamageByEntityEvent implements Listener {
         if (event.getEntity() instanceof Player) {
             ActivePlayer activePlayer = ActivePlayer.getActivePlayer(event.getEntity().getUniqueId());
             if (activePlayer != null) {
-                AirbendingStone.move6knockback(activePlayer, event);
+                WindCloak.windCloakKnockback(activePlayer, event);
 
                 if (event.getDamager() instanceof Arrow) {
                     event.setCancelled(true);
                 }
-
             }
         }
     }
