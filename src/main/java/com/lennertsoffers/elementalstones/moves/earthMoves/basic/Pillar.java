@@ -68,6 +68,8 @@ public class Pillar extends Move {
                     }
                 }.runTaskLater(StaticVariables.plugin, 66L);
             }
+
+            this.setCooldown();
         }
     }
 }

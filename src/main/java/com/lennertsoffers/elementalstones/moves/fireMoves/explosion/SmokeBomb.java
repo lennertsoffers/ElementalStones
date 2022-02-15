@@ -20,5 +20,6 @@ public class SmokeBomb extends Move {
         Player player = this.getPlayer();
         Grenade grenade = new GrenadeSmoke(player, Particle.REDSTONE, new Particle.DustOptions(Color.GRAY, 2));
         grenade.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        this.setCooldown();
     }
 }

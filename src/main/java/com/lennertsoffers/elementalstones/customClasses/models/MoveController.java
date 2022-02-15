@@ -2,7 +2,6 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import com.lennertsoffers.elementalstones.moves.EmptyMove;
 import com.lennertsoffers.elementalstones.moves.Move;
 import com.lennertsoffers.elementalstones.moves.airMoves.agility.*;
 import com.lennertsoffers.elementalstones.moves.airMoves.airbending.*;
@@ -27,12 +26,8 @@ import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.AquaRing
 import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.Bubblebeam;
 import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.HealingWaters;
 import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.PufferBeam;
-import com.lennertsoffers.elementalstones.stones.waterStone.WaterStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
-import javafx.scene.media.Track;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.*;
@@ -52,7 +47,6 @@ public class MoveController {
 
     public static HashSet<MoveController> moveControllers = new HashSet<>();
 
-    // Constructor
     public MoveController(ActivePlayer activePlayer) {
         this.activePlayer = activePlayer;
         this.player = activePlayer.getPlayer();

@@ -41,5 +41,7 @@ public class Splash extends Move {
                 }
             }
         }.runTaskLater(StaticVariables.plugin, 5L);
+
+        this.setCooldown();
     }
 }

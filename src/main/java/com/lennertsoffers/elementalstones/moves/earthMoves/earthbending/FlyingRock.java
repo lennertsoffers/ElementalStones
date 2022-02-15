@@ -100,6 +100,7 @@ public class FlyingRock extends Move {
         // Launch platform down
         else {
             launch(activePlayer);
+            this.setCooldown();
         }
     }
 
@@ -112,7 +113,6 @@ public class FlyingRock extends Move {
             player.setVelocity(platformFallVelocity);
         }
         end(activePlayer);
-
 
         Location location = activePlayer.getPlayer().getLocation();
         EarthWave.earthWaveNew(location, true, true, true, activePlayer);
@@ -143,5 +143,10 @@ public class FlyingRock extends Move {
         player.setFlying(false);
         player.setAllowFlight(false);
         activePlayer.setMovesEnabled(true);
+        activePlayer.getMoveController().getMoves().forEach(move -> {
+            if (move instanceof FlyingRock) {
+                move.setCooldown();
+            }
+        });
     }
 }

@@ -36,5 +36,7 @@ public class LavaWave extends Move {
         } else {
             new com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaWave(activePlayer, false, false, false).runTaskTimer(StaticVariables.plugin, 0L, 1L);
         }
+
+        this.setCooldown();
     }
 }

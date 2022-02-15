@@ -41,5 +41,7 @@ public class HealingWaters extends Move {
                 amountOfSeconds++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 20L);
+
+        this.setCooldown();
     }
 }

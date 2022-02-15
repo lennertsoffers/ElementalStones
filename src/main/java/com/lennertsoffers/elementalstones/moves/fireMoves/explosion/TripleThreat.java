@@ -54,13 +54,15 @@ public class TripleThreat extends Move {
                     }
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 50L);
+            this.setCooldown();
         } else if (activePlayer.getFireFireworks() == null) {
-            FireFireworks fireFireworks = new FireFireworks(player);
+            FireFireworks fireFireworks = new FireFireworks(activePlayer);
             activePlayer.setFireFireworks(fireFireworks);
             fireFireworks.runTaskTimer(StaticVariables.plugin, 0L, 1L);
         } else {
             activePlayer.getFireFireworks().shootFireworks();
             activePlayer.setFireFireworks(null);
+            this.setCooldown();
         }
     }
 }

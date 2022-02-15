@@ -44,6 +44,8 @@ public class RandomRocket extends Move {
                 firework.detonate();
             }
         }.runTaskLater(StaticVariables.plugin, 20L);
+
+        this.setCooldown();
     }
 
     public static void effect(Location location) {

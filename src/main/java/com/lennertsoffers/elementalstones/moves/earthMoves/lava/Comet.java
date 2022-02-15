@@ -114,6 +114,8 @@ public class Comet extends Move {
                     world.spawnParticle(Particle.FLAME, particleLocation3, 0);
                 }
             }
+
+            this.setCooldown();
         }
     }
 }

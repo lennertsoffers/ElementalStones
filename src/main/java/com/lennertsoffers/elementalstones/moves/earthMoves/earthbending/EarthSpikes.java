@@ -48,6 +48,8 @@ public class EarthSpikes extends Move {
         } else {
             this.spikeWave(location, true, false, false);
         }
+
+        this.setCooldown();
     }
 
     private void spikeWave(Location location, boolean var0, boolean var1, boolean perpendicular) {

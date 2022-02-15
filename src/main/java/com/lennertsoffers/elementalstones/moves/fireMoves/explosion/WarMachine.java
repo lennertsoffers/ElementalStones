@@ -28,6 +28,10 @@ public class WarMachine extends Move {
             activePlayer.useWarMachineGrenade();
             GrenadeWarMachineBig grenadeWarMachineBig = new GrenadeWarMachineBig(player, 17, Particle.TOTEM, null);
             grenadeWarMachineBig.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+            if (!activePlayer.hasWarMachineGrenades()) {
+                this.setCooldown();
+            }
         } else {
             activePlayer.fillWarMachineGrenades();
 
@@ -46,6 +50,7 @@ public class WarMachine extends Move {
                     if (!activePlayer.hasWarMachineGrenades() || amountOfTicks > 600) {
                         this.cancel();
                         activePlayer.setWarMachineGrenades(0);
+                        setCooldown();
                     }
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L);

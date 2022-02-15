@@ -17,5 +17,7 @@ public class Hellfire extends Move {
         Player player = this.getPlayer();
         FireHellfireStorm fireHellfireStorm = new FireHellfireStorm(player);
         fireHellfireStorm.runTaskTimer(StaticVariables.plugin, 0L, 5L);
+
+        this.setCooldown();
     }
 }

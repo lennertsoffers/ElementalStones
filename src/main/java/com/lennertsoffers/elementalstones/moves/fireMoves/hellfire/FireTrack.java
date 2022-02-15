@@ -69,5 +69,7 @@ public class FireTrack extends Move {
                 }
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

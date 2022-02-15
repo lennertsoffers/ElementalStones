@@ -66,6 +66,8 @@ public class SnowStomp extends Move {
                     block.setType(Material.POWDER_SNOW);
                 }
             }
+
+            this.setCooldown();
         }
     }
 }

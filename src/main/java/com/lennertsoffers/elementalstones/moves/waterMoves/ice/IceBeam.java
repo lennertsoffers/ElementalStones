@@ -109,5 +109,7 @@ public class IceBeam extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

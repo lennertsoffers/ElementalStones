@@ -46,6 +46,8 @@ public class EarthWave extends Move {
         } else {
             earthWaveNew(location, false, true, false, this.getActivePlayer());
         }
+
+        this.setCooldown();
     }
 
     public static void earthWaveNew(Location location, boolean var0, boolean var1, boolean perpendicular, ActivePlayer activePlayer) {

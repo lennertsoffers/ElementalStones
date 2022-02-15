@@ -30,6 +30,8 @@ public class LavaSpout extends Move {
                 com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSpout lavaSpout = new com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSpout(activePlayer, location);
                 lavaSpout.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             }
+
+            this.setCooldown();
         }
     }
 }

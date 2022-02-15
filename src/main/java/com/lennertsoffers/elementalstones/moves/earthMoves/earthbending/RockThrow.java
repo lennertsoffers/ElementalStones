@@ -66,6 +66,7 @@ public class RockThrow extends Move {
             }
 
             activePlayer.getMove6FallingBlocks().clear();
+            this.setCooldown();
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
+import com.lennertsoffers.elementalstones.moves.fireMoves.explosion.TripleThreat;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
@@ -14,13 +16,15 @@ import java.util.LinkedList;
 
 public class FireFireworks extends BukkitRunnable {
 
+    private final ActivePlayer activePlayer;
     private final Player player;
     private final World world;
     private int amountOfTicks = 0;
     private final LinkedList<Firework> fireworks = new LinkedList<>();
 
-    public FireFireworks(Player player) {
-        this.player = player;
+    public FireFireworks(ActivePlayer activePlayer) {
+        this.activePlayer = activePlayer;
+        this.player = activePlayer.getPlayer();
         this.world = player.getWorld();
 
         getFireworkLocations().forEach(location -> {
@@ -40,6 +44,11 @@ public class FireFireworks extends BukkitRunnable {
         this.amountOfTicks++;
         if (this.amountOfTicks > 400) {
             this.shootFireworks();
+            this.activePlayer.getMoveController().getMoves().forEach(move -> {
+                if (move instanceof TripleThreat) {
+                    move.setCooldown();
+                }
+            });
         }
     }
 

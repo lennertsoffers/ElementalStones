@@ -69,5 +69,7 @@ public class FireFly extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

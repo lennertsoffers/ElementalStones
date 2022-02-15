@@ -159,7 +159,7 @@ public class ExplosionStone extends FireStone {
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 50L);
             } else if (activePlayer.getFireFireworks() == null) {
-                FireFireworks fireFireworks = new FireFireworks(player);
+                FireFireworks fireFireworks = new FireFireworks(activePlayer);
                 activePlayer.setFireFireworks(fireFireworks);
                 fireFireworks.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             } else {

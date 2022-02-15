@@ -20,5 +20,7 @@ public class Flamethrower extends Move {
 
         FireFlamethrower fireFlamethrower = new FireFlamethrower(player, world);
         fireFlamethrower.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

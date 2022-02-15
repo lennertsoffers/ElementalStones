@@ -74,5 +74,7 @@ public class Earthquake extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 10L);
+
+        this.setCooldown();
     }
 }

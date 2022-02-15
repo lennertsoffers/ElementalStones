@@ -69,6 +69,8 @@ public class DeepFreeze extends Move {
                 currentLocation.add(playerDirection.multiply(0.1));
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 
     private void freezeEffect(LivingEntity target) {

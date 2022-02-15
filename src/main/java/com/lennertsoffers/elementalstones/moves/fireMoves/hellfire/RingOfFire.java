@@ -20,5 +20,7 @@ public class RingOfFire extends Move {
 
         FireBlast fireBlast = new FireBlast(player, world);
         fireBlast.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

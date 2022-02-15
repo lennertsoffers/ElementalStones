@@ -102,5 +102,7 @@ public class CombustionBeam extends Move {
                 world.createExplosion(finalEndLocation, 3, true, true, player);
             }
         }.runTaskLater(StaticVariables.plugin, 6L);
+
+        this.setCooldown();
     }
 }

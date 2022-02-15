@@ -79,6 +79,8 @@ public class AquaRing extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 
     private void knockbackEntities(Location location) {

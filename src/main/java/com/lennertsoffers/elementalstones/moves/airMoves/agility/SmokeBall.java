@@ -25,6 +25,7 @@ public class SmokeBall extends Move {
         Location startingLocation = this.getPlayer().getLocation().add(this.getPlayer().getLocation().getDirection().clone().multiply(2)).add(0, 1, 0);
         final Location impactLocation = this.getPlayer().getLocation();
         PotionEffect potionEffect = new PotionEffect(PotionEffectType.SLOW, 100, 3, true, true, true);
+        this.setCooldown();
 
         BukkitRunnable smoke = new BukkitRunnable() {
             int amountOfTicks = 0;

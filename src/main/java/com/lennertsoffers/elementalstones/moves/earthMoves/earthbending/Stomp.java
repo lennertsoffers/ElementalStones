@@ -45,5 +45,7 @@ public class Stomp extends Move {
                 }
             }
         }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

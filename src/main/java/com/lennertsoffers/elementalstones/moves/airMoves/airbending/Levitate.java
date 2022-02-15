@@ -87,14 +87,14 @@ public class Levitate extends Move {
                     }
 
                     if (amountOfTicks > 400) {
-                        getActivePlayer().stopLevitatingTask();
+                        endLevitation();
                     }
 
                     amountOfTicks++;
                 }
             }.runTaskTimer(StaticVariables.plugin, 0L, 1L));
         } else {
-            this.getActivePlayer().stopLevitatingTask();
+            this.endLevitation();
             Entity target = this.getActivePlayer().getTarget();
 
             if (
@@ -105,5 +105,10 @@ public class Levitate extends Move {
                 target.setVelocity(MathTools.getDirectionNormVector3d(this.getActivePlayer().getMove8from(), this.getActivePlayer().getMove8to()).multiply(4));
             }
         }
+    }
+
+    private void endLevitation() {
+        this.setCooldown();
+        this.getActivePlayer().stopLevitatingTask();
     }
 }

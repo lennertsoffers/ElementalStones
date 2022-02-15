@@ -48,5 +48,6 @@ public class Dash extends Move {
         }
 
         this.getPlayer().setVelocity(velocity);
+        this.setCooldown();
     }
 }

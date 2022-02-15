@@ -20,5 +20,7 @@ public class LavaSphere extends Move {
 
         com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSphere lavaSphere = new com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.LavaSphere(activePlayer);
         lavaSphere.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+
+        this.setCooldown();
     }
 }

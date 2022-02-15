@@ -85,6 +85,8 @@ public class Bubblebeam extends Move {
                 amountOfTicks++;
             }
         }.runTaskTimer(StaticVariables.plugin, 60L, 1L);
+
+        this.setCooldown();
     }
 
     private void spawnParticles(Location location) {

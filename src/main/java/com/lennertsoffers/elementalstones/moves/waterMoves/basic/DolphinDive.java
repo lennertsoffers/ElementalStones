@@ -26,5 +26,7 @@ public class DolphinDive extends Move {
         }.runTaskLater(StaticVariables.plugin, 1200L);
         Player player = activePlayer.getPlayer();
         player.addPotionEffect(new PotionEffect(PotionEffectType.DOLPHINS_GRACE, 1200, 3, true, true, true));
+
+        this.setCooldown();
     }
 }

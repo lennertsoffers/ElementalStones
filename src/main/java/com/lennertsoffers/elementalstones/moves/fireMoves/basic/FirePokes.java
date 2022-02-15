@@ -25,7 +25,9 @@ public class FirePokes extends Move {
             newFireBall.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             activePlayer.setFireBall(newFireBall);
         } else {
-            fireBall.poke(activePlayer);
+            if (!fireBall.poke(activePlayer)) {
+                this.setCooldown();
+            }
         }
     }
 }

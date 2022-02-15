@@ -37,5 +37,7 @@ public class AQuickSnack extends Move {
                 }
             }
         }
+
+        this.setCooldown();
     }
 }
