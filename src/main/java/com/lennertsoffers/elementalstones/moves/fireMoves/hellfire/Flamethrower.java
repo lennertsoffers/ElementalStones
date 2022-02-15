@@ -7,15 +7,15 @@ import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-public class FireBeam extends Move {
+public class Flamethrower extends Move {
 
-    public FireBeam(ActivePlayer activePlayer) {
-        super(activePlayer, "Fire Beam", "fire_stone", "hellfire_stone", 7);
+    public Flamethrower(ActivePlayer activePlayer) {
+        super(activePlayer, "Flamethrower", "fire_stone", "hellfire_stone", 7);
     }
 
     @Override
     public void useMove() {
-        Player player = activePlayer.getPlayer();
+        Player player = this.getPlayer();
         World world = player.getWorld();
 
         FireFlamethrower fireFlamethrower = new FireFlamethrower(player, world);
