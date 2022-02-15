@@ -344,7 +344,7 @@ public class AirbendingStone extends AirStoneSharedPassive {
             Location location = player.getLocation().add(0, 1, 0);
             Vector direction = location.getDirection();
 
-            if (!activePlayer.hasPossibleTarget() && activePlayer.isNotLevitatingTarget()) {
+            if (activePlayer.hasPossibleTarget() && activePlayer.isNotLevitatingTarget()) {
 
                 // Finding target
                 Entity target = null;

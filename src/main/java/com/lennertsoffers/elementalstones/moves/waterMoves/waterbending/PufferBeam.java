@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.Location;
+import org.bukkit.entity.Dolphin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ public class PufferBeam extends Move {
     @Override
     public void useMove() {
         Player player = this.getPlayer();
+
         new BukkitRunnable() {
             int amountOfTicks = 0;
 

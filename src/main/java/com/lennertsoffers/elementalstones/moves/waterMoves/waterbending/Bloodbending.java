@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.moves.airMoves.airbending;
+package com.lennertsoffers.elementalstones.moves.waterMoves.waterbending;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
@@ -13,10 +13,10 @@ import org.bukkit.entity.Item;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class Levitate extends Move {
+public class Bloodbending extends Move {
 
-    public Levitate(ActivePlayer activePlayer) {
-        super(activePlayer, "Levitate", "air_stone", "airbending_stone", 8);
+    public Bloodbending(ActivePlayer activePlayer) {
+        super(activePlayer, "Bloodbending", "air_stone", "airbending_stone", 8);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class Levitate extends Move {
         Location location = this.getPlayer().getLocation().add(0, 1, 0);
         Vector direction = location.getDirection();
 
-        if (!this.getActivePlayer().hasPossibleTarget() && this.getActivePlayer().isNotLevitatingTarget()) {
+        if (this.getActivePlayer().hasPossibleTarget() && this.getActivePlayer().isNotLevitatingTarget()) {
 
             // Finding target
             Entity target = null;

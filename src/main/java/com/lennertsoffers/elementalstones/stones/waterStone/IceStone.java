@@ -209,7 +209,7 @@ public class IceStone extends WaterStone {
         return () -> {
             Player player = activePlayer.getPlayer();
             World world = player.getWorld();
-            if (!activePlayer.hasIceSpear()) {
+            if (activePlayer.hasIceSpear()) {
                 activePlayer.setIceSpear(new BukkitRunnable() {
                     @Override
                     public void run() {
