@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
+import com.lennertsoffers.elementalstones.moves.earthMoves.earthbending.FlyingRock;
 import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.event.EventHandler;
@@ -30,7 +31,7 @@ public class FallingBlockToBlockEvent implements Listener {
                         if (activePlayer.getMove8FallingBlocks().contains(fallingBlock)) {
                             e.setCancelled(true);
                             activePlayer.clearMove8FallingBlocks();
-                            EarthbendingStone.move8End(activePlayer);
+                            FlyingRock.end(activePlayer);
                         }
                     }
                 }
