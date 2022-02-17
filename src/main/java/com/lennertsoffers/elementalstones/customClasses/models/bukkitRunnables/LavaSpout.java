@@ -21,13 +21,11 @@ public class LavaSpout extends BukkitRunnable {
     private int height = 0;
     private int heightAddition;
     private final Location middlePoint;
-    private final ActivePlayer activePlayer;
     private final Player player;
     private final World world;
     private final List<Location> placedLavaLocations = new ArrayList<>();
 
     public LavaSpout(ActivePlayer activePlayer, Location middlePoint) {
-        this.activePlayer = activePlayer;
         this.player = activePlayer.getPlayer();
         this.world = player.getWorld();
         this.middlePoint = getLowestHeight(middlePoint);

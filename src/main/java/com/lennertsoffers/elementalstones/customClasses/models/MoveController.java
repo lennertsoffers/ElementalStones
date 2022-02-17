@@ -34,7 +34,7 @@ import java.util.*;
 public class MoveController {
 
     // Moves
-    private ArrayList<Move> moves = new ArrayList<>();
+    private final ArrayList<Move> moves = new ArrayList<>();
 
     private final ActivePlayer activePlayer;
     private final Player player;

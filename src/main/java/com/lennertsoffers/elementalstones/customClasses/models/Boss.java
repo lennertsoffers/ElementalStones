@@ -4,11 +4,11 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.*;
 
 public class Boss {
 
@@ -80,11 +80,21 @@ public class Boss {
                     range = 200;
                     speed = 0.5;
                 }
+
                 monster.setCustomName(this.name);
-                monster.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
-                monster.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
-                monster.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(range);
-                monster.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+
+                HashMap<AttributeInstance, Double> attributeInstanceMap = new HashMap<>();
+                attributeInstanceMap.put(monster.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE), attack);
+                attributeInstanceMap.put(monster.getAttribute(Attribute.GENERIC_MAX_HEALTH), health);
+                attributeInstanceMap.put(monster.getAttribute(Attribute.GENERIC_FOLLOW_RANGE), range);
+                attributeInstanceMap.put(monster.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED), speed);
+
+                attributeInstanceMap.forEach((key, value) -> {
+                    if (key != null) {
+                        key.setBaseValue(value);
+                    }
+                });
+
                 return true;
             }
         }
