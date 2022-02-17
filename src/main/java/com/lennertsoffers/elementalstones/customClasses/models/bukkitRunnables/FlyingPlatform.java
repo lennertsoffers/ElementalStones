@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
+import com.lennertsoffers.elementalstones.moves.earthMoves.earthbending.FlyingRock;
 import org.bukkit.Location;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
@@ -66,7 +66,7 @@ public class FlyingPlatform extends BukkitRunnable {
             if (amountOfTicks >= maxAmountOfTicks) {
                 this.cancel();
                 if (!creation) {
-                    EarthbendingStone.move8End(activePlayer);
+                    FlyingRock.end(activePlayer);
                 } else {
                     activePlayer.setMove8active(true);
                     activePlayer.setMovesEnabled(true);

@@ -2,7 +2,6 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.airMoves.airbending.WindCloak;
-import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

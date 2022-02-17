@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireHellfireStorm;
-import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
+import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.event.EventHandler;
@@ -24,6 +24,6 @@ public class EntityExplodeEvent implements Listener {
             }
         }
 
-        ExplosionStone.passive2(event);
+        PassiveHandler.cuteCreepers(event);
     }
 }

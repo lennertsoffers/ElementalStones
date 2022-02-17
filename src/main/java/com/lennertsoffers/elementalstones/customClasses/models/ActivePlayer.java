@@ -5,7 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.C
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
+import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -91,7 +91,7 @@ public class ActivePlayer {
             this.moveController.clearScoreBoard();
             clearMoves();
 
-            IceStone.passive1(this);
+            PassiveHandler.iceBoots(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
         } else {
@@ -102,7 +102,7 @@ public class ActivePlayer {
             this.moveController.loadMoves();
 
             // Initialize passives
-            IceStone.passive1(this);
+            PassiveHandler.iceBoots(this);
             initAgilityStonePassive();
 
             // Inform player of his/her state

@@ -1,7 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.moves.fireMoves.explosion.RandomRocket;
-import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
 import org.bukkit.entity.Firework;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
