@@ -1,30 +1,16 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
-import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthStone;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
-import com.lennertsoffers.elementalstones.stones.fireStone.FireStone;
-import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
-import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
-import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
-import com.lennertsoffers.elementalstones.stones.waterStone.WaterStone;
-import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AgilityStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AirStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
+import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -35,7 +21,6 @@ public class ActivePlayer {
     private final Player player;
     private boolean active;
     private Vector movingDirection;
-    private final ArrayList<ItemStack> hotbarContents = new ArrayList<>();
     private static final ArrayList<ActivePlayer> activePlayers = new ArrayList<>();
     private final Map<Location, Material> resetMapping = new HashMap<>();
     private final MoveController moveController;
@@ -101,37 +86,23 @@ public class ActivePlayer {
     public void toggleActive() {
         if (this.active) {
             this.active = false;
-//            Inventory inventory = player.getInventory();
-//            for (int i = 0; i < 8; i++) {
-//                inventory.setItem(i, hotbarContents.get(i));
-//                hotbarContents.clear();
-//            }
             this.resetWorld();
-            player.setAllowFlight(false);
-
+            this.player.setAllowFlight(false);
+            this.moveController.clearScoreBoard();
             clearMoves();
 
-            IceStone.passive1(this);
+            PassiveHandler.iceBoots(this);
             this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
 
         } else {
             // Set player to active
             this.active = true;
 
-            // Switch contents of hotbar with moves
-            Inventory inventory = player.getInventory();
-            for (int i = 0; i < 8; i++) {
-                hotbarContents.add(inventory.getItem(i));
-                inventory.setItem(i, null);
-            }
-
             // Select correct moves
             this.moveController.loadMoves();
 
-            // Select correct cooldowns
-
             // Initialize passives
-            IceStone.passive1(this);
+            PassiveHandler.iceBoots(this);
             initAgilityStonePassive();
 
             // Inform player of his/her state
@@ -308,10 +279,6 @@ public class ActivePlayer {
         return activePlayers;
     }
 
-    public int getRemainingIceShards() {
-        return this.remainingIceShards;
-    }
-
     public boolean useIceShard() {
         if (this.remainingIceShards >= 1) {
             this.remainingIceShards--;
@@ -330,7 +297,7 @@ public class ActivePlayer {
     }
 
     public boolean hasIceSpear() {
-        return this.iceSpear != null;
+        return this.iceSpear == null;
     }
 
     public void setIceSpear(BukkitTask bukkitTask) {
@@ -444,7 +411,7 @@ public class ActivePlayer {
     }
 
     public boolean hasPossibleTarget() {
-        return this.possibleTarget != null;
+        return this.possibleTarget == null;
     }
 
     public Entity getPossibleTarget() {

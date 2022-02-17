@@ -1,11 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.stones.earthStone.EarthbendingStone;
-import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
-import com.lennertsoffers.elementalstones.stones.fireStone.ExplosionStone;
-import com.lennertsoffers.elementalstones.stones.fireStone.HellfireStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
+import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -22,16 +18,16 @@ public class EntityDamageEvent implements Listener {
                 return;
             }
 
-            AirbendingStone.passive1(activePlayer, event);
-            LavaStone.passive2(activePlayer, event);
-            HellfireStone.passive(event, player);
-            ExplosionStone.passive1(event, player);
+            PassiveHandler.featherFalling(activePlayer, event);
+            PassiveHandler.magmaMaster(activePlayer, event);
+            PassiveHandler.friendlyFire(event, player);
+            PassiveHandler.explosionResistance(event, player);
 
             if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.FALL) {
                 if (activePlayer.isMove8active()) {
                     event.setCancelled(true);
                 } else {
-                    EarthbendingStone.passive(activePlayer, event);
+                    PassiveHandler.shockwave(activePlayer, event);
                 }
             }
         }

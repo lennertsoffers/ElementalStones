@@ -22,10 +22,7 @@ import com.lennertsoffers.elementalstones.moves.waterMoves.basic.DolphinDive;
 import com.lennertsoffers.elementalstones.moves.waterMoves.basic.Splash;
 import com.lennertsoffers.elementalstones.moves.waterMoves.basic.WaterBullet;
 import com.lennertsoffers.elementalstones.moves.waterMoves.ice.*;
-import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.AquaRing;
-import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.Bubblebeam;
-import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.HealingWaters;
-import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.PufferBeam;
+import com.lennertsoffers.elementalstones.moves.waterMoves.waterbending.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -58,6 +55,15 @@ public class MoveController {
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
         moveControllers.add(this);
+    }
+
+    public void clearScoreBoard() {
+        for (int i = 0; i < this.moves.size(); i++) {
+            Move move = this.moves.get(i);
+
+            this.scoreboard.resetScores(ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + (i + 1) + ": " + move.getName());
+            this.scoreboard.resetScores(ChatColor.YELLOW + "" + (i + 1) + ": " + move.getName());
+        }
     }
 
     public void updateScoreBoard() {
@@ -136,6 +142,7 @@ public class MoveController {
                 this.moves.add(new HealingWaters(this.activePlayer));
                 this.moves.add(new PufferBeam(this.activePlayer));
                 this.moves.add(new AquaRing(this.activePlayer));
+                this.moves.add(new Bloodbending(this.activePlayer));
             } else if (activeStone.isSimilar(ItemStones.waterStoneIce0)) {
                 this.moves.add(new Splash(this.activePlayer));
                 this.moves.add(new DolphinDive(this.activePlayer));
@@ -216,7 +223,7 @@ public class MoveController {
                 this.moves.add(new TrackingBlade(this.activePlayer));
                 this.moves.add(new WindCloak(this.activePlayer));
                 this.moves.add(new Tornado(this.activePlayer));
-                this.moves.add(new Levitate(this.activePlayer));
+                this.moves.add(new Antigravity(this.activePlayer));
             } else if (activeStone.isSimilar(ItemStones.airStoneAgility0)) {
                 this.moves.add(new AirBall(this.activePlayer));
                 this.moves.add(new AreaControl(this.activePlayer));

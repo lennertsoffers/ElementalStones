@@ -4,11 +4,6 @@
 disable_cooldowns: false
 
 # Cooldown time per stone in ms
-# Empty stone
-empty_stone:
-  default:
-    move1: 0
-
 # Water stone
 water_stone:
   default:
@@ -40,7 +35,7 @@ fire_stone:
     move6: 10000
     move7: 10000
     move8: 10000
-  lava_stone:
+  explosion_stone:
     move4: 10000
     move5: 10000
     move6: 10000
@@ -78,7 +73,7 @@ earth_stone:
     move6: 10000
     move7: 10000
     move8: 10000
-  defense_stone:
+  lava_stone:
     move4: 10000
     move5: 10000
     move6: 10000

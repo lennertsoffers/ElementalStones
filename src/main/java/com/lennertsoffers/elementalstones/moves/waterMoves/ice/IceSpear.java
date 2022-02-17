@@ -27,7 +27,7 @@ public class IceSpear extends Move {
         ActivePlayer activePlayer = this.getActivePlayer();
         Player player = activePlayer.getPlayer();
         World world = player.getWorld();
-        if (!activePlayer.hasIceSpear()) {
+        if (activePlayer.hasIceSpear()) {
             activePlayer.setIceSpear(new BukkitRunnable() {
                 @Override
                 public void run() {

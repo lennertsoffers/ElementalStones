@@ -2,17 +2,12 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import com.lennertsoffers.elementalstones.stones.earthStone.LavaStone;
-import com.lennertsoffers.elementalstones.stones.waterStone.IceStone;
-import com.lennertsoffers.elementalstones.stones.waterStone.WaterbendingStone;
-import com.lennertsoffers.elementalstones.stones.windStone.AirbendingStone;
-import org.bukkit.Material;
+import com.lennertsoffers.elementalstones.moves.airMoves.airbending.AirSlash;
+import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.Arrays;
@@ -38,7 +33,7 @@ public class PlayerMoveEvent implements Listener {
                 activePlayer.enableDoubleJump();
                 if (activePlayer.doCriticalOnGround()) {
                     activePlayer.setCriticalOnGround(false);
-                    AirbendingStone.move4Slash(player, true);
+                    AirSlash.slashEffect(player, true);
                 }
             }
         }
@@ -46,8 +41,8 @@ public class PlayerMoveEvent implements Listener {
         Vector movingDirection = Objects.requireNonNull(Objects.requireNonNull(event.getTo()).clone()).add(event.getFrom().clone().multiply(-1)).toVector();
         activePlayer.setMovingDirection(movingDirection.multiply(3));
 
-        WaterbendingStone.passive2(activePlayer);
-        IceStone.passive2(player);
-        LavaStone.passive1(activePlayer);
+        PassiveHandler.waterWalker(activePlayer);
+        PassiveHandler.slippery(player);
+        PassiveHandler.lavaWalker(activePlayer);
     }
 }
