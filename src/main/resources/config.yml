@@ -105,39 +105,39 @@ drop_chance:
 # XP VALUE
 xp_value:
   # Base items
-  baby_zombie_hide: 10
-  rotten_apple: 10
+  baby_zombie_hide: 1
+  rotten_apple: 1
   insect: 10
-  bat: 10
-  thyme: 10
-  oregano: 10
-  dill: 10
-  rosemary: 7
-  golden_feather: 10
-  dead_flower: 10
-  twig: 10
-  soul_of_evoker: 10
-  blood_of_wandering_trader: 10
-  stinger: 10
-  hoglin_tusk: 10
-  finn: 10
+  bat: 1
+  thyme: 1
+  oregano: 1
+  dill: 1
+  rosemary: 1
+  golden_feather: 1
+  dead_flower: 1
+  twig: 1
+  soul_of_evoker: 1
+  blood_of_wandering_trader: 1
+  stinger: 1
+  hoglin_tusk: 1
+  finn: 1
 
   # Craft items
-  voodoo_doll: 20
-  ship_in_bottle: 20
-  palantir: 20
-  blood_and_quil: 20
-  bundle_of_herbs: 20
-  carnivorous_plant: 20
-  scented_candle: 20
-  finn_soup: 20
-  war_horn: 20
-  poisonous_dart: 20
-  broom: 20
-  poisoned_apple: 20
-  mystery_potion: 20
-  antidote: 20
-  gingerbread_man: 20
+  voodoo_doll: 2
+  ship_in_bottle: 2
+  palantir: 2
+  blood_and_quil: 2
+  bundle_of_herbs: 2
+  carnivorous_plant: 2
+  scented_candle: 2
+  finn_soup: 2
+  war_horn: 2
+  poisonous_dart: 2
+  broom: 2
+  poisoned_apple: 2
+  mystery_potion: 2
+  antidote: 2
+  gingerbread_man: 2
 
 
 

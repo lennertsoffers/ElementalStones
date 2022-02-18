@@ -15,7 +15,7 @@ import org.bukkit.util.Vector;
 public class TrackingBlade extends Move {
 
     public TrackingBlade(ActivePlayer activePlayer) {
-        super(activePlayer, "Wind Cloak", "air_stone", "airbending_stone", 5);
+        super(activePlayer, "Tracking Blade", "air_stone", "airbending_stone", 5);
     }
 
     @Override
