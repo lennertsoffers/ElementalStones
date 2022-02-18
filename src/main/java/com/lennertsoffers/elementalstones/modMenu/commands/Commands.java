@@ -89,7 +89,7 @@ public class Commands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (args.length == 0) {
                         Player player = (Player) sender;
-                        ItemStack itemStack = CraftItemManager.VOODOO_DOLL.clone();
+                        ItemStack itemStack = CraftItemManager.INSECT.clone();
                         itemStack.setAmount(64);
                         player.getInventory().addItem(itemStack);
                         return true;

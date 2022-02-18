@@ -11,14 +11,13 @@ import org.bukkit.entity.Villager;
 
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
 public class ShamanVillager {
+
+    private boolean firstTradeGeneration = true;
 
     private final Villager villager;
     private final ArrayList<MerchantRecipe> trades = new ArrayList<>();
@@ -31,48 +30,77 @@ public class ShamanVillager {
         villager.setCustomName("Shaman");
         villager.setCustomNameVisible(false);
         initShamanIngredients();
-        generateTrades();
         shamanVillagers.add(this);
+
+        generateTrades();
     }
 
     public void generateTrades() {
-        trades.clear();
+        this.trades.clear();
         for (int i = 0; i < 5; i++) {
-            trades.add(generateTrade());
+            this.trades.add(generateTrade());
         }
-        villager.setRecipes(trades);
+
+        if (this.firstTradeGeneration) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    villager.setRecipes(trades);
+                }
+            }.runTaskLater(StaticVariables.plugin, 10L);
+        } else {
+            this.villager.setRecipes(this.trades);
+        }
     }
 
     public boolean acceptItem(ItemStack item) {
         if (villager.getVillagerLevel() < 5) {
             for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
                 if (shamanTradeItem.getItem().isSimilar(item)) {
-                    villager.setVillagerExperience(villager.getVillagerExperience() + shamanTradeItem.getXpValue());
-                    if (villager.getVillagerExperience() >= 10) {
-                        World world = villager.getWorld();
-                        if (villager.getVillagerLevel() < 5) {
-                            villager.setVillagerLevel(villager.getVillagerLevel() + 1);
-                            for (int i = 0; i < 30; i++) {
-                                Location particleLocation = villager.getLocation().add(0, 1.5, 0);
-                                double x = particleLocation.getX() + StaticVariables.random.nextGaussian() / 6;
-                                double y = particleLocation.getY() + StaticVariables.random.nextGaussian() / 6;
-                                double z = particleLocation.getZ() + StaticVariables.random.nextGaussian() / 6;
-                                world.spawnParticle(Particle.VILLAGER_HAPPY, x, y, z, 0);
-                            }
-                            generateTrades();
-                            if (villager.getVillagerLevel() == 5) {
-                                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.spell")) == 0) {
-                                    Location location = villager.getLocation();
-                                    world.dropItem(location, CraftItemManager.spells.get(StaticVariables.random.nextInt(CraftItemManager.spells.size())));
-                                }
-                            }
-                        }
-                    }
+                    int xp = shamanTradeItem.getXpValue();
+                    System.out.println(xp);
+
+                    int oldXp = this.villager.getVillagerExperience();
+                    villager.setVillagerExperience(villager.getVillagerExperience() + xp);
+                    int newXp = this.villager.getVillagerExperience();
+
+                    System.out.println("old: " + oldXp);
+                    System.out.println("new: " + newXp);
+
+//                    if (oldXp / 10 != newXp / 10) {
+//                        villagerLevelUp();
+//                    }
+
+                    // TODO - Experience levels of villagers to level
+
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private void villagerLevelUp() {
+        World world = villager.getWorld();
+
+        for (int i = 0; i < 30; i++) {
+            Location particleLocation = villager.getLocation().add(0, 1.5, 0);
+            double x = particleLocation.getX() + StaticVariables.random.nextGaussian() / 6;
+            double y = particleLocation.getY() + StaticVariables.random.nextGaussian() / 6;
+            double z = particleLocation.getZ() + StaticVariables.random.nextGaussian() / 6;
+            world.spawnParticle(Particle.VILLAGER_HAPPY, x, y, z, 0);
+        }
+
+        generateTrades();
+
+        if (villager.getVillagerLevel() == 5) {
+            if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.spell")) == 0) {
+                Location location = villager.getLocation();
+                world.dropItem(location, CraftItemManager.spells.get(StaticVariables.random.nextInt(CraftItemManager.spells.size())));
+            }
+        } else {
+            this.villager.setVillagerLevel(this.villager.getVillagerLevel() + 1);
+        }
     }
 
     private MerchantRecipe generateTrade() {

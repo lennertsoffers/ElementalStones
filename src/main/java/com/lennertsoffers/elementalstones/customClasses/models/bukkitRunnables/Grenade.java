@@ -101,9 +101,5 @@ public abstract class Grenade extends BukkitRunnable {
         return startLocation;
     }
 
-    public Vector getStartVelocity() {
-        return startVelocity;
-    }
-
     abstract public void explode(Location impactLocation);
 }

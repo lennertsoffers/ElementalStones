@@ -59,20 +59,17 @@ public class StringListTools {
         return inputString;
     }
 
-    public static String[][] mirrorX(String[][] inputString) {
+    public static void mirrorX(String[][] inputString) {
         for (int i = 0; i < inputString.length; i++) {
             inputString[i] = mirrorX(inputString[i]);
         }
 
-        return inputString;
     }
 
-    public static String[][] mirrorY(String[][] inputString) {
+    public static void mirrorY(String[][] inputString) {
         for (int i = 0; i < inputString.length; i++) {
             inputString[i] = mirrorY(inputString[i]);
         }
-
-        return inputString;
     }
 
     public static ArrayList<String> formatLore(String lore, ChatColor chatColor) {
