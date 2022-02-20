@@ -58,20 +58,19 @@ public class ShamanVillager {
             for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
                 if (shamanTradeItem.getItem().isSimilar(item)) {
                     int xp = shamanTradeItem.getXpValue();
-                    System.out.println(xp);
 
                     int oldXp = this.villager.getVillagerExperience();
                     villager.setVillagerExperience(villager.getVillagerExperience() + xp);
                     int newXp = this.villager.getVillagerExperience();
 
-                    System.out.println("old: " + oldXp);
-                    System.out.println("new: " + newXp);
-
-//                    if (oldXp / 10 != newXp / 10) {
-//                        villagerLevelUp();
-//                    }
-
-                    // TODO - Experience levels of villagers to level
+                    if (
+                            (oldXp < 10 && newXp >= 10) ||
+                            (oldXp < 70 && newXp >= 70) ||
+                            (oldXp < 150 && newXp >= 150) ||
+                            (oldXp < 250 && newXp >= 250)
+                    ) {
+                        villagerLevelUp();
+                    }
 
                     return true;
                 }
