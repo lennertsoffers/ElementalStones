@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.items;
 
+import com.lennertsoffers.elementalstones.customClasses.models.ItemCounter;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.ChatColor;
@@ -30,24 +31,35 @@ public class CraftItemManager {
     public static ItemStack FINN;
 
     // Craft Items
+    // Summons random boss
     public static ItemStack VOODOO_DOLL;
+    // Right click to locate the nearest shipwreck
     public static ItemStack SHIP_IN_BOTTLE;
     public static ItemStack PALANTIR;
     public static ItemStack BLOOD_AND_QUIL;
     public static ItemStack BUNDLE_OF_HERBS;
     public static ItemStack CARNIVOROUS_PLANT;
     public static ItemStack SCENTED_CANDLE;
+    // Gives water breathing
     public static ItemStack FINN_SOUP;
+    // Right click plays raid sound
     public static ItemStack WAR_HORN;
     public static ItemStack POISONOUS_DART;
     public static ItemStack BROOM;
 
     // Consumables
+
+    // Gives hunger & nausea
     public static ItemStack ROTTEN_APPLE;
+    // Gives poison
     public static ItemStack POISONED_APPLE;
+    // Random potionEffect
     public static ItemStack MYSTERY_POTION;
+    // Turns bad potionEffect in good version
     public static ItemStack ANTIDOTE;
+    // Gives luck resistance and saturation
     public static ItemStack GINGERBREAD_MAN;
+    // Summons lightning
     public static ItemStack BOTTLE_OF_LIGHTNING;
 
     // Shards
@@ -72,81 +84,87 @@ public class CraftItemManager {
 
 
     // Create Items
-    private static int itemId = 0;
-    private static ItemStack createNormalItem(String displayName, String lore) {
-        ItemStack itemStack = new ItemStack(Material.BOWL);
-        return setLore(displayName, lore, itemStack);
-    }
-    
-    private static ItemStack createAlterMaterialItem(String displayName, String lore, Material material) {
-        ItemStack itemStack = new ItemStack(material);
-        return setLore(displayName, lore, itemStack);
 
-    }
-    
-    private static ItemStack setLore(String displayName, String lore, ItemStack itemStack) {
+    private static ItemStack createItem(String displayName, String lore, ItemCounter itemCounter) {
+        ItemStack itemStack = new ItemStack(itemCounter.getMaterial());
+
         ItemMeta itemMeta = itemStack.getItemMeta();
+
         if (itemMeta != null) {
             itemMeta.setDisplayName(displayName);
             StringListTools.formatLore(lore, ChatColor.GRAY);
-            itemMeta.setCustomModelData(itemId);
-            itemId++;
+            itemMeta.setCustomModelData(itemCounter.getAmount());
+
+            itemCounter.createItem();
         }
+
         itemStack.setItemMeta(itemMeta);
         return itemStack;
-    } 
+    }
 
     public static void init() {
-        // Set items
-        BABY_ZOMBIE_HIDE = createNormalItem("Baby Zombie Hide", "");
-        INSECT = createNormalItem("Insect", "");
-        BAT = createNormalItem("Bat", "");
-        THYME = createNormalItem("Thyme", "");
-        OREGANO = createNormalItem("Oregano", "");
-        DILL = createNormalItem("Dill", "");
-        ROSEMARY = createNormalItem("Rosemary", "");
-        GOLDEN_FEATHER = createNormalItem("Golden Feather", "");
-        DEAD_FLOWER = createNormalItem("Dead Flower", "");
-        TWIG = createNormalItem("Twig", "");
-        SOUL_OF_EVOKER = createNormalItem("Soul Of Evoker", "");
-        BLOOD_OF_WANDERING_TRADER = createNormalItem("Blood Of Wandering Trader", "");
-        STINGER = createNormalItem("Stinger", "");
-        HOGLIN_TUSK = createNormalItem("Hoglin Tusk", "");
-        FINN = createNormalItem("Finn", "");
+        // No Effect
+        BABY_ZOMBIE_HIDE = createItem("Baby Zombie Hide", "", ItemCounter.NO_EFFECT);
+        INSECT = createItem("Insect", "", ItemCounter.NO_EFFECT);
+        BAT = createItem("Bat", "", ItemCounter.NO_EFFECT);
+        THYME = createItem("Thyme", "", ItemCounter.NO_EFFECT);
+        OREGANO = createItem("Oregano", "", ItemCounter.NO_EFFECT);
+        DILL = createItem("Dill", "", ItemCounter.NO_EFFECT);
+        ROSEMARY = createItem("Rosemary", "", ItemCounter.NO_EFFECT);
+        GOLDEN_FEATHER = createItem("Golden Feather", "", ItemCounter.NO_EFFECT);
+        DEAD_FLOWER = createItem("Dead Flower", "", ItemCounter.NO_EFFECT);
+        TWIG = createItem("Twig", "", ItemCounter.NO_EFFECT);
+        SOUL_OF_EVOKER = createItem("Soul Of Evoker", "", ItemCounter.NO_EFFECT);
+        BLOOD_OF_WANDERING_TRADER = createItem("Blood Of Wandering Trader", "", ItemCounter.NO_EFFECT);
+        STINGER = createItem("Stinger", "", ItemCounter.NO_EFFECT);
+        HOGLIN_TUSK = createItem("Hoglin Tusk", "", ItemCounter.NO_EFFECT);
+        FINN = createItem("Finn", "", ItemCounter.NO_EFFECT);
+        SHIP_IN_BOTTLE = createItem("Ship In Bottle", "", ItemCounter.NO_EFFECT);
+        BLOOD_AND_QUIL = createItem("Blood And Quil", "", ItemCounter.NO_EFFECT);
+        BUNDLE_OF_HERBS = createItem("Bundle Of Herbs", "", ItemCounter.NO_EFFECT);
+        CARNIVOROUS_PLANT = createItem("Carnivorous Plant", "", ItemCounter.NO_EFFECT);
+        SCENTED_CANDLE = createItem("Scented Candle", "", ItemCounter.NO_EFFECT);
+        POISONOUS_DART = createItem("Poisonous Dart", "", ItemCounter.NO_EFFECT);
+        BROOM = createItem("Broom", "", ItemCounter.NO_EFFECT);
 
-        VOODOO_DOLL = createNormalItem("Voodoo Doll", "");
-        SHIP_IN_BOTTLE = createNormalItem("Ship In Bottle", "");
-        PALANTIR = createNormalItem("Palantir", "");
-        BLOOD_AND_QUIL = createNormalItem("Blood And Quil", "");
-        BUNDLE_OF_HERBS = createNormalItem("Bundle Of Herbs", "");
-        CARNIVOROUS_PLANT = createNormalItem("Carnivorous Plant", "");
-        SCENTED_CANDLE = createAlterMaterialItem("Scented Candle", "", Material.CANDLE);
-        FINN_SOUP = createNormalItem("Finn Soup", "");
-        POISONOUS_DART = createNormalItem("Poisonous Dart", "");
-        BROOM = createNormalItem("Broom", "");
-        WAR_HORN = createNormalItem("War Horn", "");
+        // Spell
+        WATERBENDING_SPELL = createItem("Waterbending Spell", "", ItemCounter.SPELL);
+        ICE_SPELL = createItem("Ice Spell", "", ItemCounter.SPELL);
+        EXPLOSION_SPELL = createItem("Explosion Spell", "", ItemCounter.SPELL);
+        HELLFIRE_SPELL = createItem("Hellfire Spell", "", ItemCounter.SPELL);
+        AGILITY_SPELL = createItem("Agility Spell", "", ItemCounter.SPELL);
+        AIRBENDING_SPELL = createItem("Airbending Spell", "", ItemCounter.SPELL);
+        LAVA_SPELL = createItem("Lava Spell", "", ItemCounter.SPELL);
+        EARTHBENDING_SPELL = createItem("Earthbending Spell", "", ItemCounter.SPELL);
 
-        ROTTEN_APPLE = createAlterMaterialItem("Rotten Apple", "", Material.APPLE);
-        POISONED_APPLE = createAlterMaterialItem("Poisoned Apple", "", Material.APPLE);
-        MYSTERY_POTION = createAlterMaterialItem("Mystery Potion", "", Material.POTION);
-        ANTIDOTE = createAlterMaterialItem("Antidote", "", Material.POTION);
-        GINGERBREAD_MAN = createAlterMaterialItem("Gingerbread Man", "", Material.COOKIE);
+        // Shard
+        COMMON_SHARD = createItem("Common Shard", "", ItemCounter.SHARD);
+        UNCOMMON_SHARD = createItem("Uncommon Shard", "", ItemCounter.SHARD);
+        RARE_SHARD = createItem("Rare Shard", "", ItemCounter.SHARD);
+        ULTRA_RARE_SHARD = createItem("Ultra Rare Shard", "", ItemCounter.SHARD);
+        LEGENDARY_SHARD = createItem("Legendary Shard", "", ItemCounter.SHARD);
 
-        COMMON_SHARD = createAlterMaterialItem("Common Shard", "", Material.DIAMOND);
-        UNCOMMON_SHARD = createAlterMaterialItem("Uncommon Shard", "", Material.DIAMOND);
-        RARE_SHARD = createAlterMaterialItem("Rare Shard", "", Material.DIAMOND);
-        ULTRA_RARE_SHARD = createAlterMaterialItem("Ultra Rare Shard", "", Material.DIAMOND);
-        LEGENDARY_SHARD = createAlterMaterialItem("Legendary Shard", "", Material.DIAMOND);
+        // Apple
+        ROTTEN_APPLE = createItem("Rotten Apple", "", ItemCounter.APPLE);
+        POISONED_APPLE = createItem("Poisoned Apple", "", ItemCounter.APPLE);
 
-        WATERBENDING_SPELL = createAlterMaterialItem("Waterbending Spell", "", Material.DIAMOND);
-        ICE_SPELL = createAlterMaterialItem("Ice Spell", "", Material.DIAMOND);
-        EXPLOSION_SPELL = createAlterMaterialItem("Lava Spell", "", Material.DIAMOND);
-        HELLFIRE_SPELL = createAlterMaterialItem("Hellfire Spell", "", Material.DIAMOND);
-        AGILITY_SPELL = createAlterMaterialItem("Agility Spell", "", Material.DIAMOND);
-        AIRBENDING_SPELL = createAlterMaterialItem("Airbending Spell", "", Material.DIAMOND);
-        LAVA_SPELL = createAlterMaterialItem("Defense Spell", "", Material.DIAMOND);
-        EARTHBENDING_SPELL = createAlterMaterialItem("Earthbending Spell", "", Material.DIAMOND);
+        // Potion
+        MYSTERY_POTION = createItem("Mystery Potion", "", ItemCounter.POTION);
 
+        // Food
+        GINGERBREAD_MAN = createItem("Gingerbread Man", "", ItemCounter.FOOD);
+
+        // Bottle
+        BOTTLE_OF_LIGHTNING = createItem("Bottle of Lightning", "", ItemCounter.BOTTLE);
+
+        // Stew
+        FINN_SOUP = createItem("Finn Soup", "", ItemCounter.STEW);
+
+        // Consumable
+        WAR_HORN = createItem("War Horn", "", ItemCounter.CONSUMABLE);
+        VOODOO_DOLL = createItem("Voodoo Doll", "", ItemCounter.CONSUMABLE);
+        ANTIDOTE = createItem("Antidote", "", ItemCounter.CONSUMABLE);
+        PALANTIR = createItem("Palantir", "", ItemCounter.CONSUMABLE);
 
         // Add spells to list
         spells.addAll(Arrays.asList(

@@ -236,7 +236,7 @@ public class ItemStones {
             int numberOfMoves,
             int customModelData
     ) {
-        ItemStack stack = new ItemStack(Material.BLAZE_ROD);
+        ItemStack stack = new ItemStack(Material.GHAST_TEAR);
         ItemMeta meta = stack.getItemMeta();
 
         if (meta != null) {

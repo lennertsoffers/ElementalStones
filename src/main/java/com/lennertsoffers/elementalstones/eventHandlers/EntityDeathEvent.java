@@ -18,12 +18,9 @@ public class EntityDeathEvent implements Listener {
         Location deathLocation = event.getEntity().getLocation();
         World world = deathLocation.getWorld();
         LivingEntity entity = event.getEntity();
-        System.out.println("test");
 
         if (world != null) {
             Boss boss = Boss.getBoss(entity.getUniqueId());
-            System.out.println("test");
-            System.out.println(boss);
             if (boss != null) {
                 Boss.killedBoss(boss);
             }
