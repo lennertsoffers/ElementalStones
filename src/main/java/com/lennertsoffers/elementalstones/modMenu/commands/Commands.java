@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -89,7 +90,7 @@ public class Commands implements CommandExecutor {
                 if (sender.isOp()) {
                     if (args.length == 0) {
                         Player player = (Player) sender;
-                        ItemStack itemStack = CraftItemManager.INSECT.clone();
+                        ItemStack itemStack = CraftItemManager.LEGENDARY_SHARD.clone();
                         itemStack.setAmount(64);
                         player.getInventory().addItem(itemStack);
                         return true;
@@ -124,6 +125,15 @@ public class Commands implements CommandExecutor {
                     for (int i = 0; i < 100; i++) {
                         world.spawnEntity(location, EntityType.COW);
                     }
+                }
+            }
+        } else if (label.equalsIgnoreCase("customModelData")) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                ItemMeta itemMeta = player.getInventory().getItemInMainHand().getItemMeta();
+
+                if (itemMeta != null) {
+                    player.sendMessage(String.valueOf(itemMeta.getCustomModelData()));
                 }
             }
         }

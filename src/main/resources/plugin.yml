@@ -22,3 +22,5 @@ commands:
     description: Saves the default config file
   spawnCows:
     description: Spawns 100 cows
+  customModelData:
+    description: Sends message to the player with the custom model data of the itemstack he's holding

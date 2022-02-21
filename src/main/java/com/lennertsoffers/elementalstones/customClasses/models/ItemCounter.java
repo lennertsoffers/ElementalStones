@@ -18,7 +18,7 @@ public enum ItemCounter {
 
     ItemCounter(Material material) {
         this.material = material;
-        this.amount = 0;
+        this.amount = 1;
     }
 
     public int getAmount() {
