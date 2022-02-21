@@ -223,7 +223,7 @@ public class MoveController {
                 this.moves.add(new TrackingBlade(this.activePlayer));
                 this.moves.add(new WindCloak(this.activePlayer));
                 this.moves.add(new Tornado(this.activePlayer));
-                this.moves.add(new Antigravity(this.activePlayer));
+                this.moves.add(new Suffocation(this.activePlayer));
             } else if (activeStone.isSimilar(ItemStones.airStoneAgility0)) {
                 this.moves.add(new AirBall(this.activePlayer));
                 this.moves.add(new AreaControl(this.activePlayer));
