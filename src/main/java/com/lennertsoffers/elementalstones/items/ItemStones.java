@@ -278,7 +278,7 @@ public class ItemStones {
             }
             lore.add("");
             meta.setLore(lore);
-            meta.setCustomModelData(customModelData);
+            meta.setCustomModelData(customModelData + 1);
             stack.setItemMeta(meta);
         }
         return stack;
