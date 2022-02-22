@@ -22,6 +22,7 @@ public class Suffocation extends Move {
         world.getNearbyEntities(player.getLocation(), 6, 6, 6, entity -> entity instanceof LivingEntity && entity != player).forEach(entity -> {
             AirBreath airBreath = new AirBreath((LivingEntity) entity, player);
             airBreath.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            entity.setGlowing(true);
         });
     }
 }
