@@ -24,3 +24,11 @@ commands:
     description: Spawns 100 cows
   customModelData:
     description: Sends message to the player with the custom model data of the itemstack he's holding
+  checkItems1:
+    description: test
+  checkItems2:
+    description: test
+  checkShards:
+    description: test
+  checkSpells:
+    description: test

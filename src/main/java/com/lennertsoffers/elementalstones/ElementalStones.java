@@ -49,6 +49,10 @@ public final class ElementalStones extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("saveDefaultConfig")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("spawnCows")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("customModelData")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("checkShards")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("checkSpells")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("checkItems1")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("checkItems2")).setExecutor(new Commands());
 
         new BukkitRunnable() {
             @Override

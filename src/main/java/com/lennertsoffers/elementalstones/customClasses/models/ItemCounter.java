@@ -3,7 +3,7 @@ package com.lennertsoffers.elementalstones.customClasses.models;
 import org.bukkit.Material;
 
 public enum ItemCounter {
-    NO_EFFECT(Material.KELP),
+    NO_EFFECT(Material.BLAZE_ROD),
     SPELL(Material.DIAMOND),
     SHARD(Material.LEATHER),
     APPLE(Material.APPLE),
