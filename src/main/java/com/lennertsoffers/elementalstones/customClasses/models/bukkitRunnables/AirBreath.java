@@ -35,8 +35,8 @@ public class AirBreath extends BukkitRunnable {
 
         this.amountOfTicks++;
         if (this.amountOfTicks > 600) {
-            this.cancel();
-            this.damageOwner();
+            this.endMove();
+            this.owner.damage(10, this.target);
         }
     }
 
@@ -68,21 +68,21 @@ public class AirBreath extends BukkitRunnable {
             LivingEntity player = (LivingEntity) entity;
 
             if (player != this.owner) {
-                double health = player.getHealth() + 10;
-                if (health > 20) {
-                    health = 20;
+                double health = player.getHealth() + 5;
+                if (health > 10) {
+                    health = 10;
                 }
 
                 player.setHealth(health);
-                this.damageOwner();
+                this.owner.damage(10, this.target);
             }
 
-            this.cancel();
+            this.endMove();
         });
     }
 
-    private void damageOwner() {
-        this.owner.damage(10, this.target);
+    private void endMove() {
         this.owner.setGlowing(false);
+        this.cancel();
     }
 }

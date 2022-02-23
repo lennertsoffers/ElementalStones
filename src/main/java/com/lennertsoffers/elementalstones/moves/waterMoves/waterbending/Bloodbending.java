@@ -86,6 +86,10 @@ public class Bloodbending extends Move {
                         world.spawnParticle(Particle.SPELL_MOB, particleX, particleY, particleZ, 0, grayValue, grayValue, grayValue);
                     }
 
+                    if (target.isDead()) {
+                        endLevitation();
+                    }
+
                     if (amountOfTicks > 400) {
                         endLevitation();
                     }

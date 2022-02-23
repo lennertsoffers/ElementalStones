@@ -129,20 +129,18 @@ public class FlyingRock extends Move {
                 EarthWave.earthWaveNew(location, false, false, false, activePlayer);
             }
         }.runTaskLater(StaticVariables.plugin, 13L);
-
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                activePlayer.setMove8active(false);
-            }
-        }.runTaskLater(StaticVariables.plugin, 40L);
     }
 
     public static void end(ActivePlayer activePlayer) {
         Player player = activePlayer.getPlayer();
         player.setFlying(false);
         player.setAllowFlight(false);
-        activePlayer.setMovesEnabled(true);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                activePlayer.setMove8active(false);
+            }
+        }.runTaskLater(StaticVariables.plugin, 40L);        activePlayer.setMovesEnabled(true);
         activePlayer.getMoveController().getMoves().forEach(move -> {
             if (move instanceof FlyingRock) {
                 move.setCooldown();

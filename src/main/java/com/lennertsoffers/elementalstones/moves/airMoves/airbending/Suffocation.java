@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.AirBreath;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -18,11 +19,17 @@ public class Suffocation extends Move {
     public void useMove() {
         Player player = this.getPlayer();
         World world = player.getWorld();
+        boolean foundEntity = false;
 
-        world.getNearbyEntities(player.getLocation(), 6, 6, 6, entity -> entity instanceof LivingEntity && entity != player).forEach(entity -> {
+        for (Entity entity : world.getNearbyEntities(player.getLocation(), 10, 10, 10, entity -> entity instanceof LivingEntity && entity != player)) {
             AirBreath airBreath = new AirBreath((LivingEntity) entity, player);
             airBreath.runTaskTimer(StaticVariables.plugin, 0L, 1L);
             entity.setGlowing(true);
-        });
+            foundEntity = true;
+        }
+
+        if (foundEntity) {
+            this.setCooldown();
+        }
     }
 }

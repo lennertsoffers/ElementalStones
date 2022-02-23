@@ -278,20 +278,21 @@ public class PassiveHandler {
         Location location = event.getLocation();
         World world = location.getWorld();
 
-        if (world != null) {
-            if (
-                    world.getNearbyEntities(location, 10, 10, 10, entity -> entity instanceof Player).stream().anyMatch(entity -> {
-                        Player player = (Player)  entity;
-                        return !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones);
-                    })
-            ) {
-                event.setCancelled(true);
+        if (event.getEntityType() == EntityType.CREEPER) {
+            if (world != null) {
+                if (
+                        world.getNearbyEntities(location, 10, 10, 10, entity -> entity instanceof Player).stream().anyMatch(entity -> {
+                            Player player = (Player) entity;
+                            return !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones);
+                        })
+                ) {
+                    event.setCancelled(true);
 
-                Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location.add(0, 1.5, 0), EntityType.FIREWORK), 0, null, 3, 3, -1, -1);
-                firework.detonate();
+                    Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location.add(0, 1.5, 0), EntityType.FIREWORK), 0, null, 3, 3, -1, -1);
+                    firework.detonate();
+                }
             }
         }
-
     }
 
 
