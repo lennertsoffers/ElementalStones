@@ -25,10 +25,10 @@ commands:
   customModelData:
     description: Sends message to the player with the custom model data of the itemstack he's holding
   checkItems1:
-    description: test
+    description: Test to check items
   checkItems2:
-    description: test
+    description: Test to check items
   checkShards:
-    description: test
+    description: Test to check shards
   checkSpells:
-    description: test
+    description: Test to check spells

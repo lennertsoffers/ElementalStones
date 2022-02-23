@@ -7,21 +7,21 @@ disable_cooldowns: false
 # Water stone
 water_stone:
   default:
-    move1: 10000
-    move2: 10000
+    move1: 5000
+    move2: 30000
     move3: 10000
   waterbending_stone:
-    move4: 10000
-    move5: 10000
-    move6: 10000
-    move7: 10000
-    move8: 10000
+    move4: 20000
+    move5: 60000
+    move6: 60000
+    move7: 30000
+    move8: 120000
   ice_stone:
-    move4: 10000
-    move5: 10000
-    move6: 10000
-    move7: 10000
-    move8: 10000
+    move4: 0
+    move5: 15000
+    move6: 20000
+    move7: 30000
+    move8: 60000
 
 # Fire stone
 fire_stone:
@@ -30,55 +30,55 @@ fire_stone:
     move2: 10000
     move3: 10000
   hellfire_stone:
-    move4: 10000
-    move5: 10000
-    move6: 10000
-    move7: 10000
-    move8: 10000
+    move4: 20000
+    move5: 15000
+    move6: 30000
+    move7: 20000
+    move8: 180000
   explosion_stone:
-    move4: 10000
-    move5: 10000
-    move6: 10000
+    move4: 20000
+    move5: 5000
+    move6: 20000
     move7: 10000
-    move8: 10000
+    move8: 120000
 
 # Air stone
 air_stone:
   default:
-    move1: 10000
-    move2: 10000
-    move3: 10000
+    move1: 2000
+    move2: 15000
+    move3: 5000
   agility_stone:
-    move4: 10000
+    move4: 1000
     move5: 10000
-    move6: 10000
-    move7: 10000
-    move8: 10000
+    move6: 20000
+    move7: 5000
+    move8: 60000
   airbending_stone:
     move4: 10000
-    move5: 10000
-    move6: 10000
+    move5: 8000
+    move6: 30000
     move7: 10000
-    move8: 10000
+    move8: 60000
 
 # Earth stone
 earth_stone:
   default:
-    move1: 10000
+    move1: 2000
     move2: 10000
-    move3: 10000
+    move3: 5000
   earthbending_stone:
-    move4: 10000
-    move5: 10000
-    move6: 10000
+    move4: 8000
+    move5: 4000
+    move6: 2000
     move7: 10000
-    move8: 10000
+    move8: 60000
   lava_stone:
-    move4: 10000
+    move4: 5000
     move5: 10000
-    move6: 10000
+    move6: 20000
     move7: 10000
-    move8: 10000
+    move8: 24000
 
 
 

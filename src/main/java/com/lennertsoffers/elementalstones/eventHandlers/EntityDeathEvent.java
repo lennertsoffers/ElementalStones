@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
+import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.Boss;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
@@ -69,8 +70,19 @@ public class EntityDeathEvent implements Listener {
                     if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.villager_blood")) == 0) {
                         world.dropItemNaturally(deathLocation, CraftItemManager.BLOOD_OF_WANDERING_TRADER);
                     }
-                } else if (entity instanceof Villager) {
+                }
+
+                // Shaman villager
+                else if (entity instanceof Villager) {
                     ShamanVillager.deadShamanVillager(entity.getUniqueId());
+                }
+
+                // Player
+                else if (entity instanceof Player) {
+                    ActivePlayer activePlayer = ActivePlayer.getActivePlayer(entity.getUniqueId());
+                    if (activePlayer != null) {
+                        activePlayer.setInactive();
+                    }
                 }
             }
         }

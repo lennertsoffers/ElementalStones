@@ -19,6 +19,7 @@ public final class ElementalStones extends JavaPlugin {
     @Override
     public void onEnable() {
         configuration = this.getConfig();
+        this.saveDefaultConfig();
         ItemStones.init();
         CraftItemManager.init();
         StaticVariables.staticVariablesInit(this);

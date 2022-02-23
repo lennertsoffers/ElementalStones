@@ -85,29 +85,36 @@ public class ActivePlayer {
 
     public void toggleActive() {
         if (this.active) {
-            this.active = false;
-            this.resetWorld();
-            this.player.setAllowFlight(false);
-            this.moveController.clearScoreBoard();
-            clearMoves();
-
-            PassiveHandler.iceBoots(this);
-            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
-
+            this.setInactive();
         } else {
-            // Set player to active
-            this.active = true;
-
-            // Select correct moves
-            this.moveController.loadMoves();
-
-            // Initialize passives
-            PassiveHandler.iceBoots(this);
-            initAgilityStonePassive();
-
-            // Inform player of his/her state
-            this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+            this.setActive();
         }
+    }
+
+    private void setActive() {
+        // Set player to active
+        this.active = true;
+
+        // Select correct moves
+        this.moveController.loadMoves();
+
+        // Initialize passives
+        PassiveHandler.iceBoots(this);
+        initAgilityStonePassive();
+
+        // Inform player of his/her state
+        this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You are in move mode!");
+    }
+
+    public void setInactive() {
+        this.active = false;
+        this.resetWorld();
+        this.player.setAllowFlight(false);
+        this.moveController.clearScoreBoard();
+        clearMoves();
+
+        PassiveHandler.iceBoots(this);
+        this.player.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "You left move mode!");
     }
 
     private void initAgilityStonePassive() {

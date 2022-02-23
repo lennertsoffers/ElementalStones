@@ -4,9 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class MathTools {
@@ -20,10 +17,6 @@ public class MathTools {
         Vector direction = new Vector(b.getX() - a.getX(), b.getY() - a.getY(), b.getZ() - a.getZ());
         double lengthOfVector = Math.sqrt(Math.pow(direction.getX(), 2)+ Math.pow(direction.getY(), 2) + Math.pow(direction.getZ(), 2));
         return direction.multiply(1/lengthOfVector);
-    }
-
-    public static double calculate2dDistance(Location a, Location b) {
-        return Math.sqrt(Math.pow(b.getX() - a.getX(), 2) + Math.pow(b.getZ() - a.getY(), 2));
     }
 
     public static double calculate3dDistance(Location a, Location b) {
