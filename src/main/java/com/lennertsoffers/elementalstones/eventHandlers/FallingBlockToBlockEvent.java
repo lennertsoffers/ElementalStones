@@ -19,9 +19,10 @@ public class FallingBlockToBlockEvent implements Listener {
                 if (activePlayer.getMove6LaunchedFallingBlocks().contains(fallingBlock)) {
                     e.setCancelled(true);
                     activePlayer.getMove6LaunchedFallingBlocks().remove(fallingBlock);
-                } else if (activePlayer.getCometFallingBlocks().contains(fallingBlock)) {
+                } else if (activePlayer.getCometFallingBlocks().contains(fallingBlock) && activePlayer.getComet() != null) {
                     e.setCancelled(true);
                     activePlayer.getComet().endComet(fallingBlock.getLocation());
+                    activePlayer.getCometFallingBlocks().clear();
                 }
 
                 if (activePlayer.isMove8active()) {

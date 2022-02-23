@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -24,18 +25,21 @@ public class ClickEvent implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            ItemStack originalItemInMainHand = player.getInventory().getItemInMainHand().clone();
-            ItemStack itemInMainHand = player.getInventory().getItemInMainHand().clone();
-            itemInMainHand.setAmount(1);
-            if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
-                ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
-                if (activePlayer != null) {
-                    activePlayer.toggleActive();
+        if (event.getHand() == EquipmentSlot.HAND) {
+            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                ItemStack originalItemInMainHand = player.getInventory().getItemInMainHand().clone();
+                ItemStack itemInMainHand = player.getInventory().getItemInMainHand().clone();
+                itemInMainHand.setAmount(1);
+                if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
+                    ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+                    if (activePlayer != null) {
+                        event.setCancelled(true);
+                        activePlayer.toggleActive();
+                    }
+                } else if (itemInMainHand.isSimilar(CraftItemManager.VOODOO_DOLL)) {
+                    event.setCancelled(true);
+                    new Boss(player, originalItemInMainHand);
                 }
-            } else if (itemInMainHand.isSimilar(CraftItemManager.VOODOO_DOLL)) {
-                event.setCancelled(true);
-                new Boss(player, originalItemInMainHand);
             }
         }
     }

@@ -4,7 +4,6 @@ import com.lennertsoffers.elementalstones.customClasses.models.ItemCounter;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -161,8 +160,8 @@ public class CraftItemManager {
         FINN_SOUP = createItem("Finn Soup", "", ItemCounter.STEW);
 
         // Consumable
-        WAR_HORN = createItem("War Horn", "", ItemCounter.CONSUMABLE);
         VOODOO_DOLL = createItem("Voodoo Doll", "", ItemCounter.CONSUMABLE);
+        WAR_HORN = createItem("War Horn", "", ItemCounter.CONSUMABLE);
         ANTIDOTE = createItem("Antidote", "", ItemCounter.CONSUMABLE);
         PALANTIR = createItem("Palantir", "", ItemCounter.CONSUMABLE);
 

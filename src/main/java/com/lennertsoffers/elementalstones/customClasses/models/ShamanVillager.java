@@ -42,6 +42,7 @@ public class ShamanVillager {
         }
 
         if (this.firstTradeGeneration) {
+            this.firstTradeGeneration = false;
             new BukkitRunnable() {
                 @Override
                 public void run() {

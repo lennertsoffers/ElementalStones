@@ -35,14 +35,20 @@ public class AirBreath extends BukkitRunnable {
 
         this.amountOfTicks++;
         if (this.amountOfTicks > 600) {
-            this.cancel();
+            this.endMove();
             this.owner.damage(10, this.target);
         }
     }
 
     private void moveOrb() {
-        Location targetLocation = this.target.getLocation();
-        this.orbLocation.add(targetLocation.getX() - this.orbLocation.getX(), targetLocation.getY() - this.orbLocation.getY(), targetLocation.getZ() - this.orbLocation.getZ());
+        double speed = 40;
+        Location targetLocation = this.target.getLocation().add(0, 1, 0);
+
+        double orbX = (targetLocation.getX() - this.orbLocation.getX()) / speed;
+        double orbY = (targetLocation.getY() - this.orbLocation.getY()) / speed;
+        double orbZ = (targetLocation.getZ() - this.orbLocation.getZ()) / speed;
+
+        this.orbLocation.add(orbX, orbY, orbZ);
     }
 
     private void spawnOrbParticles() {
@@ -62,10 +68,21 @@ public class AirBreath extends BukkitRunnable {
             LivingEntity player = (LivingEntity) entity;
 
             if (player != this.owner) {
-                player.setHealth(player.getHealth() + 10);
+                double health = player.getHealth() + 5;
+                if (health > 10) {
+                    health = 10;
+                }
+
+                player.setHealth(health);
                 this.owner.damage(10, this.target);
             }
-            this.cancel();
+
+            this.endMove();
         });
+    }
+
+    private void endMove() {
+        this.owner.setGlowing(false);
+        this.cancel();
     }
 }

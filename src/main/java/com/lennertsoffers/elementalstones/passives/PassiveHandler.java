@@ -51,58 +51,61 @@ public class PassiveHandler {
      */
     public static void shockwave(ActivePlayer activePlayer, EntityDamageEvent event) {
         Player player = activePlayer.getPlayer();
-        World world = player.getWorld();
-        float fallDistance;
-        if (player.getFallDistance() < 20) {
-            fallDistance = player.getFallDistance();
-        } else {
-            fallDistance = 20;
-        }
-        List<PotionEffect> potionEffects = new ArrayList<>();
-        potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 40, 1, false, false, false));
-        Vector velocity = new Vector(0, 0.2, 0);
 
-        event.setCancelled(true);
+        if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.earthBendingStones)) {
+            World world = player.getWorld();
+            float fallDistance;
+            if (player.getFallDistance() < 20) {
+                fallDistance = player.getFallDistance();
+            } else {
+                fallDistance = 20;
+            }
+            List<PotionEffect> potionEffects = new ArrayList<>();
+            potionEffects.add(new PotionEffect(PotionEffectType.SLOW, 40, 1, false, false, false));
+            Vector velocity = new Vector(0, 0.2, 0);
 
-        List<Block> rings = new ArrayList<>();
-        new BukkitRunnable() {
-            int range = 2;
+            event.setCancelled(true);
 
-            @Override
-            public void run() {
-                for (int i = 0; i < 360; i+= 1) {
-                    Location locationOnCircle = CheckLocationTools.getClosestAirBlockLocation(MathTools.locationOnCircle(player.getLocation(), range, i, world));
+            List<Block> rings = new ArrayList<>();
+            new BukkitRunnable() {
+                int range = 2;
 
-                    if (locationOnCircle != null) {
-                        locationOnCircle.add(0, -1, 0);
+                @Override
+                public void run() {
+                    for (int i = 0; i < 360; i += 1) {
+                        Location locationOnCircle = CheckLocationTools.getClosestAirBlockLocation(MathTools.locationOnCircle(player.getLocation(), range, i, world));
 
-                        Block block = world.getBlockAt(locationOnCircle);
+                        if (locationOnCircle != null) {
+                            locationOnCircle.add(0, -1, 0);
 
-                        if (rings.stream().noneMatch(b -> b.getX() == block.getX() && b.getZ() == block.getZ())) {
-                            rings.add(block);
+                            Block block = world.getBlockAt(locationOnCircle);
 
-                            BlockData blockData = block.getBlockData();
-                            block.setType(Material.AIR);
+                            if (rings.stream().noneMatch(b -> b.getX() == block.getX() && b.getZ() == block.getZ())) {
+                                rings.add(block);
 
-                            FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation().add(0.5, 0, 0.5), blockData);
-                            fallingBlock.setDropItem(true);
-                            fallingBlock.setVelocity(velocity);
+                                BlockData blockData = block.getBlockData();
+                                block.setType(Material.AIR);
 
-                            double amountY = (fallDistance - range - 2) / 10;
-                            if (amountY < 0.4) {
-                                amountY = 0.4;
+                                FallingBlock fallingBlock = world.spawnFallingBlock(block.getLocation().add(0.5, 0, 0.5), blockData);
+                                fallingBlock.setDropItem(true);
+                                fallingBlock.setVelocity(velocity);
+
+                                double amountY = (fallDistance - range - 2) / 10;
+                                if (amountY < 0.4) {
+                                    amountY = 0.4;
+                                }
+                                NearbyEntityTools.damageNearbyEntities(player, block.getLocation(), 0, 1, 2, 1, new Vector(0, amountY, 0), potionEffects);
                             }
-                            NearbyEntityTools.damageNearbyEntities(player, block.getLocation(), 0, 1, 2, 1, new Vector(0, amountY, 0), potionEffects);
                         }
                     }
-                }
 
-                range++;
-                if (range > fallDistance - 2) {
-                    this.cancel();
+                    range++;
+                    if (range > fallDistance - 2) {
+                        this.cancel();
+                    }
                 }
-            }
-        }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+            }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+        }
     }
 
 
@@ -278,20 +281,21 @@ public class PassiveHandler {
         Location location = event.getLocation();
         World world = location.getWorld();
 
-        if (world != null) {
-            if (
-                    world.getNearbyEntities(location, 10, 10, 10, entity -> entity instanceof Player).stream().anyMatch(entity -> {
-                        Player player = (Player)  entity;
-                        return !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones);
-                    })
-            ) {
-                event.setCancelled(true);
+        if (event.getEntityType() == EntityType.CREEPER) {
+            if (world != null) {
+                if (
+                        world.getNearbyEntities(location, 10, 10, 10, entity -> entity instanceof Player).stream().anyMatch(entity -> {
+                            Player player = (Player) entity;
+                            return !Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.explosionStones);
+                        })
+                ) {
+                    event.setCancelled(true);
 
-                Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location.add(0, 1.5, 0), EntityType.FIREWORK), 0, null, 3, 3, -1, -1);
-                firework.detonate();
+                    Firework firework = FireworkTools.setRandomMeta((Firework) world.spawnEntity(location.add(0, 1.5, 0), EntityType.FIREWORK), 0, null, 3, 3, -1, -1);
+                    firework.detonate();
+                }
             }
         }
-
     }
 
 
@@ -431,7 +435,7 @@ public class PassiveHandler {
     public static void slippery(Player player) {
         if (!Collections.disjoint(Arrays.asList(player.getInventory().getContents()), ItemStones.iceStones)) {
             Material material = player.getLocation().add(0, -1, 0).getBlock().getType();
-            if (material == Material.ICE || material == Material.PACKED_ICE || material == Material.BLUE_ICE) {
+            if (material == Material.ICE || material == Material.PACKED_ICE || material == Material.BLUE_ICE || material == Material.FROSTED_ICE) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 100, 3, true, true, true));
             }
         }

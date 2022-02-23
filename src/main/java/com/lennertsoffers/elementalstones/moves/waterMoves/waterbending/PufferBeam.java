@@ -4,7 +4,6 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.Location;
-import org.bukkit.entity.Dolphin;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
