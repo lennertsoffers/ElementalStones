@@ -132,95 +132,98 @@ public class ItemStones {
                             {
                                     "Move 1: Splash",
                                     "Move 2: Dolphin Dive",
-                                    "Move 3: Water Spear"
+                                    "Move 3: Water Bullet"
                             },
                             {
                                     "Passive1: Deep Breath",
                                     "Passive2: Water Walker",
                                     "Move 4: Bubblebeam",
-                                    "Move 5: Healing Water",
+                                    "Move 5: Healing Waters",
                                     "Move 6: Puffer Beam",
-                                    "Move 7: Wave",
-                                    "Move 8: Water Wall"
+                                    "Move 7: Aqua Ring",
+                                    "Ultimate: Bloodbending"
                             },
                             {
-                                    "Passive: Frost Walker",
+                                    "Passive1: Ice Boots",
+                                    "Passive2: Slippery",
                                     "Move 4: Ice Shards",
                                     "Move 5: Ice Spear",
                                     "Move 6: Snow Stomp",
                                     "Move 7: Deep Freeze",
-                                    "Move 8: Ice Beam"
+                                    "Ultimate: Ice Beam"
                             }
                     },
                     {
                             {
                                     "Move 1: A-Quick-Snack",
-                                    "Move 2: Floating Fire",
+                                    "Move 2: Fire Pokes",
                                     "Move 3: Firefly"
+                            },
+                            {
+                                    "Passive1: Explosion Resistance",
+                                    "Passive2: Cute Creepers",
+                                    "Move 4: Smoke Bomb",
+                                    "Move 5: Triple Threat",
+                                    "Move 6: Combustion Beam",
+                                    "Move 7: Random Rocket",
+                                    "Ultimate: War Machine"
+                            },
+                            {
+                                    "Passive: Friendly Fire",
+                                    "Move 4: Fire Track",
+                                    "Move 5: Ring Of Fire",
+                                    "Move 6: Fire Shields",
+                                    "Move 7: Flamethrower",
+                                    "Ultimate: Hellfire"
+                            }
+                    },
+                    {
+                            {
+                                    "Move 1: Air Ball",
+                                    "Move 2: A(i)rea Control",
+                                    "Move 3: Suction"
+                            },
+                            {
+                                    "Passive1: Feather Falling",
+                                    "Passive2: Double Jump",
+                                    "Move 4: Dash",
+                                    "Move 5: Flying Knives",
+                                    "Move 6: Smoke Ball",
+                                    "Move 7: Charge Jump",
+                                    "Ultimate: Hyperspeed"
+                            },
+                            {
+                                    "Passive1: Feather Falling",
+                                    "Passive2: Double Jump",
+                                    "Move 4: Air Slash",
+                                    "Move 5: Tracking Blade",
+                                    "Move 6: Wind Cloak",
+                                    "Move 7: Tornado",
+                                    "Ultimate: Suffocation"
+                            }
+                    },
+                    {
+                            {
+                                    "Move 1: Stone Pillar",
+                                    "Move 2: Earthquake",
+                                    "Move 3: Pushback"
                             },
                             {
                                     "Passive1: Lava Walker",
                                     "Passive2: Magma Master",
                                     "Move 4: Reverse Logic",
                                     "Move 5: Lava Wave",
-                                    "Move 6: Rift",
-                                    "Move 7: Lava Burst",
-                                    "Move 8: Lava Rider"
+                                    "Move 6: Comet",
+                                    "Move 7: Lava Spout",
+                                    "Ultimate: Lava Sphere"
                             },
                             {
-                                    "Passive: Friendly Fire",
-                                    "Move 4: Fire Track",
-                                    "Move 5: Fire Blast",
-                                    "Move 6: Into the Underworld",
-                                    "Move 7: Fire Beam",
-                                    "Move 8: Dragons Breath"
-                            }
-                    },
-                    {
-                            {
-                                    "Move 1: Air Ball",
-                                    "Move 2: A(i)r(ea) Control",
-                                    "Move 3: Suction"
-                            },
-                            {
-                                    "Passive: Double Jump",
-                                    "Move 4: Forwards Dash",
-                                    "Move 5: Backwards Dash",
-                                    "Move 6: Smoke Ball",
-                                    "Move 7: Charge Jump",
-                                    "Move 8: Hyperspeed"
-                            },
-                            {
-                                    "Passive1: Feather Falling",
-                                    "Passive2: Speed Boost",
-                                    "Move 4: Air Slash",
-                                    "Move 5: Tracking Blade",
-                                    "Move 6: Air Cloak",
-                                    "Move 7: Tornado",
-                                    "Move 8: Levitate"
-                            }
-                    },
-                    {
-                            {
-                                    "Move 1: Stone Pillar",
-                                    "Move 2: Flying Rock",
-                                    "Move 3: Bunker"
-                            },
-                            {
-                                    "Passive: Stone Resistance",
-                                    "Move 4: Smoke Screen",
-                                    "Move 5: Better Gear",
-                                    "Move 6: Wall",
-                                    "Move 7: Shockwave",
-                                    "Move 8: Last Chance"
-                            },
-                            {
-                                    "Passive: Joinker",
-                                    "Move 4: Rock Throw",
+                                    "Passive: Shockwave",
+                                    "Move 4: Earth Spikes",
                                     "Move 5: Stomp",
-                                    "Move 6: Earth Prison",
+                                    "Move 6: Rock Throw",
                                     "Move 7: Earth Wave",
-                                    "Move 8: Reverse Turret"
+                                    "Ultimate: Flying Rock"
                             }
             }
     };
