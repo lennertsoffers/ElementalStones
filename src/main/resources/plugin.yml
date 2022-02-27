@@ -32,3 +32,5 @@ commands:
     description: Test to check shards
   checkSpells:
     description: Test to check spells
+  giveShards:
+    description: Gives 64 shards to the player

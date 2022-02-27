@@ -102,6 +102,18 @@ public class Commands implements CommandExecutor {
                     }
                 }
             }
+        } else if (label.equalsIgnoreCase("giveShards")) {
+            if (sender instanceof Player) {
+                if (sender.isOp()) {
+                    if (args.length == 0) {
+                        Player player = (Player) sender;
+                        ItemStack itemStack = CraftItemManager.COMMON_SHARD.clone();
+                        itemStack.setAmount(64);
+                        player.getInventory().addItem(itemStack);
+                        return true;
+                    }
+                }
+            }
         } else if (label.equalsIgnoreCase("shamanMajor")) {
             if (sender instanceof Player) {
                 if (sender.isOp()) {
