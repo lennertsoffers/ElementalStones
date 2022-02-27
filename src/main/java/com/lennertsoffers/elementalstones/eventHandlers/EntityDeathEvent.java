@@ -58,6 +58,13 @@ public class EntityDeathEvent implements Listener {
                     }
                 }
 
+                // Twig
+                else if (entity instanceof Fox) {
+                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.twig")) == 0) {
+                        world.dropItemNaturally(deathLocation, CraftItemManager.TWIG);
+                    }
+                }
+
                 // Soul Of Evoker
                 else if (entity instanceof Evoker) {
                     if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.soul_of_evoker")) == 0) {
@@ -69,6 +76,27 @@ public class EntityDeathEvent implements Listener {
                 else if (entity instanceof WanderingTrader) {
                     if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.villager_blood")) == 0) {
                         world.dropItemNaturally(deathLocation, CraftItemManager.BLOOD_OF_WANDERING_TRADER);
+                    }
+                }
+
+                // Stinger
+                else if (entity instanceof Bee) {
+                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.stinger")) == 0) {
+                        world.dropItemNaturally(deathLocation, CraftItemManager.STINGER);
+                    }
+                }
+
+                // Hoglin tusk
+                else if (entity instanceof Hoglin) {
+                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.hoglin_tusk")) == 0) {
+                        world.dropItemNaturally(deathLocation, CraftItemManager.HOGLIN_TUSK);
+                    }
+                }
+
+                // Finn
+                else if (entity instanceof Dolphin) {
+                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.finn")) == 0) {
+                        world.dropItemNaturally(deathLocation, CraftItemManager.FINN);
                     }
                 }
 

@@ -86,16 +86,19 @@ earth_stone:
 # Set to one ensure drop
 # The higher the number, the lower the drop chance (formula: 1/x)
 drop_chance:
-  baby_zombie_hide: 10
-  rotten_apple: 10
-  insect: 10
-  bat: 10
-  herb: 10
+  baby_zombie_hide: 4
+  rotten_apple: 20
+  insect: 2
+  bat: 4
+  herb: 20
   golden_feather: 10
-  dead_flower: 10
-  twig: 10
-  soul_of_evoker: 10
-  villager_blood: 10
+  dead_flower: 20
+  twig: 1
+  soul_of_evoker: 2
+  blood_of_wandering_trader: 4
+  stinger: 5
+  hoglin_tusk: 10
+  finn: 4
 
   # Drop chance for a spell when a shaman reaches level 5
   spell: 2
@@ -107,35 +110,30 @@ xp_value:
   # Base items
   baby_zombie_hide: 1
   rotten_apple: 1
-  insect: 10
+  insect: 1
   bat: 1
-  thyme: 1
-  oregano: 1
-  dill: 1
-  rosemary: 1
   golden_feather: 1
   dead_flower: 1
   twig: 1
-  soul_of_evoker: 1
-  blood_of_wandering_trader: 1
+  soul_of_evoker: 3
+  blood_of_wandering_trader: 2
   stinger: 1
   hoglin_tusk: 1
   finn: 1
 
   # Craft items
-  voodoo_doll: 2
+  voodoo_doll: 6
   ship_in_bottle: 2
-  palantir: 2
-  blood_and_quil: 2
-  bundle_of_herbs: 2
-  carnivorous_plant: 2
-  scented_candle: 2
-  finn_soup: 2
-  war_horn: 2
-  poisonous_dart: 2
-  broom: 2
-  poisoned_apple: 2
-  mystery_potion: 2
+  palantir: 4
+  blood_and_quil: 4
+  bundle_of_herbs: 3
+  carnivorous_plant: 4
+  scented_candle: 3
+  finn_soup: 4
+  war_horn: 4
+  poisonous_dart: 4
+  broom: 3
+  poisoned_apple: 3
   antidote: 2
   gingerbread_man: 2
 
