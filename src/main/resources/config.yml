@@ -114,7 +114,7 @@ xp_value:
   bat: 1
   golden_feather: 1
   dead_flower: 1
-  twig: 1
+  twig: 2
   soul_of_evoker: 3
   blood_of_wandering_trader: 2
   stinger: 1
@@ -134,7 +134,6 @@ xp_value:
   poisonous_dart: 4
   broom: 3
   poisoned_apple: 3
-  antidote: 2
   gingerbread_man: 2
 
 

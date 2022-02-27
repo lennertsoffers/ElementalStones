@@ -179,12 +179,9 @@ public class CraftItemManager {
 
         // Create ShamanTradeItems
         new ShamanTradeItem(BABY_ZOMBIE_HIDE);
+        new ShamanTradeItem(ROTTEN_APPLE);
         new ShamanTradeItem(INSECT);
         new ShamanTradeItem(BAT);
-        new ShamanTradeItem(THYME);
-        new ShamanTradeItem(OREGANO);
-        new ShamanTradeItem(DILL);
-        new ShamanTradeItem(ROSEMARY);
         new ShamanTradeItem(GOLDEN_FEATHER);
         new ShamanTradeItem(DEAD_FLOWER);
         new ShamanTradeItem(TWIG);
@@ -201,8 +198,10 @@ public class CraftItemManager {
         new ShamanTradeItem(CARNIVOROUS_PLANT);
         new ShamanTradeItem(SCENTED_CANDLE);
         new ShamanTradeItem(FINN_SOUP);
+        new ShamanTradeItem(WAR_HORN);
         new ShamanTradeItem(POISONOUS_DART);
         new ShamanTradeItem(BROOM);
-        new ShamanTradeItem(WAR_HORN);
+        new ShamanTradeItem(POISONED_APPLE);
+        new ShamanTradeItem(GINGERBREAD_MAN);
     }
 }
