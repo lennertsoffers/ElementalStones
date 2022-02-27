@@ -80,8 +80,6 @@ public class CraftItemManager {
 
     public static ArrayList<ItemStack> spells = new ArrayList<>();
 
-
-
     // Create Items
 
     private static ItemStack createItem(String displayName, String lore, ItemCounter itemCounter) {
