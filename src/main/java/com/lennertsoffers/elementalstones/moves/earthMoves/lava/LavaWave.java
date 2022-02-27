@@ -8,6 +8,19 @@ import org.bukkit.entity.Player;
 
 public class LavaWave extends Move {
 
+    /**
+     * <b>MOVE 5: Lava Wave</b>
+     * <p>
+     *     Creates a wave of lava in the looking direction
+     *     <ul>
+     *         <li><b>Damage:</b> 40</li>
+     *         <li><b>Range: </b> 50</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see LavaWave
+     */
     public LavaWave(ActivePlayer activePlayer) {
         super(activePlayer, "Lava Wave", "earth_stone", "lava_stone", 5);
     }

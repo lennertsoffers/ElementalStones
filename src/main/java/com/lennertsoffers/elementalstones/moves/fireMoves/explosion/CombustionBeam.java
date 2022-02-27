@@ -19,6 +19,22 @@ import java.util.Collection;
 
 public class CombustionBeam extends Move {
 
+    /**
+     * <b>MOVE 6: Combustion Beam</b>
+     * <p>
+     *     Shoots lighting beam in the looking direction triggering an explosion on impact<br>
+     *     The beam can lock on entities or a targeted block<br>
+     *     In case the beam selects an entity or block, it can be shorter and explode quicker<br>
+     *     This move has recoil for the user<br>
+     *     <ul>
+     *         <li><b>Explosion Power:</b> 3</li>
+     *         <li><b>Range:</b> 30</li>
+     *         <li><b>Recoil:</b> 8</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public CombustionBeam(ActivePlayer activePlayer) {
         super(activePlayer, "Combustion Beam", "fire_stone", "explosion_stone", 6);
     }

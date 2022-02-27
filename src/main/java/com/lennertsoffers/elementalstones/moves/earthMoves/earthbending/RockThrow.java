@@ -15,6 +15,25 @@ import org.bukkit.util.Vector;
 
 public class RockThrow extends Move {
 
+    /**
+     * <b>MOVE 6: Rock Throw</b>
+     * <p>
+     *     Select a block by executing this move and aiming at a block<br>
+     *     Multiple blocks can be selected by doing this move multiple times<br>
+     *     The selected blocks will fly up<br>
+     * </p>
+     * <p>
+     *     By crouching and executing this move, the blocks will be launched in your looking direction<br>
+     *     An entity hurt by this attack will get a bit of knockback<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Range:</b> 80</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public RockThrow(ActivePlayer activePlayer) {
         super(activePlayer, "Rock Throw", "earth_stone", "earthbending_stone", 6);
     }

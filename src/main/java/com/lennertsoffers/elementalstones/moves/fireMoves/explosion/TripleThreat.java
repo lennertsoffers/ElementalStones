@@ -16,6 +16,18 @@ import org.bukkit.util.Vector;
 
 public class TripleThreat extends Move {
 
+    /**
+     * <b>MOVE 5: Triple Threat</b>
+     * <p>
+     *     The player takes 3 rockets flowing its movements<br>
+     *     These rockets will be launched automatically after 20s<br>
+     *     Reactivating this move will launch the fireworks<br>
+     *     When crouching a firework show will appear<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see FireFireworks
+     */
     public TripleThreat(ActivePlayer activePlayer) {
         super(activePlayer, "Triple Threat", "fire_stone", "explosion_stone", 5);
     }

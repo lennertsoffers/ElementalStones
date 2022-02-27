@@ -16,6 +16,19 @@ import java.util.Random;
 
 public class FireFly extends Move {
 
+    /**
+     * <b>MOVE 3: Fire Fly</b>
+     * <p>
+     *     The player get trusted in the looking direction of the player<br>
+     *     Any entities colliding with the player get some damage and are set on fire<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 3</li>
+     *         <li><b>Duration:</b> 30s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public FireFly(ActivePlayer activePlayer) {
         super(activePlayer, "Fire Fly", "fire_stone", "default", 3);
     }

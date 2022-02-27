@@ -21,6 +21,20 @@ import java.util.List;
 
 public class EarthWave extends Move {
 
+    /**
+     * <b>MOVE 7: Earth Wave</b>
+     * <p>
+     *     Creates an earth wave in the looking direction of the player<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 0</li>
+     *         <li><b>Range:</b> 50</li>
+     *         <li><b>Knockup: </b> 1</li>
+     *         <li><b>PotionEffect: </b> Slowness (duration: 5s, amplifier: 1)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public EarthWave(ActivePlayer activePlayer) {
         super(activePlayer, "Earth Wave", "earth_stone", "earthbending_stone", 7);
     }

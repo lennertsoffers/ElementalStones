@@ -14,6 +14,16 @@ import org.bukkit.util.Vector;
 
 public class ChargeJump extends Move {
 
+    /**
+     * <b>MOVE 7: Charge Jump</b>
+     * <p>
+     *     Charges until next activation (max 10 seconds)<br>
+     *     The longer you charge, the higher you will jump<br>
+     *     The player gets slowness when charging<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public ChargeJump(ActivePlayer activePlayer) {
         super(activePlayer, "Charge Jump", "air_stone", "agility_stone", 7);
     }

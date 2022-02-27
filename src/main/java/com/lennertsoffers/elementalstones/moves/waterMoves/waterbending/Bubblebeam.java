@@ -12,6 +12,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Bubblebeam extends Move {
 
+    /**
+     * <b>MOVE 4: Bubblebeam</b>
+     * <p>
+     *     Shoots a beam of bubbles in the looking direction of the player<br>
+     *     This beam damages entities over time<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 1</li>
+     *         <li><b>Duration:</b> 4.5s</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     */
     public Bubblebeam(ActivePlayer activePlayer) {
         super(activePlayer, "Bubblebeam", "water_stone", "waterbending_stone", 4);
     }

@@ -20,6 +20,20 @@ import java.util.List;
 
 public class EarthSpikes extends Move {
 
+    /**
+     * <b>MOVE 4: Earth Spikes</b>
+     * <p>
+     *     Summons an array of spikes out of the ground in the players looking direction.
+     *     Entities hurt get mining fatigue for a brief moment.
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>Range:</b> 6</li>
+     *         <li><b>PotionEffect:</b> Mining fatigue (duration: 5s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public EarthSpikes(ActivePlayer activePlayer) {
         super(activePlayer, "Earth Spikes", "earth_stone", "earthbending_stone", 4);
     }

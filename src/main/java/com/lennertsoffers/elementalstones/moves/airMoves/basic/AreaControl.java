@@ -13,8 +13,20 @@ import org.bukkit.util.Vector;
 
 public class AreaControl extends Move {
 
+    /**
+     * <b>MOVE 2: A(i)rea Control</b>
+     * <p>
+     *     Blast away every living entity in close range<br>
+     *     <ul>
+     *         <li><b>Range: </b> 7</li>
+     *         <li><b>Knockback:</b> more the further away from the player</li>
+     *         <li><b>Knockup: </b> 0.2</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public AreaControl(ActivePlayer activePlayer) {
-        super(activePlayer, "Area Control", "air_stone", "default", 2);
+        super(activePlayer, "A(i)rea Control", "air_stone", "default", 2);
     }
     
     @Override

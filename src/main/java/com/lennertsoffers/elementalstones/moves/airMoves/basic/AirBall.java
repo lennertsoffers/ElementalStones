@@ -13,6 +13,18 @@ import org.bukkit.util.Vector;
 
 public class AirBall extends Move {
 
+    /**
+     * <b>MOVE 1: Air Ball</b>
+     * <p>
+     *     Shoots an air ball in the looking direction<br>
+     *     Damages entities on hit<br>
+     *     <ul>
+     *         <li><b>Range: </b> 20</li>
+     *         <li><b>Knockback:</b> 2</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public AirBall(ActivePlayer activePlayer) {
         super(activePlayer, "Air Ball", "air_stone", "default", 1);
     }

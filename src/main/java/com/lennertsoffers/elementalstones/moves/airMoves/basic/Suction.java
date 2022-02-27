@@ -12,6 +12,18 @@ import org.bukkit.util.Vector;
 
 public class Suction extends Move {
 
+    /**
+     * <b>MOVE 3: Suction</b>
+     * <p>
+     *     Sucks all the items in close range towards the player<br>
+     *     It launches the items up and after 0.5s the are shot towards the player<br>
+     *     The targeted items get the glowing effect<br>
+     *     <ul>
+     *         <li><b>Range: </b> 15</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public Suction(ActivePlayer activePlayer) {
         super(activePlayer, "Suction", "air_stone", "default", 3);
     }

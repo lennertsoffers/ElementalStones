@@ -5,6 +5,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;
@@ -15,6 +16,20 @@ import org.bukkit.util.Vector;
 
 public class Bloodbending extends Move {
 
+    /**
+     * <b>ULTIMATE: Bloodbending</b>
+     * <p>
+     *     <b>Activation 1:</b> the player selects the closest target he/she is looking at<br>
+     *     <b>Activation 2:</b> the player grabs the target and can move it around freely<br>
+     *     <b>Activation 3:</b> if the player makes a throw movement with the target and then looses it, the target will fly away (optional)<br>
+     *     <ul>
+     *         <li><b>Range:</b> 40</li>
+     *         <li><b>Duration:</b> 20</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing this move
+     */
     public Bloodbending(ActivePlayer activePlayer) {
         super(activePlayer, "Bloodbending", "air_stone", "airbending_stone", 8);
     }
@@ -82,8 +97,7 @@ public class Bloodbending extends Move {
                         double particleX = playerLocation.clone().getX() + StaticVariables.random.nextGaussian() / 5;
                         double particleY = playerLocation.clone().getY() + StaticVariables.random.nextGaussian() / 5 + 1;
                         double particleZ = playerLocation.clone().getZ() + StaticVariables.random.nextGaussian() / 5;
-                        int grayValue = (1 + StaticVariables.random.nextInt(30));
-                        world.spawnParticle(Particle.SPELL_MOB, particleX, particleY, particleZ, 0, grayValue, grayValue, grayValue);
+                        world.spawnParticle(Particle.ITEM_CRACK, particleX, particleY, particleZ, 0, Material.REDSTONE_BLOCK);
                     }
 
                     if (target.isDead()) {

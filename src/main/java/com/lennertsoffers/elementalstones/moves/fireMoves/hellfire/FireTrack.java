@@ -17,6 +17,18 @@ import java.util.LinkedList;
 
 public class FireTrack extends Move {
 
+    /**
+     * <b>MOVE 4: Fire Track</b>
+     * <p>
+     *     The player leaves a track of fire behind him/her<br>
+     *     The speed of the player is drastically improved<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 30s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public FireTrack(ActivePlayer activePlayer) {
         super(activePlayer, "Fire Track", "fire_stone", "hellfire_stone", 4);
     }

@@ -15,6 +15,19 @@ import java.util.List;
 
 public class FlyingKnives extends Move {
 
+    /**
+     * <b>MOVE 5: Flying Knifes</b>
+     * <p>
+     *     Hovers 5 arrows around the player on activation<br>
+     *     Each time the move gets activated again an arrow is shot<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 2 minutes</li>
+     *         <li><b>Arrow Speed:</b> 4</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public FlyingKnives(ActivePlayer activePlayer) {
         super(activePlayer, "Flying Knives", "air_stone", "agility_stone", 5);
     }
@@ -67,7 +80,7 @@ public class FlyingKnives extends Move {
         } else {
             Arrow arrow = this.getActivePlayer().getMove5Arrows().removeLast();
             Location location = this.getPlayer().getLocation();
-            arrow.setVelocity(location.getDirection().multiply(3));
+            arrow.setVelocity(location.getDirection().multiply(4));
 
             if (this.getActivePlayer().getMove5Arrows().isEmpty()) {
                 this.setCooldown();

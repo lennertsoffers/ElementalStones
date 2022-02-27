@@ -14,6 +14,17 @@ import org.bukkit.util.Vector;
 
 public class Splash extends Move {
 
+    /**
+     * <b>MOVE 1: Splash</b>
+     * <p>
+     *     Splashes around some water<br>
+     *     The higher the level of the player, the more damage it does<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2^(level / 30)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public Splash(ActivePlayer activePlayer) {
         super(activePlayer, "Splash", "water_stone", "default", 1);
     }

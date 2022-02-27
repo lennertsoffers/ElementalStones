@@ -17,6 +17,20 @@ import java.util.List;
 
 public class IceShards extends Move {
 
+    /**
+     * <b>MOVE 4: Ice Shards</b>
+     * <p>
+     *     You can throw ice shards damaging entities on impact<br>
+     *     It stops when colliding with a block<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2</li>
+     *         <li><b>Ammo:</b> 10</li>
+     *         <li><b>Freeze:</b> +2s</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 2s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public IceShards(ActivePlayer activePlayer) {
         super(activePlayer, "Ice Shards", "water_stone", "ice_stone", 4);
     }

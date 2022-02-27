@@ -10,6 +10,16 @@ import org.bukkit.util.Vector;
 
 public class FireShields extends Move {
 
+    /**
+     * <b>MOVE 6: Fire Shields</b>
+     * <p>
+     *     The player can place 5 walls of fire<br>
+     *     These walls will protect the player from entities or other moves<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see FireWall
+     */
     public FireShields(ActivePlayer activePlayer) {
         super(activePlayer, "Fire Shields", "fire_stone", "hellfire_stone", 6);
     }

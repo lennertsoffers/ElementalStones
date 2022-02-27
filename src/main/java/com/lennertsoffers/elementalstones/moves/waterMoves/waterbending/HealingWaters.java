@@ -12,6 +12,24 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class HealingWaters extends Move {
 
+    /**
+     * <b>MOVE 5: Healing Waters</b>
+     * <p>
+     *     Heals the player over time if he/she stand in water<br>
+     *     The player will be slower but gets the absorption effect<br>
+     *     <ul>
+     *         <li><b>Heal:</b> 3health/s</li>
+     *         <li><b>Duration:</b> 10s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Absorption (duration: 10s, amplifier: 1)</li>
+     *                 <li>Slowness (duration: 2s, amplifier: 2)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     */
     public HealingWaters(ActivePlayer activePlayer) {
         super(activePlayer, "Healing Waters", "water_stone", "waterbending_stone", 5);
     }

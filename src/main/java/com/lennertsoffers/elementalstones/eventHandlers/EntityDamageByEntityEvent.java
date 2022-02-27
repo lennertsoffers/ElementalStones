@@ -17,7 +17,12 @@ public class EntityDamageByEntityEvent implements Listener {
                 WindCloak.windCloakKnockback(activePlayer, event);
 
                 if (event.getDamager() instanceof Arrow) {
-                    event.setCancelled(true);
+                    Arrow arrow = (Arrow) event.getDamager();
+                    ActivePlayer.getActivePlayers().forEach(a -> {
+                        if (a.getMove5Arrows().contains(arrow)) {
+                            event.setCancelled(true);
+                        }
+                    });
                 }
             }
         }

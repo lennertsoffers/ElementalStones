@@ -12,6 +12,15 @@ import org.bukkit.util.Vector;
 
 public class Dash extends Move {
 
+    /**
+     * <b>MOVE 4: Dash</b>
+     * <p>
+     *     Player dashes in its looking direction<br>
+     *     It damages entities along its way<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Dash(ActivePlayer activePlayer) {
         super(activePlayer, "Dash", "air_stone", "agility_stone", 4);
     }

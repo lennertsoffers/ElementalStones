@@ -23,6 +23,28 @@ import java.util.Map;
 
 public class DeepFreeze extends Move {
 
+    /**
+     * <b>MOVE 7: Deep Freeze</b>
+     * <p>
+     *     Spawns an ice ball that penetrates trough walls<br>
+     *     This ice ball is controllable by the player's looking direction<br>
+     *     If an entity is hit by this ball, it will be unable to move and see and will be trapped in an iceberg<br>
+     *     This iceberg will melt after half a minute<br>
+     *     The trapped entity will regen because of suffocation<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 30s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Slowness (duration: 30s, amplifier: 3)</li>
+     *                 <li>Mining Fatigue (duration: 30s, amplifier 3)</li>
+     *                 <li>Regeneration (duration: 30s, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public DeepFreeze(ActivePlayer activePlayer) {
         super(activePlayer, "Deep Freeze", "water_stone", "ice_stone", 7);
     }

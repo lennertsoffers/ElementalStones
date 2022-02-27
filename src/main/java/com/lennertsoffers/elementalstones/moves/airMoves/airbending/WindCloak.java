@@ -18,6 +18,21 @@ import org.bukkit.util.Vector;
 
 public class WindCloak extends Move {
 
+    /**
+     * <b>MOVE 6: Wind Cloak</b>
+     * <p>
+     *     Gives the player a cloak of wind<br>
+     *     Any entity damaging this player will be knocked back and get the levitation effect<br>
+     *     <ul>
+     *         <li><b>Damage: </b> 3</li>
+     *         <li><b>Knockback: </b> 5</li>
+     *         <li><b>PotionEffect: </b> Levitation (duration: 5s, amplifier: 3)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public WindCloak(ActivePlayer activePlayer) {
         super(activePlayer, "Wind Cloak", "air_stone", "airbending_stone", 6);
     }
@@ -49,6 +64,15 @@ public class WindCloak extends Move {
         this.setCooldown();
     }
 
+    /**
+     * <b>Creates the knockback and levitation effect</b>
+     * <p>
+     *     Triggered when an entity damages the player with the wind cloak<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer with the wind cloak
+     * @param event the EntityDamageByEntityEvent triggered when the player is attacked
+     */
     public static void windCloakKnockback(ActivePlayer activePlayer, EntityDamageByEntityEvent event) {
         if (activePlayer.hasWindCloak()) {
             Player player = activePlayer.getPlayer();
