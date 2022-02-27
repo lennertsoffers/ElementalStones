@@ -13,6 +13,19 @@ import org.bukkit.util.Vector;
 
 public class Stomp extends Move {
 
+    /**
+     * <b>MOVE 5: Stomp</b>
+     * <p>
+     *     Create an underground shockwave that damages entities along its way
+     *     <ul>
+     *         <li><b>Damage:</b> 7</li>
+     *         <li><b>Range:</b> 50</li>
+     *         <li><b>Knockup:</b> 0.5</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Stomp(ActivePlayer activePlayer) {
         super(activePlayer, "Stomp", "earth_stone", "earthbending_stone", 5);
     }

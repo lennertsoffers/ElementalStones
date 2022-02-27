@@ -21,6 +21,16 @@ public class RandomRocket extends Move {
 
     public static HashSet<Firework> randomRocketFireworks = new HashSet<>();
 
+    /**
+     * <b>MOVE 7: Random Rocket</b>
+     * <p>
+     *     The player shoots a rocket in the looking direction<br>
+     *     This rocket has a random effect chosen from the Effect enum<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see Effect
+     */
     public RandomRocket(ActivePlayer activePlayer) {
         super(activePlayer, "Random Rocket", "fire_stone", "explosion_stone", 7);
     }

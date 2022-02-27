@@ -13,6 +13,17 @@ import org.bukkit.util.Vector;
 
 public class Tornado extends Move {
 
+    /**
+     * <b>MOVE 7: Tornado</b>
+     * <p>
+     *     Shoots a tornado in the looking direction launching entities up<br>
+     *     <ul>
+     *         <li><b>Knockup: </b> 2</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Tornado(ActivePlayer activePlayer) {
         super(activePlayer, "Tornado", "air_stone", "airbending_stone", 7);
     }

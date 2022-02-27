@@ -3,6 +3,8 @@ package com.lennertsoffers.elementalstones.moves.fireMoves.explosion;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.GrenadeWarMachineBig;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Grenade;
+import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.GrenadeWarMachineSmall;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -13,6 +15,24 @@ import org.bukkit.util.Vector;
 
 public class WarMachine extends Move {
 
+    /**
+     * <b>ULTIMATE: War Machine</b>
+     * <p>
+     *     The player gets 3 throwing grenades<br>
+     *     These grenades explode on impact and spawn 15 other smaller bombs<br>
+     *     The smaller bombs form a carpet bomber exploding on impact<br>
+     *     <ul>
+     *         <li><b>Explosion Power:</b> 4,3</li>
+     *         <li><b>Duration:</b> 30s</li>
+     *         <li><b>Ammo:</b> 3</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see Grenade
+     * @see GrenadeWarMachineSmall
+     * @see GrenadeWarMachineBig
+     */
     public WarMachine(ActivePlayer activePlayer) {
         super(activePlayer, "War Machine", "fire_stone", "explosion_stone", 8);
     }

@@ -10,6 +10,20 @@ import org.bukkit.entity.Player;
 
 public class LavaSpout extends Move {
 
+    /**
+     * <b>MOVE 7: Lava Spout</b>
+     * <p>
+     *     The targeted block bursts open creating an intense flow of lava<br>
+     *     This lava spout will launch entities up<br>
+     *     <ul>
+     *         <li><b>Range: </b> 15</li>
+     *         <li><b>Knockup: </b>1</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see LavaSpout
+     */
     public LavaSpout(ActivePlayer activePlayer) {
         super(activePlayer, "Lava Spout", "earth_stone", "lava_stone", 7);
     }

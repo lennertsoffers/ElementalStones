@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.entity.Player;
@@ -15,6 +16,9 @@ public class PlayerJoinEvent implements Listener {
         ActivePlayer activePlayer = new ActivePlayer(player);
         PassiveHandler.deepBreath(activePlayer);
 
-        player.setResourcePack("https://www.dropbox.com/s/tjxjp8sgrzjytmc/ElementalStones.zip?dl=1");
+        String resourcePackUrl = ElementalStones.configuration.getString("resource_pack");
+        if (resourcePackUrl != null) {
+            player.setResourcePack(resourcePackUrl);
+        }
     }
 }

@@ -17,6 +17,27 @@ import org.bukkit.util.Vector;
 
 public class IceBeam extends Move {
 
+    /**
+     * <b>ULTIMATE: Ice Beam</b>
+     * <p>
+     *     Shoots a beam of ice that freezes targets<br>
+     *     Targets will be unable to see and move<br>
+     *     Frozen enemies will see random snowballs flying towards them<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Blindness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Nausea (duration: 10s, amplifier: 3)</li>
+     *                 <li>Slowness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Mining Fatigue (duration: 10s, amplifier: 3)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public IceBeam(ActivePlayer activePlayer) {
         super(activePlayer, "Ice Beam", "water_stone", "ice_stone", 8);
     }

@@ -9,6 +9,20 @@ import org.bukkit.entity.Player;
 
 public class Flamethrower extends Move {
 
+    /**
+     * <b>MOVE 7: Flamethrower</b>
+     * <p>
+     *     Shoot an array of destructing fire out of your hands<br>
+     *     Sets entities and the ground on fire<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 2</li>
+     *         <li><b>Range:</b> 7</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see FireFlamethrower
+     */
     public Flamethrower(ActivePlayer activePlayer) {
         super(activePlayer, "Flamethrower", "fire_stone", "hellfire_stone", 7);
     }

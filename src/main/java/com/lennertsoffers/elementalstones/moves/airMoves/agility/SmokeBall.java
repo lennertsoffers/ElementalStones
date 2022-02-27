@@ -15,6 +15,20 @@ import org.bukkit.util.Vector;
 
 public class SmokeBall extends Move {
 
+    /**
+     * <b>MOVE 6: Smoke Ball</b>
+     * <p>
+     *     Throw a smoke ball in the looking direction<br>
+     *     While the ball is moving, you can control it by changing your looking direction<br>
+     *     If the ball collides with a living entity or block it will create a smoke screen<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 20</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 5, amplifier 3)</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public SmokeBall(ActivePlayer activePlayer) {
         super(activePlayer, "Smoke Ball", "air_stone", "agility_stone", 6);
     }

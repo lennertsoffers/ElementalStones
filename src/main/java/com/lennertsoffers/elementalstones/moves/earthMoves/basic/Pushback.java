@@ -15,6 +15,19 @@ import java.util.ArrayList;
 
 public class Pushback extends Move {
 
+    /**
+     * <b>MOVE 3: Pushback</b>
+     * <p>
+     *     Launches a wall that pushes away entities
+     *     <ul>
+     *         <li><b>Range:</b> 40</li>
+     *         <li><b>Knockback:</b> 1.5</li>
+     *         <li><b>Knockup:</b> 0.2</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Pushback(ActivePlayer activePlayer) {
         super(activePlayer, "Pushback", "earth_stone", "default", 3);
     }

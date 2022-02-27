@@ -18,6 +18,19 @@ import java.util.Objects;
 
 public class IceSpear extends Move {
 
+    /**
+     * <b>MOVE 5: Ice Spear</b>
+     * <p>
+     *     Throw a spear of ice at your enemy<br>
+     *     This spear will give the enemy the freeze effect and slow him down for a brief moment<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 5</li>
+     *         <li><b>Freeze:</b> 5s</li>
+     *         <li><b>PotionEffect:</b> Slowness (duration: 3s, amplifier: 2)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public IceSpear(ActivePlayer activePlayer) {
         super(activePlayer, "Ice Spear", "water_stone", "ice_stone", 5);
     }

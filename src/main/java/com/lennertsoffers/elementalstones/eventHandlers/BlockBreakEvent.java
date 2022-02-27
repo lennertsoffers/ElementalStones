@@ -37,6 +37,25 @@ public class BlockBreakEvent implements Listener {
             // Herbs
             else if (
                     blockMaterial == Material.GRASS ||
+                    blockMaterial == Material.TALL_GRASS ||
+                    blockMaterial == Material.LARGE_FERN
+            ) {
+                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.herb")) == 0) {
+                    int random = StaticVariables.random.nextInt(4);
+                    if (random == 0) {
+                        world.dropItemNaturally(blockLocation, CraftItemManager.OREGANO);
+                    } else if (random == 1) {
+                        world.dropItemNaturally(blockLocation, CraftItemManager.DILL);
+                    } else if (random == 2) {
+                        world.dropItemNaturally(blockLocation, CraftItemManager.ROSEMARY);
+                    } else {
+                        world.dropItemNaturally(blockLocation, CraftItemManager.THYME);
+                    }
+                }
+            }
+
+            // Dead Flower
+            else if (
                     blockMaterial == Material.DANDELION ||
                     blockMaterial == Material.POPPY ||
                     blockMaterial == Material.BLUE_ORCHID ||
@@ -51,47 +70,17 @@ public class BlockBreakEvent implements Listener {
                     blockMaterial == Material.LILAC ||
                     blockMaterial == Material.ROSE_BUSH ||
                     blockMaterial == Material.PEONY ||
-                    blockMaterial == Material.TALL_GRASS ||
-                    blockMaterial == Material.LARGE_FERN ||
                     blockMaterial == Material.CORNFLOWER ||
                     blockMaterial == Material.LILY_OF_THE_VALLEY ||
                     blockMaterial == Material.AZALEA ||
                     blockMaterial == Material.FLOWERING_AZALEA ||
                     blockMaterial == Material.SPORE_BLOSSOM
             ) {
-                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.herb")) == 0) {
-                    switch (StaticVariables.random.nextInt(3)) {
-                        case 0:
-                            world.dropItemNaturally(blockLocation, CraftItemManager.OREGANO);
-                        case 1:
-                            world.dropItemNaturally(blockLocation, CraftItemManager.THYME);
-                        case 2:
-                            world.dropItemNaturally(blockLocation, CraftItemManager.ROSEMARY);
-                        default:
-                            world.dropItemNaturally(blockLocation, CraftItemManager.DILL);
-                    }
-                }
-            }
-
-            // Dead Flower
-            else if (
-                    blockMaterial == Material.WITHER_ROSE ||
-                    blockMaterial == Material.CRIMSON_ROOTS ||
-                    blockMaterial == Material.CRIMSON_FUNGUS ||
-                    blockMaterial == Material.WARPED_ROOTS ||
-                    blockMaterial == Material.WARPED_FUNGUS
-            ) {
                 if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.dead_flower")) == 0) {
                     world.dropItemNaturally(blockLocation, CraftItemManager.DEAD_FLOWER);
                 }
             }
 
-            // Twig
-            else if (blockMaterial == Material.DEAD_BUSH) {
-                if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.twig")) == 0) {
-                    world.dropItemNaturally(blockLocation, CraftItemManager.TWIG);
-                }
-            }
         }
     }
 }

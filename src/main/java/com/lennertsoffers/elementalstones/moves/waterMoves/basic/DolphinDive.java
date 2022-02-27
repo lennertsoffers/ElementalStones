@@ -10,6 +10,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class DolphinDive extends Move {
 
+    /**
+     * <b>MOVE 2: Dolphin Dive</b>
+     * <p>
+     *     The player gets the dolphins grace effect for 1 minute<br>
+     *     If the player has the waterbending stone, its passive effect gets doubled<br>
+     *     <ul>
+     *         <li><b>PotionEffect:</b> Dolphin Grace (duration: 1min, amplifier 3)</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public DolphinDive(ActivePlayer activePlayer) {
         super(activePlayer, "Dolphin Dive", "water_stone", "default", 2);
     }

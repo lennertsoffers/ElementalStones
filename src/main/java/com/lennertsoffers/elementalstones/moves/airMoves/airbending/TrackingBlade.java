@@ -14,6 +14,21 @@ import org.bukkit.util.Vector;
 
 public class TrackingBlade extends Move {
 
+    /**
+     * <b>MOVE 5: Tracking Blade</b>
+     * <p>
+     *     Shoots a blade of air that tracks the closets entity you are looking at<br>
+     *     It explodes on collision of after a certain amount of time<br>
+     *     <ul>
+     *         <li><b>Damage: </b> 6</li>
+     *         <li><b>Range: </b> 55</li>
+     *         <li><b>Duration: </b> 20</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @return a BukkitRunnable that can be executed as move
+     */
     public TrackingBlade(ActivePlayer activePlayer) {
         super(activePlayer, "Tracking Blade", "air_stone", "airbending_stone", 5);
     }

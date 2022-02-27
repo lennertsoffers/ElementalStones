@@ -1,6 +1,9 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public enum ItemCounter {
     NO_EFFECT(Material.BLAZE_ROD),

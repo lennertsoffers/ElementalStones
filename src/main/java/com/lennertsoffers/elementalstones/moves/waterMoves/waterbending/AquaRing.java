@@ -17,6 +17,16 @@ public class AquaRing extends Move {
 
     private final ArrayList<Location> waterBlockLocations = new ArrayList<>();
 
+    /**
+     * <b>MOVE 7: Aqua Ring</b>
+     * <p>
+     *     Creates a huge wave around the player knocking back all entities<br>
+     *     <ul>
+     *         <li><b>Knockback 4:</b> 4</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activePlayer executing the move
+     */
     public AquaRing(ActivePlayer activePlayer) {
         super(activePlayer, "Aqua Ring", "water_stone", "waterbending_stone", 7);
     }

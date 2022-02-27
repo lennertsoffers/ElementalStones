@@ -79,7 +79,7 @@ public class CraftItemManager {
     public static ItemStack EARTHBENDING_SPELL;
 
     public static ArrayList<ItemStack> spells = new ArrayList<>();
-
+    public static ArrayList<ItemStack> craftItems = new ArrayList<>();
 
 
     // Create Items
@@ -177,14 +177,60 @@ public class CraftItemManager {
                 EARTHBENDING_SPELL
         ));
 
+        // Add all craft items to list
+        craftItems.addAll(Arrays.asList(
+                BABY_ZOMBIE_HIDE,
+                INSECT,
+                BAT,
+                THYME,
+                OREGANO,
+                DILL,
+                ROSEMARY,
+                GOLDEN_FEATHER,
+                DEAD_FLOWER,
+                TWIG,
+                SOUL_OF_EVOKER,
+                BLOOD_OF_WANDERING_TRADER,
+                STINGER,
+                HOGLIN_TUSK,
+                FINN,
+                VOODOO_DOLL,
+                SHIP_IN_BOTTLE,
+                PALANTIR,
+                BLOOD_AND_QUIL,
+                BUNDLE_OF_HERBS,
+                CARNIVOROUS_PLANT,
+                SCENTED_CANDLE,
+                FINN_SOUP,
+                WAR_HORN,
+                POISONOUS_DART,
+                BROOM,
+                ROTTEN_APPLE,
+                POISONED_APPLE,
+                MYSTERY_POTION,
+                ANTIDOTE,
+                GINGERBREAD_MAN,
+                BOTTLE_OF_LIGHTNING,
+                COMMON_SHARD,
+                UNCOMMON_SHARD,
+                RARE_SHARD,
+                ULTRA_RARE_SHARD,
+                LEGENDARY_SHARD,
+                WATERBENDING_SPELL,
+                ICE_SPELL,
+                EXPLOSION_SPELL,
+                HELLFIRE_SPELL,
+                AGILITY_SPELL,
+                AIRBENDING_SPELL,
+                LAVA_SPELL,
+                EARTHBENDING_SPELL
+        ));
+
         // Create ShamanTradeItems
         new ShamanTradeItem(BABY_ZOMBIE_HIDE);
+        new ShamanTradeItem(ROTTEN_APPLE);
         new ShamanTradeItem(INSECT);
         new ShamanTradeItem(BAT);
-        new ShamanTradeItem(THYME);
-        new ShamanTradeItem(OREGANO);
-        new ShamanTradeItem(DILL);
-        new ShamanTradeItem(ROSEMARY);
         new ShamanTradeItem(GOLDEN_FEATHER);
         new ShamanTradeItem(DEAD_FLOWER);
         new ShamanTradeItem(TWIG);
@@ -201,8 +247,10 @@ public class CraftItemManager {
         new ShamanTradeItem(CARNIVOROUS_PLANT);
         new ShamanTradeItem(SCENTED_CANDLE);
         new ShamanTradeItem(FINN_SOUP);
+        new ShamanTradeItem(WAR_HORN);
         new ShamanTradeItem(POISONOUS_DART);
         new ShamanTradeItem(BROOM);
-        new ShamanTradeItem(WAR_HORN);
+        new ShamanTradeItem(POISONED_APPLE);
+        new ShamanTradeItem(GINGERBREAD_MAN);
     }
 }

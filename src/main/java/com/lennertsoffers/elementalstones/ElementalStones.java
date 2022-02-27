@@ -40,6 +40,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this);
         getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this);
         getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
@@ -54,6 +55,7 @@ public final class ElementalStones extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("checkSpells")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("checkItems1")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("checkItems2")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("giveShards")).setExecutor(new Commands());
 
         new BukkitRunnable() {
             @Override

@@ -11,6 +11,14 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class PufferBeam extends Move {
 
+    /**
+     * <b>MOVE 6: Puffer Beam</b>
+     * <p>
+     *     Rapidly shoots 100 puffer fish in the looking direction
+     * </p>
+     *
+     * @param activePlayer the activePlayer executing this move
+     */
     public PufferBeam(ActivePlayer activePlayer) {
         super(activePlayer, "Puffer Beam", "water_stone", "waterbending_stone", 6);
     }

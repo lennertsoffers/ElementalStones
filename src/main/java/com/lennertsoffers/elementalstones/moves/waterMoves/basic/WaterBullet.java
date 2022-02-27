@@ -17,6 +17,17 @@ import java.util.LinkedList;
 
 public class WaterBullet extends Move {
 
+    /**
+     * <b>MOVE 3: Water Bullet</b>
+     * <p>
+     *     Shoots a bullet of water damaging and penetrating entities<br>
+     *     <ul>
+     *         <li><b>Damage:</b> 4</li>
+     *         <li><b>Knockback:</b> 1</li>
+     *     </ul>
+     * </p>
+     * @param activePlayer the activeplayer executing the move
+     */
     public WaterBullet(ActivePlayer activePlayer) {
         super(activePlayer, "Water Bullet", "water_stone", "default", 3);
     }

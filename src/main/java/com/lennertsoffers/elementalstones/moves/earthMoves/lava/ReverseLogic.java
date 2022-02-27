@@ -9,6 +9,17 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class ReverseLogic extends Move {
 
+    /**
+     * <b>MOVE 4: Reverse Logic</b>
+     * <p>
+     *     The player heals over time while standing on magma blocks<br>
+     *     <ul>
+     *         <li><b>Heal:</b> 3 health/s</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public ReverseLogic(ActivePlayer activePlayer) {
         super(activePlayer, "Reverse Logic", "earth_stone", "lava_stone", 4);
     }

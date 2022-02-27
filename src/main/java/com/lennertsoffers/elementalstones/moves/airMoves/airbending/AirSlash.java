@@ -18,7 +18,27 @@ import java.util.Arrays;
 import java.util.List;
 
 public class AirSlash extends Move {
-    
+
+    /**
+     * <b>MOVE 4: Air Slash</b>
+     * <p>
+     *     A high speed high damage air slash<br>
+     *     Executing this move while falling or jumping does critical damage<br>
+     *     The move launches the player down and creates a slash where the player looks
+     *     <ul>
+     *         <li><b>Damage: </b> 4 (8 on critical)</li>
+     *         <li><b>Range: </b> 1</li>
+     *         <li><b>PotionEffects: </b>
+     *             <ul>
+     *                 <li>Slowness (duration: 10, amplifier: 2)</li>
+     *                 <li>Blindness (duration: 20, amplifier: 1)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public AirSlash(ActivePlayer activePlayer) {
         super(activePlayer, "Air Slash", "air_stone", "airbending_stone", 4);
     }
@@ -36,6 +56,14 @@ public class AirSlash extends Move {
         this.setCooldown();
     }
 
+    /**
+     * <b>BukkitRunnable that creates the slash effect</b>
+     * <p>
+     *     When the attack is critical, crit particles are spawned too
+     * </p>
+     * @param player the player executing this move
+     * @param critical if the move is a critical or not
+     */
     public static void slashEffect(Player player, boolean critical) {
         World world = player.getWorld();
         Location location = player.getLocation();

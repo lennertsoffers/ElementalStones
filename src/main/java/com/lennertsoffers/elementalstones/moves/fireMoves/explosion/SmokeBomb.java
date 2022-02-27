@@ -11,6 +11,27 @@ import org.bukkit.entity.Player;
 
 public class SmokeBomb extends Move {
 
+    /**
+     * <b>MOVE 4: Smoke Bomb</b>
+     * <p>
+     *     The player throws a bomb in its looking direction<br>
+     *     The falling path of this bomb will act with natural physics<br>
+     *     Any entities caught in the smoke will get blindness and slowness<br>
+     *     <ul>
+     *         <li><b>Duration: </b> 20s</li>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Blindness (duration: 10s, amplifier: 3)</li>
+     *                 <li>Slowness (duration: 10s, amplifier: 2)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see Grenade
+     * @see GrenadeSmoke
+     */
     public SmokeBomb(ActivePlayer activePlayer) {
         super(activePlayer, "Smoke Bomb", "fire_stone", "explosion_stone", 4);
     }

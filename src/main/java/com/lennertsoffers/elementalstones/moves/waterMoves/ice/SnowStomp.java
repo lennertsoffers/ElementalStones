@@ -14,6 +14,15 @@ import java.util.ArrayList;
 
 public class SnowStomp extends Move {
 
+    /**
+     * <b>MOVE 6: Snow Stomp</b>
+     * <p>
+     *     Turns a circle of ground into powder snow<br>
+     *     The height of the transformed blocks is 4<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public SnowStomp(ActivePlayer activePlayer) {
         super(activePlayer, "Snow Stomp", "water_stone", "ice_stone", 6);
     }

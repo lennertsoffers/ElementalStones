@@ -17,6 +17,22 @@ import java.util.List;
 
 public class Pillar extends Move {
 
+    /**
+     * <b>MOVE 1: Pillar</b>
+     * <p>
+     *     Creates a pillar on the targeted location<br>
+     *     Colliding entities are launched up<br>
+     *     The pillar will be removed after a certain amount of time<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 3s</li>
+     *         <li><b>Range: </b> 40</li>
+     *         <li><b>Knockup:</b> 1</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see Pillar
+     */
     public Pillar(ActivePlayer activePlayer) {
         super(activePlayer, "Pillar", "earth_stone", "default", 1);
     }

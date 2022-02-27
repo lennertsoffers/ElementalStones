@@ -19,6 +19,23 @@ import java.util.List;
 
 public class FlyingRock extends Move {
 
+    /**
+     * <b>ULTIMATE: Flying Rock</b>
+     * <p>
+     *     The player flies up and a set of random blocks in the close range fly up to<br>
+     *     These blocks will form into a flying island<br>
+     * </p>
+     * <p>
+     *     When the move is activated again, the rock will be launched at the ground<br>
+     *     This wil create an Earth Wave in all 8 directions<br>
+     *     <ul>
+     *         <li><b>Duration:</b> 1min</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see FlyingPlatform
+     */
     public FlyingRock(ActivePlayer activePlayer) {
         super(activePlayer, "Flying Rock", "earth_stone", "earthbending_stone", 8);
     }

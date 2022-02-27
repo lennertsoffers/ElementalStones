@@ -8,6 +8,16 @@ import org.bukkit.inventory.ItemStack;
 
 public class AQuickSnack extends Move {
 
+    /**
+     * <b>MOVE 1: A-Quick-Snack</b>
+     * <p>
+     *     Turns any raw food to the cooked variant of it<br>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+
+
+     */
     public AQuickSnack(ActivePlayer activePlayer) {
         super(activePlayer, "A-Quick-Snack", "fire_stone", "default", 1);
     }

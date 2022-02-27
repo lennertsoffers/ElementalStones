@@ -18,6 +18,19 @@ import java.util.List;
 
 public class Comet extends Move {
 
+    /**
+     * <b>MOVE 6: Comet</b>
+     * <p>
+     *     Marks a spot where a comet wil land after a few seconds
+     *     <ul>
+     *         <li><b>Range: </b> 30</li>
+     *         <li><b>Explosion Power: </b>5</li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     * @see Comet
+     */
     public Comet(ActivePlayer activePlayer) {
         super(activePlayer, "Comet", "earth_stone", "lava_stone", 6);
     }

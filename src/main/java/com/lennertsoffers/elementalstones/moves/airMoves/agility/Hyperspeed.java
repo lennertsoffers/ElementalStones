@@ -7,6 +7,25 @@ import org.bukkit.potion.PotionEffectType;
 
 public class Hyperspeed extends Move {
 
+    /**
+     * <b>ULTIMATE: Hyperspeed</b>
+     * <p>
+     *     Makes the player run faster<br>
+     *     Makes the player jump higher<br>
+     *     Dashes do more damage<br>
+     *     Charge jump is stronger<br>
+     *     <ul>
+     *         <li><b>PotionEffects:</b>
+     *             <ul>
+     *                 <li>Speed (duration: 1min, amplifier: 3</li>
+     *                 <li>Jump (duration: 1min, amplifier: 2</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Hyperspeed(ActivePlayer activePlayer) {
         super(activePlayer, "Hyperspeed", "air_stone", "agility_stone", 8);
     }

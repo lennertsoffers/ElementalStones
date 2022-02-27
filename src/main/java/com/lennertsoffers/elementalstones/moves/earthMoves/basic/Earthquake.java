@@ -20,6 +20,25 @@ import java.util.List;
 
 public class Earthquake extends Move {
 
+    /**
+     * <b>MOVE 2: Earthquake</b>
+     * <p>
+     *     Makes a circular earthquake damaging, slowing and confusing living entities
+     *     <ul>
+     *         <li><b>Duration:</b> 4s</li>
+     *         <li><b>Damage:</b> 1</li>
+     *         <li><b>Range:</b> 10</li>
+     *         <li><b>PotionEffects: </b>
+     *             <ul>
+     *                 <li>Slowness (duration: 10, amplifier: 1)</li>
+     *                 <li>Confusion (duration: 20, amplifier: 1)</li>
+     *             </ul>
+     *         </li>
+     *     </ul>
+     * </p>
+     *
+     * @param activePlayer the activeplayer executing the move
+     */
     public Earthquake(ActivePlayer activePlayer) {
         super(activePlayer, "Earthquake", "earth_stone", "default", 2);
     }
