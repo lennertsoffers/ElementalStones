@@ -79,6 +79,8 @@ public class CraftItemManager {
     public static ItemStack EARTHBENDING_SPELL;
 
     public static ArrayList<ItemStack> spells = new ArrayList<>();
+    public static ArrayList<ItemStack> craftItems = new ArrayList<>();
+
 
     // Create Items
 
@@ -165,6 +167,55 @@ public class CraftItemManager {
 
         // Add spells to list
         spells.addAll(Arrays.asList(
+                WATERBENDING_SPELL,
+                ICE_SPELL,
+                EXPLOSION_SPELL,
+                HELLFIRE_SPELL,
+                AGILITY_SPELL,
+                AIRBENDING_SPELL,
+                LAVA_SPELL,
+                EARTHBENDING_SPELL
+        ));
+
+        // Add all craft items to list
+        craftItems.addAll(Arrays.asList(
+                BABY_ZOMBIE_HIDE,
+                INSECT,
+                BAT,
+                THYME,
+                OREGANO,
+                DILL,
+                ROSEMARY,
+                GOLDEN_FEATHER,
+                DEAD_FLOWER,
+                TWIG,
+                SOUL_OF_EVOKER,
+                BLOOD_OF_WANDERING_TRADER,
+                STINGER,
+                HOGLIN_TUSK,
+                FINN,
+                VOODOO_DOLL,
+                SHIP_IN_BOTTLE,
+                PALANTIR,
+                BLOOD_AND_QUIL,
+                BUNDLE_OF_HERBS,
+                CARNIVOROUS_PLANT,
+                SCENTED_CANDLE,
+                FINN_SOUP,
+                WAR_HORN,
+                POISONOUS_DART,
+                BROOM,
+                ROTTEN_APPLE,
+                POISONED_APPLE,
+                MYSTERY_POTION,
+                ANTIDOTE,
+                GINGERBREAD_MAN,
+                BOTTLE_OF_LIGHTNING,
+                COMMON_SHARD,
+                UNCOMMON_SHARD,
+                RARE_SHARD,
+                ULTRA_RARE_SHARD,
+                LEGENDARY_SHARD,
                 WATERBENDING_SPELL,
                 ICE_SPELL,
                 EXPLOSION_SPELL,

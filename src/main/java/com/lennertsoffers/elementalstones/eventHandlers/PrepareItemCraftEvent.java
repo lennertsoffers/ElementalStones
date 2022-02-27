@@ -1,13 +1,17 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.customClasses.models.ItemCounter;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
+import com.sun.javafx.collections.FloatArraySyncer;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class PrepareItemCraftEvent implements Listener {
 
@@ -277,6 +281,8 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.earthStoneBending3);
         } else if (Arrays.equals(earthStoneBending4, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStoneBending4);
+        } else if (Collections.disjoint(CraftItemManager.craftItems, Arrays.asList(craftingMatrix))) {
+            event.getInventory().setResult(null);
         }
     }
 }
