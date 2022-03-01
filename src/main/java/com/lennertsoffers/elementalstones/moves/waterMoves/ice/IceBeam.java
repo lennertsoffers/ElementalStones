@@ -22,7 +22,6 @@ public class IceBeam extends Move {
      * <p>
      *     Shoots a beam of ice that freezes targets<br>
      *     Targets will be unable to see and move<br>
-     *     Frozen enemies will see random snowballs flying towards them<br>
      *     <ul>
      *         <li><b>Damage:</b> 5</li>
      *         <li><b>PotionEffects:</b>

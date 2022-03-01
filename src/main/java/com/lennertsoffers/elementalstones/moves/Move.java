@@ -51,14 +51,6 @@ public abstract class Move {
         return this.stone;
     }
 
-    public String getPath() {
-        return this.path;
-    }
-
-    public int getMoveIndex() {
-        return this.moveIndex;
-    }
-
     public Player getPlayer() {
         return this.player;
     }

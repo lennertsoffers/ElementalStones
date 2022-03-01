@@ -31,6 +31,7 @@ public class ShamanVillager {
         villager.setCustomNameVisible(false);
         initShamanIngredients();
         shamanVillagers.add(this);
+        this.villager.setVillagerExperience(villager.getVillagerExperience() + 1);
 
         generateTrades();
     }
@@ -61,7 +62,7 @@ public class ShamanVillager {
                     int xp = shamanTradeItem.getXpValue();
 
                     int oldXp = this.villager.getVillagerExperience();
-                    villager.setVillagerExperience(villager.getVillagerExperience() + xp);
+                    this.villager.setVillagerExperience(villager.getVillagerExperience() + xp);
                     int newXp = this.villager.getVillagerExperience();
 
                     if (
@@ -217,7 +218,7 @@ public class ShamanVillager {
         uncommonIngredientsPool.add(new ItemStack(Material.GLISTERING_MELON_SLICE, 32));
         uncommonIngredientsPool.add(new ItemStack(Material.AMETHYST_SHARD, 32));
         uncommonIngredientsPool.add(new ItemStack(Material.BEE_NEST, 1));
-        uncommonIngredientsPool.add(new ItemStack(Material.CHAINMAIL_HELMET, 32));
+        uncommonIngredientsPool.add(new ItemStack(Material.CHAINMAIL_HELMET, 1));
 
         ArrayList<ItemStack> rareIngredientsPool = new ArrayList<>();
         rareIngredientsPool.add(new ItemStack(Material.GOLDEN_CARROT, 64));
