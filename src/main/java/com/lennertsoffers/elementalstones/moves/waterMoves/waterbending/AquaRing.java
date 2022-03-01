@@ -22,7 +22,7 @@ public class AquaRing extends Move {
      * <p>
      *     Creates a huge wave around the player knocking back all entities<br>
      *     <ul>
-     *         <li><b>Knockback 4:</b> 4</li>
+     *         <li><b>Knockback:</b> 4</li>
      *     </ul>
      * </p>
      * @param activePlayer the activePlayer executing the move
