@@ -14,7 +14,7 @@ public class PlayerItemHeldEvent implements Listener {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
         if (activePlayer != null) {
-            if (activePlayer.areMovesEnabled() && activePlayer.getMoveController().getMoves().size() != 0) {
+            if (activePlayer.areMovesEnabled() && activePlayer.getMoveController().getMoves().size() > event.getNewSlot()) {
                 if (event.getNewSlot() <= 7) {
                     Move move = activePlayer.getMoveController().getMoves().get(event.getNewSlot());
                     if (!move.isOnCooldown()) {

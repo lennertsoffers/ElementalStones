@@ -1,14 +1,14 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ItemCounter;
+import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
-import com.sun.javafx.collections.FloatArraySyncer;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -143,6 +143,7 @@ public class PrepareItemCraftEvent implements Listener {
 
         // Check CraftingMatrix
         ItemStack[] craftingMatrix = event.getInventory().getMatrix();
+        ArrayList<ItemStack> singleItemCraftingMatrix = ItemTools.getSingleListFromStackList(craftingMatrix);
 
         // Craft items
         if (Arrays.equals(voodoo_doll_recipe, craftingMatrix)) {
@@ -281,10 +282,21 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(ItemStones.earthStoneBending3);
         } else if (Arrays.equals(earthStoneBending4, craftingMatrix)) {
             event.getInventory().setResult(ItemStones.earthStoneBending4);
-        } else if (!Collections.disjoint(CraftItemManager.craftItems, Arrays.asList(craftingMatrix))) {
+        }
+
+        else if (!Collections.disjoint(CraftItemManager.craftItems, singleItemCraftingMatrix)) {
             event.getInventory().setResult(null);
-        } else if (!Collections.disjoint(ItemStones.allStones, Arrays.asList(craftingMatrix))) {
+        } else if (!Collections.disjoint(ItemStones.allStones, singleItemCraftingMatrix)) {
             event.getInventory().setResult(null);
+        }
+
+
+        for (ItemStack i : event.getInventory().getMatrix()) {
+            if (i != null) {
+                if (i.getType().equals(Material.BLAZE_ROD)) {
+                    event.getInventory().setResult(null);
+                }
+            }
         }
     }
 }
