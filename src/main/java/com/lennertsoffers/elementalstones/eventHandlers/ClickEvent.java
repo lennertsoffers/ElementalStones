@@ -32,17 +32,18 @@ public class ClickEvent implements Listener {
             itemInMainHand.setAmount(1);
 
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (itemInMainHand.isSimilar(CraftItemManager.VOODOO_DOLL)) {
+                    System.out.println("voodoo");
+                    event.setCancelled(true);
+                    new Boss(player, originalItemInMainHand);
+                }
+
                 if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                     ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
                     if (activePlayer != null) {
                         event.setCancelled(true);
                         activePlayer.toggleActive();
                     }
-                }
-            } else if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                if (itemInMainHand.isSimilar(CraftItemManager.VOODOO_DOLL)) {
-                    event.setCancelled(true);
-                    new Boss(player, originalItemInMainHand);
                 }
             }
         }
