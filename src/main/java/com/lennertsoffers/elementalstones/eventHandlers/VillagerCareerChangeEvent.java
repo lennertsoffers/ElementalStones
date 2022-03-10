@@ -9,11 +9,8 @@ public class VillagerCareerChangeEvent implements Listener {
 
     @EventHandler
     public void onVillagerCareerChange(org.bukkit.event.entity.VillagerCareerChangeEvent event) {
-        Villager villager = event.getEntity();
         if (event.getProfession() == Villager.Profession.FLETCHER) {
-            if (!ShamanVillager.isShamanVillager(villager)) {
-                new ShamanVillager(event.getEntity());
-            }
+            new ShamanVillager(event.getEntity(), true);
         }
     }
 
