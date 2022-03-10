@@ -3,7 +3,6 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.Boss;
-import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Location;
@@ -98,11 +97,6 @@ public class EntityDeathEvent implements Listener {
                     if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.finn")) == 0) {
                         world.dropItemNaturally(deathLocation, CraftItemManager.FINN);
                     }
-                }
-
-                // Shaman villager
-                else if (entity instanceof Villager) {
-                    ShamanVillager.deadShamanVillager(entity.getUniqueId());
                 }
 
                 // Player

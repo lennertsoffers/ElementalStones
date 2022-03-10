@@ -49,7 +49,6 @@ public class AquaRing extends Move {
                 replaceWater();
                 waterBlockLocations.clear();
                 for (int i = 0; i < 360; i++) {
-                    System.out.println(i);
                     Location waterBlockLocationB = location.clone().add(direction.clone().rotateAroundY(i).multiply(amountOfTicks));
                     Location waterBlockLocationM = waterBlockLocationB.clone().add(0, 1, 0);
                     Location waterBlockLocationT = waterBlockLocationB.clone().add(0, 2, 0);

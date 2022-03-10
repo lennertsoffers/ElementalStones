@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.MoveController;
+import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.modMenu.commands.Commands;
@@ -23,6 +24,8 @@ public final class ElementalStones extends JavaPlugin {
         ItemStones.init();
         CraftItemManager.init();
         StaticVariables.staticVariablesInit(this);
+        ShamanVillager.initShamanIngredients();
+
         getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
         getServer().getPluginManager().registerEvents(new ClickEvent(this), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
@@ -67,6 +70,5 @@ public final class ElementalStones extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
     }
 }

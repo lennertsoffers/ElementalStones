@@ -3,6 +3,7 @@ package com.lennertsoffers.elementalstones.eventHandlers;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
+import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -19,23 +20,20 @@ public class PlayerInteractAtEntityEvent implements Listener {
         if (activePlayer != null) {
             if (event.getRightClicked() instanceof Villager) {
                 Villager villager = (Villager) event.getRightClicked();
+
                 if (villager.getProfession() == Villager.Profession.FLETCHER) {
-                    if (ShamanVillager.isShamanVillager(villager)) {
-                        ShamanVillager shamanVillager = ShamanVillager.getShamanVillager(villager.getUniqueId());
-                        if (shamanVillager != null) {
-                            ItemStack clickItemStackType = player.getInventory().getItemInMainHand().clone();
-                            clickItemStackType.setAmount(1);
-                            for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
-                                if (clickItemStackType.isSimilar(shamanTradeItem.getItem())) {
-                                    activePlayer.setCloseTradingInventories(true);
-                                    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
-                                    ItemStack itemToGive = itemInMainHand.clone();
-                                    itemToGive.setAmount(1);
-                                    if (shamanVillager.acceptItem(itemToGive)) {
-                                        itemInMainHand.setAmount(itemInMainHand.getAmount() - 1);
-                                        player.getInventory().setItemInMainHand(itemInMainHand);
-                                    }
-                                }
+                    ShamanVillager shamanVillager = new ShamanVillager(villager, false);
+                    ItemStack clickItemStackType = ItemTools.getSingleFromStack(player.getInventory().getItemInMainHand());
+
+                    for (ShamanTradeItem shamanTradeItem : ShamanTradeItem.getShamanXpItems()) {
+                        if (clickItemStackType.isSimilar(shamanTradeItem.getItem())) {
+                            activePlayer.setCloseTradingInventories(true);
+
+                            ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+
+                            if (shamanVillager.acceptItem(clickItemStackType)) {
+                                itemInMainHand.setAmount(itemInMainHand.getAmount() - 1);
+                                player.getInventory().setItemInMainHand(itemInMainHand);
                             }
                         }
                     }

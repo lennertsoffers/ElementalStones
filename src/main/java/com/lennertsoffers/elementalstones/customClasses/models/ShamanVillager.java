@@ -15,25 +15,23 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
-public class ShamanVillager {
+public class ShamanVillager{
 
     private boolean firstTradeGeneration = true;
 
     private final Villager villager;
     private final ArrayList<MerchantRecipe> trades = new ArrayList<>();
 
-    public static HashSet<ShamanVillager> shamanVillagers = new HashSet<>();
     private static final HashMap<String, ArrayList<ItemStack>> shamanIngredients = new HashMap<>();
 
-    public ShamanVillager(Villager villager) {
+    public ShamanVillager(Villager villager, boolean firstConversion) {
         this.villager = villager;
-        villager.setCustomName("Shaman");
-        villager.setCustomNameVisible(false);
-        initShamanIngredients();
-        shamanVillagers.add(this);
-        this.villager.setVillagerExperience(villager.getVillagerExperience() + 1);
 
-        generateTrades();
+        if (firstConversion) {
+            this.villager.setCustomName("Shaman");
+            this.villager.setVillagerExperience(villager.getVillagerExperience() + 1);
+            this.generateTrades();
+        }
     }
 
     public void generateTrades() {
@@ -188,7 +186,7 @@ public class ShamanVillager {
         return merchantRecipe;
     }
 
-    private void initShamanIngredients() {
+    public static void initShamanIngredients() {
         ArrayList<ItemStack> commonIngredientsPool = new ArrayList<>();
         commonIngredientsPool.add(new ItemStack(Material.NETHER_WART, 64));
         commonIngredientsPool.add(new ItemStack(Material.REDSTONE, 64));
@@ -261,27 +259,5 @@ public class ShamanVillager {
         shamanIngredients.put("rareIngredients", rareIngredientsPool);
         shamanIngredients.put("ultraRareIngredients", ultraRareIngredientsPool);
         shamanIngredients.put("legendaryIngredients", legendaryIngredientsPool);
-    }
-
-    public static ShamanVillager getShamanVillager(UUID uuid) {
-        for (ShamanVillager shamanVillager : shamanVillagers) {
-            if (shamanVillager.villager.getUniqueId() == uuid) {
-                return shamanVillager;
-            }
-        }
-        return null;
-    }
-
-    public static boolean isShamanVillager(Villager villager) {
-        for (ShamanVillager shamanVillager : shamanVillagers) {
-            if (shamanVillager.villager.getUniqueId() == villager.getUniqueId()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void deadShamanVillager(UUID uuid) {
-        shamanVillagers.removeIf(shamanVillager -> shamanVillager.villager.getUniqueId() == uuid);
     }
 }

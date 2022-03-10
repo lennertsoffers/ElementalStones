@@ -24,9 +24,6 @@ public class InventoryClickEvent implements Listener {
             if (inventory.getType() == InventoryType.WORKBENCH || inventory.getType() == InventoryType.CRAFTING) {
                 if (inventory.getType() == InventoryType.WORKBENCH) {
                     if (event.getSlotType() == InventoryType.SlotType.RESULT) {
-
-                        System.out.println("click");
-
                         CraftingInventory craftingInventory = (CraftingInventory) inventory;
                         ItemStack[] craftingMatrix = craftingInventory.getMatrix();
                         ArrayList<ItemStack> singleItemCraftingMatrix = ItemTools.getSingleListFromStackList(craftingMatrix);
