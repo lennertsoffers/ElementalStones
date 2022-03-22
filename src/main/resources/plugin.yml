@@ -34,3 +34,5 @@ commands:
     description: Test to check spells
   giveShards:
     description: Gives 64 shards to the player
+  setHunger:
+    description: Sets the hunger level to 1

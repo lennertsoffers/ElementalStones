@@ -18,12 +18,9 @@ public class Boss {
 
     public static ArrayList<Boss> bosses = new ArrayList<>();
 
-    public Boss(Player player, ItemStack itemStack) {
+    public Boss(Player player) {
         if (spawnBoss(player.getLocation())) {
             bosses.add(this);
-            ItemStack newItemStack = itemStack.clone();
-            newItemStack.setAmount(itemStack.getAmount() - 1);
-            player.getInventory().setItemInMainHand(newItemStack);
             this.monster.setTarget(player);
         }
     }

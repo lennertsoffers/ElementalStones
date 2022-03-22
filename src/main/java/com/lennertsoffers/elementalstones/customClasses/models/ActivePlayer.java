@@ -68,6 +68,10 @@ public class ActivePlayer {
     // Shaman Trading
     private boolean closeTradingInventories = false;
 
+    // Consumables
+    private final LinkedList<Player> spectatorTargets = new LinkedList<>();
+    private boolean requestedNewSpectatorTarget = false;
+
     public ActivePlayer(Player player) {
         this.player = player;
         this.active = false;
@@ -145,7 +149,6 @@ public class ActivePlayer {
         this.resetMapping.forEach(((location, material) -> this.player.getWorld().getBlockAt(location).setType(material)));
     }
 
-
     public void setMovesEnabled(boolean movesEnabled) {
         this.movesEnabled = movesEnabled;
     }
@@ -193,7 +196,6 @@ public class ActivePlayer {
     public void clearMove8FallingBlocks() {
         this.move8FallingBlocks.clear();
     }
-
 
     public FireBall getFireBall() {
         return this.fireBall;
@@ -493,5 +495,31 @@ public class ActivePlayer {
 
     public void setCloseTradingInventories(boolean closeTradingInventories) {
         this.closeTradingInventories = closeTradingInventories;
+    }
+
+    public boolean hasSpectatorTargets() {
+        return !this.spectatorTargets.isEmpty();
+    }
+
+    public LinkedList<Player> getSpectatorTargets() {
+        return this.spectatorTargets;
+    }
+
+    public void clearSpectatorTargets() {
+        this.spectatorTargets.clear();
+        this.requestedNewSpectatorTarget = false;
+    }
+
+    public Player getNewSpectatorTarget() {
+        this.requestedNewSpectatorTarget = false;
+        return this.spectatorTargets.pop();
+    }
+
+    public boolean hasRequestedNewSpectatorTarget() {
+        return this.requestedNewSpectatorTarget;
+    }
+
+    public void requestNewSpectatorTarget() {
+        this.requestedNewSpectatorTarget = true;
     }
 }
