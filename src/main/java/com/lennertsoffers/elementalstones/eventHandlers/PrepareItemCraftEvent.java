@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 public class PrepareItemCraftEvent implements Listener {
 
@@ -288,15 +287,6 @@ public class PrepareItemCraftEvent implements Listener {
             event.getInventory().setResult(null);
         } else if (!Collections.disjoint(ItemStones.allStones, singleItemCraftingMatrix)) {
             event.getInventory().setResult(null);
-        }
-
-
-        for (ItemStack i : event.getInventory().getMatrix()) {
-            if (i != null) {
-                if (i.getType().equals(Material.BLAZE_ROD)) {
-                    event.getInventory().setResult(null);
-                }
-            }
         }
     }
 }
