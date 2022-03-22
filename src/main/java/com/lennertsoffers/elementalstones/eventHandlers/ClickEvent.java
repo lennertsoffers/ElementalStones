@@ -47,15 +47,6 @@ public class ClickEvent implements Listener {
                     new Boss(player, originalItemInMainHand);
                 }
 
-                // War Horn
-                else if (itemInMainHand.isSimilar(CraftItemManager.WAR_HORN)) {
-                    world.playSound(location, Sound.EVENT_RAID_HORN, 1, 0);
-
-                    WarHornRaid raid = new WarHornRaid(location, world, player);
-                    raid.runTaskTimer(StaticVariables.plugin, 0L, 1L);
-                    new RaidSpawnWaveEvent(raid, world, raid.getCaptain(), raid.getRaiders());
-                }
-
                 if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                     ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
                     if (activePlayer != null) {

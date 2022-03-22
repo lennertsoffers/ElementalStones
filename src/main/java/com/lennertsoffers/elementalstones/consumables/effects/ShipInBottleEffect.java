@@ -8,6 +8,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class ShipInBottleEffect implements ConsumableEffect{
+
     @Override
     public void playEffect(Player player) {
         World world = player.getWorld();
