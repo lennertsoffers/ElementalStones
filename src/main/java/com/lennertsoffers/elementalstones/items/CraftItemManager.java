@@ -39,26 +39,18 @@ public class CraftItemManager {
     public static ItemStack BUNDLE_OF_HERBS;
     public static ItemStack CARNIVOROUS_PLANT;
     public static ItemStack SCENTED_CANDLE;
-    // Gives water breathing
     public static ItemStack FINN_SOUP;
-    // Right click plays raid sound
     public static ItemStack WAR_HORN;
     public static ItemStack POISONOUS_DART;
     public static ItemStack BROOM;
 
     // Consumables
 
-    // Gives hunger & nausea
     public static ItemStack ROTTEN_APPLE;
-    // Gives poison
     public static ItemStack POISONED_APPLE;
-    // Random potionEffect
     public static ItemStack MYSTERY_POTION;
-    // Turns bad potionEffect in good version
     public static ItemStack ANTIDOTE;
-    // Gives luck resistance and saturation
     public static ItemStack GINGERBREAD_MAN;
-    // Summons lightning
     public static ItemStack BOTTLE_OF_LIGHTNING;
 
     // Shards

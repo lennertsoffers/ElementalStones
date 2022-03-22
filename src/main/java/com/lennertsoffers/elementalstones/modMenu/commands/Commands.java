@@ -247,7 +247,9 @@ public class Commands implements CommandExecutor {
                             CraftItemManager.POISONED_APPLE,
                             CraftItemManager.MYSTERY_POTION,
                             CraftItemManager.GINGERBREAD_MAN,
-                            CraftItemManager.FINN_SOUP
+                            CraftItemManager.FINN_SOUP,
+                            CraftItemManager.BOTTLE_OF_LIGHTNING,
+                            CraftItemManager.PALANTIR
                     );
 
                     Inventory inventory = Bukkit.createInventory(player, 18);
@@ -261,7 +263,16 @@ public class Commands implements CommandExecutor {
                     return true;
                 }
             }
+        } else if (label.equalsIgnoreCase("setHunger")) {
+            if (sender.isOp()) {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    player.setFoodLevel(1);
+                }
+            }
         }
+
+
         return false;
     }
 }

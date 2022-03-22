@@ -24,4 +24,9 @@ public class ItemTools {
 
         return singleItemCraftingMatrix;
     }
+
+    public static ItemStack getLoweredItemStack(ItemStack itemStack) {
+        itemStack.setAmount(itemStack.getAmount() - 1);
+        return itemStack;
+    }
 }

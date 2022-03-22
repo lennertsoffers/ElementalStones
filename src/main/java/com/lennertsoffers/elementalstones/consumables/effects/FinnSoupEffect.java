@@ -25,7 +25,7 @@ public class FinnSoupEffect implements ConsumableEffect {
             @Override
             public void run() {
                 for (int i = 0; i < 10; i++) {
-                    OffsetParticleLocation opl = new OffsetParticleLocation(location, 10 + amountOfTicks);
+                    OffsetParticleLocation opl = new OffsetParticleLocation(location, 25 + amountOfTicks);
                     world.spawnParticle(Particle.ELECTRIC_SPARK, opl.getLocation(), 0);
                 }
 
