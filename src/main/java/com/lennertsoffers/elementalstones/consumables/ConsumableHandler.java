@@ -55,14 +55,17 @@ public class ConsumableHandler {
     }
 
     public static void antidote(Player player) {
-
+        ConsumableEffect effect = new AntidoteEffect();
+        effect.playEffect(player);
     }
 
-    public static void gingerbreadMan() {
-
+    public static void gingerbreadMan(Player player) {
+        ConsumableEffect effect = new GingerbreadManEffect();
+        effect.playEffect(player);
     }
 
-    public static void bottleOfLightning() {
-
+    public static void bottleOfLightning(Player player) {
+        ConsumableEffect effect = new BottleOfLightningEffect();
+        effect.playEffect(player);
     }
 }
