@@ -7,6 +7,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.Boss;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.items.ItemStones;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,16 +30,13 @@ public class ClickEvent implements Listener {
         Player player = event.getPlayer();
 
         if (event.getHand() == EquipmentSlot.HAND) {
-
-            ItemStack originalItemInMainHand = player.getInventory().getItemInMainHand().clone();
-            ItemStack itemInMainHand = ItemTools.getSingleFromStack(originalItemInMainHand);
-
             if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                 ConsumableHandler.voodooDoll(player);
                 ConsumableHandler.shipInBottle(player);
                 ConsumableHandler.warHorn(player);
                 ConsumableHandler.antidote(player);
                 ConsumableHandler.bottleOfLightning(player);
+                ConsumableHandler.palantir(player);
 
                 if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                     ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());

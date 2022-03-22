@@ -90,6 +90,13 @@ public class ConsumableHandler {
         }
     }
 
+    public static void palantir(Player player) {
+        if (canPlayEffect(player, CraftItemManager.PALANTIR, true)) {
+            ConsumableEffect effect = new PalantirEffect();
+            effect.playEffect(player);
+        }
+    }
+
     public static boolean canPlayEffect(Player player, ItemStack itemStack, boolean lowerItemInMainHand) {
         PlayerInventory inventory = player.getInventory();
 
