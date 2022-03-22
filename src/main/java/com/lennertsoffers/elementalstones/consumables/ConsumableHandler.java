@@ -49,11 +49,12 @@ public class ConsumableHandler {
         effect.playEffect(player);
     }
 
-    public static void mysteryPotion() {
-
+    public static void mysteryPotion(Player player) {
+        ConsumableEffect effect = new MysteryPotionEffect();
+        effect.playEffect(player);
     }
 
-    public static void antidote() {
+    public static void antidote(Player player) {
 
     }
 

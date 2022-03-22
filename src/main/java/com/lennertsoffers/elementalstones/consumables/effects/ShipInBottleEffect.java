@@ -31,8 +31,8 @@ public class ShipInBottleEffect implements ConsumableEffect{
                 @Override
                 public void run() {
                     for (int i = 0; i < 10; i++) {
-                        OffsetParticleLocation ops = new OffsetParticleLocation(playerLocation, 10);
-                        world.spawnParticle(Particle.TOTEM, ops.getX(), ops.getY(), ops.getZ(), 0);
+                        OffsetParticleLocation opl = new OffsetParticleLocation(playerLocation, 10);
+                        world.spawnParticle(Particle.TOTEM, opl.getLocation(), 0);
                     }
 
                     playerLocation.add(shipwreck);

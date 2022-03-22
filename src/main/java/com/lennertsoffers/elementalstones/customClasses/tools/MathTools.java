@@ -51,6 +51,23 @@ public class MathTools {
 
         return result;
     }
+
+    public static int mirrorAngle(int angle) {
+        return incrementAngle(angle, 180);
+    }
+
+    public static int incrementAngle(int angle, int degrees) {
+        int newAngle = angle + degrees;
+
+        if (newAngle >= 360) {
+            newAngle -= 360;
+        } else if (newAngle < 0) {
+            newAngle += 360;
+        }
+
+        return newAngle;
+    }
+
 }
 
 
