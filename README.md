@@ -1,4 +1,5 @@
-# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_bg.png" width="100px" style="margin-bottom: -40px !important">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
+# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_bg.png" width="100px">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) Elemental Stones
+
 This Spigot Plugin enhances the players experience by adding special stones to the base game
 
 ## About
@@ -6,7 +7,7 @@ This Spigot Plugin enhances the players experience by adding special stones to t
 
 These stones can be used to exercise all sorts of moves and make PvP/PvE more fun. It all starts with the four base stones, which can be levelled up 8 times. for each level, the player unlocks an additional move (which are explained below). The last level unlocks the strongest move of the stone, the ultimate.
 
-In addition to executable moves, each stone provides 1 or more passives. This type of move always remains active and helps the player in the background. These vary from stone to stone but are well balanced.
+In addition to executable moves, each stone provides 1 or more passives. This type of move always remains active and helps the player in the background. These vary from stone to stone but are well-balanced.
 
 When a base stone reaches level 3, the player has to choose a path to continue the upgrading process. Each base stone has 2 paths to choose from, which makes 8 paths in total. When a path is chosen, the first 3 moves of the base stones are kept.
 
@@ -16,18 +17,18 @@ To make the experience of the Elemental Stones even more fun, the server will pr
 ### Stones
 The following stones are currently in the game, more will be added in updates :)
 
-* [<img src="https://lennertsoffers.com/elementalstones/assets/water_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/water_stone.png) Water Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/waterbending_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/waterbending_stone.png) Waterbending Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/ice_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/ice_stone.png) Ice Stone
-* [<img src="https://lennertsoffers.com/elementalstones/assets/fire_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/fire_stone.png) Fire Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/explosion_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/explosion_stone.png) Explosion Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/hellfire_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/hellfire_stone.png) Hellfire Stone
-* [<img src="https://lennertsoffers.com/elementalstones/assets/air_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/air_stone.png) Air Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/agility_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/agility_stone.png) Agility Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/airbending_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/airbending_stone.png) Airbending Stone
-* [<img src="https://lennertsoffers.com/elementalstones/assets/earth_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/earth_stone.png) Earth Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/lava_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/lava_stone.png) Lava Stone
-    * [<img src="https://lennertsoffers.com/elementalstones/assets/earthbending_stone.png" style="margin-bottom: -2px;"/>](https://lennertsoffers.com/elementalstones/assets/earthbending_stone.png) Earthbending Stone
+* ![Water Stone](https://lennertsoffers.com/elementalstones/assets/water_stone.png) Water Stone
+    * ![Waterbending Stone](https://lennertsoffers.com/elementalstones/assets/waterbending_stone.png) Waterbending Stone
+    * ![Ice Stone](https://lennertsoffers.com/elementalstones/assets/ice_stone.png) Ice Stone
+* ![Fire Stone](https://lennertsoffers.com/elementalstones/assets/fire_stone.png) Fire Stone
+    * ![Explosion Stone](https://lennertsoffers.com/elementalstones/assets/explosion_stone.png) Explosion Stone
+    * ![Hellfire Stone](https://lennertsoffers.com/elementalstones/assets/hellfire_stone.png) Hellfire Stone
+* ![<Air Stone](https://lennertsoffers.com/elementalstones/assets/air_stone.png) Air Stone
+    * ![Agility Stone](https://lennertsoffers.com/elementalstones/assets/agility_stone.png) Agility Stone
+    * ![Airbending Stone](https://lennertsoffers.com/elementalstones/assets/airbending_stone.png) Airbending Stone
+* ![Earth Stone](https://lennertsoffers.com/elementalstones/assets/earth_stone.png) Earth Stone
+    * ![Lava Stone](https://lennertsoffers.com/elementalstones/assets/lava_stone.png) Lava Stone
+    * ![Earthbending Stone](https://lennertsoffers.com/elementalstones/assets/earthbending_stone.png) Earthbending Stone
 
 ### Items
 These items will be added to the server to provide survival mechanics for obtaining the stones.
