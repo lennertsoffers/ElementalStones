@@ -1,4 +1,4 @@
-# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png" style="margin-bottom: -70px">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
+# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_bg.png" width="100px" style="margin-bottom: -40px">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
 \
 \
 \
