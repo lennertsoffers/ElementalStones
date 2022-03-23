@@ -113,4 +113,7 @@ public class ConsumableHandler {
 
         return false;
     }
+
+    // TODO - Bosses more health
+    // TODO - Fix items of consumables and resource pack
 }
