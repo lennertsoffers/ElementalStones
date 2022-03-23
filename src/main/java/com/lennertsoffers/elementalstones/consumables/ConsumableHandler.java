@@ -97,6 +97,13 @@ public class ConsumableHandler {
         }
     }
 
+    public static void carnivorousPlant(Player player) {
+        if (canPlayEffect(player, CraftItemManager.CARNIVOROUS_PLANT, true)) {
+            ConsumableEffect effect = new CarnivorousPlantEffect();
+            effect.playEffect(player);
+        }
+    }
+
     public static boolean canPlayEffect(Player player, ItemStack itemStack, boolean lowerItemInMainHand) {
         PlayerInventory inventory = player.getInventory();
 
