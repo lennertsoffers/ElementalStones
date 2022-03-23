@@ -1,7 +1,4 @@
-# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_bg.png" width="100px" style="margin-bottom: -40px">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
-\
-\
-\
+# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_bg.png" width="100px" style="margin-bottom: -40px !important">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
 This Spigot Plugin enhances the players experience by adding special stones to the base game
 
 ## About
