@@ -1,4 +1,7 @@
-# ElementalStones
+# [<img src="https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png" style="margin-bottom: -70px">](https://lennertsoffers.com/elementalstones/assets/logo_clear_bg.png) ElementalStones
+\
+\
+\
 This Spigot Plugin enhances the players experience by adding special stones to the base game
 
 ## About
@@ -84,6 +87,8 @@ Spells:\
 ![Lava Spell](https://lennertsoffers.com/elementalstones/assets/lava_spell.png)
 ![Earthbending Spell](https://lennertsoffers.com/elementalstones/assets/earthbending_spell.png)
 
-## Download elementalStones.jar
-I'm currently still working on the plugin and haven't set up a download link yet.
-If you want the jar file to add the plugin to your server, you are free to pull the code and build the jar file yourself:))
+### Wiki
+This plugin has an extensive [dedicated wiki page](https://lennertsoffers.com/elementalstones) where all the game mechanics are explained
+
+## Usage
+Just [download the ElementalStones.jar](https://www.spigotmc.org/resources/elemental-stones.100459/) and drag it into your plugins folder. Restart the server and your plugin is ready to go. You can do some optional configuration yourself.
