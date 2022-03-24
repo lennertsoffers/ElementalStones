@@ -18,7 +18,7 @@ public class CarnivorousPlantEffect implements ConsumableEffect {
         Location location = CheckLocationTools.getClosestAirBlockLocation(player.getLocation().add(new Vector(StaticVariables.random.nextInt(10) + 5, 0 ,StaticVariables.random.nextInt(10) + 5)));
 
         if (location != null) {
-            if (StaticVariables.random.nextInt(10) == 0) {
+            if (StaticVariables.random.nextInt(10) != 0) {
                 world.spawnEntity(location, this.randomEntityType(), true);
             } else {
                 new Boss(player);

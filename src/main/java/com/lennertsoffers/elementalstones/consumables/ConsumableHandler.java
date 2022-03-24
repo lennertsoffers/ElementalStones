@@ -121,6 +121,22 @@ public class ConsumableHandler {
         return false;
     }
 
+    // TODO - only spectate survival players                        ?
+    // TODO - Respawn on activation place                           ?
+    // TODO - When shifting after no players in array, respawn      ?
+
+    // TODO - Fix mystery potion particles
+    // TODO - Broom: Spawn cats following u
+    // TODO - Poisonous dart: Arsenal of tipped arrows
+    // TODO - Bundle of herbs: Ride every entity
+    // TODO - Check spell drops
     // TODO - Bosses more health
     // TODO - Fix items of consumables and resource pack
+    // TODO - Make stones stay in inventory after death
+
+    // java.lang.IllegalArgumentException: bound must be positive
+    //        at java.util.Random.nextInt(Random.java:322) ~[?:?]
+    //        at com.lennertsoffers.elementalstones.eventHandlers.EntityDeathEvent.onEntityDeath(EntityDeathEvent.java:76) ~[elementalstones-1.0.1.jar:?]
+    //        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor5.execute(Unknown Source) ~[?:?]
+    //        at org.bukkit.plugin.EventExecutor.lambda$create$1(EventExecutor.java:75) ~[paper-api-1.18.1-R0.1-SNAPSHOT.jar:?]
 }

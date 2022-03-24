@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones.consumables.effects;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.PalantirSpectatorHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -12,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PalantirEffect implements ConsumableEffect {
 
@@ -20,37 +22,35 @@ public class PalantirEffect implements ConsumableEffect {
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
 
         if (activePlayer != null) {
+            PalantirSpectatorHandler palantirSpectatorHandler = activePlayer.getPalantirSpectatorHandler();
+
             // Switch trough players in map
-            if (activePlayer.hasSpectatorTargets()) {
+            if (palantirSpectatorHandler.hasSpectatorTargets()) {
                 player.setGameMode(GameMode.SPECTATOR);
 
-                activePlayer.requestNewSpectatorTarget();
+                palantirSpectatorHandler.requestNewSpectatorTarget();
 
-                BossBar bossBar = Bukkit.createBossBar("Spectating Time Left", BarColor.YELLOW, BarStyle.SEGMENTED_20);
-                bossBar.setProgress(1.0);
-                bossBar.addPlayer(player);
+                palantirSpectatorHandler.setBossBar(Bukkit.createBossBar("Spectating Time Left", BarColor.YELLOW, BarStyle.SEGMENTED_20));
+                palantirSpectatorHandler.getBossBar().setProgress(1.0);
+                palantirSpectatorHandler.getBossBar().addPlayer(player);
 
                 new BukkitRunnable() {
                     int amountOfTicks = 1200;
 
                     @Override
                     public void run() {
-                        bossBar.setProgress(amountOfTicks / 1200F);
+                        palantirSpectatorHandler.getBossBar().setProgress(amountOfTicks / 1200F);
+
+                        if (palantirSpectatorHandler.hasRequestedNewSpectatorTarget()) {
+                            Player spectatorTarget = palantirSpectatorHandler.getNewSpectatorTarget();
+                            player.setSpectatorTarget(spectatorTarget);
+                            player.sendMessage(ChatColor.YELLOW + "Switched to " + player.getName());
+                        }
+
                         amountOfTicks--;
                         if (amountOfTicks <= 1) {
-                            bossBar.removeAll();
                             this.cancel();
-                        }
-
-                        if (activePlayer.hasRequestedNewSpectatorTarget()) {
-                            player.setSpectatorTarget(activePlayer.getNewSpectatorTarget());
-                        }
-
-                        amountOfTicks++;
-                        if (amountOfTicks <= 1) {
-                            this.cancel();
-                            activePlayer.clearSpectatorTargets();
-                            player.setGameMode(GameMode.SURVIVAL);
+                            palantirSpectatorHandler.endEffect();
                         }
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
@@ -58,13 +58,20 @@ public class PalantirEffect implements ConsumableEffect {
 
             // Create new set of online players
             else {
-                Collection<? extends Player> onlinePlayers = StaticVariables.plugin.getServer().getOnlinePlayers();
+                palantirSpectatorHandler.setRespawnLocation(player.getLocation());
+                palantirSpectatorHandler.setGameMode(player.getGameMode());
+
+                List<Player> onlinePlayers = StaticVariables.plugin.getServer().getOnlinePlayers().stream().filter(onlinePlayer -> {
+                    GameMode gameMode = onlinePlayer.getGameMode();
+                    return gameMode == GameMode.ADVENTURE || gameMode == GameMode.CREATIVE || gameMode == GameMode.SURVIVAL;
+                }).collect(Collectors.toList());
+
                 onlinePlayers.remove(player);
 
                 // Only possible to create this map if there are players online
                 if (!onlinePlayers.isEmpty()) {
-                    activePlayer.getSpectatorTargets().addAll(onlinePlayers);
-                    Collections.shuffle(activePlayer.getSpectatorTargets());
+                    palantirSpectatorHandler.getSpectatorTargets().addAll(onlinePlayers);
+                    Collections.shuffle(palantirSpectatorHandler.getSpectatorTargets());
                     this.playEffect(player);
                 }
 

@@ -91,14 +91,15 @@ public class ShamanVillager{
         }
 
         generateTrades();
+        this.villager.setVillagerLevel(this.villager.getVillagerLevel() + 1);
 
-        if (villager.getVillagerLevel() == 5) {
-            if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.spell")) == 0) {
-                Location location = villager.getLocation();
+        if (this.villager.getVillagerLevel() == 5) {
+            int random = StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.spell"));
+
+            if (random == 0) {
+                Location location = this.villager.getLocation();
                 world.dropItem(location, CraftItemManager.spells.get(StaticVariables.random.nextInt(CraftItemManager.spells.size())));
             }
-        } else {
-            this.villager.setVillagerLevel(this.villager.getVillagerLevel() + 1);
         }
     }
 

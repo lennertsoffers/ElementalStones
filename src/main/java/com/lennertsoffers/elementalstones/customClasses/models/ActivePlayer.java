@@ -69,14 +69,14 @@ public class ActivePlayer {
     private boolean closeTradingInventories = false;
 
     // Consumables
-    private final LinkedList<Player> spectatorTargets = new LinkedList<>();
-    private boolean requestedNewSpectatorTarget = false;
+    PalantirSpectatorHandler palantirSpectatorHandler;
 
     public ActivePlayer(Player player) {
         this.player = player;
         this.active = false;
         activePlayers.add(this);
         this.moveController = new MoveController(this);
+        this.palantirSpectatorHandler = new PalantirSpectatorHandler(player);
     }
 
     public Player getPlayer() {
@@ -497,29 +497,7 @@ public class ActivePlayer {
         this.closeTradingInventories = closeTradingInventories;
     }
 
-    public boolean hasSpectatorTargets() {
-        return !this.spectatorTargets.isEmpty();
-    }
-
-    public LinkedList<Player> getSpectatorTargets() {
-        return this.spectatorTargets;
-    }
-
-    public void clearSpectatorTargets() {
-        this.spectatorTargets.clear();
-        this.requestedNewSpectatorTarget = false;
-    }
-
-    public Player getNewSpectatorTarget() {
-        this.requestedNewSpectatorTarget = false;
-        return this.spectatorTargets.pop();
-    }
-
-    public boolean hasRequestedNewSpectatorTarget() {
-        return this.requestedNewSpectatorTarget;
-    }
-
-    public void requestNewSpectatorTarget() {
-        this.requestedNewSpectatorTarget = true;
+    public PalantirSpectatorHandler getPalantirSpectatorHandler() {
+        return this.palantirSpectatorHandler;
     }
 }
