@@ -69,6 +69,7 @@ public class PalantirSpectatorHandler {
 
     public void endEffect() {
         this.bossBar.removeAll();
+        this.bossBar.removePlayer(this.player);
         this.clearSpectatorTargets();
         this.player.setGameMode(this.gameMode);
         this.player.teleport(this.respawnLocation);

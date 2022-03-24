@@ -104,6 +104,13 @@ public class ConsumableHandler {
         }
     }
 
+    public static void broom(Player player) {
+        if (canPlayEffect(player, CraftItemManager.BROOM, true)) {
+            ConsumableEffect effect = new BroomEffect();
+            effect.playEffect(player);
+        }
+    }
+
     public static boolean canPlayEffect(Player player, ItemStack itemStack, boolean lowerItemInMainHand) {
         PlayerInventory inventory = player.getInventory();
 
@@ -124,12 +131,12 @@ public class ConsumableHandler {
     // TODO - only spectate survival players                        ?
     // TODO - Respawn on activation place                           ?
     // TODO - When shifting after no players in array, respawn      ?
+    // TODO - Previous bossBar not removed                          ?
 
     // TODO - Fix mystery potion particles
-    // TODO - Broom: Spawn cats following u
+    // TODO - Broom: Spawn cats following u                         ?
     // TODO - Poisonous dart: Arsenal of tipped arrows
     // TODO - Bundle of herbs: Ride every entity
-    // TODO - Check spell drops
     // TODO - Bosses more health
     // TODO - Fix items of consumables and resource pack
     // TODO - Make stones stay in inventory after death
