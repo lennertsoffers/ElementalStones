@@ -9,6 +9,7 @@ import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.raid.RaidSpawnWaveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -111,6 +112,20 @@ public class ConsumableHandler {
         }
     }
 
+    public static void poisonousDart(Player player) {
+        if (canPlayEffect(player, CraftItemManager.POISONOUS_DART, true)) {
+            ConsumableEffect effect = new PoisonousDartEffect();
+            effect.playEffect(player);
+        }
+    }
+
+    public static void bundleOfHerbs(Player player, Entity entity) {
+        if (canPlayEffect(player, CraftItemManager.BUNDLE_OF_HERBS, true)) {
+            ConsumableEffect effect = new BundleOfHerbsEffect(entity);
+            effect.playEffect(player);
+        }
+    }
+
     public static boolean canPlayEffect(Player player, ItemStack itemStack, boolean lowerItemInMainHand) {
         PlayerInventory inventory = player.getInventory();
 
@@ -135,8 +150,8 @@ public class ConsumableHandler {
 
     // TODO - Fix mystery potion particles
     // TODO - Broom: Spawn cats following u                         ?
-    // TODO - Poisonous dart: Arsenal of tipped arrows
-    // TODO - Bundle of herbs: Ride every entity
+    // TODO - Poisonous dart: Arsenal of tipped arrows              ?
+    // TODO - Bundle of herbs: Ride every entity                    ?
     // TODO - Bosses more health
     // TODO - Fix items of consumables and resource pack
     // TODO - Make stones stay in inventory after death

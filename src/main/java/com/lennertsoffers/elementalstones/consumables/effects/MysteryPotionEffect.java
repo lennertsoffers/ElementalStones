@@ -32,8 +32,8 @@ public class MysteryPotionEffect implements ConsumableEffect {
             @Override
             public void run() {
                 List<Location> particleLocations = new ArrayList<>();
-                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(angle)));
-                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(MathTools.mirrorAngle(angle))));
+                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(angle * (Math.PI / 180f))));
+                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(MathTools.mirrorAngle(angle)   * (Math.PI / 180))));
 
                 angle = MathTools.incrementAngle(angle, 10);
 
