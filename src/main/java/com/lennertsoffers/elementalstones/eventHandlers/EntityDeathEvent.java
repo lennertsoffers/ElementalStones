@@ -73,7 +73,7 @@ public class EntityDeathEvent implements Listener {
 
                 // Wandering Trader Blood
                 else if (entity instanceof WanderingTrader) {
-                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.villager_blood")) == 0) {
+                    if (StaticVariables.random.nextInt(ElementalStones.configuration.getInt("drop_chance.blood_of_wandering_trader")) == 0) {
                         world.dropItemNaturally(deathLocation, CraftItemManager.BLOOD_OF_WANDERING_TRADER);
                     }
                 }

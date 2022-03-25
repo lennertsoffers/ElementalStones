@@ -1,9 +1,11 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.consumables.ConsumableHandler;
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
@@ -16,9 +18,12 @@ public class PlayerInteractAtEntityEvent implements Listener {
     public void onPlayerInteractAtEntity(org.bukkit.event.player.PlayerInteractAtEntityEvent event) {
         Player player = event.getPlayer();
         ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
+        Entity entity = event.getRightClicked();
+
+        ConsumableHandler.bundleOfHerbs(player, entity);
 
         if (activePlayer != null) {
-            if (event.getRightClicked() instanceof Villager) {
+            if (entity instanceof Villager) {
                 Villager villager = (Villager) event.getRightClicked();
 
                 if (villager.getProfession() == Villager.Profession.FLETCHER) {

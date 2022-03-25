@@ -46,7 +46,10 @@ public class PalantirSpectatorHandler {
     public void requestNewSpectatorTarget() {
         if (this.hasSpectatorTargets()) {
             this.requestedNewSpectatorTarget = true;
+            System.out.println("contin");
+            System.out.println("contin");
         } else {
+            System.out.println("end");
             this.endEffect();
         }
     }

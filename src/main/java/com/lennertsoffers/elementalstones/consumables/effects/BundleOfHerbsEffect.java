@@ -24,7 +24,7 @@ public class BundleOfHerbsEffect implements ConsumableEffect {
             @Override
             public void run() {
                 Vector direction = player.getLocation().getDirection().setY(0).multiply(0.5);
-                entity.setVelocity(entity.getVelocity().add(direction));
+                entity.setVelocity(direction);
 
                 amountOfTicks++;
                 if (amountOfTicks > 60) {

@@ -156,7 +156,7 @@ public class ConsumableHandler {
     // TODO - Fix items of consumables and resource pack
     // TODO - Make stones stay in inventory after death
 
-    // java.lang.IllegalArgumentException: bound must be positive
+    // java.lang.IllegalArgumentException: bound must be positive   ?
     //        at java.util.Random.nextInt(Random.java:322) ~[?:?]
     //        at com.lennertsoffers.elementalstones.eventHandlers.EntityDeathEvent.onEntityDeath(EntityDeathEvent.java:76) ~[elementalstones-1.0.1.jar:?]
     //        at com.destroystokyo.paper.event.executor.asm.generated.GeneratedEventExecutor5.execute(Unknown Source) ~[?:?]

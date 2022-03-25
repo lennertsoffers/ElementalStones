@@ -32,6 +32,8 @@ public class ClickEvent implements Listener {
                 ConsumableHandler.bottleOfLightning(player);
                 ConsumableHandler.palantir(player);
                 ConsumableHandler.carnivorousPlant(player);
+                ConsumableHandler.broom(player);
+                ConsumableHandler.poisonousDart(player);
 
                 if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                     ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());

@@ -19,6 +19,7 @@ public class PlayerToggleSneakEvent implements Listener {
             if (activePlayer != null) {
                 PalantirSpectatorHandler palantirSpectatorHandler = activePlayer.getPalantirSpectatorHandler();
 
+                System.out.println(palantirSpectatorHandler.getSpectatorTargets());
                 if (palantirSpectatorHandler.hasSpectatorTargets()) {
                     event.setCancelled(true);
                     palantirSpectatorHandler.requestNewSpectatorTarget();
