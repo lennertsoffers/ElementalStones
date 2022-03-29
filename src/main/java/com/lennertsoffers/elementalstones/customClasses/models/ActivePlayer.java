@@ -1,9 +1,11 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
+import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
+import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.ChatColor;
@@ -11,10 +13,15 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class ActivePlayer {
@@ -143,6 +150,73 @@ public class ActivePlayer {
 
         this.getMove6LaunchedFallingBlocks().clear();
         this.getMove6FallingBlocks().clear();
+    }
+
+    public void respawnPlayer() {
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get("./Plugins/ElementalStones/death_player_stones.txt"));
+            List<String> writeLines = new ArrayList<>(allLines);
+
+            for (String line : allLines) {
+                String[] uuidStone = line.split(";");
+                String uuid = uuidStone[0].trim();
+                String stoneName = uuidStone[1].trim();
+
+                ItemStones.allStones.forEach(stone -> {
+
+                    ItemMeta itemMeta = stone.getItemMeta();
+
+                    if (itemMeta != null) {
+                        if (stoneName.equals(itemMeta.getDisplayName())) {
+                            if (uuid.equals(player.getUniqueId().toString())) {
+                                this.player.getInventory().addItem(stone);
+
+                                writeLines.remove(line);
+                            }
+                        }
+                    }
+                });
+            }
+
+            Files.write(Paths.get("./Plugins/ElementalStones/death_player_stones.txt"), writeLines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void death() {
+        this.resetWorld();
+        this.setInactive();
+
+        List<ItemStack> contents = Arrays.asList(this.player.getInventory().getContents());
+
+        contents.forEach(itemStack -> {
+            if (itemStack != null) {
+                ItemStack singleItemStack = ItemTools.getSingleFromStack(itemStack);
+
+                if (ItemStones.allStones.contains(singleItemStack)) {
+                    String uuid = this.player.getUniqueId().toString();
+                    String name;
+
+                    ItemMeta itemMeta = singleItemStack.getItemMeta();
+                    if (itemMeta != null) {
+                        name = itemMeta.getDisplayName();
+
+                        try {
+                            String writeString = uuid + ";" + name;
+                            List<String> allLines = Files.readAllLines(Paths.get("./Plugins/ElementalStones/death_player_stones.txt"));
+                            allLines.add(writeString);
+
+                            Files.write(Paths.get("./Plugins/ElementalStones/death_player_stones.txt"), allLines);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    itemStack.setAmount(0);
+                }
+            }
+        });
     }
 
     public void resetWorld() {

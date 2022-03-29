@@ -103,7 +103,7 @@ public class EntityDeathEvent implements Listener {
                 else if (entity instanceof Player) {
                     ActivePlayer activePlayer = ActivePlayer.getActivePlayer(entity.getUniqueId());
                     if (activePlayer != null) {
-                        activePlayer.setInactive();
+                        activePlayer.death();
                     }
                 }
             }
