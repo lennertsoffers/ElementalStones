@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.models.FileStorageHandler;
 import com.lennertsoffers.elementalstones.customClasses.models.MoveController;
 import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
@@ -11,7 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class ElementalStones extends JavaPlugin {
 
@@ -19,6 +24,9 @@ public final class ElementalStones extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        FileStorageHandler fileStorageHandler = new FileStorageHandler(this.getLogger());
+        fileStorageHandler.initDeathPlayerStones();
+
         configuration = this.getConfig();
         this.saveDefaultConfig();
         ItemStones.init();
@@ -39,6 +47,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
         getServer().getPluginManager().registerEvents(new PlayerToggleSneakEvent(), this);
         getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this);

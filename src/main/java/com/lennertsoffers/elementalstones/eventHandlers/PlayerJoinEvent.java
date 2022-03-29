@@ -14,6 +14,8 @@ public class PlayerJoinEvent implements Listener {
         Player player = event.getPlayer();
 
         ActivePlayer activePlayer = new ActivePlayer(player);
+        activePlayer.respawnPlayer();
+
         PassiveHandler.deepBreath(activePlayer);
 
         String resourcePackUrl = ElementalStones.configuration.getString("resource_pack");
