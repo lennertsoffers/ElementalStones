@@ -91,7 +91,8 @@ public class WarHornRaid extends BukkitRunnable implements Raid {
 
         this.activator.sendMessage(ChatColor.RED + "You have lost the raid!");
         this.activator.sendMessage(ChatColor.RED + "You will be punished for this!");
-        this.activator.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2400, 1));
+        this.activator.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2400, 2));
+        this.activator.removePotionEffect(PotionEffectType.BAD_OMEN);
     }
 
     @Override

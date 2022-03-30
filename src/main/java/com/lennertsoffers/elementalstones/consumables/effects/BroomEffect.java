@@ -17,7 +17,7 @@ public class BroomEffect implements ConsumableEffect {
     public void playEffect(Player player) {
         World world = player.getWorld();
         Location location = player.getLocation();
-        PotionEffect levitation = new PotionEffect(PotionEffectType.LEVITATION, 1200, 1, true, true, true);
+        PotionEffect levitation = new PotionEffect(PotionEffectType.LEVITATION, 12000, 1, true, true, true);
 
         for (int i = 0; i < 20; i++) {
             double locationX = location.getX() + StaticVariables.random.nextGaussian() * 10;
