@@ -21,7 +21,7 @@ public class MysteryPotionEffect implements ConsumableEffect {
     public void playEffect(Player player) {
         World world = player.getWorld();
         Location location = player.getLocation();
-        Vector direction = location.getDirection();
+        Vector direction = location.getDirection().setY(0);
 
         player.addPotionEffect(PotionEffectTools.randomPotionEffect());
 
@@ -32,17 +32,19 @@ public class MysteryPotionEffect implements ConsumableEffect {
             @Override
             public void run() {
                 List<Location> particleLocations = new ArrayList<>();
-                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(angle)));
-                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(MathTools.mirrorAngle(angle))));
+                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(angle * (Math.PI / 180f))));
+                particleLocations.add(location.clone().add(direction.clone().rotateAroundY(MathTools.mirrorAngle(angle)   * (Math.PI / 180))));
 
-                angle = MathTools.incrementAngle(angle, 10);
+                angle = MathTools.incrementAngle(angle, 20);
 
                 for (Location particleLocation : particleLocations) {
                     particleLocation.add(0, amountOfTicks / 10F, 0);
-                    OffsetParticleLocation opl = new OffsetParticleLocation(location, 3);
+                    OffsetParticleLocation opl = new OffsetParticleLocation(particleLocation, 3);
 
                     world.spawnParticle(Particle.REDSTONE, opl.getLocation(), 0, new Particle.DustOptions(Color.fromRGB(StaticVariables.random.nextInt(255), StaticVariables.random.nextInt(255), StaticVariables.random.nextInt(255)), 2F));
                 }
+
+                direction.multiply(0.97);
 
                 amountOfTicks++;
                 if (amountOfTicks > 60) {

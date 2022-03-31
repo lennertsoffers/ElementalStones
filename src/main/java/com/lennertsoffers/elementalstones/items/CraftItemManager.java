@@ -139,14 +139,12 @@ public class CraftItemManager {
         ROTTEN_APPLE = createItem("Rotten Apple", "", ItemCounter.APPLE);
         POISONED_APPLE = createItem("Poisoned Apple", "", ItemCounter.APPLE);
 
-        // Potion
-        MYSTERY_POTION = createItem("Mystery Potion", "", ItemCounter.POTION);
-
         // Food
         GINGERBREAD_MAN = createItem("Gingerbread Man", "", ItemCounter.FOOD);
 
         // Bottle
         BOTTLE_OF_LIGHTNING = createItem("Bottle of Lightning", "", ItemCounter.BOTTLE);
+        MYSTERY_POTION = createItem("Mystery Potion", "", ItemCounter.BOTTLE);
 
         // Stew
         FINN_SOUP = createItem("Finn Soup", "", ItemCounter.STEW);

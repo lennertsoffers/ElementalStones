@@ -1,10 +1,19 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;
+import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EntityDamageEvent implements Listener {
 
@@ -28,6 +37,17 @@ public class EntityDamageEvent implements Listener {
                     event.setCancelled(true);
                 } else {
                     PassiveHandler.shockwave(activePlayer, event);
+                }
+            }
+
+            else if (event.getCause() == org.bukkit.event.entity.EntityDamageEvent.DamageCause.LIGHTNING) {
+                for (ItemStack itemStack : player.getInventory().getContents()) {
+                    if (itemStack != null) {
+                        if (itemStack.getType() == Material.GLASS_BOTTLE) {
+                            itemStack = CraftItemManager.BOTTLE_OF_LIGHTNING.clone();
+                            itemStack.setAmount(itemStack.getAmount());
+                        }
+                    }
                 }
             }
         }

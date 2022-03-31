@@ -9,6 +9,7 @@ import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.raid.RaidSpawnWaveEvent;
 import org.bukkit.inventory.ItemStack;
@@ -97,6 +98,34 @@ public class ConsumableHandler {
         }
     }
 
+    public static void carnivorousPlant(Player player) {
+        if (canPlayEffect(player, CraftItemManager.CARNIVOROUS_PLANT, true)) {
+            ConsumableEffect effect = new CarnivorousPlantEffect();
+            effect.playEffect(player);
+        }
+    }
+
+    public static void broom(Player player) {
+        if (canPlayEffect(player, CraftItemManager.BROOM, true)) {
+            ConsumableEffect effect = new BroomEffect();
+            effect.playEffect(player);
+        }
+    }
+
+    public static void poisonousDart(Player player) {
+        if (canPlayEffect(player, CraftItemManager.POISONOUS_DART, true)) {
+            ConsumableEffect effect = new PoisonousDartEffect();
+            effect.playEffect(player);
+        }
+    }
+
+    public static void bundleOfHerbs(Player player, Entity entity) {
+        if (canPlayEffect(player, CraftItemManager.BUNDLE_OF_HERBS, true)) {
+            ConsumableEffect effect = new BundleOfHerbsEffect(entity);
+            effect.playEffect(player);
+        }
+    }
+
     public static boolean canPlayEffect(Player player, ItemStack itemStack, boolean lowerItemInMainHand) {
         PlayerInventory inventory = player.getInventory();
 
@@ -113,4 +142,13 @@ public class ConsumableHandler {
 
         return false;
     }
+
+    // TODO - only spectate survival players                        ?
+    // TODO - When shifting after no players in array, respawn      ?
+    // TODO - Previous bossBar not removed                          ?
+
+    // TODO - Bosses more health
+    // TODO - Fix items of consumables and resource pack
+    // TODO - Make stones stay in inventory after death
+
 }

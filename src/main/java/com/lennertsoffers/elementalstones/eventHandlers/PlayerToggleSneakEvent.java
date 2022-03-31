@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.PalantirSpectatorHandler;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,9 +17,12 @@ public class PlayerToggleSneakEvent implements Listener {
             ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
 
             if (activePlayer != null) {
-                if (activePlayer.hasSpectatorTargets()) {
+                PalantirSpectatorHandler palantirSpectatorHandler = activePlayer.getPalantirSpectatorHandler();
+
+                System.out.println(palantirSpectatorHandler.getSpectatorTargets());
+                if (palantirSpectatorHandler.hasSpectatorTargets()) {
                     event.setCancelled(true);
-                    activePlayer.requestNewSpectatorTarget();
+                    palantirSpectatorHandler.requestNewSpectatorTarget();
                 }
             }
         }
