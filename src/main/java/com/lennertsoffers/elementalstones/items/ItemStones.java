@@ -421,7 +421,7 @@ public class ItemStones {
 
         // FIRE STONES
         String fireStoneTypeLore = "An old relic used to utilize the power of fire";
-        String moveHellfireTypeLore = "This path is an expansion on the fire related moves and aims on high damage";
+        String moveHellfireTypeLore = "This path is an expansion on the fire related moves and aims at high damage";
         String moveExplosionTypeLore = "With the power of this stone you can create explosions everywhere";
         
         // FireStones: Default

@@ -30,9 +30,7 @@ public class CraftItemManager {
     public static ItemStack FINN;
 
     // Craft Items
-    // Summons random boss
     public static ItemStack VOODOO_DOLL;
-    // Right click to locate the nearest shipwreck
     public static ItemStack SHIP_IN_BOTTLE;
     public static ItemStack PALANTIR;
     public static ItemStack BLOOD_AND_QUIL;
