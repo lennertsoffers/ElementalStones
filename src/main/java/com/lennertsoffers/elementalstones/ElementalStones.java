@@ -14,7 +14,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,6 +80,11 @@ public final class ElementalStones extends JavaPlugin {
                 MoveController.moveControllers.forEach(MoveController::updateScoreBoard);
             }
         }.runTaskTimer(this, 0L, 20L);
+
+        Locale locale = new Locale("nl");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("LanguageBundle", locale);
+        System.out.println(resourceBundle.getString("test"));
+        System.out.println(resourceBundle.getString("test2"));
     }
 
     @Override
