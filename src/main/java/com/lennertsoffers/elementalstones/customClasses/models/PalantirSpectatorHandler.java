@@ -5,15 +5,18 @@ import org.bukkit.Location;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class PalantirSpectatorHandler {
 
-    private final LinkedList<Player> spectatorTargets = new LinkedList<>();
+    private final ArrayList<Player> spectatorTargets = new ArrayList<>();
+    private int spectatorIndex = 0;
     private boolean requestedNewSpectatorTarget = false;
     private Location respawnLocation;
     private BossBar bossBar;
     private GameMode gameMode;
+    private Player spectatorTraget;
 
     private final Player player;
 
@@ -25,7 +28,7 @@ public class PalantirSpectatorHandler {
         return !this.spectatorTargets.isEmpty();
     }
 
-    public LinkedList<Player> getSpectatorTargets() {
+    public ArrayList<Player> getSpectatorTargets() {
         return this.spectatorTargets;
     }
 
@@ -36,7 +39,16 @@ public class PalantirSpectatorHandler {
 
     public Player getNewSpectatorTarget() {
         this.requestedNewSpectatorTarget = false;
-        return this.spectatorTargets.pop();
+
+        Player player = this.spectatorTargets.get(this.spectatorIndex);
+        this.spectatorTraget = player;
+
+        this.spectatorIndex++;
+        if (this.spectatorIndex >= this.spectatorTargets.size()) {
+            this.spectatorIndex = 0;
+        }
+
+        return player;
     }
 
     public boolean hasRequestedNewSpectatorTarget() {
@@ -46,10 +58,7 @@ public class PalantirSpectatorHandler {
     public void requestNewSpectatorTarget() {
         if (this.hasSpectatorTargets()) {
             this.requestedNewSpectatorTarget = true;
-            System.out.println("contin");
-            System.out.println("contin");
         } else {
-            System.out.println("end");
             this.endEffect();
         }
     }
@@ -70,7 +79,14 @@ public class PalantirSpectatorHandler {
         return this.bossBar;
     }
 
+    public void teleportToPlayer() {
+        this.respawnLocation = this.spectatorTraget.getLocation();
+        this.endEffect();
+    }
+
     public void endEffect() {
+        this.bossBar.setProgress(0);
+        this.bossBar.setVisible(false);
         this.bossBar.removeAll();
         this.bossBar.removePlayer(this.player);
         this.clearSpectatorTargets();

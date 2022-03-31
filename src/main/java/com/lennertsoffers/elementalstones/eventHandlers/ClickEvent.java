@@ -22,22 +22,24 @@ public class ClickEvent implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) {
         Player player = event.getPlayer();
+        ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
 
-        if (event.getHand() == EquipmentSlot.HAND) {
-            if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                ConsumableHandler.voodooDoll(player);
-                ConsumableHandler.shipInBottle(player);
-                ConsumableHandler.warHorn(player);
-                ConsumableHandler.antidote(player);
-                ConsumableHandler.bottleOfLightning(player);
-                ConsumableHandler.palantir(player);
-                ConsumableHandler.carnivorousPlant(player);
-                ConsumableHandler.broom(player);
-                ConsumableHandler.poisonousDart(player);
+        if (activePlayer != null) {
+            if (event.getHand() == EquipmentSlot.HAND) {
+                if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                    ConsumableHandler.voodooDoll(player);
+                    ConsumableHandler.shipInBottle(player);
+                    ConsumableHandler.warHorn(player);
+                    ConsumableHandler.antidote(player);
+                    ConsumableHandler.bottleOfLightning(player);
+                    ConsumableHandler.palantir(player);
+                    ConsumableHandler.carnivorousPlant(player);
+                    ConsumableHandler.broom(player);
+                    ConsumableHandler.poisonousDart(player);
 
-                if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
-                    ActivePlayer activePlayer = ActivePlayer.getActivePlayer(player.getUniqueId());
-                    if (activePlayer != null) {
+                    activePlayer.getPalantirSpectatorHandler().teleportToPlayer();
+
+                    if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                         event.setCancelled(true);
                         activePlayer.toggleActive();
                     }

@@ -215,7 +215,7 @@ public class Commands implements CommandExecutor {
                             CraftItemManager.VOODOO_DOLL,
                             CraftItemManager.WAR_HORN,
                             CraftItemManager.ANTIDOTE,
-                            CraftItemManager.PALANTIR
+                            CraftItemManager.BOTTLE_OF_LIGHTNING
                     );
 
                     Inventory inventory = Bukkit.createInventory(player, 18);
