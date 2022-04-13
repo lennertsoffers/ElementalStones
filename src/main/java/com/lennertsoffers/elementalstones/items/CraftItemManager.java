@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.items;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ItemCounter;
-import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ItemCounter;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;

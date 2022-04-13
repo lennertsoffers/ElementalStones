@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.moves.airMoves.airbending.AirSlash;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;

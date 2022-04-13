@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.consumables.effects;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.OffsetParticleLocation;
+import com.lennertsoffers.elementalstones.customClasses.models.utils.OffsetParticleLocation;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;

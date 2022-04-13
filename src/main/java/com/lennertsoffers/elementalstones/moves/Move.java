@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.moves;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import org.bukkit.entity.Player;
 
 public abstract class Move {

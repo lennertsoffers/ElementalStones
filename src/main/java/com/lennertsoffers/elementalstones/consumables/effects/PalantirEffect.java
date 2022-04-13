@@ -1,8 +1,8 @@
 package com.lennertsoffers.elementalstones.consumables.effects;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.models.PalantirSpectatorHandler;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.PalantirSpectatorHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;

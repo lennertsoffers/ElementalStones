@@ -1,9 +1,9 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.consumables.ConsumableHandler;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.models.ShamanTradeItem;
-import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanTradeItem;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;

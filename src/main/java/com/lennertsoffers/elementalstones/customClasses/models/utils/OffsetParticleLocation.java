@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.utils;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.Location;

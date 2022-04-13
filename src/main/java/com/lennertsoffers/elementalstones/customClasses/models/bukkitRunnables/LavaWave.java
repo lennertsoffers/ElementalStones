@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.SetBlockTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.StringListTools;
 import org.bukkit.Location;

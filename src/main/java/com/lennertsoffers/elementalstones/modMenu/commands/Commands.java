@@ -1,8 +1,8 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.models.Boss;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.Boss;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;

@@ -1,8 +1,8 @@
 package com.lennertsoffers.elementalstones.moves.fireMoves.explosion;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.models.Effect;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.Effect;
 import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.FireworkEffect;

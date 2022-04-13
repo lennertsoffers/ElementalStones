@@ -1,9 +1,9 @@
 package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.FileStorageHandler;
-import com.lennertsoffers.elementalstones.customClasses.models.MoveController;
-import com.lennertsoffers.elementalstones.customClasses.models.ShamanVillager;
+import com.lennertsoffers.elementalstones.customClasses.models.handlers.FileStorageHandler;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.MoveController;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.modMenu.commands.Commands;
@@ -12,13 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class ElementalStones extends JavaPlugin {
 
@@ -31,6 +25,7 @@ public final class ElementalStones extends JavaPlugin {
 
         configuration = this.getConfig();
         this.saveDefaultConfig();
+
         ItemStones.init();
         CraftItemManager.init();
         StaticVariables.staticVariablesInit(this);

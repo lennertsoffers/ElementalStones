@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.gameplay;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;

@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
