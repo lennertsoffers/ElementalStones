@@ -37,8 +37,6 @@ public class ClickEvent implements Listener {
                     ConsumableHandler.broom(player);
                     ConsumableHandler.poisonousDart(player);
 
-                    activePlayer.getPalantirSpectatorHandler().teleportToPlayer();
-
                     if (ItemStones.allStones.contains(player.getInventory().getItemInMainHand()) && player.getInventory().getHeldItemSlot() == 8) {
                         event.setCancelled(true);
                         activePlayer.toggleActive();

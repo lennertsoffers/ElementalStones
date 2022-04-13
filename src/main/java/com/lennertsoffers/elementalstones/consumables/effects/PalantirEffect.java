@@ -10,6 +10,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ public class PalantirEffect implements ConsumableEffect {
                 palantirSpectatorHandler.getBossBar().setProgress(1.0);
                 palantirSpectatorHandler.getBossBar().addPlayer(player);
 
-                new BukkitRunnable() {
+                BukkitTask playerSwitch = new BukkitRunnable() {
                     int amountOfTicks = 1200;
 
                     @Override
@@ -43,7 +44,7 @@ public class PalantirEffect implements ConsumableEffect {
                         if (palantirSpectatorHandler.hasRequestedNewSpectatorTarget()) {
                             Player spectatorTarget = palantirSpectatorHandler.getNewSpectatorTarget();
                             player.setSpectatorTarget(spectatorTarget);
-                            player.sendMessage(ChatColor.YELLOW + "Switched to " + player.getName());
+                            player.sendMessage(ChatColor.YELLOW + "Switched to " + spectatorTarget.getName());
                         }
 
                         amountOfTicks--;
@@ -53,6 +54,7 @@ public class PalantirEffect implements ConsumableEffect {
                         }
                     }
                 }.runTaskTimer(StaticVariables.plugin, 0L, 1L);
+                palantirSpectatorHandler.setPlayerSwitch(playerSwitch);
             }
 
             // Create new set of online players

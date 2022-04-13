@@ -1,12 +1,14 @@
 package com.lennertsoffers.elementalstones.customClasses.models;
 
+import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class PalantirSpectatorHandler {
 
@@ -16,7 +18,8 @@ public class PalantirSpectatorHandler {
     private Location respawnLocation;
     private BossBar bossBar;
     private GameMode gameMode;
-    private Player spectatorTraget;
+    private Player spectatorTarget;
+    private BukkitTask playerSwitch;
 
     private final Player player;
 
@@ -24,8 +27,16 @@ public class PalantirSpectatorHandler {
         this.player = player;
     }
 
+    public void setPlayerSwitch(BukkitTask playerSwitch) {
+        this.playerSwitch = playerSwitch;
+    }
+
     public boolean hasSpectatorTargets() {
         return !this.spectatorTargets.isEmpty();
+    }
+
+    public boolean hasSpectatorTarget() {
+        return this.spectatorTarget != null;
     }
 
     public ArrayList<Player> getSpectatorTargets() {
@@ -35,13 +46,14 @@ public class PalantirSpectatorHandler {
     public void clearSpectatorTargets() {
         this.spectatorTargets.clear();
         this.requestedNewSpectatorTarget = false;
+        this.spectatorTarget = null;
     }
 
     public Player getNewSpectatorTarget() {
         this.requestedNewSpectatorTarget = false;
 
         Player player = this.spectatorTargets.get(this.spectatorIndex);
-        this.spectatorTraget = player;
+        this.spectatorTarget = player;
 
         this.spectatorIndex++;
         if (this.spectatorIndex >= this.spectatorTargets.size()) {
@@ -79,17 +91,33 @@ public class PalantirSpectatorHandler {
         return this.bossBar;
     }
 
-    public void teleportToPlayer() {
-        this.respawnLocation = this.spectatorTraget.getLocation();
-        this.endEffect();
+    public boolean teleportToPlayer() {
+        if (this.hasSpectatorTarget()) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    respawnLocation = spectatorTarget.getLocation();
+                    endEffect();
+                }
+            }.runTask(StaticVariables.plugin);
+
+            return true;
+        }
+
+        return false;
     }
 
     public void endEffect() {
+        this.playerSwitch.cancel();
+        this.playerSwitch = null;
+
         this.bossBar.setProgress(0);
         this.bossBar.setVisible(false);
         this.bossBar.removeAll();
         this.bossBar.removePlayer(this.player);
+
         this.clearSpectatorTargets();
+
         this.player.setGameMode(this.gameMode);
         this.player.teleport(this.respawnLocation);
     }
