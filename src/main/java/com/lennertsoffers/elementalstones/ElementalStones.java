@@ -7,6 +7,7 @@ import com.lennertsoffers.elementalstones.eventHandlers.*;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.modMenu.commands.Commands;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -46,6 +47,7 @@ public final class ElementalStones extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this);
         getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
+        getServer().getPluginManager().registerEvents(new PlayerChatEvent(), this);
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
