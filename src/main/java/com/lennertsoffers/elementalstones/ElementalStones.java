@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.handlers.FileStorageHandler;
+import com.lennertsoffers.elementalstones.customClasses.models.initializers.EventInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.MoveController;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
 import com.lennertsoffers.elementalstones.eventHandlers.*;
@@ -31,27 +32,8 @@ public final class ElementalStones extends JavaPlugin {
         StaticVariables.staticVariablesInit(this);
         ShamanVillager.initShamanIngredients();
 
-        getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
-        getServer().getPluginManager().registerEvents(new ClickEvent(this), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
-        getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
-        getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this);
-        getServer().getPluginManager().registerEvents(new EntityExplodeEvent(), this);
-        getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerConsumeEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this);
-        getServer().getPluginManager().registerEvents(new PlayerToggleSneakEvent(), this);
-        getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this);
-        getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this);
-        getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this);
-        getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
+        EventInitializer eventInitializer = new EventInitializer(this);
+        eventInitializer.initialize();
 
         // Commands
         Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
