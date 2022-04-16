@@ -5,9 +5,8 @@ import com.lennertsoffers.elementalstones.customClasses.models.handlers.FileStor
 import com.lennertsoffers.elementalstones.customClasses.models.initializers.EventInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.MoveController;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
-import com.lennertsoffers.elementalstones.eventHandlers.*;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
-import com.lennertsoffers.elementalstones.modMenu.commands.Commands;
+import com.lennertsoffers.elementalstones.modMenu.commands.SaveDefaultConfigCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
@@ -41,7 +40,7 @@ public final class ElementalStones extends JavaPlugin {
         Objects.requireNonNull(this.getCommand("stoneInventory")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("giveItem")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("shamanMajor")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("saveDefaultConfig")).setExecutor(new Commands());
+        Objects.requireNonNull(this.getCommand("saveDefaultConfig")).setExecutor(new SaveDefaultConfigCommand("saveDefaultConfig"));
         Objects.requireNonNull(this.getCommand("spawnCows")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("customModelData")).setExecutor(new Commands());
         Objects.requireNonNull(this.getCommand("checkShards")).setExecutor(new Commands());

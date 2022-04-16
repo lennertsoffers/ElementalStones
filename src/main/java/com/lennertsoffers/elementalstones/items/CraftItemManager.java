@@ -70,6 +70,8 @@ public class CraftItemManager {
 
     public static ArrayList<ItemStack> spells = new ArrayList<>();
     public static ArrayList<ItemStack> craftItems = new ArrayList<>();
+    public static ArrayList<ItemStack> baseItems = new ArrayList<>();
+    public static ArrayList<ItemStack> consumables = new ArrayList<>();
 
 
     // Create Items
@@ -163,6 +165,44 @@ public class CraftItemManager {
                 AIRBENDING_SPELL,
                 LAVA_SPELL,
                 EARTHBENDING_SPELL
+        ));
+
+        baseItems.addAll(Arrays.asList(
+                CraftItemManager.BABY_ZOMBIE_HIDE,
+                CraftItemManager.INSECT,
+                CraftItemManager.BAT,
+                CraftItemManager.THYME,
+                CraftItemManager.OREGANO,
+                CraftItemManager.DILL,
+                CraftItemManager.ROSEMARY,
+                CraftItemManager.GOLDEN_FEATHER,
+                CraftItemManager.DEAD_FLOWER,
+                CraftItemManager.TWIG,
+                CraftItemManager.SOUL_OF_EVOKER,
+                CraftItemManager.BLOOD_OF_WANDERING_TRADER,
+                CraftItemManager.STINGER,
+                CraftItemManager.HOGLIN_TUSK,
+                CraftItemManager.FINN
+        ));
+
+        consumables.addAll(Arrays.asList(
+                CraftItemManager.VOODOO_DOLL,
+                CraftItemManager.SHIP_IN_BOTTLE,
+                CraftItemManager.PALANTIR,
+                CraftItemManager.BLOOD_AND_QUIL,
+                CraftItemManager.BUNDLE_OF_HERBS,
+                CraftItemManager.CARNIVOROUS_PLANT,
+                CraftItemManager.SCENTED_CANDLE,
+                CraftItemManager.FINN_SOUP,
+                CraftItemManager.WAR_HORN,
+                CraftItemManager.POISONOUS_DART,
+                CraftItemManager.BROOM,
+                CraftItemManager.ROTTEN_APPLE,
+                CraftItemManager.POISONED_APPLE,
+                CraftItemManager.GINGERBREAD_MAN,
+                CraftItemManager.ANTIDOTE,
+                CraftItemManager.BOTTLE_OF_LIGHTNING,
+                CraftItemManager.MYSTERY_POTION
         ));
 
         // Add all craft items to list
