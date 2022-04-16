@@ -1,36 +1,36 @@
 package com.lennertsoffers.elementalstones.customClasses.models.initializers;
 
 import com.lennertsoffers.elementalstones.eventHandlers.*;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class EventInitializer {
-    private final Plugin plugin;
+public class EventInitializer extends Initializer {
 
-    public EventInitializer(Plugin plugin) {
-        this.plugin = plugin;
+    public EventInitializer(JavaPlugin plugin) {
+        super(plugin);
     }
 
+    @Override
     public void initialize() {
-        this.plugin.getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new ClickEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new EntityExplodeEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerConsumeEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PlayerToggleSneakEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this.plugin);
-        this.plugin.getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this.plugin);
+        this.getPlugin().getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new ClickEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityExplodeEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerConsumeEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerToggleSneakEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this.getPlugin());
+        this.getPlugin().getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this.getPlugin());
     }
 }

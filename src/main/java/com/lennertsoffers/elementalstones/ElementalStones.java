@@ -34,22 +34,6 @@ public final class ElementalStones extends JavaPlugin {
         EventInitializer eventInitializer = new EventInitializer(this);
         eventInitializer.initialize();
 
-        // Commands
-        Objects.requireNonNull(this.getCommand("r")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("giveStone")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("stoneInventory")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("giveItem")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("shamanMajor")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("saveDefaultConfig")).setExecutor(new SaveDefaultConfigCommand("saveDefaultConfig"));
-        Objects.requireNonNull(this.getCommand("spawnCows")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("customModelData")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("checkShards")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("checkSpells")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("checkItems1")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("checkItems2")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("giveShards")).setExecutor(new Commands());
-        Objects.requireNonNull(this.getCommand("setHunger")).setExecutor(new Commands());
-
         new BukkitRunnable() {
             @Override
             public void run() {
