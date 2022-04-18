@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
@@ -7,9 +8,10 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+@CommandExecutor
 public class CheckConsumablesCommand extends PlayerCommand {
-    public CheckConsumablesCommand(String command) {
-        super(command);
+    public CheckConsumablesCommand() {
+        super("checkConsumables");
     }
 
     @Override

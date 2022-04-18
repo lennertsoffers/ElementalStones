@@ -1,13 +1,15 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+@CommandExecutor
 public class ReloadCommand extends OperatorCommand {
 
-    public ReloadCommand(String command) {
-        super(command);
+    public ReloadCommand() {
+        super("r");
     }
 
     @Override

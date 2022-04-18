@@ -1,9 +1,12 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
+
+@CommandExecutor
 public class LowerHungerCommand extends PlayerCommand {
 
-    public LowerHungerCommand(String command) {
-        super(command);
+    public LowerHungerCommand() {
+        super("lowerHunger");
     }
 
     @Override

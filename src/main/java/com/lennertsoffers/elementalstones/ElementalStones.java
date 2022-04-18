@@ -2,6 +2,7 @@ package com.lennertsoffers.elementalstones;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.handlers.FileStorageHandler;
+import com.lennertsoffers.elementalstones.customClasses.models.initializers.CommandInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.initializers.EventInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.MoveController;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
@@ -33,6 +34,9 @@ public final class ElementalStones extends JavaPlugin {
 
         EventInitializer eventInitializer = new EventInitializer(this);
         eventInitializer.initialize();
+
+        CommandInitializer commandInitializer = new CommandInitializer(this);
+        commandInitializer.initialize();
 
         new BukkitRunnable() {
             @Override

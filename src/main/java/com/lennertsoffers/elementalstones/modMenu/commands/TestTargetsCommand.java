@@ -1,13 +1,15 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 
+@CommandExecutor
 public class TestTargetsCommand extends PlayerCommand {
-    public TestTargetsCommand(String command) {
-        super(command);
+    public TestTargetsCommand() {
+        super("testTargets");
     }
 
     @Override

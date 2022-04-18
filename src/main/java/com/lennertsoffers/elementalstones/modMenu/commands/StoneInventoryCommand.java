@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
@@ -7,10 +8,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 
+@CommandExecutor
 public class StoneInventoryCommand extends PlayerCommand {
 
-    public StoneInventoryCommand(String command) {
-        super(command);
+    public StoneInventoryCommand() {
+        super("stoneInventory");
     }
 
     @Override

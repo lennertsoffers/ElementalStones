@@ -1,12 +1,13 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
-import org.bukkit.entity.Player;
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 import org.bukkit.inventory.meta.ItemMeta;
 
+@CommandExecutor
 public class GetCustomModelDataCommand extends PlayerCommand {
 
-    public GetCustomModelDataCommand(String command) {
-        super(command);
+    public GetCustomModelDataCommand() {
+        super("getCustomModelData");
     }
 
     @Override

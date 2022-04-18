@@ -1,10 +1,12 @@
 package com.lennertsoffers.elementalstones.modMenu.commands;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
+import com.lennertsoffers.elementalstones.customClasses.annotations.CommandExecutor;
 
+@CommandExecutor
 public class SaveDefaultConfigCommand extends OperatorCommand {
-    public SaveDefaultConfigCommand(String command) {
-        super(command);
+    public SaveDefaultConfigCommand() {
+        super("saveDefaultConfig");
     }
 
     @Override
