@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.earthMoves.earthbending.FlyingRock;
 import org.bukkit.entity.FallingBlock;
@@ -7,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 
+@Event
 public class FallingBlockToBlockEvent implements Listener {
 
     @EventHandler

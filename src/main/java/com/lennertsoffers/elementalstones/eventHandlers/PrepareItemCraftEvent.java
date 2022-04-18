@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+@Event
 public class PrepareItemCraftEvent implements Listener {
 
     @EventHandler

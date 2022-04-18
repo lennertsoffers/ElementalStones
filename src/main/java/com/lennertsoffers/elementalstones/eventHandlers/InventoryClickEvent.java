@@ -1,5 +1,6 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -7,6 +8,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+@Event
 public class InventoryClickEvent implements Listener {
 
     @EventHandler

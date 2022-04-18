@@ -1,6 +1,7 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.consumables.ConsumableHandler;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanTradeItem;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
@@ -12,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.*;
 
+@Event
 public class PlayerInteractAtEntityEvent implements Listener {
 
     @EventHandler

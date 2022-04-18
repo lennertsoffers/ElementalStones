@@ -1,7 +1,11 @@
 package com.lennertsoffers.elementalstones.customClasses.models.initializers;
 
-import com.lennertsoffers.elementalstones.eventHandlers.*;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
+
+import java.util.Set;
 
 public class EventInitializer extends Initializer {
 
@@ -11,26 +15,18 @@ public class EventInitializer extends Initializer {
 
     @Override
     public void initialize() {
-        this.getPlugin().getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new ClickEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityDeathEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new EntityExplodeEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new InventoryOpenEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerConsumeEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerInteractAtEntityEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerItemHeldEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerJoinEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerRespawnEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerToggleFlightEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PlayerToggleSneakEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new PrepareItemCraftEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new VillagerCareerChangeEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new FallingBlockToBlockEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new FireworkExplodeEvent(), this.getPlugin());
-        this.getPlugin().getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this.getPlugin());
+        Set<Class<?>> eventClasses = new Reflections("com.lennertsoffers.elementalstones.eventHandlers").getTypesAnnotatedWith(Event.class);
+
+        try {
+            for (Class<?> eventClass : eventClasses) {
+                Object eventInstance = eventClass.newInstance();
+
+                if (eventInstance instanceof Listener) {
+                    this.getPlugin().getServer().getPluginManager().registerEvents((Listener) eventInstance, this.getPlugin());
+                }
+            }
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
