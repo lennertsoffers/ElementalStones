@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ResourceBundle;
 
 public class CraftItemManager {
 
@@ -93,7 +94,7 @@ public class CraftItemManager {
         return itemStack;
     }
 
-    public static void init() {
+    public static void init(ResourceBundle languageBundle) {
         // No Effect
         BABY_ZOMBIE_HIDE = createItem("Baby Zombie Hide", "", ItemCounter.NO_EFFECT);
         INSECT = createItem("Insect", "", ItemCounter.NO_EFFECT);

@@ -7,6 +7,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LanguageInitializer extends Initializer {
+    private ResourceBundle languageBundle;
+
     public LanguageInitializer(JavaPlugin plugin) {
         super(plugin);
     }
@@ -18,7 +20,15 @@ public class LanguageInitializer extends Initializer {
         if (language != null) {
             Locale locale = new Locale(language);
 
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("",locale);
+            this.languageBundle = ResourceBundle.getBundle("LanguageBundle", locale);
         }
+    }
+
+    public ResourceBundle getLanguageBundle() {
+        if (this.languageBundle == null) {
+            this.initialize();
+        }
+
+        return this.languageBundle;
     }
 }

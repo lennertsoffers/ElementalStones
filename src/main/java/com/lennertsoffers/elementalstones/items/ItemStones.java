@@ -5,13 +5,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class ItemStones {
-
 
     // WATER STONES
     // WaterStones: Default
@@ -103,196 +104,150 @@ public class ItemStones {
 
     // Lists of stones
     public static ArrayList<ItemStack> allStones = new ArrayList<>();
-    
+
     public static ArrayList<ItemStack> waterStones = new ArrayList<>();
     public static ArrayList<ItemStack> waterStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> waterBendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> iceStones = new ArrayList<>();
-    
+
     public static ArrayList<ItemStack> fireStones = new ArrayList<>();
     public static ArrayList<ItemStack> fireStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> hellfireStones = new ArrayList<>();
     public static ArrayList<ItemStack> explosionStones = new ArrayList<>();
-    
+
     public static ArrayList<ItemStack> airStones = new ArrayList<>();
     public static ArrayList<ItemStack> airStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> airbendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> agilityStones = new ArrayList<>();
-    
+
     public static ArrayList<ItemStack> earthStones = new ArrayList<>();
     public static ArrayList<ItemStack> earthStonesDefault = new ArrayList<>();
     public static ArrayList<ItemStack> earthBendingStones = new ArrayList<>();
     public static ArrayList<ItemStack> lavaStones = new ArrayList<>();
-    
-    
-    // Move declarations
-    private static final String[][][] moveDeclaration =
-            {
-                    {
-                            {
-                                    "Move 1: Splash",
-                                    "Move 2: Dolphin Dive",
-                                    "Move 3: Water Bullet"
-                            },
-                            {
-                                    "Passive1: Deep Breath",
-                                    "Passive2: Water Walker",
-                                    "Move 4: Bubblebeam",
-                                    "Move 5: Healing Waters",
-                                    "Move 6: Puffer Beam",
-                                    "Move 7: Aqua Ring",
-                                    "Ultimate: Bloodbending"
-                            },
-                            {
-                                    "Passive1: Ice Boots",
-                                    "Passive2: Slippery",
-                                    "Move 4: Ice Shards",
-                                    "Move 5: Ice Spear",
-                                    "Move 6: Snow Stomp",
-                                    "Move 7: Deep Freeze",
-                                    "Ultimate: Ice Beam"
-                            }
-                    },
-                    {
-                            {
-                                    "Move 1: A-Quick-Snack",
-                                    "Move 2: Fire Pokes",
-                                    "Move 3: Firefly"
-                            },
-                            {
-                                    "Passive1: Explosion Resistance",
-                                    "Passive2: Cute Creepers",
-                                    "Move 4: Smoke Bomb",
-                                    "Move 5: Triple Threat",
-                                    "Move 6: Combustion Beam",
-                                    "Move 7: Random Rocket",
-                                    "Ultimate: War Machine"
-                            },
-                            {
-                                    "Passive: Friendly Fire",
-                                    "Move 4: Fire Track",
-                                    "Move 5: Ring Of Fire",
-                                    "Move 6: Fire Shields",
-                                    "Move 7: Flamethrower",
-                                    "Ultimate: Hellfire"
-                            }
-                    },
-                    {
-                            {
-                                    "Move 1: Air Ball",
-                                    "Move 2: A(i)rea Control",
-                                    "Move 3: Suction"
-                            },
-                            {
-                                    "Passive1: Feather Falling",
-                                    "Passive2: Double Jump",
-                                    "Move 4: Dash",
-                                    "Move 5: Flying Knives",
-                                    "Move 6: Smoke Ball",
-                                    "Move 7: Charge Jump",
-                                    "Ultimate: Hyperspeed"
-                            },
-                            {
-                                    "Passive1: Feather Falling",
-                                    "Passive2: Double Jump",
-                                    "Move 4: Air Slash",
-                                    "Move 5: Tracking Blade",
-                                    "Move 6: Wind Cloak",
-                                    "Move 7: Tornado",
-                                    "Ultimate: Suffocation"
-                            }
-                    },
-                    {
-                            {
-                                    "Move 1: Stone Pillar",
-                                    "Move 2: Earthquake",
-                                    "Move 3: Pushback"
-                            },
-                            {
-                                    "Passive1: Lava Walker",
-                                    "Passive2: Magma Master",
-                                    "Move 4: Reverse Logic",
-                                    "Move 5: Lava Wave",
-                                    "Move 6: Comet",
-                                    "Move 7: Lava Spout",
-                                    "Ultimate: Lava Sphere"
-                            },
-                            {
-                                    "Passive: Shockwave",
-                                    "Move 4: Earth Spikes",
-                                    "Move 5: Stomp",
-                                    "Move 6: Rock Throw",
-                                    "Move 7: Earth Wave",
-                                    "Ultimate: Flying Rock"
-                            }
-            }
-    };
 
 
-    // Method to build stone
-    private static ItemStack createStone(
-            String displayName,
-            String stoneTypeLore,
-            String moveTypeLore,
-            int stoneType,
-            int moveType,
-            int numberOfMoves,
-            int customModelData
-    ) {
-        ItemStack stack = new ItemStack(Material.GHAST_TEAR);
-        ItemMeta meta = stack.getItemMeta();
 
-        if (meta != null) {
-            // Set display name of item
-            meta.setDisplayName(displayName);
+    private String[][][] moveDeclaration;
+    private final ResourceBundle languageBundle;
 
-            // Set stone type lore of item
-            List<String> lore = new ArrayList<>(StringListTools.formatLore(stoneTypeLore, ChatColor.GRAY));
-
-            lore.add("");
-
-            if (!(moveTypeLore.equals(""))) {
-                // Set path lore of item
-                lore.addAll(StringListTools.formatLore(moveTypeLore, ChatColor.GRAY));
-                lore.add("");
-
-                // Set passive declaration
-                int firstMoveIndex = 1;
-                lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][0]);
-                if (moveDeclaration[stoneType][moveType][1].contains("Passive")) {
-                    lore.add(ChatColor.YELLOW + moveDeclaration[stoneType][moveType][1]);
-                    firstMoveIndex = 2;
-                }
-
-                // Set base move declaration
-                for (int i = 0; i < 3; i++) {
-                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
-                }
-
-                // Set type move declaration
-                for (int i = firstMoveIndex; i <= (numberOfMoves + (firstMoveIndex - 1)); i++) {
-                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][moveType][i], ChatColor.YELLOW));
-                }
-            } else {
-                // Set base move declaration
-                for (int i = 0; i < numberOfMoves; i++) {
-                    lore.addAll(StringListTools.formatLore(moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
-                }
-            }
-            lore.add("");
-            meta.setLore(lore);
-            meta.setCustomModelData(customModelData + 1);
-            stack.setItemMeta(meta);
-        }
-        return stack;
+    public ItemStones(ResourceBundle languageBundle) {
+        this.languageBundle = languageBundle;
     }
 
-    public static void init() {
+    public void init() {
+        this.createMoveDeclaration();
+        this.createStones();
+        this.addStones();
+    }
 
+    private void createMoveDeclaration() {
+        this.moveDeclaration = new String[][][] {
+                {
+                        {
+                                this.languageBundle.getString("move") + " 1: " + this.languageBundle.getString("water_stone_move_1"),
+                                this.languageBundle.getString("move") + " 2: " + this.languageBundle.getString("water_stone_move_2"),
+                                this.languageBundle.getString("move") + " 3: " + this.languageBundle.getString("water_stone_move_3"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("waterbending_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("waterbending_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("waterbending_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("waterbending_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("waterbending_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("waterbending_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("waterbending_stone_ultimate"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("ice_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("ice_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("ice_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("ice_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("ice_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("ice_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("ice_stone_ultimate"),
+                        }
+                },
+                {
+                        {
+                                this.languageBundle.getString("move") + " 1: " + this.languageBundle.getString("fire_stone_move_1"),
+                                this.languageBundle.getString("move") + " 2: " + this.languageBundle.getString("fire_stone_move_2"),
+                                this.languageBundle.getString("move") + " 3: " + this.languageBundle.getString("fire_stone_move_3"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("explosion_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("explosion_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("explosion_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("explosion_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("explosion_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("explosion_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("explosion_stone_ultimate"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + ": " + this.languageBundle.getString("hellfire_stone_passive"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("hellfire_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("hellfire_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("hellfire_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("hellfire_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("hellfire_stone_ultimate"),
+                        }
+                },
+                {
+                        {
+                                this.languageBundle.getString("move") + " 1: " + this.languageBundle.getString("air_stone_move_1"),
+                                this.languageBundle.getString("move") + " 2: " + this.languageBundle.getString("air_stone_move_2"),
+                                this.languageBundle.getString("move") + " 3: " + this.languageBundle.getString("air_stone_move_3"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("agility_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("agility_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("agility_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("agility_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("agility_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("agility_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("agility_stone_ultimate"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("airbending_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("airbending_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("airbending_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("airbending_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("airbending_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("airbending_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("airbending_stone_ultimate"),
+                        }
+                },
+                {
+                        {
+                                this.languageBundle.getString("move") + " 1: " + this.languageBundle.getString("earth_stone_move_1"),
+                                this.languageBundle.getString("move") + " 2: " + this.languageBundle.getString("earth_stone_move_2"),
+                                this.languageBundle.getString("move") + " 3: " + this.languageBundle.getString("earth_stone_move_3"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + " 1: " + this.languageBundle.getString("lava_stone_passive_1"),
+                                this.languageBundle.getString("passive") + " 2: " + this.languageBundle.getString("lava_stone_passive_2"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("lava_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("lava_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("lava_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("lava_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("lava_stone_ultimate"),
+                        },
+                        {
+                                this.languageBundle.getString("passive") + ": " + this.languageBundle.getString("earthbending_stone_passive"),
+                                this.languageBundle.getString("move") + " 4: " + this.languageBundle.getString("earthbending_stone_move_4"),
+                                this.languageBundle.getString("move") + " 5: " + this.languageBundle.getString("earthbending_stone_move_5"),
+                                this.languageBundle.getString("move") + " 6: " + this.languageBundle.getString("earthbending_stone_move_6"),
+                                this.languageBundle.getString("move") + " 7: " + this.languageBundle.getString("earthbending_stone_move_7"),
+                                this.languageBundle.getString("ultimate") + ": " + this.languageBundle.getString("earthbending_stone_ultimate"),
+                        }
+                }
+        };
+    }
+
+    private void createStones() {
         // WATER STONES
-        String waterStoneTypeLore = "An old relic used to manipulate water in surroundings";
-        String moveIceTypeLore = "This relic magical powers are especially useful to use ice in your advantage";
-        String moveWaterbendingTypeLore = "This relic magical powers are especially useful to manipulate the movement of water in close range";
+        String waterStoneTypeLore = languageBundle.getString("water_stone_lore");
+        String moveIceTypeLore = languageBundle.getString("ice_stone_lore");
+        String moveWaterbendingTypeLore = languageBundle.getString("waterbending_stone_lore");
 
         // WaterStones: Default
         waterStone0 = createStone(
@@ -420,10 +375,10 @@ public class ItemStones {
 
 
         // FIRE STONES
-        String fireStoneTypeLore = "An old relic used to utilize the power of fire";
-        String moveHellfireTypeLore = "This path is an expansion on the fire related moves and aims at high damage";
-        String moveExplosionTypeLore = "With the power of this stone you can create explosions everywhere";
-        
+        String fireStoneTypeLore = languageBundle.getString("fire_stone_lore");
+        String moveHellfireTypeLore = languageBundle.getString("hellfire_stone_lore");
+        String moveExplosionTypeLore = languageBundle.getString("explosion_stone_lore");
+
         // FireStones: Default
         fireStone0 = createStone(
                 ChatColor.RED + "Fire Stone",
@@ -550,10 +505,10 @@ public class ItemStones {
 
 
         // AIR STONES
-        String airStoneTypeLore = "An old relic that befriends you with the air around you";
-        String moveAgilityTypeLore = "You use the powers of the agility stone to make you more agile";
-        String moveAirbendingTypeLore = "The airbending stone makes it possible to move the air around you and use it as an offense";
-        
+        String airStoneTypeLore = languageBundle.getString("air_stone_lore");
+        String moveAgilityTypeLore = languageBundle.getString("agility_stone_lore");
+        String moveAirbendingTypeLore = languageBundle.getString("airbending_stone_lore");
+
         // AirStones: Default
         airStone0 = createStone(
                 ChatColor.WHITE + "Air Stone",
@@ -680,10 +635,10 @@ public class ItemStones {
 
 
         // EARTH STONES
-        String earthStoneTypeLore = "An old relic that makes it possible to alter with the earth around you";
-        String moveEarthbendingTypeLore = "With this stone you can terraform the terrain or even use the terrain offensive against your enemies";
-        String moveLavaTypeLore = "The powers of this relic are specialized to influence the flow of lava in your vicinity";
-        
+        String earthStoneTypeLore = languageBundle.getString("earth_stone_lore");
+        String moveEarthbendingTypeLore = languageBundle.getString("earthbending_stone_lore");
+        String moveLavaTypeLore = languageBundle.getString("lava_stone_lore");
+
         // EarthStones: Default
         earthStone0 = createStone(
                 ChatColor.DARK_GREEN + "Earth Stone",
@@ -806,7 +761,9 @@ public class ItemStones {
                 5,
                 11
         );
+    }
 
+    private void addStones() {
         allStones.addAll(Arrays.asList(
                 waterStone0,
                 waterStone1,
@@ -896,7 +853,7 @@ public class ItemStones {
                 waterStoneIce3,
                 waterStoneIce4
         ));
-        
+
         fireStones.addAll(Arrays.asList(
                 fireStone0,
                 fireStone1,
@@ -1001,5 +958,62 @@ public class ItemStones {
                 earthStoneLava3,
                 earthStoneLava4
         ));
+    }
+
+    private @NotNull ItemStack createStone(
+            String displayName,
+            String stoneTypeLore,
+            String moveTypeLore,
+            int stoneType,
+            int moveType,
+            int numberOfMoves,
+            int customModelData
+    ) {
+        ItemStack stack = new ItemStack(Material.GHAST_TEAR);
+        ItemMeta meta = stack.getItemMeta();
+
+        if (meta != null) {
+            // Set display name of item
+            meta.setDisplayName(displayName);
+
+            // Set stone type lore of item
+            List<String> lore = new ArrayList<>(StringListTools.formatLore(stoneTypeLore, ChatColor.GRAY));
+
+            lore.add("");
+
+            if (!(moveTypeLore.equals(""))) {
+                // Set path lore of item
+                lore.addAll(StringListTools.formatLore(moveTypeLore, ChatColor.GRAY));
+                lore.add("");
+
+                // Set passive declaration
+                int firstMoveIndex = 1;
+                lore.add(ChatColor.YELLOW + this.moveDeclaration[stoneType][moveType][0]);
+                if (this.moveDeclaration[stoneType][moveType][1].contains("Passive")) {
+                    lore.add(ChatColor.YELLOW + this.moveDeclaration[stoneType][moveType][1]);
+                    firstMoveIndex = 2;
+                }
+
+                // Set base move declaration
+                for (int i = 0; i < 3; i++) {
+                    lore.addAll(StringListTools.formatLore(this.moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
+                }
+
+                // Set type move declaration
+                for (int i = firstMoveIndex; i <= (numberOfMoves + (firstMoveIndex - 1)); i++) {
+                    lore.addAll(StringListTools.formatLore(this.moveDeclaration[stoneType][moveType][i], ChatColor.YELLOW));
+                }
+            } else {
+                // Set base move declaration
+                for (int i = 0; i < numberOfMoves; i++) {
+                    lore.addAll(StringListTools.formatLore(this.moveDeclaration[stoneType][0][i], ChatColor.YELLOW));
+                }
+            }
+            lore.add("");
+            meta.setLore(lore);
+            meta.setCustomModelData(customModelData + 1);
+            stack.setItemMeta(meta);
+        }
+        return stack;
     }
 }

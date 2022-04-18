@@ -4,6 +4,7 @@ import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.handlers.FileStorageHandler;
 import com.lennertsoffers.elementalstones.customClasses.models.initializers.CommandInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.initializers.EventInitializer;
+import com.lennertsoffers.elementalstones.customClasses.models.initializers.LanguageInitializer;
 import com.lennertsoffers.elementalstones.customClasses.models.mechanics.MoveController;
 import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVillager;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
@@ -27,16 +28,19 @@ public final class ElementalStones extends JavaPlugin {
         configuration = this.getConfig();
         this.saveDefaultConfig();
 
-        ItemStones.init();
-        CraftItemManager.init();
-        StaticVariables.staticVariablesInit(this);
-        ShamanVillager.initShamanIngredients();
-
+        // Run initializers
+        LanguageInitializer languageInitializer = new LanguageInitializer(this);
+        languageInitializer.initialize();
         EventInitializer eventInitializer = new EventInitializer(this);
         eventInitializer.initialize();
-
         CommandInitializer commandInitializer = new CommandInitializer(this);
         commandInitializer.initialize();
+
+        new ItemStones(languageInitializer.getLanguageBundle()).init();
+        CraftItemManager.init(languageInitializer.getLanguageBundle());
+
+        StaticVariables.staticVariablesInit(this);
+        ShamanVillager.initShamanIngredients();
 
         new BukkitRunnable() {
             @Override
