@@ -13,5 +13,5 @@ public abstract class Initializer {
         return this.plugin;
     }
 
-    public abstract void initialize() throws InstantiationException, IllegalAccessException;
+    public abstract void initialize();
 }
