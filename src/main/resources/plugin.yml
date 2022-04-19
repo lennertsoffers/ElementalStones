@@ -6,7 +6,7 @@ authors: [ lennertsoffers ]
 description: A Minecraft Spigot plugin to add elemental stones to your server
 
 commands:
-  checkConsumbables:
+  checkConsumables:
     description: Open an inventory of all the consumables in the plugin
     usage: /checkConsumables
   checkItems:

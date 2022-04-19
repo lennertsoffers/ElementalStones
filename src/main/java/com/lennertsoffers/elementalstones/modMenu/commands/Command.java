@@ -7,7 +7,6 @@ public abstract class Command implements CommandExecutor {
 
     public Command(String command) {
         this.command = command;
-        System.out.println(command);
     }
 
     public String getCommand() {
