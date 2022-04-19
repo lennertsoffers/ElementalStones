@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.moves.airMoves.agility;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;

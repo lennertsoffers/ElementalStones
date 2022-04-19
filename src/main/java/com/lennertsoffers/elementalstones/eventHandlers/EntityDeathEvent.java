@@ -1,8 +1,9 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
 import com.lennertsoffers.elementalstones.ElementalStones;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
-import com.lennertsoffers.elementalstones.customClasses.models.Boss;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.Boss;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import org.bukkit.Location;
@@ -11,6 +12,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+@Event
 public class EntityDeathEvent implements Listener {
 
     @EventHandler

@@ -4,35 +4,38 @@ main: com.lennertsoffers.elementalstones.ElementalStones
 api-version: 1.16
 authors: [ lennertsoffers ]
 description: A Minecraft Spigot plugin to add elemental stones to your server
+
 commands:
+  checkConsumbables:
+    description: Open an inventory of all the consumables in the plugin
+    usage: /checkConsumables
+  checkItems:
+    description: Open an inventory of all the base items in the plugin
+    usage: /checkItems
+  checkShards:
+    description: Open an inventory with all the shards in the plugin
+    usage: /checkShards
+  checkSpells:
+    description: Open an inventory with all the spells in the plugin
+    usage: /checkSpells
+  getCustomModelData:
+    description: Sends message to the player with the custom model data of the itemstack he's holding
+    usage: /getCustomModelData
+  lowerHunger:
+    description: Sets the hunger level to 1
+    usage: /lowerHunger
   r:
-    description: Reloads the server
+    description: Reloads the server and kicks all online players
     usage: /r
-  givestone:
-    description: Gives particular stone to the selected player, if none selected, the executing player gets the itemstack
-    usage: /giveStone <player> <stone>
-  stoneInventory:
-    description: Opens inventory where you can pick a stone from, Magic Stone is default
-    usage: /stoneInventory <water-fire-air-earth-magic>
-  giveItem:
-    description: Gives you the Rosemary Itemstack
-  shamanMajor:
-    description: Spawns in a shaman major
   saveDefaultConfig:
     description: Saves the default config file
-  spawnCows:
-    description: Spawns 100 cows
-  customModelData:
-    description: Sends message to the player with the custom model data of the itemstack he's holding
-  checkItems1:
-    description: Test to check items
-  checkItems2:
-    description: Test to check items
-  checkShards:
-    description: Test to check shards
-  checkSpells:
-    description: Test to check spells
-  giveShards:
-    description: Gives 64 shards to the player
-  setHunger:
-    description: Sets the hunger level to 1
+    usage: /saveDefaultConfig
+  spawnBoss:
+    description: Summons a random boss
+    usage: /spawnBoss
+  stoneInventory:
+    description: Opens inventory where you can pick a stone from
+    usage: /stoneInventory <water-fire-air-earth>
+  testTargets:
+    description: Spawns 100 cows to test the stones on
+    usage: testTargets

@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.Location;
 import org.bukkit.Material;

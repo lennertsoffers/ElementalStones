@@ -1,20 +1,16 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Event
 public class EntityDamageEvent implements Listener {
 
     @EventHandler

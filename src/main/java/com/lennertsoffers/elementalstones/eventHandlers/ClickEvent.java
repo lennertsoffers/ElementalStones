@@ -1,8 +1,8 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.consumables.ConsumableHandler;
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,13 +11,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
+@Event
 public class ClickEvent implements Listener {
-
-    protected final ElementalStones plugin;
-
-    public ClickEvent(ElementalStones plugin) {
-        this.plugin = plugin;
-    }
 
     @EventHandler
     public void onClick(PlayerInteractEvent event) {

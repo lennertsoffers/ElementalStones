@@ -1,6 +1,6 @@
 package com.lennertsoffers.elementalstones.moves.fireMoves.basic;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.Move;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

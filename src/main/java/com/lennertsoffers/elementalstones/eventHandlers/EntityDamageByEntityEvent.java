@@ -1,12 +1,14 @@
 package com.lennertsoffers.elementalstones.eventHandlers;
 
-import com.lennertsoffers.elementalstones.customClasses.models.ActivePlayer;
+import com.lennertsoffers.elementalstones.customClasses.annotations.Event;
+import com.lennertsoffers.elementalstones.customClasses.models.mechanics.ActivePlayer;
 import com.lennertsoffers.elementalstones.moves.airMoves.airbending.WindCloak;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+@Event
 public class EntityDamageByEntityEvent implements Listener {
 
     @EventHandler

@@ -1,10 +1,10 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.mechanics;
 
-import com.lennertsoffers.elementalstones.ElementalStones;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.Comet;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireBall;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.FireFireworks;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.PalantirSpectatorHandler;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import com.lennertsoffers.elementalstones.passives.PassiveHandler;

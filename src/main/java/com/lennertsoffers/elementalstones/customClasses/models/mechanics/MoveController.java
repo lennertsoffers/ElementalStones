@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.mechanics;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import com.lennertsoffers.elementalstones.items.ItemStones;

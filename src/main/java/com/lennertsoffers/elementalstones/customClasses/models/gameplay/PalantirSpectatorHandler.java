@@ -1,4 +1,4 @@
-package com.lennertsoffers.elementalstones.customClasses.models;
+package com.lennertsoffers.elementalstones.customClasses.models.gameplay;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
 import org.bukkit.GameMode;

@@ -2,7 +2,7 @@ package com.lennertsoffers.elementalstones.consumables;
 
 import com.lennertsoffers.elementalstones.consumables.effects.*;
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.Boss;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.Boss;
 import com.lennertsoffers.elementalstones.customClasses.models.bukkitRunnables.WarHornRaid;
 import com.lennertsoffers.elementalstones.customClasses.tools.ItemTools;
 import com.lennertsoffers.elementalstones.items.CraftItemManager;

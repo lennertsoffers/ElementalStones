@@ -1,7 +1,7 @@
 package com.lennertsoffers.elementalstones.consumables.effects;
 
 import com.lennertsoffers.elementalstones.customClasses.StaticVariables;
-import com.lennertsoffers.elementalstones.customClasses.models.Boss;
+import com.lennertsoffers.elementalstones.customClasses.models.gameplay.Boss;
 import com.lennertsoffers.elementalstones.customClasses.tools.CheckLocationTools;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
