@@ -10,6 +10,7 @@ import com.lennertsoffers.elementalstones.customClasses.models.gameplay.ShamanVi
 import com.lennertsoffers.elementalstones.items.CraftItemManager;
 import com.lennertsoffers.elementalstones.modMenu.commands.SaveDefaultConfigCommand;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import com.lennertsoffers.elementalstones.items.ItemStones;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -27,6 +28,7 @@ public final class ElementalStones extends JavaPlugin {
 
         configuration = this.getConfig();
         this.saveDefaultConfig();
+
 
         // Run initializers
         LanguageInitializer languageInitializer = new LanguageInitializer(this);
