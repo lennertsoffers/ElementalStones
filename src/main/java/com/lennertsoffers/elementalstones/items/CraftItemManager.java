@@ -182,6 +182,11 @@ public class CraftItemManager {
                 this.languageBundle.getString("finn_lore"),
                 ItemCounter.NO_EFFECT
         );
+        SHIP_IN_BOTTLE = this.createItem(
+                this.languageBundle.getString("ship_in_bottle_name"),
+                this.languageBundle.getString("ship_in_bottle_lore"),
+                ItemCounter.NO_EFFECT
+        );
         BLOOD_AND_QUIL = this.createItem(
                 this.languageBundle.getString("blood_and_quil_name"),
                 this.languageBundle.getString("blood_and_quil_lore"),
@@ -192,9 +197,24 @@ public class CraftItemManager {
                 this.languageBundle.getString("bundle_of_herbs_lore"),
                 ItemCounter.NO_EFFECT
         );
+        CARNIVOROUS_PLANT = this.createItem(
+                this.languageBundle.getString("carnivorous_plant_name"),
+                this.languageBundle.getString("carnivorous_plant_lore"),
+                ItemCounter.NO_EFFECT
+        );
         SCENTED_CANDLE = this.createItem(
                 this.languageBundle.getString("scented_candle_name"),
                 this.languageBundle.getString("scented_candle_lore"),
+                ItemCounter.NO_EFFECT
+        );
+        POISONOUS_DART = this.createItem(
+                this.languageBundle.getString("poisonous_dart_name"),
+                this.languageBundle.getString("poisonous_dart_lore"),
+                ItemCounter.NO_EFFECT
+        );
+        BROOM = this.createItem(
+                this.languageBundle.getString("broom_name"),
+                this.languageBundle.getString("broom_lore"),
                 ItemCounter.NO_EFFECT
         );
 
@@ -325,26 +345,6 @@ public class CraftItemManager {
                 this.languageBundle.getString("palantir_name"),
                 this.languageBundle.getString("palantir_lore"),
                 ItemCounter.CONSUMABLE
-        );
-        SHIP_IN_BOTTLE = this.createItem(
-                this.languageBundle.getString("ship_in_bottle_name"),
-                this.languageBundle.getString("ship_in_bottle_lore"),
-                ItemCounter.NO_EFFECT
-        );
-        POISONOUS_DART = this.createItem(
-                this.languageBundle.getString("poisonous_dart_name"),
-                this.languageBundle.getString("poisonous_dart_lore"),
-                ItemCounter.NO_EFFECT
-        );
-        BROOM = this.createItem(
-                this.languageBundle.getString("broom_name"),
-                this.languageBundle.getString("broom_lore"),
-                ItemCounter.NO_EFFECT
-        );
-        CARNIVOROUS_PLANT = this.createItem(
-                this.languageBundle.getString("carnivorous_plant_name"),
-                this.languageBundle.getString("carnivorous_plant_lore"),
-                ItemCounter.NO_EFFECT
         );
     }
 
