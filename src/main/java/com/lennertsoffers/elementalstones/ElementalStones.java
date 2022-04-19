@@ -37,7 +37,7 @@ public final class ElementalStones extends JavaPlugin {
         commandInitializer.initialize();
 
         new ItemStones(languageInitializer.getLanguageBundle()).init();
-        CraftItemManager.init(languageInitializer.getLanguageBundle());
+        new CraftItemManager(languageInitializer.getLanguageBundle()).init();
 
         StaticVariables.staticVariablesInit(this);
         ShamanVillager.initShamanIngredients();

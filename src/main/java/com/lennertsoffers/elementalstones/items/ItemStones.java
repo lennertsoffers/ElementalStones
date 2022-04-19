@@ -5,7 +5,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -960,7 +959,7 @@ public class ItemStones {
         ));
     }
 
-    private @NotNull ItemStack createStone(
+    private ItemStack createStone(
             String displayName,
             String stoneTypeLore,
             String moveTypeLore,
