@@ -4,6 +4,8 @@ main: com.lennertsoffers.elementalstones.ElementalStones
 api-version: 1.16
 authors: [ lennertsoffers ]
 description: A Minecraft Spigot plugin to add elemental stones to your server
+libraries:
+  - org.apache.commons:commons-text:1.10.0
 
 commands:
   checkConsumables:
