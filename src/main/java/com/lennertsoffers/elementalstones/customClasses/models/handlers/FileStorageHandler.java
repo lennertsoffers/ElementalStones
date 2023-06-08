@@ -17,8 +17,7 @@ public class FileStorageHandler {
 
     public void initDeathPlayerStones() {
         try {
-            File file = new File("./Plugins/ElementalStones/death_player_stones.txt");
-
+            File file = new File(StaticVariables.plugin.getDataFolder(), "death_player_stones.txt");
             if (file.createNewFile()) {
                 this.logger.log(Level.INFO, "Created new " + file.getName().toUpperCase() + " file.");
             } else {

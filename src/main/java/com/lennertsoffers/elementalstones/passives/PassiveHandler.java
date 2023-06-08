@@ -7,7 +7,7 @@ import com.lennertsoffers.elementalstones.customClasses.tools.FireworkTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.MathTools;
 import com.lennertsoffers.elementalstones.customClasses.tools.NearbyEntityTools;
 import com.lennertsoffers.elementalstones.items.ItemStones;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.text.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
